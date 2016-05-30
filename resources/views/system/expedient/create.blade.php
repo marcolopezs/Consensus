@@ -173,30 +173,19 @@
 
                             <div class="row">
 
-                                <div class="col-md-5">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         {!! Form::label('abogado', 'Abogado', ['class' => 'control-label']) !!}
                                         {!! Form::text('abogado', null, ['class' => 'form-control', 'required']) !!}
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         {!! Form::label('asistente', 'Asistente', ['class' => 'control-label']) !!}
                                         {!! Form::text('asistente', null, ['class' => 'form-control']) !!}
                                     </div>
                                 </div>
-
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        {!! Form::label('estado', 'Estado', ['class' => 'control-label']) !!}
-                                        {!! Form::select('estado', ['' => ''] + $estado, null, ['class' => 'form-control select2', 'required']) !!}
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="row">
 
                                 <div class="col-md-3">
                                     <div class="form-group">
@@ -218,6 +207,10 @@
                                     </div>
                                 </div>
 
+                            </div>
+
+                            <div class="row">
+
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         {!! Form::label('valor', 'Valor', ['class' => 'control-label']) !!}
@@ -231,10 +224,6 @@
                                         {!! Form::text('moneda', null, ['class' => 'form-control']) !!}
                                     </div>
                                 </div>
-
-                            </div>
-
-                            <div class="row">
 
                                 <div class="col-md-3">
                                     <div class="form-group">
@@ -250,6 +239,10 @@
                                     </div>
                                 </div>
 
+                            </div>
+
+                            <div class="row">
+
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         {!! Form::label('exito', 'Éxito', ['class' => 'control-label']) !!}
@@ -259,8 +252,8 @@
 
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        {!! Form::label('estado_expediente', 'Estado Expediente', ['class' => 'control-label']) !!}
-                                        {!! Form::select('estado_expediente', ['' => 'Seleccionar', '1' => 'Trámite', '2' => 'Terminado'] , null , ['class' => 'form-control select2']) !!}
+                                        {!! Form::label('estado', 'Estado', ['class' => 'control-label']) !!}
+                                        {!! Form::select('estado', ['' => ''] + $estado, null, ['class' => 'form-control select2', 'required']) !!}
                                     </div>
                                 </div>
 
