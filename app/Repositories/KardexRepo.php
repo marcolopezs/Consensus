@@ -17,7 +17,7 @@ class KardexRepo extends BaseRepo {
     {
         return $this->getModel()
                     ->kardex($request->get('kardex'))
-                    ->clienteKardex($request->get('cliente'))
+                    ->clienteId($request->get('cliente'))
                     ->dni($request->get('dni'))
                     ->ruc($request->get('ruc'))
                     ->order($request->get('order'))

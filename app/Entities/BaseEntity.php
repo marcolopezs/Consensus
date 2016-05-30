@@ -17,6 +17,16 @@ class BaseEntity extends Model{
         return $this->morphMany(History::class, 'historyble')->where('opcion','file')->orderBy('created_at','desc');
     }
 
+    public function scopeClienteId($query, $value)
+    {
+        $rows = Cliente::all();
+
+        if($value != "" && isset($rows[$value]))
+        {
+            $query->where('cliente_id', $value);
+        }
+    }
+
     public function scopeTitulo($query, $titulo)
     {
         if(trim($titulo) != "")
@@ -123,7 +133,7 @@ class BaseEntity extends Model{
     {
         switch ($order){
             case '':
-                $query->orderBy('created_at', 'asc');
+                $query->orderBy('created_at', 'desc');
                 break;
 
             case 'tituloAsc':

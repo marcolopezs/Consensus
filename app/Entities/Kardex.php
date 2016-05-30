@@ -24,16 +24,6 @@ class Kardex extends BaseEntity {
         return $this->hasMany(Expedient::class);
     }
 
-    public function scopeClienteKardex($query, $value)
-    {
-        $rows = Cliente::all()->lists('titulo', 'id');
-
-        if($value != "" && isset($rows[$value]))
-        {
-            $query->where('cliente_id', $value);
-        }
-    }
-
     public function scopeKardex($query, $value)
     {
         if(trim($value) != "")
