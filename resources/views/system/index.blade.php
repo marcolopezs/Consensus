@@ -41,7 +41,7 @@
                                 <td>{{ $row_fecha }}</td>
                                 <td>
                                     <a href="{{ route('kardex.edit', $row_id) }}" class="btn btn-xs btn-default">
-                                        <i class="fa fa-search"></i> View </a>
+                                        <i class="fa fa-search"></i> Ver </a>
                                 </td>
                             </tr>
                             @endforeach
@@ -92,7 +92,7 @@
                                 <td>{{ $row_kardex }}</td>
                                 <td>
                                     <a href="#" class="btn btn-xs btn-default">
-                                        <i class="fa fa-search"></i> View </a>
+                                        <i class="fa fa-search"></i> Ver </a>
                                 </td>
                             </tr>
                         @endforeach
