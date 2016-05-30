@@ -135,20 +135,6 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        {!! Form::label('inicio', 'Inicio', ['class' => 'control-label']) !!}
-                                        {!! Form::text('inicio', 0, ['class' => 'form-control']) !!}
-                                    </div>
-                                </div>
-
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        {!! Form::label('termino', 'Término', ['class' => 'control-label']) !!}
-                                        {!! Form::text('termino', 0, ['class' => 'form-control']) !!}
-                                    </div>
-                                </div>
-
                             </div>
 
                             <div class="row">
