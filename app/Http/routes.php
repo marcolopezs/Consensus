@@ -82,7 +82,7 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
         Route::resource('area', 'AreaController', ['names' => $prefixedResourceNames('area')]);
 
         //SITUACION
-        Route::resource('situation', 'SituationController', ['names' => $prefixedResourceNames('situation')]);
+        Route::resource('ubicacion', 'UbicacionController', ['names' => $prefixedResourceNames('ubicacion')]);
 
         //ESTADOS
         Route::resource('state', 'StateController', ['names' => $prefixedResourceNames('state')]);

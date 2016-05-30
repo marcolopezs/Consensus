@@ -1,7 +1,7 @@
 @extends('layouts.system')
 
 @section('title')
-    Situación
+    Ubicación
 @stop
 
 @section('contenido_header')
@@ -27,7 +27,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="btn-group">
-                                    <a class="btn sbold green modal-view" data-url="{{ route('situation.create') }}" data-toggle="modal"> Agregar registro
+                                    <a class="btn sbold green modal-view" data-url="{{ route('ubicacion.create') }}" data-toggle="modal"> Agregar registro
                                         <i class="fa fa-plus"></i>
                                     </a>
                                 </div>
@@ -35,11 +35,11 @@
                         </div>
                     </div>
 
-                    {!! Form::model(Request::all(), ['route' => 'situation.index', 'method' => 'GET']) !!}
+                    {!! Form::model(Request::all(), ['route' => 'ubicacion.index', 'method' => 'GET']) !!}
 
                     <table class="table table-striped table-bordered table-hover order-column">
 
-                        @include('system.situation.partials.search')
+                        @include('system.ubicacion.partials.search')
 
                         <tbody>
                         @foreach($rows as $item)
@@ -57,7 +57,7 @@
                                             <i class="fa fa-angle-down"></i>
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
-                                            <li><a class="modal-view" data-url="{{ route('situation.edit', $row_id) }}" data-toggle="modal">Editar</a></li>
+                                            <li><a class="modal-view" data-url="{{ route('ubicacion.edit', $row_id) }}" data-toggle="modal">Editar</a></li>
                                             <li><a href="#delete" class="btn-delete">Eliminar</a></li>
                                             <li><div class="divider"></div></li>
                                             <li><a href="javascript:;">Historial</a></li>
@@ -96,7 +96,7 @@
 <!-- ajax -->
 <div id="ajax-modal" class="modal fade" tabindex="-1"></div>
 
-{!! Form::open(['route' => ['situation.destroy', ':REGISTER'], 'method' => 'DELETE', 'id' => 'FormDeleteRow']) !!}
+{!! Form::open(['route' => ['ubicacion.destroy', ':REGISTER'], 'method' => 'DELETE', 'id' => 'FormDeleteRow']) !!}
 {!! Form::close() !!}
 
 <div class="modal-view-delete" id="delete" title="Eliminar registro">

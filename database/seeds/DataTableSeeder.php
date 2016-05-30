@@ -170,7 +170,7 @@ class DataTableSeeder extends Seeder
             ['id' => '13', 'titulo' => 'PAGARES', 'email' => 'vehicular@consensus.com.pe', 'estado' => '1']
         ]);
 
-        DB::table('situations')->insert([
+        DB::table('ubicaciones')->insert([
             ['id' => '1', 'titulo' => 'ESPECIALISTA LEGAL', 'estado' => '1'],
             ['id' => '2', 'titulo' => 'ARCHIVO DEL JUZGADO', 'estado' => '1'],
             ['id' => '3', 'titulo' => 'DESPACHO DEL JUEZ', 'estado' => '1'],

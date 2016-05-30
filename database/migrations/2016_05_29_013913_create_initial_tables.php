@@ -384,7 +384,7 @@ class CreateInitialTables extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('situations', function(Blueprint $table)
+        Schema::create('ubicaciones', function(Blueprint $table)
         {
             $table->increments('id');
 
@@ -470,7 +470,7 @@ class CreateInitialTables extends Migration
         Schema::drop('matters');
         Schema::drop('entities');
         Schema::drop('areas');
-        Schema::drop('situations');
+        Schema::drop('ubicaciones');
         Schema::drop('states');
         Schema::drop('interveners');
         Schema::drop('expense_types');

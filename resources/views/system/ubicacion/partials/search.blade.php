@@ -16,7 +16,7 @@
         <td>{!! Form::select('estado', ['' => 'Seleccionar', '0' => 'No activo', '1' => 'Activo'], null, ['class' => 'form-control form-filter input-sm']) !!}</td>
         <td>
             {!! Form::button('<i class="fa fa-search"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-success filter-submit margin-bottom']) !!}
-            <a href="{!! route('situation.index') !!}" class="btn btn-sm btn-default filter-cancel"><i class="fa fa-times"></i></a>
+            <a href="{!! route('ubicacion.index') !!}" class="btn btn-sm btn-default filter-cancel"><i class="fa fa-times"></i></a>
         </td>
     </tr>
 </thead>

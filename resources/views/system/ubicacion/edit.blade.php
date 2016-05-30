@@ -1,6 +1,6 @@
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-    <h4 class="modal-title">Crear nuevo registro</h4>
+    <h4 class="modal-title">Actualizar registro</h4>
 </div>
 <div class="modal-body">
     <div class="row">
@@ -8,7 +8,7 @@
 
             <div class="form-content"></div>
 
-            {!! Form::open(['route' => 'situation.store', 'method' => 'POST', 'id' => 'formCreate']) !!}
+            {!! Form::model($row, ['route' => ['ubicacion.update', $row->id], 'method' => 'PUT', 'id' => 'formEdit']) !!}
 
                 <div class="form-body">
 
@@ -36,18 +36,18 @@
 </div>
 <div class="modal-footer">
     <a class="btn default" id="formCreateClose" data-dismiss="modal">Cerrar</a>
-    <a class="btn blue" id="formCreateSubmit" href="javascript:;">Guardar</a>
+    <a class="btn blue" id="formEditSubmit" href="javascript:;">Actualizar</a>
 </div>
 
 <script>
 
     $('.progress').hide();
 
-    $("#formCreateSubmit").on("click", function(e){
+    $("#formEditSubmit").on("click", function(e){
 
         e.preventDefault();
 
-        var form = $("#formCreate");
+        var form = $("#formEdit");
         var url = form.attr('action');
         var data = form.serialize();
 
@@ -57,7 +57,6 @@
             $('.progress').hide();
             successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>'+result.message+'</div>';
             $(".form-content").html(successHtml);
-            form[0].reset();
         }).fail(function(result){
             $('.progress').hide();
             console.log(result);

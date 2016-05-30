@@ -105,11 +105,11 @@
                                             <div class="col-md-6">
                                                 <ul class="mega-menu-submenu">
                                                     <li {!! (Request::is('options/service*') ? 'class="active"' : '') !!}><a href="{{ route('service.index') }}">Servicios</a></li>
-                                                    <li {!! (Request::is('options/situation*') ? 'class="active"' : '') !!}><a href="{{ route('situation.index') }}">Situación</a></li>
                                                     <li {!! (Request::is('options/tariff*') ? 'class="active"' : '') !!}><a href="{{ route('tariff.index') }}">Tarifas</a></li>
                                                     <li {!! (Request::is('options/money*') ? 'class="active"' : '') !!}><a href="{{ route('money.index') }}">Tipo de Cambio</a></li>
                                                     <li {!! (Request::is('options/expense-type*') ? 'class="active"' : '') !!}><a href="{{ route('expense-type.index') }}">Tipos de Gasto</a></li>
                                                     <li {!! (Request::is('options/kardex-type*') ? 'class="active"' : '') !!}><a href="{{ route('kardex-type.index') }}">Tipos de Kardex</a></li>
+                                                    <li {!! (Request::is('options/ubicacion*') ? 'class="active"' : '') !!}><a href="{{ route('ubicacion.index') }}">Ubicación</a></li>
                                                 </ul>
                                             </div>
                                         </div>

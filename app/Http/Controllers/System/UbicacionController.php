@@ -6,21 +6,21 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Consensus\Http\Controllers\Controller;
 
-use Consensus\Entities\Situation;
-use Consensus\Repositories\SituationRepo;
+use Consensus\Entities\Ubicacion;
+use Consensus\Repositories\UbicacionRepo;
 
-class SituationController extends Controller {
+class UbicacionController extends Controller {
 
     protected  $rules = [
         'titulo' => 'required',
         'estado' => 'required|in:0,1'
     ];
 
-    protected $situationRepo;
+    protected $ubicacionRepo;
 
-    public function __construct(SituationRepo $situationRepo)
+    public function __construct(UbicacionRepo $ubicacionRepo)
     {
-        $this->situationRepo = $situationRepo;
+        $this->ubicacionRepo = $ubicacionRepo;
     }
 
     /**
@@ -30,14 +30,14 @@ class SituationController extends Controller {
      */
     public function index(Request $request)
     {
-        $rows = $this->situationRepo->findOrder($request);
+        $rows = $this->ubicacionRepo->findOrder($request);
 
-        return view('system.situation.list', compact('rows'));
+        return view('system.ubicacion.list', compact('rows'));
     }
 
     public function create()
     {
-        return view('system.situation.create');
+        return view('system.ubicacion.create');
     }
 
     /**
@@ -51,11 +51,11 @@ class SituationController extends Controller {
         $this->validate($request, $this->rules);
 
         //GUARDAR DATOS
-        $row = new Situation($request->all());
-        $this->situationRepo->create($row, $request->all());
+        $row = new Ubicacion($request->all());
+        $this->ubicacionRepo->create($row, $request->all());
 
         //GUARDAR HISTORIAL
-        $this->situationRepo->saveHistory($row, $request, 'create');
+        $this->ubicacionRepo->saveHistory($row, $request, 'create');
 
         //MENSAJE
         $mensaje = 'El registro se agregó satisfactoriamente.';
@@ -77,9 +77,9 @@ class SituationController extends Controller {
      */
     public function edit($id, Request $request)
     {
-        $row = $this->situationRepo->findOrFail($id);
+        $row = $this->ubicacionRepo->findOrFail($id);
 
-        return view('system.situation.edit', compact('row'));
+        return view('system.ubicacion.edit', compact('row'));
     }
 
     /**
@@ -92,16 +92,16 @@ class SituationController extends Controller {
     public function update(Request $request, $id)
     {
         //BUSCAR ID
-        $row = $this->situationRepo->findOrFail($id);
+        $row = $this->ubicacionRepo->findOrFail($id);
 
         //VALIDACION DE DATOS
         $this->validate($request, $this->rules);
 
         //GUARDAR DATOS
-        $this->situationRepo->update($row, $request->all());
+        $this->ubicacionRepo->update($row, $request->all());
 
         //GUARDAR HISTORIAL
-        $this->situationRepo->saveHistory($row, $request, 'update');
+        $this->ubicacionRepo->saveHistory($row, $request, 'update');
 
         //MENSAJE
         $mensaje = 'El registro se actualizó satisfactoriamente.';
@@ -124,11 +124,11 @@ class SituationController extends Controller {
     public function destroy($id, Request $request)
     {
         //BUSCAR ID PARA ELIMINAR
-        $row = $this->situationRepo->findOrFail($id);
+        $row = $this->ubicacionRepo->findOrFail($id);
         $row->delete();
 
         //GUARDAR HISTORIAL
-        $this->situationRepo->saveHistory($row, $request, 'delete');
+        $this->ubicacionRepo->saveHistory($row, $request, 'delete');
 
         $message = 'El registro se eliminó satisfactoriamente.';
 

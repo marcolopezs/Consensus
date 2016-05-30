@@ -2,9 +2,11 @@
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Situation extends BaseEntity {
+class Ubicacion extends BaseEntity {
 
     use SoftDeletes;
+
+    protected $table = 'ubicaciones';
 
     protected $dates = ['deleted_at'];
 
