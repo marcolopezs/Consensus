@@ -93,6 +93,9 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
         //TIPOS DE GASTOS
         Route::resource('expense-type', 'ExpenseTypeController', ['names' => $prefixedResourceNames('expense-type')]);
 
+        //TIPOS DE KARDEX
+        Route::resource('kardex-type', 'KardexTypeController', ['names' => $prefixedResourceNames('kardex-type')]);
+
     });
 
 });

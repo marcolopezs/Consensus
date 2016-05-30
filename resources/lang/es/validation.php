@@ -178,7 +178,8 @@ return [
         'area'                  => 'Área',
         'estado'                => 'Estado',
         'dni'                   => 'DNI',
-        'ruc'                   => 'RUC'
+        'ruc'                   => 'RUC',
+        'abrev'                 => 'Letra'
     ],
 
 ];
