@@ -8,6 +8,10 @@
 {{-- UI Modal --}}
 {!! HTML::style('assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css') !!}
 {!! HTML::style('assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css') !!}
+
+{{-- Select2 --}}
+{!! HTML::style('assets/global/plugins/select2/css/select2.min.css') !!}
+{!! HTML::style('assets/global/plugins/select2/css/select2-bootstrap.min.css') !!}
 @stop
 
 @section('contenido_body')
@@ -155,6 +159,17 @@
 
     });
 
+</script>
+
+{{-- SELECT2 --}}
+{!! HTML::script('assets/global/plugins/select2/js/select2.full.min.js') !!}
+{!! HTML::script('assets/global/plugins/select2/js/i18n/es.js') !!}
+<script>
+    var placeholder = "Seleccionar";
+
+    $('.select2').select2({
+        placeholder: placeholder
+    });
 </script>
 
 @stop
