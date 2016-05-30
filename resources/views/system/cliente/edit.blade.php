@@ -1,192 +1,163 @@
-@extends('layouts.system')
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+    <h4 class="modal-title">Editar registro</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
 
-@section('title')
-    Clientes
-@stop
+            <div class="form-content"></div>
 
-@section('contenido_header')
+            {!! Form::model($row, ['route' => ['cliente.update', $row->id], 'method' => 'PUT', 'id' => 'formCreate', 'class' => 'horizontal-form', 'autocomplete' => 'off']) !!}
+
+            <div class="form-body">
+
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            {!! Form::label('cliente', 'Cliente', ['class' => 'control-label']) !!}
+                            {!! Form::text('cliente', null, ['class' => 'form-control']) !!}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {!! Form::label('dni', 'DNI', ['class' => 'control-label']) !!}
+                            {!! Form::text('dni', null, ['class' => 'form-control']) !!}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {!! Form::label('ruc', 'RUC', ['class' => 'ontrol-label']) !!}
+                            {!! Form::text('ruc', null, ['class' => 'form-control']) !!}
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            {!! Form::label('email', 'Email', ['class' => 'control-label']) !!}
+                            {!! Form::text('email', null, ['class' => 'form-control']) !!}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {!! Form::label('telefono', 'Teléfono', ['class' => 'control-label']) !!}
+                            {!! Form::text('telefono', null, ['class' => 'form-control']) !!}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {!! Form::label('fax', 'Fax', ['class' => 'control-label']) !!}
+                            {!! Form::text('fax', null, ['class' => 'form-control']) !!}
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            {!! Form::label('direccion', 'Dirección', ['class' => 'control-label']) !!}
+                            {!! Form::text('direccion', null, ['class' => 'form-control']) !!}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {!! Form::label('pais', 'País', ['class' => 'control-label']) !!}
+                            {!! Form::select('pais', ['' => ''] + $pais, $row->pais_id, ['class' => 'form-control select2']) !!}
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="progress progress-striped active">
+                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+            </div>
+
+            {!! Form::close() !!}
+
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <a class="btn default" id="formCreateClose" data-dismiss="modal">Cerrar</a>
+    <a class="btn blue" id="formCreateSubmit" href="javascript:;">Guardar</a>
+</div>
+
+<script>
+
+    $('.progress').hide();
+
+    $("#formCreateSubmit").on("click", function(e){
+
+        e.preventDefault();
+
+        var form = $("#formCreate");
+        var url = form.attr('action');
+        var data = form.serialize();
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: data,
+            success: function (result) {
+                successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>'+result.message+'</div>';
+                $(".form-content").html(successHtml);
+            },
+            beforeSend: function () { $('.progress').show(); },
+            complete: function () { $('.progress').hide(); },
+            error: function (result){
+                if(result.status === 422){
+                    var errors = result.responseJSON;
+                    errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';
+                    $.each( errors, function( key, value ) {
+                        errorsHtml += '<li>' + value[0] + '</li>';
+                    });
+                    errorsHtml += '</ul></div>';
+                    $('.form-content').html(errorsHtml);
+                }else{
+                    console.log(result);
+                    errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';
+                    errorsHtml += '<li>Se ha producido un error. Intentelo de nuevo.</li>';
+                    errorsHtml += '</ul></div>';
+                    $('.form-content').html(errorsHtml);
+                }
+            }
+        });
+
+    });
+
+    $("#formCreateClose").on("click", function (e) {
+        e.preventDefault();
+
+        $("#ajax-modal").modal('hide');
+        location.reload();
+
+    });
+
+</script>
+
 {{-- Select2 --}}
 {!! HTML::style('assets/global/plugins/select2/css/select2.min.css') !!}
 {!! HTML::style('assets/global/plugins/select2/css/select2-bootstrap.min.css') !!}
-@stop
-
-@section('contenido_body')
-
-    <div class="row">
-
-        <div class="col-md-12">
-
-            <div class="portlet light ">
-                <div class="portlet-title">
-                    <div class="caption">
-                        <span class="caption-subject bold uppercase">Editar registro</span>
-                    </div>
-                </div>
-                <div class="portlet-body form">
-
-                    {!! Form::model($row, ['route' => ['cliente.update', $row->id], 'method' => 'PUT', 'id' => 'formCreate', 'class' => 'form-horizontal']) !!}
-
-                    <div class="form-body">
-
-                        <div class="row">
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    {!! Form::label('cliente', 'Cliente', ['class' => 'col-md-2 control-label']) !!}
-                                    <div class="col-md-10">
-                                        {!! Form::text('cliente', null, ['class' => 'form-control']) !!}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    {!! Form::label('dni', 'DNI', ['class' => 'col-md-2 control-label']) !!}
-                                    <div class="col-md-10">
-                                        {!! Form::text('dni', null, ['class' => 'form-control']) !!}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    {!! Form::label('ruc', 'RUC', ['class' => 'col-md-2 control-label']) !!}
-                                    <div class="col-md-10">
-                                        {!! Form::text('ruc', null, ['class' => 'form-control']) !!}
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="row">
-
-                            <div class="col-md-5">
-                                <div class="form-group">
-                                    {!! Form::label('email', 'Email', ['class' => 'col-md-2 control-label']) !!}
-                                    <div class="col-md-10">
-                                        {!! Form::text('email', null, ['class' => 'form-control']) !!}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    {!! Form::label('telefono', 'Teléfono', ['class' => 'col-md-3 control-label']) !!}
-                                    <div class="col-md-9">
-                                        {!! Form::text('telefono', null, ['class' => 'form-control']) !!}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    {!! Form::label('fax', 'Fax', ['class' => 'col-md-3 control-label']) !!}
-                                    <div class="col-md-9">
-                                        {!! Form::text('fax', null, ['class' => 'form-control']) !!}
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="row">
-
-                            <div class="col-md-8">
-                                <div class="form-group">
-                                    {!! Form::label('direccion', 'Dirección', ['class' => 'col-md-2 control-label']) !!}
-                                    <div class="col-md-10">
-                                        {!! Form::text('direccion', null, ['class' => 'form-control']) !!}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    {!! Form::label('pais', 'País', ['class' => 'col-md-2 control-label']) !!}
-                                    <div class="col-md-10">
-                                        {!! Form::select('pais', ['' => ''] + $pais, $row->pais_id, ['class' => 'form-control select2']) !!}
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <div class="form-actions left">
-                        <a href="{{ route('cliente.index') }}" class="btn default">Cancelar</a>
-                        <button type="submit" class="btn blue"><i class='fa fa-check'></i> Guardar</button>
-                    </div>
-
-
-                    {!! Form::close() !!}
-
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-
-@stop
-
-@section('contenido_footer')
-{{-- Select2 --}}
 {!! HTML::script('assets/global/plugins/select2/js/select2.full.min.js') !!}
 {!! HTML::script('assets/global/plugins/select2/js/i18n/es.js') !!}
 <script>
-    $(document).on("ready", function(){
+    var placeholder = "Seleccionar";
 
-        var placeholder = "Seleccionar";
-
-        $('.select2').select2({
-            placeholder: placeholder
-        });
-
-        $('.js-data-example-ajax').select2({
-            placeholder: 'Busca productos para relacionar',
-            minimumInputLength: 2,
-            ajax: {
-                url: '{{ route('cliente.all') }}',
-                dataType: 'json',
-                delay: 250,
-                data: function (params) {
-                    return {
-                        q: params.term,
-                        page: params.page
-                    };
-                },
-                processResults: function (data, params) {
-                    params.page = params.page || 1;
-
-                    return {
-                        results: data,
-                        pagination: {
-                            more: (params.page * 30) < data.total_count
-                        }
-                    };
-                },
-                cache: true
-            },
-            escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
-            templateResult: formatRepo, // omitted for brevity, see the source of this page
-            templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
-        });
-
-        function formatRepo (repo) {
-            if (repo.loading) return repo.text;
-
-            var markup = "<div class='select2-result-options clearfix'>" +
-                    "<div class='select2-result-options__meta'>" +
-                    "<div class='select2-result-options__title'>" + repo.cliente + "</div></div></div>";
-
-            return markup;
-        }
-
-        function formatRepoSelection (repo) {
-            return repo.cliente || repo.id;
-        }
+    $('.select2').select2({
+        placeholder: placeholder
     });
 </script>
-@stop

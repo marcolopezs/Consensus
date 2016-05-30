@@ -110,6 +110,12 @@ return [
         ],
         'fecha_vencimiento' => [
             'required_if' => 'El campo Fecha de Vencimiento es obligatorio'
+        ],
+        'dni' => [
+            'required_without' => 'El campo DNI es obligatorio en caso el campo RUC este vacío'
+        ],
+        'ruc' => [
+            'required_without' => 'El campo RUC es obligatorio en caso el campo DNI este vacío'
         ]
     ],
 
@@ -125,16 +131,17 @@ return [
     */
 
     'attributes'           => [
-        'name'                  => 'nombre',
-        'username'              => 'usuario',
-        'email'                 => 'correo electrónico',
-        'first_name'            => 'nombre',
-        'last_name'             => 'apellido',
-        'password'              => 'contraseña',
-        'password_confirmation' => 'confirmación de la contraseña',
-        'city'                  => 'ciudad',
-        'country'               => 'país',
-        'address'               => 'dirección',
+        'name'                  => 'Nombre',
+        'username'              => 'Usuario',
+        'email'                 => 'Email',
+        'first_name'            => 'Nombres',
+        'last_name'             => 'Apellidos',
+        'password'              => 'Contraseña',
+        'password_confirmation' => 'confirmación de la Contraseña',
+        'city'                  => 'Ciudad',
+        'country'               => 'País',
+        'pais'                  => 'País',
+        'address'               => 'Dirección',
         'phone'                 => 'teléfono',
         'mobile'                => 'celular',
         'age'                   => 'edad',
@@ -169,7 +176,9 @@ return [
         'entidad'               => 'Entidad',
         'instancia'             => 'Instancia',
         'area'                  => 'Área',
-        'estado'                => 'Estado'
+        'estado'                => 'Estado',
+        'dni'                   => 'DNI',
+        'ruc'                   => 'RUC'
     ],
 
 ];

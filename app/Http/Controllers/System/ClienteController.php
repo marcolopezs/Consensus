@@ -6,6 +6,8 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Consensus\Http\Controllers\Controller;
 
+use Consensus\Http\Requests\ClienteRequest;
+
 use Consensus\Entities\Cliente;
 use Consensus\Repositories\ClienteRepo;
 
@@ -18,10 +20,6 @@ use Consensus\Repositories\UserProfileRepo;
 use Consensus\Repositories\PaisRepo;
 
 class ClienteController extends Controller {
-
-    protected  $rules = [
-        'cliente' => 'required'
-    ];
 
     protected $ruleUserClient = [
         'usuario' => 'required|unique:users,username',
@@ -70,10 +68,8 @@ class ClienteController extends Controller {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ClienteRequest $request)
     {
-        $this->validate($request, $this->rules);
-
         //VARIABLES
         $pais = $request->input('pais');
 
@@ -86,10 +82,16 @@ class ClienteController extends Controller {
         $this->clienteRepo->saveHistory($row, $request, 'create');
 
         //MENSAJE
-        flash()->success('El registro se agregó satisfactoriamente.');
+        $mensaje = 'El registro se agregó satisfactoriamente.';
 
-        //REDIRECCIONAR A PAGINA PARA VER DATOS
-        return redirect()->route('cliente.index');
+        //AJAX
+        if($request->ajax())
+        {
+            return response()->json([
+                'message' => $mensaje
+            ]);
+        }
+
     }
 
     /**
@@ -98,7 +100,7 @@ class ClienteController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, Request $request)
+    public function edit($id)
     {
         $row = $this->clienteRepo->findOrFail($id);
         $pais = $this->paisRepo->estadoListArray();
@@ -113,13 +115,10 @@ class ClienteController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ClienteRequest $request, $id)
     {
         //BUSCAR ID
         $row = $this->clienteRepo->findOrFail($id);
-
-        //VALIDACION DE DATOS
-        $this->validate($request, $this->rules);
 
         //VARIABLES
         $pais = $request->input('pais');
@@ -132,10 +131,15 @@ class ClienteController extends Controller {
         $this->clienteRepo->saveHistory($row, $request, 'update');
 
         //MENSAJE
-        flash()->success('El registro se actualizó satisfactoriamente.');
+        $mensaje = 'El registro se actualizó satisfactoriamente.';
 
-        //REDIRECCIONAR A PAGINA PARA VER DATOS
-        return redirect()->route('cliente.index');
+        //AJAX
+        if($request->ajax())
+        {
+            return response()->json([
+                'message' => $mensaje
+            ]);
+        }
     }
 
     /**
@@ -144,7 +148,7 @@ class ClienteController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id, Request $request)
+    public function destroy($id, ClienteRequest $request)
     {
         //BUSCAR ID PARA ELIMINAR
         $row = $this->clienteRepo->findOrFail($id);
