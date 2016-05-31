@@ -40,7 +40,7 @@
                                 <td>{{ $row_cliente }}</td>
                                 <td>{{ $row_fecha }}</td>
                                 <td>
-                                    <a href="{{ route('kardex.edit', $row_id) }}" class="btn btn-xs btn-default">
+                                    <a href="{{ route('kardex.show', $row_id) }}" class="btn btn-xs btn-default" data-target="#ajax" data-toggle="modal">
                                         <i class="fa fa-search"></i> Ver </a>
                                 </td>
                             </tr>
@@ -91,7 +91,7 @@
                                 <td>{{ $row_cliente }}</td>
                                 <td>{{ $row_kardex }}</td>
                                 <td>
-                                    <a href="#" class="btn btn-xs btn-default">
+                                    <a href="{{ route('expedient.show', $row_id) }}" class="btn btn-xs btn-default"  data-target="#ajax" data-toggle="modal">
                                         <i class="fa fa-search"></i> Ver </a>
                                 </td>
                             </tr>
@@ -104,6 +104,18 @@
         <!-- End: life time stats -->
     </div>
 
+</div>
+
+<!-- ajax -->
+<div class="modal fade modal-scroll" id="ajax" role="basic" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img src="/assets/global/img/loading-spinner-grey.gif" alt="" class="loading">
+                <span> &nbsp;&nbsp;Cargando... </span>
+            </div>
+        </div>
+    </div>
 </div>
 
 @stop
