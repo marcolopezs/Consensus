@@ -9,4 +9,9 @@ return [
         '1' => 'Activo',
     ],
 
+    'estado_exp' => [
+        '0' => 'Trámite',
+        '1' => 'Terminado',
+    ]
+
 ];
