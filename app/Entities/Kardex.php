@@ -24,6 +24,21 @@ class Kardex extends BaseEntity {
         return $this->hasMany(Expedient::class);
     }
 
+    public function tariff()
+    {
+        return $this->belongsTo(Tariff::class);
+    }
+
+    public function money()
+    {
+        return $this->belongsTo(Money::class);
+    }
+
+    public function service()
+    {
+        return $this->belongsTo(Service::class);
+    }
+
     public function scopeKardex($query, $value)
     {
         if(trim($value) != "")
