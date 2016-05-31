@@ -195,7 +195,9 @@ class KardexController extends Controller {
      */
     public function show($id)
     {
-        //
+        $row = $this->kardexRepo->findOrFail($id);
+
+        return view('system.kardex.show', compact('row'));
     }
 
     /**

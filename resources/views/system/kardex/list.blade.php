@@ -5,10 +5,6 @@
 @stop
 
 @section('contenido_header')
-{{-- UI Modal --}}
-{!! HTML::style('assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css') !!}
-{!! HTML::style('assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css') !!}
-
 {{-- Select2 --}}
 {!! HTML::style('assets/global/plugins/select2/css/select2.min.css') !!}
 {!! HTML::style('assets/global/plugins/select2/css/select2-bootstrap.min.css') !!}
@@ -67,6 +63,7 @@
                                             <i class="fa fa-angle-down"></i>
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
+                                            <li><a href="{{ route('kardex.show', $row_id) }}" data-target="#ajax" data-toggle="modal">Ver registro</a></li>
                                             <li><a href="{{ route('kardex.edit', $row_id) }}">Editar</a></li>
                                             <li><a href="#delete" class="btn-delete">Eliminar</a></li>
                                             <li><div class="divider"></div></li>
@@ -102,6 +99,18 @@
 
     </div>
 
+<!-- ajax -->
+<div class="modal fade bs-modal-lg" id="ajax" role="basic" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img src="/assets/global/img/loading-spinner-grey.gif" alt="" class="loading">
+                <span> &nbsp;&nbsp;Cargando... </span>
+            </div>
+        </div>
+    </div>
+</div>
+
 {!! Form::open(['route' => ['kardex.destroy', ':REGISTER'], 'method' => 'DELETE', 'id' => 'FormDeleteRow']) !!}
 {!! Form::close() !!}
 
@@ -126,11 +135,6 @@
         });
     });
 </script>
-
-{{-- UI Modal --}}
-{!! HTML::script('assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js') !!}
-{!! HTML::script('assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js') !!}
-{!! HTML::script('assets/pages/scripts/ui-extended-modals.js') !!}
 
 <script>
 
