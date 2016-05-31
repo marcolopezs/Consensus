@@ -30,7 +30,7 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                {!! Form::label('ruc', 'RUC', ['class' => 'ontrol-label']) !!}
+                                {!! Form::label('ruc', 'RUC', ['class' => 'control-label']) !!}
                                 {!! Form::text('ruc', null, ['class' => 'form-control']) !!}
                             </div>
                         </div>
@@ -64,14 +64,14 @@
 
                     <div class="row">
 
-                        <div class="col-md-12">
+                        <div class="col-md-8">
                             <div class="form-group">
                                 {!! Form::label('direccion', 'Dirección', ['class' => 'control-label']) !!}
                                 {!! Form::text('direccion', null, ['class' => 'form-control']) !!}
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 {!! Form::label('pais', 'País', ['class' => 'control-label']) !!}
                                 {!! Form::select('pais', ['' => ''] + $pais, null, ['class' => 'form-control select2']) !!}

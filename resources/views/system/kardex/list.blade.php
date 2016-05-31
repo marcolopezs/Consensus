@@ -99,18 +99,6 @@
 
     </div>
 
-<!-- ajax -->
-<div class="modal fade modal-scroll" id="ajax" role="basic" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-body">
-                <img src="/assets/global/img/loading-spinner-grey.gif" alt="" class="loading">
-                <span> &nbsp;&nbsp;Cargando... </span>
-            </div>
-        </div>
-    </div>
-</div>
-
 {!! Form::open(['route' => ['kardex.destroy', ':REGISTER'], 'method' => 'DELETE', 'id' => 'FormDeleteRow']) !!}
 {!! Form::close() !!}
 

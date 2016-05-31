@@ -12,19 +12,25 @@
 
                 <div class="form-body">
 
-                    <div class="form-group">
-                        {!! Form::label('titulo', 'Titulo') !!}
-                        {!! Form::text('titulo', null, ['class' => 'form-control']) !!}
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {!! Form::label('titulo', 'Titulo') !!}
+                            {!! Form::text('titulo', null, ['class' => 'form-control']) !!}
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        {!! Form::label('valor', 'Valor') !!}
-                        {!! Form::text('valor', null, ['class' => 'form-control']) !!}
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {!! Form::label('valor', 'Valor') !!}
+                            {!! Form::text('valor', null, ['class' => 'form-control']) !!}
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        {!! Form::label('simbolo', 'Simbolo') !!}
-                        {!! Form::text('simbolo', null, ['class' => 'form-control']) !!}
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {!! Form::label('simbolo', 'Simbolo') !!}
+                            {!! Form::text('simbolo', null, ['class' => 'form-control']) !!}
+                        </div>
                     </div>
 
                 </div>

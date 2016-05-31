@@ -12,24 +12,32 @@
 
                 <div class="form-body">
 
-                    <div class="form-group">
-                        {!! Form::label('titulo', 'Titulo') !!}
-                        {!! Form::text('titulo', null, ['class' => 'form-control']) !!}
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {!! Form::label('titulo', 'Titulo') !!}
+                            {!! Form::text('titulo', null, ['class' => 'form-control']) !!}
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        {!! Form::label('area', 'Área') !!}
-                        {!! Form::text('area', null, ['class' => 'form-control']) !!}
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {!! Form::label('area', 'Área') !!}
+                            {!! Form::text('area', null, ['class' => 'form-control']) !!}
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        {!! Form::label('funcionario', 'Funcionario') !!}
-                        {!! Form::text('funcionario', null, ['class' => 'form-control']) !!}
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {!! Form::label('funcionario', 'Funcionario') !!}
+                            {!! Form::text('funcionario', null, ['class' => 'form-control']) !!}
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        {!! Form::label('otro', 'Otro') !!}
-                        {!! Form::text('otro', null, ['class' => 'form-control']) !!}
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {!! Form::label('otro', 'Otro') !!}
+                            {!! Form::text('otro', null, ['class' => 'form-control']) !!}
+                        </div>
                     </div>
 
                 </div>
