@@ -120,6 +120,8 @@ class CreateInitialTables extends Migration
 
             $table->text('adicional')->nullable();
 
+            $table->boolean('estado');
+
             $table->nullableTimestamps();
             $table->softDeletes();
         });
@@ -144,6 +146,8 @@ class CreateInitialTables extends Migration
 
             $table->text('direccion');
             $table->integer('pais_id')->unsigned();
+
+            $table->boolean('estado');
             
             $table->nullableTimestamps();
             $table->softDeletes();
@@ -297,7 +301,7 @@ class CreateInitialTables extends Migration
             $table->integer('bienes');
             $table->integer('especial');
             $table->boolean('exito');
-            $table->string('estado_expediente');
+            $table->boolean('estado');
 
             $table->nullableTimestamps();
             $table->softDeletes();
