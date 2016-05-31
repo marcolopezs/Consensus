@@ -8,6 +8,6 @@ class ClienteContacto extends BaseEntity {
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['contacto','dni','ruc','email','telefono','fax','direccion','pais_id'];
+    protected $fillable = ['contacto','dni','ruc','carnet_extranjeria','pasaporte','partidad_nacimiento','otros','email','telefono','fax','direccion','pais_id'];
 
 }

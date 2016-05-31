@@ -6,7 +6,8 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Consensus\Http\Controllers\Controller;
 
-use Consensus\Entities\Cliente;
+use Consensus\Http\Requests\ClienteContactoRequest;
+
 use Consensus\Repositories\ClienteRepo;
 
 use Consensus\Entities\ClienteContacto;
@@ -15,10 +16,6 @@ use Consensus\Repositories\ClienteContactoRepo;
 use Consensus\Repositories\PaisRepo;
 
 class ClienteContactosController extends Controller {
-
-    protected  $rules = [
-        'contacto' => 'required'
-    ];
 
     protected $clienteRepo;
     protected $clienteContactoRepo;
@@ -60,10 +57,8 @@ class ClienteContactosController extends Controller {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store($cliente, Request $request)
+    public function store($cliente, ClienteContactoRequest $request)
     {
-        $this->validate($request, $this->rules);
-
         //VARIABLES
         $pais = $request->input('pais');
 
@@ -77,10 +72,15 @@ class ClienteContactosController extends Controller {
         $this->clienteContactoRepo->saveHistory($row, $request, 'create');
 
         //MENSAJE
-        flash()->success('El registro se agregó satisfactoriamente.');
+        $mensaje = 'El registro se agregó satisfactoriamente.';
 
-        //REDIRECCIONAR A PAGINA PARA VER DATOS
-        return redirect()->route('cliente.contactos.index', $cliente);
+        //AJAX
+        if($request->ajax())
+        {
+            return response()->json([
+                'message' => $mensaje
+            ]);
+        }
     }
 
     /**
@@ -105,13 +105,10 @@ class ClienteContactosController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($cliente, $id, Request $request)
+    public function update($cliente, $id, ClienteContactoRequest $request)
     {
         //BUSCAR ID
         $row = $this->clienteContactoRepo->findOrFail($id);
-
-        //VALIDACION DE DATOS
-        $this->validate($request, $this->rules);
 
         //VARIABLES
         $pais = $request->input('pais');
@@ -124,10 +121,15 @@ class ClienteContactosController extends Controller {
         $this->clienteContactoRepo->saveHistory($row, $request, 'update');
 
         //MENSAJE
-        flash()->success('El registro se actualizó satisfactoriamente.');
+        $mensaje = 'El registro se actualizó satisfactoriamente.';
 
-        //REDIRECCIONAR A PAGINA PARA VER DATOS
-        return redirect()->route('cliente.contactos.index', $cliente);
+        //AJAX
+        if($request->ajax())
+        {
+            return response()->json([
+                'message' => $mensaje
+            ]);
+        }
     }
 
     /**

@@ -5,9 +5,9 @@
 @stop
 
 @section('contenido_header')
-{{-- UI Modal --}}
-{!! HTML::style('assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css') !!}
-{!! HTML::style('assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css') !!}
+{{-- Select2 --}}
+{!! HTML::style('assets/global/plugins/select2/css/select2.min.css') !!}
+{!! HTML::style('assets/global/plugins/select2/css/select2-bootstrap.min.css') !!}
 @stop
 
 @section('contenido_body')
@@ -27,7 +27,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="btn-group">
-                                    <a class="btn sbold green" href="{{ route('cliente.contactos.create', $prin->id) }}"> Agregar registro
+                                    <a class="btn sbold green" href="{{ route('cliente.contactos.create', $prin->id) }}" data-target="#ajax" data-toggle="modal"> Agregar registro
                                         <i class="fa fa-plus"></i>
                                     </a>
                                 </div>
@@ -59,7 +59,7 @@
                                             <i class="fa fa-angle-down"></i>
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
-                                            <li><a href="{{ route('cliente.contactos.edit', [$prin->id, $row_id]) }}">Editar</a></li>
+                                            <li><a href="{{ route('cliente.contactos.edit', [$prin->id, $row_id]) }}" data-target="#ajax" data-toggle="modal">Editar</a></li>
                                             <li><a href="#delete" class="btn-delete">Eliminar</a></li>
                                         </ul>
                                     </div>
@@ -103,14 +103,21 @@
 
 @section('contenido_footer')
 
-{{-- UI Modal --}}
-{!! HTML::script('assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js') !!}
-{!! HTML::script('assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js') !!}
-{!! HTML::script('assets/pages/scripts/ui-extended-modals.js') !!}
+{{-- Select2 --}}
+{!! HTML::script('assets/global/plugins/select2/js/select2.full.min.js') !!}
+{!! HTML::script('assets/global/plugins/select2/js/i18n/es.js') !!}
 
 <script>
 
     $(document).on("ready", function () {
+
+        $("#ajax").on("loaded.bs.modal", function() {
+            var placeholder = "Seleccionar";
+
+            $('.select2').select2({
+                placeholder: placeholder
+            });
+        });
 
         $('.modal-view-delete, #mensajeAjax').hide();
 
