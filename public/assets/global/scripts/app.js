@@ -30,6 +30,16 @@ var App = function() {
         'yellow': '#F8CB00'
     };
 
+    // Borrar datos de Modal Ajax y agregar Loading...
+    var modalLoading = function() {
+        carga = '<div class="modal-body"><img src="/assets/global/img/loading-spinner-grey.gif" alt="" class="loading"><span> &nbsp;&nbsp;Cargando... </span></div>';
+
+        $("#ajax").on("hide.bs.modal", function() {
+            $("#ajax .modal-content").empty().html(carga);
+        });
+
+    };
+
     // initializes main settings
     var handleInit = function() {
 
@@ -630,6 +640,8 @@ var App = function() {
             handleCounterup(); // handle counterup instances
             clickRadio();
 
+            modalLoading();
+
             //Handle group element heights
             this.addResizeHandler(handleHeight); // handle auto calculating height on window resize
 
@@ -1054,6 +1066,6 @@ var App = function() {
 
 }();
 
-jQuery(document).ready(function() {    
-   App.init(); // init metronic core componets
+jQuery(document).ready(function() {
+    App.init(); // init metronic core componets
 });
