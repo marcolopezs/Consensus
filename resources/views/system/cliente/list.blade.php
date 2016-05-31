@@ -5,6 +5,9 @@
 @stop
 
 @section('contenido_header')
+{{-- Select2 --}}
+{!! HTML::style('assets/global/plugins/select2/css/select2.min.css') !!}
+{!! HTML::style('assets/global/plugins/select2/css/select2-bootstrap.min.css') !!}
 @stop
 
 @section('contenido_body')
@@ -123,9 +126,21 @@
 
 @section('contenido_footer')
 
+{{-- Select2 --}}
+{!! HTML::script('assets/global/plugins/select2/js/select2.full.min.js') !!}
+{!! HTML::script('assets/global/plugins/select2/js/i18n/es.js') !!}
+
 <script>
 
     $(document).on("ready", function () {
+
+        $("#ajax").on("loaded.bs.modal", function() {
+            var placeholder = "Seleccionar";
+
+            $('.select2').select2({
+                placeholder: placeholder
+            });
+        });
 
         $('.modal-view-delete, #mensajeAjax').hide();
 
