@@ -167,6 +167,18 @@
     <!-- END INNER FOOTER -->
     <!-- END FOOTER -->
 
+    <!-- ajax -->
+    <div class="modal fade modal-scroll" id="ajax" role="basic" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img src="/assets/global/img/loading-spinner-grey.gif" alt="" class="loading">
+                    <span> &nbsp;&nbsp;Cargando... </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- BEGIN CORE PLUGINS -->
     {!! HTML::script('https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js') !!}
     {!! HTML::script('https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js') !!}

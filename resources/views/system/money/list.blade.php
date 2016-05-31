@@ -5,9 +5,6 @@
 @stop
 
 @section('contenido_header')
-{{-- UI Modal --}}
-{!! HTML::style('assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css') !!}
-{!! HTML::style('assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css') !!}
 @stop
 
 @section('contenido_body')
@@ -27,7 +24,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="btn-group">
-                                    <a class="btn sbold green modal-view" data-url="{{ route('money.create') }}" data-toggle="modal"> Agregar registro
+                                    <a class="btn sbold green" href="{{ route('money.create') }}" data-target="#ajax" data-toggle="modal"> Agregar registro
                                         <i class="fa fa-plus"></i>
                                     </a>
                                 </div>
@@ -62,7 +59,7 @@
                                             <i class="fa fa-angle-down"></i>
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
-                                            <li><a class="modal-view" data-url="{{ route('money.edit', $row_id) }}" data-toggle="modal">Editar</a></li>
+                                            <li><a href="{{ route('money.edit', $row_id) }}" data-target="#ajax" data-toggle="modal">Editar</a></li>
                                             <li><a href="#delete" class="btn-delete">Eliminar</a></li>
                                             <li><div class="divider"></div></li>
                                             <li><a href="javascript:;">Historial</a></li>
@@ -96,9 +93,6 @@
 
     </div>
 
-<!-- ajax -->
-<div id="ajax-modal" class="modal fade" tabindex="-1"></div>
-
 {!! Form::open(['route' => ['money.destroy', ':REGISTER'], 'method' => 'DELETE', 'id' => 'FormDeleteRow']) !!}
 {!! Form::close() !!}
 
@@ -110,12 +104,6 @@
 @stop
 
 @section('contenido_footer')
-
-{{-- UI Modal --}}
-{!! HTML::script('assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js') !!}
-{!! HTML::script('assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js') !!}
-{!! HTML::script('assets/pages/scripts/ui-extended-modals.js') !!}
-
 <script>
 
     $(document).on("ready", function () {
@@ -161,5 +149,4 @@
     });
 
 </script>
-
 @stop
