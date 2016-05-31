@@ -100,7 +100,7 @@
     </div>
 
 <!-- ajax -->
-<div class="modal fade bs-modal-lg" id="ajax" role="basic" aria-hidden="true">
+<div class="modal fade modal-scroll" id="ajax" role="basic" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-body">
