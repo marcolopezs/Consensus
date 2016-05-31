@@ -76,7 +76,7 @@ class CreateInitialTables extends Migration
         {
             $table->increments('id');
 
-            $table->integer('historyble_id');
+            $table->integer('historyble_id')->unsigned();
             $table->string('historyble_type');
 
             $table->integer('user_id')->nullable()->default(NULL);
@@ -98,8 +98,12 @@ class CreateInitialTables extends Migration
 
             $table->string('cliente');
 
-            $table->string('ruc', 15);
-            $table->string('dni', 15);
+            $table->string('dni', 8);
+            $table->string('ruc', 11);
+            $table->string('carnet_extranjeria', 12);
+            $table->string('pasaporte', 12);
+            $table->string('partida_nacimiento', 15);
+            $table->string('otros', 15);
 
             $table->string('email');
 
@@ -107,9 +111,9 @@ class CreateInitialTables extends Migration
             $table->string('fax', 20);
 
             $table->text('direccion');
-            $table->integer('pais_id');
+            $table->integer('pais_id')->unsigned();
 
-            $table->integer('tariff_id');
+            $table->integer('tariff_id')->unsigned();
 
             $table->integer('imp_clie')->nullable();
             $table->integer('trelclie')->nullable();
@@ -124,19 +128,23 @@ class CreateInitialTables extends Migration
         {
             $table->increments('id');
 
-            $table->integer('cliente_id');
+            $table->integer('cliente_id')->unsigned();
 
             $table->string('contacto');
-            $table->string('dni', 15);
-            $table->string('ruc', 15);
+            $table->string('dni', 8);
+            $table->string('ruc', 11);
+            $table->string('carnet_extranjeria', 12);
+            $table->string('pasaporte', 12);
+            $table->string('partida_nacimiento', 15);
+            $table->string('otros', 15);
 
             $table->string('email');
             $table->string('telefono', 25);
             $table->string('fax', 25);
 
             $table->text('direccion');
-            $table->integer('pais_id');
-
+            $table->integer('pais_id')->unsigned();
+            
             $table->nullableTimestamps();
             $table->softDeletes();
         });
@@ -145,7 +153,7 @@ class CreateInitialTables extends Migration
         {
             $table->increments('id');
 
-            $table->integer('cliente_id');
+            $table->integer('cliente_id')->unsigned();
 
             $table->string('titulo');
             $table->text('descripcion');
@@ -215,7 +223,7 @@ class CreateInitialTables extends Migration
             $table->integer('honorario_fijo')->nullable()->default('0');
             $table->integer('hora_adicional')->nullable()->default('0');
 
-            $table->integer('service_id');
+            $table->integer('service_id')->unsigned();
             $table->integer('numero_dias')->nullable()->default('0');
             $table->date('fecha_limite')->nullable();
 
@@ -224,8 +232,6 @@ class CreateInitialTables extends Migration
             $table->text('concepto');
 
             $table->boolean('estado');
-
-            $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade')->onUpdate('cascade');
 
             $table->nullableTimestamps();
             $table->softDeletes();
@@ -261,12 +267,12 @@ class CreateInitialTables extends Migration
 
             $table->string('titulo');
 
-            $table->integer('cliente_id');
-            $table->integer('kardex_id');
+            $table->integer('cliente_id')->unsigned();
+            $table->integer('kardex_id')->unsigned();
 
-            $table->integer('matter_id');
-            $table->integer('entity_id');
-            $table->integer('instance_id');
+            $table->integer('matter_id')->unsigned();
+            $table->integer('entity_id')->unsigned();
+            $table->integer('instance_id')->unsigned();
             $table->string('encargado');
 
             $table->boolean('poder');
@@ -274,19 +280,19 @@ class CreateInitialTables extends Migration
             $table->boolean('vencimiento');
             $table->date('fecha_vencimiento');
 
-            $table->integer('area_id');
+            $table->integer('area_id')->unsigned();
             $table->string('jefe_area');
 
             $table->string('abogado');
             $table->string('asistente');
 
-            $table->integer('state_id');
+            $table->integer('state_id')->unsigned();
 
             $table->date('fecha_inicio');
             $table->date('fecha_fin');
 
             $table->double('valor', 10, 2);
-            $table->integer('money_id');
+            $table->integer('money_id')->unsigned();
 
             $table->integer('bienes');
             $table->integer('especial');
@@ -457,9 +463,9 @@ class CreateInitialTables extends Migration
         Schema::drop('kardex_documentos');
         Schema::drop('kardex_types');
 
-        Schema::drop('clientes');
-        Schema::drop('cliente_contactos');
         Schema::drop('cliente_documentos');
+        Schema::drop('cliente_contactos');
+        Schema::drop('clientes');
 
         Schema::drop('abogados');
         Schema::drop('money');

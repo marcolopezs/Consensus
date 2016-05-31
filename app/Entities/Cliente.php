@@ -8,7 +8,7 @@ class Cliente extends BaseEntity {
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['cliente','dni','ruc','email','telefono','fax','direccion','pais_id'];
+    protected $fillable = ['cliente','dni','ruc','carnet_extranjeria','pasaporte','partidad_nacimiento','otros','email','telefono','fax','direccion','pais_id'];
 
     public function kardexs()
     {
@@ -18,6 +18,11 @@ class Cliente extends BaseEntity {
     public function expedientes()
     {
         return $this->hasMany(Expedient::class);
+    }
+
+    public function contactos()
+    {
+        return $this->hasMany(ClienteContacto::class);
     }
 
 }

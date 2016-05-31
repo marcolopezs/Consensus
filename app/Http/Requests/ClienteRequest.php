@@ -46,8 +46,12 @@ class ClienteRequest extends Request
             {
                 return [
                     'cliente' => 'required|unique:clientes,cliente',
-                    'dni' => 'required_without:ruc|numeric|unique:clientes,dni',
-                    'ruc' => 'required_without:dni|numeric|unique:clientes,ruc',
+                    'dni' => 'required_without_all:ruc,carnet_extranjeria,pasaporte,partida_nacimiento,otros|numeric|unique:clientes,dni',
+                    'ruc' => 'required_without_all:dni,carnet_extranjeria,pasaporte,partida_nacimiento,otros|numeric|unique:clientes,ruc',
+                    'carnet_extranjeria' => 'required_without_all:dni,ruc,pasaporte,partida_nacimiento,otros|unique:clientes,carnet_extranjeria',
+                    'pasaporte' => 'required_without_all:dni,ruc,carnet_extranjeria,partida_nacimiento,otros|unique:clientes,pasaporte',
+                    'partida_nacimiento' => 'required_without_all:dni,ruc,carnet_extranjeria,pasaporte,otros|unique:clientes,partida_nacimiento',
+                    'otros' => 'required_without_all:dni,ruc,carnet_extranjeria,pasaporte,partida_nacimiento|unique:clientes,otros',
                     'email' => 'required|email|unique:clientes,email',
                     'telefono' => 'string',
                     'fax' => 'string',
@@ -60,8 +64,12 @@ class ClienteRequest extends Request
             {
                 return [
                     'cliente' => 'required|unique:clientes,cliente,'.$this->route->getParameter('cliente'),
-                    'dni' => 'required_without:ruc|numeric|unique:clientes,dni,'.$this->route->getParameter('cliente'),
-                    'ruc' => 'required_without:dni|numeric|unique:clientes,ruc,'.$this->route->getParameter('cliente'),
+                    'dni' => 'required_without_all:ruc,carnet_extranjeria,pasaporte,partida_nacimiento,otros|numeric|unique:clientes,dni,'.$this->route->getParameter('cliente'),
+                    'ruc' => 'required_without_all:dni,carnet_extranjeria,pasaporte,partida_nacimiento,otros|numeric|unique:clientes,ruc,'.$this->route->getParameter('cliente'),
+                    'carnet_extranjeria' => 'required_without_all:dni,ruc,pasaporte,partida_nacimiento,otros|unique:clientes,carnet_extranjeria,'.$this->route->getParameter('cliente'),
+                    'pasaporte' => 'required_without_all:dni,ruc,carnet_extranjeria,partida_nacimiento,otros|unique:clientes,pasaporte,'.$this->route->getParameter('cliente'),
+                    'partida_nacimiento' => 'required_without_all:dni,ruc,carnet_extranjeria,pasaporte,otros|unique:clientes,partida_nacimiento,'.$this->route->getParameter('cliente'),
+                    'otros' => 'required_without_all:dni,ruc,carnet_extranjeria,pasaporte,partida_nacimiento|unique:clientes,otros,'.$this->route->getParameter('cliente'),
                     'email' => 'required|email|unique:clientes,email,'.$this->route->getParameter('cliente'),
                     'telefono' => 'string',
                     'fax' => 'string',

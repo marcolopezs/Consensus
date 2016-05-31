@@ -67,7 +67,7 @@ return [
     'required_with'        => 'El campo :attribute es obligatorio cuando :values está presente.',
     'required_with_all'    => 'El campo :attribute es obligatorio cuando :values está presente.',
     'required_without'     => 'El campo :attribute es obligatorio cuando :values no está presente.',
-    'required_without_all' => 'El campo :attribute es obligatorio cuando ninguno de :values estén presentes.',
+    'required_without_all' => 'El campo :attribute es obligatorio cuando :values estén vacios.',
     'same'                 => ':attribute y :other deben coincidir.',
     'size'                 => [
         'numeric' => 'El tamaño de :attribute debe ser :size.',
@@ -110,12 +110,6 @@ return [
         ],
         'fecha_vencimiento' => [
             'required_if' => 'El campo Fecha de Vencimiento es obligatorio'
-        ],
-        'dni' => [
-            'required_without' => 'El campo DNI es obligatorio en caso el campo RUC este vacío'
-        ],
-        'ruc' => [
-            'required_without' => 'El campo RUC es obligatorio en caso el campo DNI este vacío'
         ]
     ],
 
@@ -179,7 +173,13 @@ return [
         'estado'                => 'Estado',
         'dni'                   => 'DNI',
         'ruc'                   => 'RUC',
-        'abrev'                 => 'Letra'
+        'carnet_extranjeria'    => 'Carnet de Extranjería',
+        'pasaporte'             => 'Pasaporte',
+        'partida_nacimiento'    => 'Partida Nacimiento',
+        'otros'                 => 'Otros',
+        'abrev'                 => 'Letra',
+        'direccion'             => 'Dirección',
+        'contacto'              => 'Contacto'
     ],
 
 ];
