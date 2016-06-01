@@ -189,6 +189,17 @@
 
                                 <div class="col-md-3">
                                     <div class="form-group">
+                                        {!! Form::label('estado', 'Estado', ['class' => 'control-label']) !!}
+                                        {!! Form::select('estado', ['' => ''] + $estado, null, ['class' => 'form-control select2', 'required']) !!}
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
                                         {!! Form::label('fecha_inicio', 'Fecha Inicio', ['class' => 'control-label']) !!}
                                         <div class="input-group input-medium date date-picker" data-date-format="dd/mm/yyyy" data-date-viewmode="years">
                                             {!! Form::text('fecha_inicio', null, ['class' => 'form-control']) !!}
@@ -207,10 +218,6 @@
                                     </div>
                                 </div>
 
-                            </div>
-
-                            <div class="row">
-
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         {!! Form::label('valor', 'Valor', ['class' => 'control-label']) !!}
@@ -225,6 +232,10 @@
                                     </div>
                                 </div>
 
+                            </div>
+
+                            <div class="row">
+
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         {!! Form::label('bienes', 'Bienes', ['class' => 'control-label']) !!}
@@ -234,14 +245,10 @@
 
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        {!! Form::label('especial', 'Sit. Especial', ['class' => 'control-label']) !!}
+                                        {!! Form::label('especial', 'Situación Especial', ['class' => 'control-label']) !!}
                                         {!! Form::select('especial', ['' => 'Seleccionar', '1' => 'Hipoteca', '2' => 'Embargo', '3' => 'Garantía', '4' => 'Otros'] , null , ['class' => 'form-control select2']) !!}
                                     </div>
                                 </div>
-
-                            </div>
-
-                            <div class="row">
 
                                 <div class="col-md-3">
                                     <div class="form-group">
@@ -252,8 +259,8 @@
 
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        {!! Form::label('estado', 'Estado', ['class' => 'control-label']) !!}
-                                        {!! Form::select('estado', ['' => ''] + $estado, null, ['class' => 'form-control select2', 'required']) !!}
+                                        {!! Form::label('estado', 'Estado Expediente', ['class' => 'control-label']) !!}
+                                        {!! Form::select('estado', ['' => 'Seleccionar', '1' => 'Trámite', '2' => 'Terminado'] , null , ['class' => 'form-control select2']) !!}
                                     </div>
                                 </div>
 
