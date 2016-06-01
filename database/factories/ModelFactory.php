@@ -45,7 +45,8 @@ $factory->define(\Consensus\Entities\Cliente::class, function ($faker) use ($fac
         'fax' => $faker->phoneNumber,
         'direccion' => $faker->address,
         'pais_id' => \Consensus\Entities\Pais::all()->random()->id,
-        'tariff_id' => \Consensus\Entities\Tariff::all()->random()->id
+        'tariff_id' => \Consensus\Entities\Tariff::all()->random()->id,
+        'estado' => $faker->randomElement([0,1])
     ];
 });
 
@@ -64,7 +65,8 @@ $factory->define(\Consensus\Entities\ClienteContacto::class, function ($faker) u
         'telefono' => $faker->phoneNumber,
         'fax' => $faker->phoneNumber,
         'direccion' => $faker->address,
-        'pais_id' => \Consensus\Entities\Pais::all()->random()->id
+        'pais_id' => \Consensus\Entities\Pais::all()->random()->id,
+        'estado' => $faker->randomElement([0,1])
     ];
 });
 
@@ -102,6 +104,14 @@ $factory->define(\Consensus\Entities\Expedient::class, function ($faker) use ($f
     return [
         'titulo' => $faker->sentence(),
         'cliente_id' => $cliente->id,
-        'kardex_id' => $kardex
+        'kardex_id' => $kardex,
+        'matter_id' => \Consensus\Entities\Matter::all()->random()->id,
+        'entity_id' => \Consensus\Entities\Entity::all()->random()->id,
+        'instance_id' => \Consensus\Entities\Instance::all()->random()->id,
+        'encargado' => $faker->name,
+        'area_id' => \Consensus\Entities\Area::all()->random()->id,
+        'jefe_area' => $faker->name,
+        'state_id' => \Consensus\Entities\State::all()->random()->id,
+        'estado' => $faker->randomElement([0,1])
     ];
 });
