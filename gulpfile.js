@@ -15,4 +15,6 @@ require('laravel-elixir-stylus');
 elixir(function(mix) {
     mix.stylus('custom.styl', 'public/assets/layouts/layout3/css');
     mix.stylus('layout.styl', 'public/assets/layouts/layout3/css');
+
+    mix.scripts(['js-delete.js'], 'public/js/js-delete.js');
 });
