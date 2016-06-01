@@ -3,6 +3,7 @@
     <h4 class="modal-title">Crear nuevo registro</h4>
 </div>
 <div class="modal-body">
+
     <div class="row">
         <div class="col-md-12">
 
@@ -28,14 +29,15 @@
 
                 </div>
 
-                <div class="progress progress-striped active">
-                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
-                </div>
-
             {!! Form::close() !!}
 
         </div>
     </div>
+
+    <div class="progress progress-striped active" style="display: none;">
+        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+    </div>
+
 </div>
 <div class="modal-footer">
     <a class="btn default" id="formCreateClose" data-dismiss="modal">Cerrar</a>
@@ -43,8 +45,6 @@
 </div>
 
 <script>
-
-    $('.progress').hide();
 
     $("#formCreateSubmit").on("click", function(e){
 
@@ -54,40 +54,42 @@
         var url = form.attr('action');
         var data = form.serialize();
 
-        $('.progress').show();
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: data,
+            beforeSend: function() { $('.progress').show(); },
+            complete: function() { $('.progress').hide(); },
+            success: function(result) {
+                successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>El registro se agregó satisfactoriamente.</div>';
+                $(".form-content").html(successHtml);
+                $(".select2-selection__rendered").empty();
+                form[0].reset();
 
-        $.post(url, data, function(result){
-            $('.progress').hide();
-            successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>'+result.message+'</div>';
-            $(".form-content").html(successHtml);
-            form[0].reset();
-        }).fail(function(result){
-            $('.progress').hide();
-            console.log(result);
+                var html = '<tr class="odd gradeX" data-id="'+result.id+'" data-title="'+result.titulo+'">'+
+                                '<td>'+result.titulo+'</td>'+
+                                '<td>'+result.email+'</td>'+
+                                '<td class="text-center"></td>';
 
-            if(result.status === 422){
-
-                var errors = result.responseJSON;
-
-                errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';
-                $.each( errors, function( key, value ) {
-                    errorsHtml += '<li>' + value[0] + '</li>';
-                });
-                errorsHtml += '</ul></di>';
-
-                $('.form-content').html(errorsHtml);
-
+                $('.table tbody tr:first').before(html);
+            },
+            error: function(result) {
+                if(result.status === 422){
+                    var errors = result.responseJSON;
+                    errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';
+                    $.each( errors, function( key, value ) {
+                        errorsHtml += '<li>' + value[0] + '</li>';
+                    });
+                    errorsHtml += '</ul></di>';
+                    $('.form-content').html(errorsHtml);
+                }else{
+                    errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';
+                    errorsHtml += '<li>Se ha producido un error. Intentelo de nuevo.</li>';
+                    errorsHtml += '</ul></div>';
+                    $('.form-content').html(errorsHtml);
+                }
             }
-
         });
-
-    });
-
-    $("#formCreateClose").on("click", function (e) {
-        e.preventDefault();
-
-        $("#ajax-modal").modal('hide');
-        location.reload();
 
     });
 

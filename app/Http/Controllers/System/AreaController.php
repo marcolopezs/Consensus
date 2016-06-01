@@ -52,7 +52,7 @@ class AreaController extends Controller {
 
         //GUARDAR DATOS
         $row = new Area($request->all());
-        $this->areaRepo->create($row, $request->all());
+        $save = $this->areaRepo->create($row, $request->all());
 
         //GUARDAR HISTORIAL
         $this->areaRepo->saveHistory($row, $request, 'create');
@@ -63,9 +63,7 @@ class AreaController extends Controller {
         //AJAX
         if($request->ajax())
         {
-            return response()->json([
-                'message' => $mensaje
-            ]);
+            return $save;
         }
     }
 
