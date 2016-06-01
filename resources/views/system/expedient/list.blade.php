@@ -41,7 +41,7 @@
 
                     {!! Form::model(Request::all(), ['route' => 'expedient.index', 'method' => 'GET']) !!}
 
-                    <table class="table table-striped table-bordered table-hover order-column">
+                    <table class="table table-bordered table-hover order-column">
 
                         @include('system.expedient.partials.search')
 
@@ -52,11 +52,17 @@
                             $row_titulo = $item->titulo;
                             $row_cliente = $item->cliente->cliente;
                             $row_kardex = $item->kardex->kardex;
+                            $row_estado = $item->estado;
                             /*--}}
-                            <tr class="odd gradeX" data-id="{{ $row_id }}" data-title="{{ $row_titulo }}">
+                            <tr class="{!! $row_estado ? 'alert-success' : '' !!}" data-id="{{ $row_id }}" data-title="{{ $row_titulo }}">
                                 <td>{{ $row_titulo }}</td>
                                 <td>{{ $row_cliente }}</td>
                                 <td>{{ $row_kardex }}</td>
+                                <td class="text-center">
+                                    <a id="estado-{{ $row_id }}" href="#" data-method="put" class="btn-oferta">
+                                        {!! $row_estado ? '<span class="label label-success">'.trans('system.estado_exp.'.$row_estado).'</span>' : '<span class="label label-default">'.trans('system.estado_exp.'.$row_estado).'</span>' !!}
+                                    </a>
+                                </td>
                                 <td class="text-center">
                                     <div class="btn-group">
                                         <button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Acciones
@@ -65,7 +71,6 @@
                                         <ul class="dropdown-menu" role="menu">
                                             <li><a class="modal-view" data-url="{{ route('expedient.edit', $row_id) }}" data-toggle="modal">Editar</a></li>
                                             <li><a href="#delete" class="btn-delete">Eliminar</a></li>
-                                            <li><div class="divider"></div></li>
                                             <li><a href="javascript:;">Historial</a></li>
                                         </ul>
                                     </div>
