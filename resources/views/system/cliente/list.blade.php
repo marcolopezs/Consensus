@@ -49,6 +49,7 @@
                             $row_dni = $item->dni;
                             $row_ruc = $item->ruc;
                             $row_email = $item->email;
+                            $row_estado = $item->estado;
                             /*--}}
                             <tr class="odd gradeX" data-id="{{ $row_id }}" data-title="{{ $row_cliente }}">
                                 <td>{{ $row_cliente }}</td>
@@ -56,20 +57,20 @@
                                 <td>{{ $row_ruc }}</td>
                                 <td>{{ $row_email }}</td>
                                 <td class="text-center">
+                                    <a id="estado-{{ $row_id }}" href="#" data-method="put" class="btn-oferta">
+                                        {!! $row_estado ? '<span class="label label-success">'.trans('system.estado.'.$row_estado).'</span>' : '<span class="label label-default">'.trans('system.estado.'.$row_estado).'</span>' !!}
+                                    </a>
+                                </td>
+                                <td class="text-center">
                                     <div class="btn-group">
                                         <button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Acciones
                                             <i class="fa fa-angle-down"></i>
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
                                             <li><a href="{{ route('cliente.edit', $row_id) }}" data-target="#ajax" data-toggle="modal">Editar</a></li>
-                                            <li><a href="#delete" class="btn-delete">Eliminar</a></li>
-                                            <li><div class="divider"></div></li>
                                             <li><a href="{{ route('cliente.contactos.index', $row_id) }}">Contacto</a></li>
-                                            <li><div class="divider"></div></li>
                                             <li><a href="{{ route('cliente.documentos.index', $row_id) }}">Documentos</a></li>
-                                            <li><div class="divider"></div></li>
                                             <li><a href="{{ route('cliente.user.get', $row_id) }}">Crear usuario</a></li>
-                                            <li><div class="divider"></div></li>
                                             <li><a href="javascript:;">Historial</a></li>
                                         </ul>
                                     </div>
