@@ -1,6 +1,4 @@
-<?php
-
-namespace Consensus\Http\Requests;
+<?php namespace Consensus\Http\Requests;
 
 use Consensus\Http\Requests\Request;
 use Illuminate\Routing\Route;
