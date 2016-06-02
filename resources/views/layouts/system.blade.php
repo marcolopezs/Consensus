@@ -54,6 +54,40 @@
                 <div class="top-menu">
                     <ul class="nav navbar-nav pull-right">
 
+                        <li class="dropdown dropdown-extended dropdown-notification dropdown-dark" id="header_notification_bar">
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                <i class="icon-bell"></i>
+                                <span class="badge badge-default">7</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="external">
+                                    <h3>You have<strong>12 pending</strong> tasks</h3>
+                                    <a href="#">view all</a>
+                                </li>
+                                <li>
+                                    <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
+                                        <li>
+                                            <a href="javascript:;">
+                                                <span class="time">just now</span>
+                                                    <span class="details">New user registered. </span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;">
+                                                <span class="time">3 mins</span>
+                                                    <span class="details">Server #12 overloaded. </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- END NOTIFICATION DROPDOWN -->
+
+                        <li class="droddown dropdown-separator">
+                            <span class="separator"></span>
+                        </li>
+
                         <!-- BEGIN USER LOGIN DROPDOWN -->
                         <li class="dropdown dropdown-user dropdown-dark">
                             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
@@ -61,9 +95,7 @@
                                 <span class="username username-hide-mobile">{{ Auth::user()->nombre_completo }}</span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-default">
-                                <li><a href="page_user_profile_1.html"><i class="icon-user"></i> Mi perfil</a></li>
-                                <li><a href="app_inbox.html"><i class="icon-envelope-open"></i> Mis mensajes<span class="badge badge-danger"> 3 </span></a></li>
-                                <li><a href="app_todo_2.html"><i class="icon-rocket"></i> Mis tareas<span class="badge badge-success"> 7 </span></a></li>
+                                <li><a href="{{ route('users.perfil') }}"><i class="icon-user"></i> Mi perfil</a></li>
                                 <li class="divider"> </li>
                                 <li><a href="{{ route('logout') }}"><i class="icon-key"></i>Cerrar sesión</a></li>
                             </ul>
@@ -117,6 +149,7 @@
                                 </li>
                             </ul>
                         </li>
+                        <li {!! (Request::is('users*') ? 'class="active"' : '') !!}><a href="{{ route('users.index') }}">Usuarios</a></li>
                     </ul>
                 </div>
                 <!-- END MEGA MENU -->
@@ -168,7 +201,7 @@
     <!-- END FOOTER -->
 
     <!-- ajax -->
-    <div class="modal fade modal-scroll" id="ajax" role="basic" aria-hidden="true">
+    <div class="modal fade modal-scroll" id="ajax" role="basic" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-body">
