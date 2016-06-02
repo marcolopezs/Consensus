@@ -1,5 +1,19 @@
 <?php
 
+//TIPO DE USUARIO
+function tipo_usuario($usuario)
+{
+    if( $usuario->admin == 1 ){
+        return $tipo = 'Administrador';
+    }else if( $usuario->usuario == 1 ){
+        return $tipo = 'Usuario';
+    }else if( $usuario->cliente_id > 0 ){
+        return $tipo = 'Cliente';
+    }else if( $usuario->abogado_id > 0 ){
+        return $tipo = 'Abogado';
+    }
+}
+
 //FECHA
 function fecha($fecha)
 {
