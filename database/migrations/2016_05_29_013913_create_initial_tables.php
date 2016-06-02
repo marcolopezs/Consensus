@@ -23,8 +23,10 @@ class CreateInitialTables extends Migration
             $table->string('password', 60);
             $table->boolean('active');
 
+            $table->boolean('admin')->nullable();
+            $table->boolean('usuario')->nullable();
             $table->integer('cliente_id')->nullable()->unsigned();
-            $table->boolean('abogado_id')->nullable();
+            $table->integer('abogado_id')->nullable()->unsigned();
 
             $table->string('code', 60)->nullable();
             $table->rememberToken();
@@ -39,6 +41,9 @@ class CreateInitialTables extends Migration
             $table->string('nombre');
             $table->string('apellidos');
             $table->string('email')->unique();
+
+            $table->string('imagen');
+            $table->string('imagen_carpeta');
 
             $table->integer('user_id')->unsigned();
 
@@ -113,12 +118,8 @@ class CreateInitialTables extends Migration
             $table->text('direccion');
             $table->integer('pais_id')->unsigned();
 
-            $table->integer('tariff_id')->unsigned();
-
-            $table->integer('imp_clie')->nullable();
-            $table->integer('trelclie')->nullable();
-
-            $table->text('adicional')->nullable();
+            $table->string('imagen');
+            $table->string('imagen_carpeta');
 
             $table->boolean('estado');
 
@@ -175,7 +176,25 @@ class CreateInitialTables extends Migration
             $table->increments('id');
 
             $table->string('nombre');
+
+            $table->string('dni', 8);
+            $table->string('ruc', 11);
+            $table->string('carnet_extranjeria', 12);
+            $table->string('pasaporte', 12);
+            $table->string('partida_nacimiento', 15);
+            $table->string('otros', 15);
+
             $table->string('email');
+
+            $table->string('telefono', 25);
+            $table->string('fax', 20);
+
+            $table->text('direccion');
+            $table->integer('pais_id')->unsigned();
+
+            $table->string('imagen');
+            $table->string('imagen_carpeta');
+
             $table->boolean('estado');
 
             $table->nullableTimestamps();
