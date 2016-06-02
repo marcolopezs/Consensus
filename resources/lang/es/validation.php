@@ -131,7 +131,7 @@ return [
         'first_name'            => 'Nombres',
         'last_name'             => 'Apellidos',
         'password'              => 'Contraseña',
-        'password_confirmation' => 'confirmación de la Contraseña',
+        'password_confirmation' => 'confirmar Contraseña',
         'city'                  => 'Ciudad',
         'country'               => 'País',
         'pais'                  => 'País',
@@ -179,7 +179,9 @@ return [
         'otros'                 => 'Otros',
         'abrev'                 => 'Letra',
         'direccion'             => 'Dirección',
-        'contacto'              => 'Contacto'
+        'contacto'              => 'Contacto',
+        'nombre'                => 'Nombre',
+        'apellidos'             => 'Apellidos'
     ],
 
 ];
