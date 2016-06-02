@@ -197,6 +197,22 @@ class KardexController extends Controller {
     {
         $row = $this->kardexRepo->findOrFail($id);
 
+        $fecha_fin = Carbon::createFromFormat('Y-m-d', $row->fecha_termino);
+
+        $fecha_hoy = Carbon::now();
+
+        $dias = $fecha_fin->diffInDays($fecha_hoy);
+
+        if($dias <=7 )
+        {
+            dd("te quedan ".$dias);
+        }else{
+            dd($dias);
+        }
+
+
+
+
         return view('system.kardex.show', compact('row'));
     }
 
