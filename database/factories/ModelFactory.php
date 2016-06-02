@@ -16,7 +16,7 @@ $factory->define(\Consensus\Entities\User::class, function ($faker) {
     return [
         'username' => $faker->unique()->userName,
         'password' => bcrypt(str_random(10)),
-        'remember_token' => str_random(10),
+        'remember_token' => str_random(10)
     ];
 });
 
@@ -25,8 +25,7 @@ $factory->define(\Consensus\Entities\UserProfile::class, function ($faker) use (
     return [
         'nombre' => $faker->name,
         'apellidos' => $faker->lastName,
-        'email' => $faker->unique()->email,
-        'user_id' => factory(\Consensus\Entities\User::class)->create()->id
+        'email' => $faker->unique()->email
     ];
 });
 
@@ -45,7 +44,6 @@ $factory->define(\Consensus\Entities\Cliente::class, function ($faker) use ($fac
         'fax' => $faker->phoneNumber,
         'direccion' => $faker->address,
         'pais_id' => \Consensus\Entities\Pais::all()->random()->id,
-        'tariff_id' => \Consensus\Entities\Tariff::all()->random()->id,
         'estado' => $faker->randomElement([0,1])
     ];
 });
@@ -93,7 +91,8 @@ $factory->define(\Consensus\Entities\Kardex::class, function ($faker) use ($fact
         'service_id' => \Consensus\Entities\Service::all()->random()->id,
         'descripcion' => $faker->text(rand(100,255)),
         'observacion' => $faker->text(rand(100,255)),
-        'concepto' => $faker->text(rand(100,255))
+        'concepto' => $faker->text(rand(100,255)),
+        'estado' => $faker->randomElement([0,1])
     ];
 });
 
