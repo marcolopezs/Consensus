@@ -98,6 +98,12 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
 
     });
 
+    //USUARIO
+    Route::resource('users', 'UsersController');
+
+    //USUARIO - MI PERFIL
+    Route::get('user/perfil', ['as' => 'users.perfil', 'uses' => 'UsersController@perfil']);
+
 });
 
 //AUTH
