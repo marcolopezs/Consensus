@@ -13,17 +13,19 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
+        factory(User::class)->create([
+            'username' => 'admin',
+            'password' => 'admin',
+            'active' => 1,
+            'admin' => 1
+        ]);
+
         factory(UserProfile::class)->create([
             'nombre' => 'Admin',
             'apellidos' => 'Consensus',
             'email' => 'admin@consensus.com',
-            'user_id' => factory(User::class)->create([
-                'username' => 'admin',
-                'password' => 'admin',
-                'active' => 1
-            ])->id
+            'user_id' => '1'
         ]);
 
-        factory(UserProfile::class, 9)->create();
     }
 }
