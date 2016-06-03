@@ -218,16 +218,16 @@ class CreateInitialTables extends Migration
         });
 
         /*==============================
-        =            KARDEX            =
+        =          EXPEDIENTE          =
         ==============================*/
 
-        Schema::create('kardex', function(Blueprint $table)
+        Schema::create('expedientes', function(Blueprint $table)
         {
             $table->increments('id');
 
-            $table->enum('kardex_opcion', ['auto', 'manual'])->default('auto');
-            $table->integer('kardex_type_id')->nullable()->unsigned();
-            $table->string('kardex');
+            $table->enum('expediente_opcion', ['auto', 'manual'])->default('auto');
+            $table->integer('expediente_tipo_id')->nullable()->unsigned();
+            $table->string('expediente');
 
             $table->integer('cliente_id')->unsigned();
             $table->integer('abogado_id')->unsigned();
@@ -260,13 +260,13 @@ class CreateInitialTables extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('kardex_documentos', function(Blueprint $table)
+        Schema::create('expediente_documentos', function(Blueprint $table)
         {
             $table->increments('id');
 
         });
 
-        Schema::create('kardex_types', function(Blueprint $table)
+        Schema::create('expediente_tipos', function(Blueprint $table)
         {
             $table->increments('id');
 
@@ -281,17 +281,17 @@ class CreateInitialTables extends Migration
         });
 
         /*==============================
-        =          EXPEDIENTES         =
+        =             KARDEX           =
         ==============================*/
 
-        Schema::create('expedients', function(Blueprint $table)
+        Schema::create('kardex', function(Blueprint $table)
         {
             $table->increments('id');
 
             $table->string('titulo');
 
             $table->integer('cliente_id')->unsigned();
-            $table->integer('kardex_id')->unsigned();
+            $table->integer('expediente_id')->unsigned();
 
             $table->integer('matter_id')->unsigned();
             $table->integer('entity_id')->unsigned();
@@ -482,9 +482,11 @@ class CreateInitialTables extends Migration
         Schema::drop('password_resets');
         Schema::drop('histories');
 
+        Schema::drop('expedientes');
+        Schema::drop('expediente_documentos');
+        Schema::drop('expediente_tipos');
+
         Schema::drop('kardex');
-        Schema::drop('kardex_documentos');
-        Schema::drop('kardex_types');
 
         Schema::drop('cliente_documentos');
         Schema::drop('cliente_contactos');
@@ -503,7 +505,6 @@ class CreateInitialTables extends Migration
         Schema::drop('states');
         Schema::drop('interveners');
         Schema::drop('expense_types');
-        Schema::drop('expedients');
         Schema::drop('paises');
     }
 }
