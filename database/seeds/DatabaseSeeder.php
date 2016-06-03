@@ -13,5 +13,10 @@ class DatabaseSeeder extends Seeder
     {
         $this->call('UserTableSeeder');
         $this->call('DataTableSeeder');
+        $this->call('ClienteTableSeeder');
+        $this->call('ClienteContactoTableSeeder');
+        $this->call('ClienteDocumentoTableSeeder');
+        $this->call('ExpedienteTableSeeder');
+        $this->call('KardexTableSeeder');
     }
 }

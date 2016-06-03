@@ -536,17 +536,11 @@ class DataTableSeeder extends Seeder
             ['id' => '237', 'titulo' => 'ZIMBABWE', 'estado' => '1']
         ]);
 
-        DB::table('kardex_types')->insert([
+        DB::table('expediente_tipos')->insert([
             ['id' => '1', 'titulo' => 'CORPORATIVO / INMOBILIARIO / PERSONAS NATURALES / SUCESIONES', 'abrev' => 'C', 'num' => '5563', 'estado' => '1'],
             ['id' => '2', 'titulo' => 'PROTESTOS', 'abrev' => 'H', 'num' => '726', 'estado' => '1'],
             ['id' => '3', 'titulo' => 'PROCESAL', 'abrev' => 'J', 'num' => '317', 'estado' => '1'],
             ['id' => '4', 'titulo' => 'VEHICULAR', 'abrev' => 'V', 'num' => '3931', 'estado' => '1']
         ]);
-
-        factory(\Consensus\Entities\Cliente::class, 30)->create();
-        factory(\Consensus\Entities\ClienteContacto::class, 60)->create();
-        factory(\Consensus\Entities\ClienteDocumento::class, 50)->create();
-        factory(\Consensus\Entities\Kardex::class, 150)->create();
-        factory(\Consensus\Entities\Expedient::class, 30)->create();
     }
 }

@@ -79,10 +79,10 @@ $factory->define(\Consensus\Entities\ClienteDocumento::class, function ($faker) 
     ];
 });
 
-//KARDEX
-$factory->define(\Consensus\Entities\Kardex::class, function ($faker) use ($factory) {
+//EXPEDIENTES
+$factory->define(\Consensus\Entities\Expediente::class, function ($faker) use ($factory) {
     return [
-        'kardex' => $faker->regexify('[A-Z]{1,1}-[0-9]{10,10}'),
+        'expediente' => $faker->regexify('[A-Z]{1,1}-[0-9]{10,10}'),
         'cliente_id' => \Consensus\Entities\Cliente::all()->random()->id,
         'money_id' => \Consensus\Entities\Money::all()->random()->id,
         'tariff_id' => \Consensus\Entities\Tariff::all()->random()->id,
@@ -96,14 +96,14 @@ $factory->define(\Consensus\Entities\Kardex::class, function ($faker) use ($fact
     ];
 });
 
-//EXPEDIENTE
-$factory->define(\Consensus\Entities\Expedient::class, function ($faker) use ($factory) {
+//KARDEX
+$factory->define(\Consensus\Entities\Kardex::class, function ($faker) use ($factory) {
     $cliente = \Consensus\Entities\Cliente::all()->random();
-    $kardex = $cliente->kardexs->random()->id;
+    $expediente = $cliente->expedientes->random()->id;
     return [
         'titulo' => $faker->sentence(),
         'cliente_id' => $cliente->id,
-        'kardex_id' => $kardex,
+        'expediente_id' => $expediente,
         'matter_id' => \Consensus\Entities\Matter::all()->random()->id,
         'entity_id' => \Consensus\Entities\Entity::all()->random()->id,
         'instance_id' => \Consensus\Entities\Instance::all()->random()->id,
