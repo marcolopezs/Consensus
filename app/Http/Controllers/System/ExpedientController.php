@@ -24,7 +24,6 @@ use Consensus\Repositories\ExpedientRepo;
 class ExpedientController extends Controller {
 
     protected  $rules = [
-        'titulo' => 'required|string',
         'cliente' => 'required|exists:clientes,id',
         'kardex' => 'required_with:cliente|exists:kardex,id',
         'materia' => 'required|exists:matters,id',
@@ -169,7 +168,7 @@ class ExpedientController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, Request $request)
+    public function edit($id)
     {
         $row = $this->expedientRepo->findOrFail($id);
 

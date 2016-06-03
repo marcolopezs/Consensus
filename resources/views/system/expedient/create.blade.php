@@ -47,17 +47,6 @@
 
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        {!! Form::label('titulo', 'Titulo', ['class' => 'control-label']) !!}
-                                        {!! Form::text('titulo', null, ['class' => 'form-control', 'required']) !!}
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="row">
-
-                                <div class="col-md-12">
-                                    <div class="form-group">
                                         <div id="progressbar" class="progress progress-striped active">
                                             <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
                                                 <span class="sr-only"> 40% Complete (success) </span>
