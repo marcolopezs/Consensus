@@ -6,10 +6,10 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Consensus\Http\Controllers\Controller;
 
-use Consensus\Entities\KardexType;
-use Consensus\Repositories\KardexTypeRepo;
+use Consensus\Entities\ExpedienteTipo;
+use Consensus\Repositories\ExpedienteTipoRepo;
 
-class KardexTypeController extends Controller {
+class ExpedienteTipoController extends Controller {
 
     protected  $rules = [
         'titulo' => 'required',
@@ -17,11 +17,11 @@ class KardexTypeController extends Controller {
         'estado' => 'required|in:0,1'
     ];
 
-    protected $kardexTypeRepo;
+    protected $expedienteTipoRepo;
 
-    public function __construct(KardexTypeRepo $kardexTypeRepo)
+    public function __construct(ExpedienteTipoRepo $expedienteTipoRepo)
     {
-        $this->kardexTypeRepo = $kardexTypeRepo;
+        $this->expedienteTipoRepo = $expedienteTipoRepo;
     }
 
     /**
@@ -31,14 +31,14 @@ class KardexTypeController extends Controller {
      */
     public function index(Request $request)
     {
-        $rows = $this->kardexTypeRepo->findOrder($request);
+        $rows = $this->expedienteTipoRepo->findOrder($request);
 
-        return view('system.kardex-type.list', compact('rows'));
+        return view('system.expediente-tipo.list', compact('rows'));
     }
 
     public function create()
     {
-        return view('system.kardex-type.create');
+        return view('system.expediente-tipo.create');
     }
 
     /**
@@ -52,11 +52,11 @@ class KardexTypeController extends Controller {
         $this->validate($request, $this->rules);
 
         //GUARDAR DATOS
-        $row = new KardexType($request->all());
-        $this->kardexTypeRepo->create($row, $request->all());
+        $row = new ExpedienteTipo($request->all());
+        $this->expedienteTipoRepo->create($row, $request->all());
 
         //GUARDAR HISTORIAL
-        $this->kardexTypeRepo->saveHistory($row, $request, 'create');
+        $this->expedienteTipoRepo->saveHistory($row, $request, 'create');
 
         //MENSAJE
         $mensaje = 'El registro se agregó satisfactoriamente.';
@@ -78,9 +78,9 @@ class KardexTypeController extends Controller {
      */
     public function edit($id, Request $request)
     {
-        $row = $this->kardexTypeRepo->findOrFail($id);
+        $row = $this->expedienteTipoRepo->findOrFail($id);
 
-        return view('system.kardex-type.edit', compact('row'));
+        return view('system.expediente-tipo.edit', compact('row'));
     }
 
     /**
@@ -93,16 +93,16 @@ class KardexTypeController extends Controller {
     public function update(Request $request, $id)
     {
         //BUSCAR ID
-        $row = $this->kardexTypeRepo->findOrFail($id);
+        $row = $this->expedienteTipoRepo->findOrFail($id);
 
         //VALIDACION DE DATOS
         $this->validate($request, $this->rules);
 
         //GUARDAR DATOS
-        $this->kardexTypeRepo->update($row, $request->all());
+        $this->expedienteTipoRepo->update($row, $request->all());
 
         //GUARDAR HISTORIAL
-        $this->kardexTypeRepo->saveHistory($row, $request, 'update');
+        $this->expedienteTipoRepo->saveHistory($row, $request, 'update');
 
         //MENSAJE
         $mensaje = 'El registro se actualizó satisfactoriamente.';
@@ -125,11 +125,11 @@ class KardexTypeController extends Controller {
     public function destroy($id, Request $request)
     {
         //BUSCAR ID PARA ELIMINAR
-        $row = $this->kardexTypeRepo->findOrFail($id);
+        $row = $this->expedienteTipoRepo->findOrFail($id);
         $row->delete();
 
         //GUARDAR HISTORIAL
-        $this->kardexTypeRepo->saveHistory($row, $request, 'delete');
+        $this->expedienteTipoRepo->saveHistory($row, $request, 'delete');
 
         $message = 'El registro se eliminó satisfactoriamente.';
 

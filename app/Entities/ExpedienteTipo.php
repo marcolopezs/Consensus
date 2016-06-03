@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class KardexType extends BaseEntity {
+class ExpedienteTipo extends BaseEntity {
 
     use SoftDeletes;
 

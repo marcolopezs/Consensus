@@ -1,9 +1,7 @@
 <?php namespace Consensus\Repositories;
 
-use Illuminate\Http\Request;
-
-use Consensus\Entities\Cliente;
 use Consensus\Entities\Kardex;
+use Illuminate\Http\Request;
 
 class KardexRepo extends BaseRepo {
 
@@ -12,17 +10,13 @@ class KardexRepo extends BaseRepo {
         return new Kardex();
     }
 
-    //BUSQUEDA DE REGISTROS
+    //BUSQUEDA DE REGISTROS POR TITULO Y ESTADO y ORDENARLO POR SELECCION DEL USUARIO
     public function findOrder(Request $request)
     {
         return $this->getModel()
-                    ->kardex($request->get('kardex'))
+                    ->titulo($request->get('titulo'))
                     ->clienteId($request->get('cliente'))
-                    ->dni($request->get('dni'))
-                    ->ruc($request->get('ruc'))
                     ->order($request->get('order'))
-                    ->orderBy('created_at','desc')
                     ->paginate();
     }
-
 }

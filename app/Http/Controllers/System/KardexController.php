@@ -7,62 +7,67 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Consensus\Http\Controllers\Controller;
 
+use Consensus\Entities\History;
+use Consensus\Repositories\HistoryRepo;
+
 use Consensus\Entities\Kardex;
-use Consensus\Repositories\KardexRepo;
 
 use Consensus\Repositories\ClienteRepo;
-use Consensus\Repositories\KardexTypeRepo;
-use Consensus\Repositories\MoneyRepo;
-use Consensus\Repositories\ServiceRepo;
-use Consensus\Repositories\TariffRepo;
+use Consensus\Repositories\ExpedienteRepo;
+use Consensus\Repositories\KardexRepo;
+use Consensus\Repositories\AreaRepo;
+use Consensus\Repositories\EntityRepo;
+use Consensus\Repositories\InstanceRepo;
+use Consensus\Repositories\MatterRepo;
+use Consensus\Repositories\StateRepo;
 
 class KardexController extends Controller {
 
-    protected $rules = [
-        'kardex_type' => 'required_if:kardex_opcion,auto',
-        'kardex' => 'required_if:kardex_opcion,manual',
+    protected  $rules = [
         'cliente' => 'required|exists:clientes,id',
+        'expediente' => 'required_with:cliente|exists:expedientes,id',
+        'materia' => 'required|exists:matters,id',
+        'entidad' => 'required|exists:entities,id',
+        'instancia' => 'required|exists:instances,id',
+        'encargado' => 'string',
+        'poder' => 'required_with:fecha_poder',
+        'vencimiento' => 'required_with:fecha_vencimiento',
+        'fecha_poder' => 'required_if:poder,1',
+        'fecha_vencimiento' => 'required_if:vencimiento,1',
+        'area' => 'required|exists:areas,id',
         'abogado' => 'required',
-        'moneda' => 'required|exists:money,id',
-        'tarifa' => 'required|exists:tariffs,id',
-        'fecha_inicio' => 'required|date_format:d/m/Y',
-        'fecha_termino' => 'required|date_format:d/m/Y',
-        'inicio' => 'numeric',
-        'termino' => 'numeric',
-        'honorario_hora' => 'numeric',
-        'tope_monto' => 'numeric',
-        'retainer_fm' => 'numeric',
-        'numero_horas' => 'numeric',
-        'honorario_fijo' => 'numeric',
-        'hora_adicional' => 'numeric',
-        'servicio' => 'required|exists:services,id',
-        'numero_dias' => 'numeric',
-        'fecha_limite' => 'date_format:d/m/Y',
-        'descripcion' => 'string',
-        'concepto' => 'string',
-        'observacion' => 'string'
+        'estado' => 'required|exists:states,id',
     ];
 
+    protected $areaRepo;
     protected $clienteRepo;
+    protected $entityRepo;
+    protected $instanceRepo;
+    protected $expedienteRepo;
+    protected $matterRepo;
+    protected $stateRepo;
     protected $kardexRepo;
-    protected $kardexTypeRepo;
-    protected $moneyRepo;
-    protected $tariffRepo;
-    protected $serviceRepo;
+    protected $historyRepo;
 
-    public function __construct(ClienteRepo $clienteRepo,
+    public function __construct(AreaRepo $areaRepo,
+                                ClienteRepo $clienteRepo,
+                                EntityRepo $entityRepo,
+                                InstanceRepo $instanceRepo,
+                                ExpedienteRepo $expedienteRepo,
+                                MatterRepo $matterRepo,
+                                StateRepo $stateRepo,
                                 KardexRepo $kardexRepo,
-                                KardexTypeRepo $kardexTypeRepo,
-                                MoneyRepo $moneyRepo,
-                                ServiceRepo $serviceRepo,
-                                TariffRepo $tariffRepo)
+                                HistoryRepo $historyRepo)
     {
+        $this->areaRepo = $areaRepo;
         $this->clienteRepo = $clienteRepo;
+        $this->entityRepo = $entityRepo;
+        $this->instanceRepo = $instanceRepo;
+        $this->expedienteRepo = $expedienteRepo;
+        $this->matterRepo = $matterRepo;
+        $this->stateRepo = $stateRepo;
         $this->kardexRepo = $kardexRepo;
-        $this->kardexTypeRepo = $kardexTypeRepo;
-        $this->moneyRepo = $moneyRepo;
-        $this->tariffRepo = $tariffRepo;
-        $this->serviceRepo = $serviceRepo;
+        $this->historyRepo = $historyRepo;
     }
 
     /**
@@ -78,20 +83,17 @@ class KardexController extends Controller {
         return view('system.kardex.list', compact('rows','cliente'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $cliente = $this->clienteRepo->orderBy('cliente', 'asc')->lists('cliente', 'id')->toArray();
-        $tarifa = $this->tariffRepo->estadoListArray();
-        $moneda = $this->moneyRepo->lists('titulo', 'id')->toArray();
-        $servicio = $this->serviceRepo->estadoListArray();
-        $kardex_type = $this->kardexTypeRepo->estadoListArray();
+        $expediente = $this->expedienteRepo->orderBy('expediente', 'asc')->lists('expediente', 'id')->toArray();
+        $area = $this->areaRepo->estadoListArray();
+        $entidad = $this->entityRepo->estadoListArray();
+        $instancia = $this->instanceRepo->estadoListArray();
+        $materia = $this->matterRepo->estadoListArray();
+        $estado = $this->stateRepo->estadoListArray();
 
-        return view('system.kardex.create', compact('cliente','tarifa','moneda','servicio','kardex_type'));
+        return view('system.kardex.create', compact('cliente','expediente','area','entidad','instancia','materia','estado'));
     }
 
     /**
@@ -102,118 +104,62 @@ class KardexController extends Controller {
      */
     public function store(Request $request)
     {
-        //VALIDACION
+        //VALIDAR
         $this->validate($request, $this->rules);
 
         //VARIABLES
-        $kardex_opcion = $request->input('kardex_opcion');
         $cliente = $request->input('cliente');
-        $abogado = $request->input('abogado');
+        $expediente = $request->input('expediente');
+        $materia = $request->input('materia');
+        $entidad = $request->input('entidad');
+        $instancia = $request->input('instancia');
+        $area = $request->input('area');
+        $estado = $request->input('estado');
         $moneda = $request->input('moneda');
-        $tarifa = $request->input('tarifa');
-        $inicio = $request->input('inicio');
-        $termino = $request->input('termino');
-        $honorario_hora = $request->input('honorario_hora');
-        $tope_monto = $request->input('tope_monto');
-        $retainer_fm = $request->input('retainer_fm');
-        $numero_horas = $request->input('numero_horas');
-        $honorario_fijo = $request->input('honorario_fijo');
-        $hora_adicional = $request->input('hora_adicional');
-        $servicio = $request->input('servicio');
-        $numero_dias = $request->input('numero_dias');
-        $descripcion = $request->input('descripcion');
-        $concepto = $request->input('concepto');
-        $observacion = $request->input('observacion');
+        $bienes = $request->input('bienes');
+        $especial = $request->input('especial');
+        $exito = $request->input('exito');
+        $estado_kardex = $request->input('estado_kardex');
+
+        //FECHA PODER
+        $carbon_poder = Carbon::createFromFormat('d/m/Y', $request->input('fecha_poder'));
+        $fecha_poder = $carbon_poder->format('Y-m-d');
+
+        //FECHA VENCIMIENTO
+        $carbon_vencimiento = Carbon::createFromFormat('d/m/Y', $request->input('fecha_vencimiento'));
+        $fecha_vencimiento = $carbon_vencimiento->format('Y-m-d');
 
         //FECHA INICIO
         $carbon_inicio = Carbon::createFromFormat('d/m/Y', $request->input('fecha_inicio'));
         $fecha_inicio = $carbon_inicio->format('Y-m-d');
 
-        //FECHA TERMINO
-        $carbon_termino = Carbon::createFromFormat('d/m/Y', $request->input('fecha_termino'));
-        $fecha_termino = $carbon_termino->format('Y-m-d');
+        //FECHA VENCIMIENTO
+        $carbon_fin = Carbon::createFromFormat('d/m/Y', $request->input('fecha_fin'));
+        $fecha_fin = $carbon_fin->format('Y-m-d');
 
-        //FECHA LIMITE
-        $carbon_limite = Carbon::createFromFormat('d/m/Y', $request->input('fecha_limite'));
-        $fecha_limite = $carbon_limite->format('Y-m-d');
-
-        //VALIDAD SI ES KARDEX AUTOMATICO O MANUAL
-        if($kardex_opcion == 'auto')
-        {
-            $kardex_type = $request->input('kardex_type');
-            $tipo = $this->kardexTypeRepo->findOrFail($kardex_type);
-            $num = $tipo->num + 1;
-            $correlativo = str_pad($num, 10, "0", STR_PAD_LEFT);
-            $kardex = $tipo->abrev.'-'.$correlativo;
-
-            //GUARDAR CORRELATIVO DE KARDEX
-            $tipo->num = $num;
-            $this->kardexTypeRepo->update($tipo, $request->all());
-        }
-        else if($kardex_opcion == 'manual')
-        {
-            $kardex = $request->input('kardex');
-        }
-
+        //GUARDAR DATOS
         $row = new Kardex($request->all());
-        $row->kardex = $kardex;
-        $row->kardex_opcion = $kardex_opcion;
         $row->cliente_id = $cliente;
-        $row->abogado_id = $abogado;
+        $row->expediente_id = $expediente;
+        $row->matter_id = $materia;
+        $row->entity_id = $entidad;
+        $row->instance_id = $instancia;
+        $row->area_id = $area;
+        $row->state_id = $estado;
         $row->money_id = $moneda;
-        $row->tariff_id = $tarifa;
+        $row->bienes = $bienes;
+        $row->especial = $especial;
+        $row->exito = $exito;
+        $row->estado = $estado_kardex;
+        $row->fecha_poder = $fecha_poder;
+        $row->fecha_vencimiento = $fecha_vencimiento;
         $row->fecha_inicio = $fecha_inicio;
-        $row->fecha_termino = $fecha_termino;
-        $row->inicio = $inicio;
-        $row->termino = $termino;
-        $row->honorario_hora = $honorario_hora;
-        $row->tope_monto = $tope_monto;
-        $row->retainer_fm = $retainer_fm;
-        $row->numero_horas = $numero_horas;
-        $row->honorario_fijo = $honorario_fijo;
-        $row->hora_adicional = $hora_adicional;
-        $row->service_id = $servicio;
-        $row->numero_dias = $numero_dias;
-        $row->fecha_limite = $fecha_limite;
-        $row->descripcion = $descripcion;
-        $row->concepto = $concepto;
-        $row->observacion = $observacion;
+        $row->fecha_fin = $fecha_fin;
         $this->kardexRepo->create($row, $request->all());
 
-        //MENSAJE
-        flash()->success('El registro se agregó satisfactoriamente.');
-
-        //REDIRECCIONAR A PAGINA PARA VER DATOS
+        //REDIRECCIONAR
         return redirect()->route('kardex.index');
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $row = $this->kardexRepo->findOrFail($id);
-
-        $fecha_fin = Carbon::createFromFormat('Y-m-d', $row->fecha_termino);
-
-        $fecha_hoy = Carbon::now();
-
-        $dias = $fecha_fin->diffInDays($fecha_hoy);
-
-        if($dias <=7 )
-        {
-            dd("te quedan ".$dias);
-        }else{
-            dd($dias);
-        }
-
-
-
-
-        return view('system.kardex.show', compact('row'));
     }
 
     /**
@@ -225,13 +171,8 @@ class KardexController extends Controller {
     public function edit($id)
     {
         $row = $this->kardexRepo->findOrFail($id);
-        $cliente = $this->clienteRepo->orderBy('cliente', 'asc')->lists('cliente', 'id')->toArray();
-        $tarifa = $this->tariffRepo->estadoListArray();
-        $moneda = $this->moneyRepo->lists('titulo', 'id')->toArray();
-        $servicio = $this->serviceRepo->estadoListArray();
-        $kardex_type = $this->kardexTypeRepo->estadoListArray();
 
-        return view('system.kardex.edit', compact('row','cliente','tarifa','moneda','servicio','kardex_type'));
+        return view('system.kardex.edit', compact('row'));
     }
 
     /**
@@ -243,7 +184,29 @@ class KardexController extends Controller {
      */
     public function update(Request $request, $id)
     {
-        //
+        //BUSCAR ID
+        $money = $this->kardexRepo->findOrFail($id);
+
+        //VALIDACION DE DATOS
+        $this->validate($request, $this->rules);
+
+        //GUARDAR DATOS
+        $this->kardexRepo->update($money, $request->all());
+
+        //GUARDAR HISTORIAL
+        $history = new History;
+        $this->historyRepo->saveHistory($history, $this->tabla, $id, $request, 'update');
+
+        //MENSAJE
+        $mensaje = 'El registro se actualizó satisfactoriamente.';
+
+        //AJAX
+        if($request->ajax())
+        {
+            return response()->json([
+                'message' => $mensaje
+            ]);
+        }
     }
 
     /**
@@ -252,8 +215,25 @@ class KardexController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        //
+        //GUARDAR HISTORIAL
+        $history = new History;
+        $this->historyRepo->saveHistory($history, $this->tabla, $id, $request, 'delete');
+
+        //BUSCAR ID PARA ELIMINAR
+        $post = $this->kardexRepo->findOrFail($id);
+        $post->delete();
+
+        $message = 'El registro se eliminó satisfactoriamente.';
+
+        if($request->ajax())
+        {
+            return response()->json([
+                'message' => $message
+            ]);
+        }
     }
+
+
 }

@@ -8,18 +8,32 @@
 
             <div class="form-content"></div>
 
-            {!! Form::model($row, ['route' => ['area.update', $row->id], 'method' => 'PUT', 'id' => 'formEdit']) !!}
+            {!! Form::model($row, ['route' => ['expediente-tipo.update', $row->id], 'method' => 'PUT', 'id' => 'formEdit']) !!}
 
                 <div class="form-body">
 
-                    <div class="form-group">
-                        {!! Form::label('titulo', 'Titulo') !!}
-                        {!! Form::text('titulo', null, ['class' => 'form-control']) !!}
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {!! Form::label('titulo', 'Titulo') !!}
+                            {!! Form::text('titulo', null, ['class' => 'form-control']) !!}
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        {!! Form::label('email', 'Email') !!}
-                        {!! Form::email('email', null, ['class' => 'form-control']) !!}
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {!! Form::label('abrev', 'Letra') !!}
+                            {!! Form::text('abrev', null, ['class' => 'form-control']) !!}
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {!! Form::label('estado', 'Estado') !!}
+                            <div class="radio-list">
+                                <label class="radio-inline">{!! Form::radio('estado', '1', null,  ['id' => 'estado']) !!}Activo</label>
+                                <label class="radio-inline">{!! Form::radio('estado', '0', null,  ['id' => 'estado']) !!}No activo</label>
+                            </div>
+                        </div>
                     </div>
 
                 </div>

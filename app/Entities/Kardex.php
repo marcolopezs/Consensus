@@ -8,9 +8,9 @@ class Kardex extends BaseEntity {
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['cliente_id','tariff_id','kardex_opcion','kardex_type_id','kardex','fecha_inicio','fecha_termino','abogado_id','money_id',
-                            'honorario_hora','tope_monto','retainer_fm','numero_horas','honorario_fijo','hora_adicional','service_id','numero_dias','fecha_limite','estado',
-                            'descripcion','concepto','observacion'];
+    protected $fillable = ['titulo','cliente_id','expediente_id','matter_id','entity_id','instance_id','encargado','poder','fecha_poder','vencimiento',
+        'fecha_vencimiento','area_id','jefe_area','abogado','asistente','state_id','fecha_inicio','fecha_fin','valor','money_id','bienes','especial',
+        'exito','estado'];
 
     protected $table = 'kardex';
 
@@ -19,32 +19,9 @@ class Kardex extends BaseEntity {
         return $this->belongsTo(Cliente::class);
     }
 
-    public function expedientes()
+    public function expediente()
     {
-        return $this->hasMany(Expedient::class);
-    }
-
-    public function tariff()
-    {
-        return $this->belongsTo(Tariff::class);
-    }
-
-    public function money()
-    {
-        return $this->belongsTo(Money::class);
-    }
-
-    public function service()
-    {
-        return $this->belongsTo(Service::class);
-    }
-
-    public function scopeKardex($query, $value)
-    {
-        if(trim($value) != "")
-        {
-            $query->where('kardex', 'LIKE', "%$value%");
-        }
+        return $this->belongsTo(Expediente::class);
     }
 
 }

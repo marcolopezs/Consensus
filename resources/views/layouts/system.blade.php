@@ -114,8 +114,8 @@
                 <div class="hor-menu  ">
                     <ul class="nav navbar-nav">
                         <li {!! (Request::is('/') ? 'class="active"' : '') !!}><a href="/">Dashboard</a></li>
+                        <li {!! (Request::is('expediente*') ? 'class="active"' : '') !!}><a href="{{ route('expedientes.index') }}">Expedientes</a></li>
                         <li {!! (Request::is('kardex*') ? 'class="active"' : '') !!}><a href="{{ route('kardex.index') }}">Kardex</a></li>
-                        <li {!! (Request::is('expedient*') ? 'class="active"' : '') !!}><a href="{{ route('expedient.index') }}">Expedientes</a></li>
                         <li {!! (Request::is('cliente*') ? 'class="active"' : '') !!}><a href="{{ route('cliente.index') }}">Clientes</a></li>
                         <li class="menu-dropdown mega-menu-dropdown {!! (Request::is('options*') ? 'active' : '') !!}">
                             <a href="javascript:;">Opciones</a><span class="arrow"></span>
@@ -140,7 +140,7 @@
                                                     <li {!! (Request::is('options/tariff*') ? 'class="active"' : '') !!}><a href="{{ route('tariff.index') }}">Tarifas</a></li>
                                                     <li {!! (Request::is('options/money*') ? 'class="active"' : '') !!}><a href="{{ route('money.index') }}">Tipo de Cambio</a></li>
                                                     <li {!! (Request::is('options/expense-type*') ? 'class="active"' : '') !!}><a href="{{ route('expense-type.index') }}">Tipos de Gasto</a></li>
-                                                    <li {!! (Request::is('options/kardex-type*') ? 'class="active"' : '') !!}><a href="{{ route('kardex-type.index') }}">Tipos de Kardex</a></li>
+                                                    <li {!! (Request::is('options/expediente-tipo*') ? 'class="active"' : '') !!}><a href="{{ route('expediente-tipo.index') }}">Tipos de Expediente</a></li>
                                                     <li {!! (Request::is('options/ubicacion*') ? 'class="active"' : '') !!}><a href="{{ route('ubicacion.index') }}">Ubicación</a></li>
                                                 </ul>
                                             </div>

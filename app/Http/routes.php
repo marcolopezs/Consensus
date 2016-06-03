@@ -28,8 +28,8 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
     Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
 
     //EXPEDIENTES
-    Route::resource('expedient', 'ExpedientController');
-    Route::get('expedient/cliente/{id}', ['as' => 'expedient.cliente.kardex', 'uses' => 'ExpedientController@clienteKardex']);
+    Route::resource('expedientes', 'ExpedientesController');
+    Route::get('expedientes/cliente/{id}', ['as' => 'expedientes.cliente', 'uses' => 'ExpedientesController@cliente']);
 
     //CLIENTES
     Route::resource('cliente', 'ClienteController');
@@ -94,7 +94,7 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
         Route::resource('expense-type', 'ExpenseTypeController', ['names' => $prefixedResourceNames('expense-type')]);
 
         //TIPOS DE KARDEX
-        Route::resource('kardex-type', 'KardexTypeController', ['names' => $prefixedResourceNames('kardex-type')]);
+        Route::resource('expediente-tipo', 'ExpedienteTipoController', ['names' => $prefixedResourceNames('expediente-tipo')]);
 
     });
 

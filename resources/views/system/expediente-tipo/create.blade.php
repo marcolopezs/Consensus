@@ -8,7 +8,7 @@
 
             <div class="form-content"></div>
 
-            {!! Form::open(['route' => 'kardex-type.store', 'method' => 'POST', 'id' => 'formCreate']) !!}
+            {!! Form::open(['route' => 'expediente-tipo.store', 'method' => 'POST', 'id' => 'formCreate']) !!}
 
                 <div class="form-body">
 
@@ -90,14 +90,6 @@
             }
 
         });
-
-    });
-
-    $("#formCreateClose").on("click", function (e) {
-        e.preventDefault();
-
-        $("#ajax-modal").modal('hide');
-        location.reload();
 
     });
 

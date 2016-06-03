@@ -1,7 +1,7 @@
 @extends('layouts.system')
 
 @section('title')
-    Tipos de Kardex
+    Tipos de Expediente
 @stop
 
 @section('contenido_header')
@@ -24,7 +24,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="btn-group">
-                                    <a class="btn sbold green" href="{{ route('kardex-type.create') }}" data-target="#ajax" data-toggle="modal"> Agregar registro
+                                    <a class="btn sbold green" href="{{ route('expediente-tipo.create') }}" data-target="#ajax" data-toggle="modal"> Agregar registro
                                         <i class="fa fa-plus"></i>
                                     </a>
                                 </div>
@@ -32,11 +32,11 @@
                         </div>
                     </div>
 
-                    {!! Form::model(Request::all(), ['route' => 'kardex-type.index', 'method' => 'GET']) !!}
+                    {!! Form::model(Request::all(), ['route' => 'expediente-tipo.index', 'method' => 'GET']) !!}
 
                     <table class="table table-striped table-bordered table-hover order-column">
 
-                        @include('system.kardex-type.partials.search')
+                        @include('system.expediente-tipo.partials.search')
 
                         <tbody>
                         @foreach($rows as $item)
@@ -58,7 +58,7 @@
                                             <i class="fa fa-angle-down"></i>
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
-                                            <li><a href="{{ route('kardex-type.edit', $row_id) }}" data-target="#ajax" data-toggle="modal">Editar</a></li>
+                                            <li><a href="{{ route('expediente-tipo.edit', $row_id) }}" data-target="#ajax" data-toggle="modal">Editar</a></li>
                                             <li><a href="#" class="btn-delete">Eliminar</a></li>
                                             <li><div class="divider"></div></li>
                                             <li><a href="javascript:;">Historial</a></li>
@@ -94,7 +94,7 @@
 
     </div>
 
-{!! Form::open(['route' => ['kardex-type.destroy', ':REGISTER'], 'method' => 'DELETE', 'id' => 'FormDeleteRow']) !!}
+{!! Form::open(['route' => ['expediente-tipo.destroy', ':REGISTER'], 'method' => 'DELETE', 'id' => 'FormDeleteRow']) !!}
 {!! Form::close() !!}
 
 @stop

@@ -1,22 +1,27 @@
 <?php namespace Consensus\Repositories;
 
-use Consensus\Entities\Expedient;
 use Illuminate\Http\Request;
 
-class ExpedientRepo extends BaseRepo {
+use Consensus\Entities\Expediente;
+
+class ExpedienteRepo extends BaseRepo {
 
     public function getModel()
     {
-        return new Expedient();
+        return new Expediente();
     }
 
-    //BUSQUEDA DE REGISTROS POR TITULO Y ESTADO y ORDENARLO POR SELECCION DEL USUARIO
+    //BUSQUEDA DE REGISTROS
     public function findOrder(Request $request)
     {
         return $this->getModel()
-                    ->titulo($request->get('titulo'))
+                    ->expediente($request->get('expediente'))
                     ->clienteId($request->get('cliente'))
+                    ->dni($request->get('dni'))
+                    ->ruc($request->get('ruc'))
                     ->order($request->get('order'))
+                    ->orderBy('created_at','desc')
                     ->paginate();
     }
+
 }

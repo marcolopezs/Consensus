@@ -10,14 +10,14 @@ class Cliente extends BaseEntity {
 
     protected $fillable = ['cliente','dni','ruc','carnet_extranjeria','pasaporte','partidad_nacimiento','otros','email','telefono','fax','direccion','pais_id'];
 
+    public function expedientes()
+    {
+        return $this->hasMany(Expediente::class);
+    }
+
     public function kardexs()
     {
         return $this->hasMany(Kardex::class);
-    }
-
-    public function expedientes()
-    {
-        return $this->hasMany(Expedient::class);
     }
 
     public function contactos()

@@ -5,10 +5,6 @@
 @stop
 
 @section('contenido_header')
-{{-- UI Modal --}}
-{!! HTML::style('assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css') !!}
-{!! HTML::style('assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css') !!}
-
 {{-- Select2 --}}
 {!! HTML::style('assets/global/plugins/select2/css/select2.min.css') !!}
 {!! HTML::style('assets/global/plugins/select2/css/select2-bootstrap.min.css') !!}
@@ -31,7 +27,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="btn-group">
-                                    <a class="btn sbold green" href="{{ route('expedient.create') }}"> Agregar registro
+                                    <a class="btn sbold green" href="{{ route('expedientes.create') }}"> Agregar registro
                                         <i class="fa fa-plus"></i>
                                     </a>
                                 </div>
@@ -39,38 +35,38 @@
                         </div>
                     </div>
 
-                    {!! Form::model(Request::all(), ['route' => 'expedient.index', 'method' => 'GET']) !!}
+                    {!! Form::model(Request::all(), ['route' => 'expedientes.index', 'method' => 'GET']) !!}
 
-                    <table class="table table-bordered table-hover order-column">
+                    <table class="table table-striped table-bordered table-hover order-column">
 
-                        @include('system.expedient.partials.search')
+                        @include('system.expediente.partials.search')
 
                         <tbody>
                         @foreach($rows as $item)
                             {{--*/
                             $row_id = $item->id;
-                            $row_titulo = $item->titulo;
+                            $row_expediente = $item->expediente;
                             $row_cliente = $item->cliente->cliente;
-                            $row_kardex = $item->kardex->kardex;
+                            $row_descripcion = $item->descripcion;
+                            $row_inicio = soloFecha($item->fecha_inicio);
                             $row_estado = $item->estado;
                             /*--}}
-                            <tr class="{!! $row_estado ? 'alert-success' : '' !!}" data-id="{{ $row_id }}" data-title="{{ $row_titulo }}">
-                                <td>{{ $row_titulo }}</td>
+                            <tr class="odd gradeX" data-id="{{ $row_id }}" data-title="{{ $row_expediente }}">
+                                <td>{{ $row_expediente }}</td>
                                 <td>{{ $row_cliente }}</td>
-                                <td>{{ $row_kardex }}</td>
-                                <td class="text-center">
-                                    <a id="estado-{{ $row_id }}" href="#" data-method="put" class="btn-oferta">
-                                        {!! $row_estado ? '<span class="label label-success">'.trans('system.estado_exp.'.$row_estado).'</span>' : '<span class="label label-default">'.trans('system.estado_exp.'.$row_estado).'</span>' !!}
-                                    </a>
-                                </td>
+                                <td>{{ $row_descripcion }}</td>
+                                <td>{{ $row_inicio }}</td>
+                                <td class="text-center">{{ trans('system.estado.'.$row_estado) }}</td>
                                 <td class="text-center">
                                     <div class="btn-group">
                                         <button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Acciones
                                             <i class="fa fa-angle-down"></i>
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
-                                            <li><a class="modal-view" data-url="{{ route('expedient.edit', $row_id) }}" data-toggle="modal">Editar</a></li>
+                                            <li><a href="{{ route('expedientes.show', $row_id) }}" data-target="#ajax" data-toggle="modal">Ver registro</a></li>
+                                            <li><a href="{{ route('expedientes.edit', $row_id) }}">Editar</a></li>
                                             <li><a href="#delete" class="btn-delete">Eliminar</a></li>
+                                            <li><div class="divider"></div></li>
                                             <li><a href="javascript:;">Historial</a></li>
                                         </ul>
                                     </div>
@@ -103,7 +99,7 @@
 
     </div>
 
-{!! Form::open(['route' => ['expedient.destroy', ':REGISTER'], 'method' => 'DELETE', 'id' => 'FormDeleteRow']) !!}
+{!! Form::open(['route' => ['expedientes.destroy', ':REGISTER'], 'method' => 'DELETE', 'id' => 'FormDeleteRow']) !!}
 {!! Form::close() !!}
 
 <div class="modal-view-delete" id="delete" title="Eliminar registro">
@@ -114,11 +110,19 @@
 @stop
 
 @section('contenido_footer')
+{{-- Select2 --}}
+{!! HTML::script('assets/global/plugins/select2/js/select2.full.min.js') !!}
+{!! HTML::script('assets/global/plugins/select2/js/i18n/es.js') !!}
+<script>
+    $(document).on("ready", function(){
 
-{{-- UI Modal --}}
-{!! HTML::script('assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js') !!}
-{!! HTML::script('assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js') !!}
-{!! HTML::script('assets/pages/scripts/ui-extended-modals.js') !!}
+        var placeholder = "Seleccionar";
+
+        $('.select2').select2({
+            placeholder: placeholder
+        });
+    });
+</script>
 
 <script>
 
@@ -164,17 +168,6 @@
 
     });
 
-</script>
-
-{{-- SELECT2 --}}
-{!! HTML::script('assets/global/plugins/select2/js/select2.full.min.js') !!}
-{!! HTML::script('assets/global/plugins/select2/js/i18n/es.js') !!}
-<script>
-    var placeholder = "Seleccionar";
-
-    $('.select2').select2({
-        placeholder: placeholder
-    });
 </script>
 
 @stop
