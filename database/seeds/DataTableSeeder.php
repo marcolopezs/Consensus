@@ -542,5 +542,24 @@ class DataTableSeeder extends Seeder
             ['id' => '3', 'titulo' => 'PROCESAL', 'abrev' => 'J', 'num' => '317', 'estado' => '1'],
             ['id' => '4', 'titulo' => 'VEHICULAR', 'abrev' => 'V', 'num' => '3931', 'estado' => '1']
         ]);
+        
+        DB::table('bienes')->insert([
+            ['id' => '1', 'titulo' => 'Mueble', 'estado' => '1'],
+            ['id' => '2', 'titulo' => 'Inmueble', 'estado' => '1'],
+            ['id' => '3', 'titulo' => 'Vehículo', 'estado' => '1'],
+            ['id' => '4', 'titulo' => 'Varios', 'estado' => '1']
+        ]);
+        
+        DB::table('situacion_especial')->insert([
+            ['id' => '1', 'titulo' => 'Hipoteca', 'estado' => '1'],
+            ['id' => '2', 'titulo' => 'Embargo', 'estado' => '1'],
+            ['id' => '3', 'titulo' => 'Garantía', 'estado' => '1'],
+            ['id' => '4', 'titulo' => 'Otros', 'estado' => '1']
+        ]);
+
+        DB::table('exito')->insert([
+            ['id' => '1', 'titulo' => 'Si', 'estado' => '1'],
+            ['id' => '2', 'titulo' => 'No', 'estado' => '1']
+        ]);
     }
 }

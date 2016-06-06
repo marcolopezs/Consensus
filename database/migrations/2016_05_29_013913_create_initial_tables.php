@@ -270,12 +270,10 @@ class CreateInitialTables extends Migration
             $table->integer('area_id')->unsigned();
             $table->string('jefe_area');
 
-            $table->integer('bienes');
-            $table->integer('especial');
-
+            $table->integer('bienes_id')->unsigned();
+            $table->integer('situacion_especial_id')->unsigned();
             $table->integer('state_id')->unsigned();
-
-            $table->boolean('exito');
+            $table->boolean('exito_id')->unsigned();
 
             $table->text('observacion');
 
@@ -490,6 +488,39 @@ class CreateInitialTables extends Migration
             $table->nullableTimestamps();
             $table->softDeletes();
         });
+
+        Schema::create('bienes', function(Blueprint $table)
+        {
+            $table->increments('id');
+
+            $table->string('titulo')->nullable();
+            $table->boolean('estado');
+
+            $table->nullableTimestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('situacion_especial', function(Blueprint $table)
+        {
+            $table->increments('id');
+
+            $table->string('titulo')->nullable();
+            $table->boolean('estado');
+
+            $table->nullableTimestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('exito', function(Blueprint $table)
+        {
+            $table->increments('id');
+
+            $table->string('titulo')->nullable();
+            $table->boolean('estado');
+
+            $table->nullableTimestamps();
+            $table->softDeletes();
+        });
     }
 
     /**
@@ -529,5 +560,9 @@ class CreateInitialTables extends Migration
         Schema::drop('interveners');
         Schema::drop('expense_types');
         Schema::drop('paises');
+
+        Schema::drop('bienes');
+        Schema::drop('situacion_especial');
+        Schema::drop('exito');
     }
 }
