@@ -230,15 +230,18 @@ class CreateInitialTables extends Migration
             $table->string('expediente');
 
             $table->integer('cliente_id')->unsigned();
-            $table->integer('abogado_id')->unsigned();
             $table->integer('money_id')->unsigned();
+
+            $table->boolean('abogado');
+            $table->integer('abogado_id')->unsigned();
+
             $table->integer('tariff_id')->unsigned();
 
-            $table->date('fecha_inicio');
-            $table->date('fecha_termino');
+            $table->double('valor', 15, 2);
 
-            $table->double('inicio', 10, 2)->nullable()->default('0');
-            $table->double('termino', 10, 2)->nullable()->default('0');
+            $table->boolean('asistente');
+            $table->integer('asistente_id')->unsigned();
+
             $table->double('honorario_hora', 10, 2)->nullable()->default('0');
             $table->double('tope_monto', 10, 2)->nullable()->default('0');
             $table->double('retainer_fm', 10, 2)->nullable()->default('0');
@@ -248,13 +251,33 @@ class CreateInitialTables extends Migration
 
             $table->integer('service_id')->unsigned();
             $table->integer('numero_dias')->nullable()->default('0');
-            $table->date('fecha_limite')->nullable();
+            $table->date('fecha_inicio');
+            $table->date('fecha_termino');
 
             $table->text('descripcion');
-            $table->text('observacion');
             $table->text('concepto');
 
-            $table->boolean('estado');
+            $table->integer('matter_id')->unsigned();
+            $table->integer('entity_id')->unsigned();
+            $table->integer('instance_id')->unsigned();
+            $table->string('encargado');
+
+            $table->boolean('poder');
+            $table->date('fecha_poder');
+            $table->boolean('vencimiento');
+            $table->date('fecha_vencimiento');
+
+            $table->integer('area_id')->unsigned();
+            $table->string('jefe_area');
+
+            $table->integer('bienes');
+            $table->integer('especial');
+
+            $table->integer('state_id')->unsigned();
+
+            $table->boolean('exito');
+
+            $table->text('observacion');
 
             $table->nullableTimestamps();
             $table->softDeletes();

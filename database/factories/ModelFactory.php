@@ -48,6 +48,25 @@ $factory->define(\Consensus\Entities\Cliente::class, function ($faker) use ($fac
     ];
 });
 
+//ABOGADOS
+$factory->define(\Consensus\Entities\Abogado::class, function ($faker) use ($factory) {
+    return [
+        'nombre' => $faker->unique()->company,
+        'dni' => $faker->unique()->regexify('[0-9]{8,8}'),
+        'ruc' => $faker->unique()->regexify('[0-9]{11,11}'),
+        'carnet_extranjeria' => $faker->unique()->regexify('[0-9]{12,12}'),
+        'pasaporte' => $faker->unique()->regexify('[0-9]{12,12}'),
+        'partida_nacimiento' => $faker->unique()->regexify('[0-9]{15,15}'),
+        'otros' => $faker->unique()->regexify('[0-9]{15,15}'),
+        'email' => $faker->unique()->email,
+        'telefono' => $faker->phoneNumber,
+        'fax' => $faker->phoneNumber,
+        'direccion' => $faker->address,
+        'pais_id' => \Consensus\Entities\Pais::all()->random()->id,
+        'estado' => $faker->randomElement([0,1])
+    ];
+});
+
 //CONTACTOS DE CLIENTE
 $factory->define(\Consensus\Entities\ClienteContacto::class, function ($faker) use ($factory) {
     return [
@@ -81,18 +100,32 @@ $factory->define(\Consensus\Entities\ClienteDocumento::class, function ($faker) 
 
 //EXPEDIENTES
 $factory->define(\Consensus\Entities\Expediente::class, function ($faker) use ($factory) {
+    $servicio = \Consensus\Entities\Service::all()->random();
+    $dias = $servicio->dias_ejecucion;
     return [
         'expediente' => $faker->regexify('[A-Z]{1,1}-[0-9]{10,10}'),
         'cliente_id' => \Consensus\Entities\Cliente::all()->random()->id,
         'money_id' => \Consensus\Entities\Money::all()->random()->id,
+        'abogado' => $faker->randomElement([0,1]),
+        'abogado_id' => \Consensus\Entities\Abogado::all()->random()->id,
         'tariff_id' => \Consensus\Entities\Tariff::all()->random()->id,
-        'fecha_inicio' => $faker->date('Y-m-d'),
-        'fecha_termino' => $faker->date('Y-m-d'),
-        'service_id' => \Consensus\Entities\Service::all()->random()->id,
+        'valor' => $faker->randomFloat(2, 5, 15),
+        'asistente' => $faker->randomElement([0,1]),
+        'asistente_id' => \Consensus\Entities\Abogado::all()->random()->id,
+        'service_id' => $servicio->id,
+        'numero_dias' => $dias,
+        'fecha_inicio' => $faker->dateTimeBetween('-2 years', 'now'),
+        'fecha_termino' => $faker->dateTimeBetween('now', '+2 years'),
         'descripcion' => $faker->text(rand(100,255)),
-        'observacion' => $faker->text(rand(100,255)),
         'concepto' => $faker->text(rand(100,255)),
-        'estado' => $faker->randomElement([0,1])
+        'matter_id' => \Consensus\Entities\Matter::all()->random()->id,
+        'entity_id' => \Consensus\Entities\Entity::all()->random()->id,
+        'instance_id' => \Consensus\Entities\Instance::all()->random()->id,
+        'encargado' => $faker->name,
+        'area_id' => \Consensus\Entities\Area::all()->random()->id,
+        'jefe_area' => $faker->name,
+        'state_id' => \Consensus\Entities\State::all()->random()->id,
+        'observacion' => $faker->text(rand(100,255))
     ];
 });
 
