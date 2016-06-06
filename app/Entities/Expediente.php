@@ -11,7 +11,7 @@ class Expediente extends BaseEntity {
     protected $fillable = ['expediente_opcion','expediente_tipo_id','expediente','cliente_id','money_id','abogado','abogado_id','tariff_id',
         'valor','asistente','asistente_id','honorario_hora','tope_monto','retainer_fm','numero_horas','honorario_fijo','hora_adicional',
         'service_id','numero_dias','fecha_inicio','fecha_termino','descripcion','concepto','matter_id','entity_id','instance_id','encargado',
-        'poder','fecha_poder','vencimiento','fecha_vencimiento','area_id','jefe_area','bienes','especial','state_id','exito','observacion'];
+        'poder','fecha_poder','vencimiento','fecha_vencimiento','area_id','jefe_area','bienes_id','situacion_especial_id','state_id','exito_id','observacion'];
 
     protected $table = 'expedientes';
 

@@ -1,6 +1,7 @@
 <?php namespace Consensus\Repositories;
 
 use Auth;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Jenssegers\Date\Date;
 
@@ -376,4 +377,10 @@ abstract class BaseRepo {
         return $row;
     }
 
+    //CONVERTIR FORMATO DE FECHA
+    public function formatoFecha($date)
+    {
+        $fecha = Carbon::createFromFormat('d/m/Y', $date);
+        return $fecha->format('Y-m-d');
+    }
 }

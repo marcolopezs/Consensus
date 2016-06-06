@@ -92,12 +92,12 @@ return [
     */
 
     'custom'               => [
-        'kardex_type' => [
-            'required_if' => 'Seleccionar el tipo de Kardex'
+        'expediente_ttipo' => [
+            'required_if' => 'Seleccionar el tipo de Expediente'
         ],
-        'kardex' => [
-            'required_if' => 'Ingresar manualmente el Kardex',
-            'required_with' => 'Seleccionar el Kardex del Cliente'
+        'expediente' => [
+            'required_if' => 'Ingresar manualmente el Expediente',
+            'required_with' => 'Seleccionar el Expediente del Cliente'
         ],
         'poder' => [
             'required_with' => 'Activar la casilla de Fecha de Poder'
@@ -110,7 +110,13 @@ return [
         ],
         'fecha_vencimiento' => [
             'required_if' => 'El campo Fecha de Vencimiento es obligatorio'
-        ]
+        ],
+        'abogado_id' => [
+            'required_if' => 'El campo Abogado es obligatorio cuando ha activado la casilla de Abogado'
+        ],
+        'asistente_id' => [
+            'required_if' => 'El campo Asistente es obligatorio cuando ha activado la casilla de Asistente'
+        ],
     ],
 
     /*
@@ -155,17 +161,21 @@ return [
         'time'                  => 'hora',
         'subject'               => 'asunto',
         'message'               => 'mensaje',
-        'kardex_type'           => 'Tipo de Kardex',
-        'kardex_opcion'         => 'Kardex',
+        'expediente_tipo'       => 'tipo de Expediente',
+        'expediente_opcion'     => 'opción de Expediente',
+        'auto'                  => 'Automático',
+        'manual'                => 'Manual',
+        'expediente'            => 'Expediente',
         'kardex'                => 'Kardex',
         'abogado'               => 'Abogado',
+        'asistente'             => 'Asistente',
         'cliente'               => 'Cliente',
         'moneda'                => 'Moneda',
         'tarifa'                => 'Tarifa',
         'fecha_inicio'          => 'Fecha de Inicio',
         'fecha_fin'             => 'Fecha de Término',
+        'fecha_termino'         => 'Fecha de Término',
         'servicio'              => 'Servicio',
-        'expediente'            => 'Expediente',
         'materia'               => 'Materia',
         'entidad'               => 'Entidad',
         'instancia'             => 'Instancia',
@@ -181,7 +191,10 @@ return [
         'direccion'             => 'Dirección',
         'contacto'              => 'Contacto',
         'nombre'                => 'Nombre',
-        'apellidos'             => 'Apellidos'
+        'apellidos'             => 'Apellidos',
+        'bienes'                => 'Bienes',
+        'especial'              => 'Situación Especial',
+        'exito'                 => 'Éxito'
     ],
 
 ];

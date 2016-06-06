@@ -2,6 +2,9 @@
 
 use Auth;
 use Carbon\Carbon;
+use Consensus\Repositories\BienesRepo;
+use Consensus\Repositories\ExitoRepo;
+use Consensus\Repositories\SituacionEspecialRepo;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
@@ -9,60 +12,69 @@ use Consensus\Http\Controllers\Controller;
 
 use Consensus\Entities\Expediente;
 use Consensus\Repositories\ExpedienteRepo;
+use Consensus\Http\Requests\ExpedienteRequest;
 
+use Consensus\Repositories\AbogadoRepo;
+use Consensus\Repositories\AreaRepo;
 use Consensus\Repositories\ClienteRepo;
+use Consensus\Repositories\EntityRepo;
 use Consensus\Repositories\ExpedienteTipoRepo;
+use Consensus\Repositories\InstanceRepo;
+use Consensus\Repositories\MatterRepo;
 use Consensus\Repositories\MoneyRepo;
 use Consensus\Repositories\ServiceRepo;
+use Consensus\Repositories\StateRepo;
 use Consensus\Repositories\TariffRepo;
 
 class ExpedientesController extends Controller {
 
-    protected $rules = [
-        'expediente_tipo' => 'required_if:expediente_opcion,auto',
-        'expediente' => 'required_if:expediente_opcion,manual',
-        'cliente' => 'required|exists:clientes,id',
-        'abogado' => 'required',
-        'moneda' => 'required|exists:money,id',
-        'tarifa' => 'required|exists:tariffs,id',
-        'fecha_inicio' => 'required|date_format:d/m/Y',
-        'fecha_termino' => 'required|date_format:d/m/Y',
-        'inicio' => 'numeric',
-        'termino' => 'numeric',
-        'honorario_hora' => 'numeric',
-        'tope_monto' => 'numeric',
-        'retainer_fm' => 'numeric',
-        'numero_horas' => 'numeric',
-        'honorario_fijo' => 'numeric',
-        'hora_adicional' => 'numeric',
-        'servicio' => 'required|exists:services,id',
-        'numero_dias' => 'numeric',
-        'fecha_limite' => 'date_format:d/m/Y',
-        'descripcion' => 'string',
-        'concepto' => 'string',
-        'observacion' => 'string'
-    ];
-
+    protected $abogadoRepo;
+    protected $areaRepo;
+    protected $bienesRepo;
     protected $clienteRepo;
+    protected $entityRepo;
+    protected $exitoRepo;
     protected $expedienteRepo;
     protected $expedienteTipoRepo;
+    protected $instanceRepo;
+    protected $matterRepo;
     protected $moneyRepo;
-    protected $tariffRepo;
     protected $serviceRepo;
+    protected $situacionEspecialRepo;
+    protected $stateRepo;
+    protected $tariffRepo;
 
-    public function __construct(ClienteRepo $clienteRepo,
+    public function __construct(AbogadoRepo $abogadoRepo,
+                                AreaRepo $areaRepo,
+                                BienesRepo $bienesRepo,
+                                ClienteRepo $clienteRepo,
+                                EntityRepo $entityRepo,
+                                ExitoRepo $exitoRepo,
                                 ExpedienteRepo $expedienteRepo,
                                 ExpedienteTipoRepo $expedienteTipoRepo,
+                                InstanceRepo $instanceRepo,
+                                MatterRepo $matterRepo,
                                 MoneyRepo $moneyRepo,
                                 ServiceRepo $serviceRepo,
+                                SituacionEspecialRepo $situacionEspecialRepo,
+                                StateRepo $stateRepo,
                                 TariffRepo $tariffRepo)
     {
+        $this->abogadoRepo = $abogadoRepo;
+        $this->areaRepo = $areaRepo;
+        $this->bienesRepo = $bienesRepo;
         $this->clienteRepo = $clienteRepo;
+        $this->entityRepo = $entityRepo;
+        $this->exitoRepo = $exitoRepo;
         $this->expedienteRepo = $expedienteRepo;
         $this->expedienteTipoRepo = $expedienteTipoRepo;
+        $this->instanceRepo = $instanceRepo;
+        $this->matterRepo = $matterRepo;
         $this->moneyRepo = $moneyRepo;
-        $this->tariffRepo = $tariffRepo;
         $this->serviceRepo = $serviceRepo;
+        $this->situacionEspecialRepo = $situacionEspecialRepo;
+        $this->stateRepo = $stateRepo;
+        $this->tariffRepo = $tariffRepo;
     }
 
     /**
@@ -86,12 +98,22 @@ class ExpedientesController extends Controller {
     public function create()
     {
         $cliente = $this->clienteRepo->orderBy('cliente', 'asc')->lists('cliente', 'id')->toArray();
+        $abogado = $this->abogadoRepo->orderBy('nombre', 'asc')->lists('nombre', 'id')->toArray();
         $tarifa = $this->tariffRepo->estadoListArray();
         $moneda = $this->moneyRepo->lists('titulo', 'id')->toArray();
         $servicio = $this->serviceRepo->estadoListArray();
         $expediente_tipo = $this->expedienteTipoRepo->estadoListArray();
+        $area = $this->areaRepo->estadoListArray();
+        $entidad = $this->entityRepo->estadoListArray();
+        $instancia = $this->instanceRepo->estadoListArray();
+        $materia = $this->matterRepo->estadoListArray();
+        $estado = $this->stateRepo->estadoListArray();
+        $bienes = $this->bienesRepo->estadoListArray();
+        $especial = $this->situacionEspecialRepo->estadoListArray();
+        $exito = $this->exitoRepo->estadoListArray();
 
-        return view('system.expediente.create', compact('cliente','tarifa','moneda','servicio','expediente_tipo'));
+        return view('system.expediente.create',
+            compact('abogado','area','cliente','entidad','instancia','materia','estado','tarifa','moneda','servicio','expediente_tipo','bienes','especial','exito'));
     }
 
     /**
@@ -100,42 +122,26 @@ class ExpedientesController extends Controller {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ExpedienteRequest $request)
     {
-        //VALIDACION
-        $this->validate($request, $this->rules);
-
         //VARIABLES
         $expediente_opcion = $request->input('expediente_opcion');
         $cliente = $request->input('cliente');
-        $abogado = $request->input('abogado');
         $moneda = $request->input('moneda');
         $tarifa = $request->input('tarifa');
-        $inicio = $request->input('inicio');
-        $termino = $request->input('termino');
-        $honorario_hora = $request->input('honorario_hora');
-        $tope_monto = $request->input('tope_monto');
-        $retainer_fm = $request->input('retainer_fm');
-        $numero_horas = $request->input('numero_horas');
-        $honorario_fijo = $request->input('honorario_fijo');
-        $hora_adicional = $request->input('hora_adicional');
         $servicio = $request->input('servicio');
-        $numero_dias = $request->input('numero_dias');
-        $descripcion = $request->input('descripcion');
-        $concepto = $request->input('concepto');
-        $observacion = $request->input('observacion');
-
-        //FECHA INICIO
-        $carbon_inicio = Carbon::createFromFormat('d/m/Y', $request->input('fecha_inicio'));
-        $fecha_inicio = $carbon_inicio->format('Y-m-d');
-
-        //FECHA TERMINO
-        $carbon_termino = Carbon::createFromFormat('d/m/Y', $request->input('fecha_termino'));
-        $fecha_termino = $carbon_termino->format('Y-m-d');
-
-        //FECHA LIMITE
-        $carbon_limite = Carbon::createFromFormat('d/m/Y', $request->input('fecha_limite'));
-        $fecha_limite = $carbon_limite->format('Y-m-d');
+        $fecha_inicio = $this->expedienteRepo->formatoFecha($request->input('fecha_inicio'));
+        $fecha_termino = $this->expedienteRepo->formatoFecha($request->input('fecha_termino'));
+        $materia = $request->input('materia');
+        $entidad = $request->input('entidad');
+        $instancia = $request->input('instancia');
+        $fecha_poder = $this->expedienteRepo->formatoFecha($request->input('fecha_poder'));
+        $fecha_vencimiento = $this->expedienteRepo->formatoFecha($request->input('fecha_vencimiento'));
+        $area = $request->input('area');
+        $bienes = $request->input('bienes');
+        $especial = $request->input('especial');
+        $estado = $request->input('estado');
+        $exito = $request->input('exito');
 
         //VALIDAD SI ES EXPEDIENTE AUTOMATICO O MANUAL
         if($expediente_opcion == 'auto')
@@ -159,25 +165,21 @@ class ExpedientesController extends Controller {
         $row->expediente = $expediente;
         $row->expediente_opcion = $expediente_opcion;
         $row->cliente_id = $cliente;
-        $row->abogado_id = $abogado;
         $row->money_id = $moneda;
         $row->tariff_id = $tarifa;
+        $row->service_id = $servicio;
         $row->fecha_inicio = $fecha_inicio;
         $row->fecha_termino = $fecha_termino;
-        $row->inicio = $inicio;
-        $row->termino = $termino;
-        $row->honorario_hora = $honorario_hora;
-        $row->tope_monto = $tope_monto;
-        $row->retainer_fm = $retainer_fm;
-        $row->numero_horas = $numero_horas;
-        $row->honorario_fijo = $honorario_fijo;
-        $row->hora_adicional = $hora_adicional;
-        $row->service_id = $servicio;
-        $row->numero_dias = $numero_dias;
-        $row->fecha_limite = $fecha_limite;
-        $row->descripcion = $descripcion;
-        $row->concepto = $concepto;
-        $row->observacion = $observacion;
+        $row->matter_id = $materia;
+        $row->entity_id = $entidad;
+        $row->instance_id = $instancia;
+        $row->fecha_poder = $fecha_poder;
+        $row->fecha_vencimiento = $fecha_vencimiento;
+        $row->area_id = $area;
+        $row->bienes_id = $bienes;
+        $row->situacion_especial_id = $especial;
+        $row->state_id = $estado;
+        $row->exito_id = $exito;
         $this->expedienteRepo->create($row, $request->all());
 
         //MENSAJE
