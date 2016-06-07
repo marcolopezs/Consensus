@@ -30,6 +30,16 @@ class Expediente extends BaseEntity {
         return $this->belongsTo(Tariff::class);
     }
 
+    public function instance()
+    {
+        return $this->belongsTo(Instance::class);
+    }
+
+    public function state()
+    {
+        return $this->belongsTo(State::class);
+    }
+
     public function money()
     {
         return $this->belongsTo(Money::class);
