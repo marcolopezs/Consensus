@@ -114,12 +114,14 @@
 
                             <div class="row">
 
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         {!! Form::label('tarifa', 'Tárifa', ['class' => 'control-label']) !!}
                                         {!! Form::select('tarifa', [''=>''] + $tarifa, null, ['class' => 'form-control select2']) !!}
                                     </div>
                                 </div>
+
+                                <div class="col-md-2"></div>
 
                                 <div class="col-md-3">
                                     <div class="form-group">
@@ -209,33 +211,29 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        {!! Form::label('fecha_inicio', 'Fecha Inicio', ['class' => 'control-label']) !!}
-                                        {!! Form::text('fecha_inicio', null, ['class' => 'form-control form-control-inline date-picker']) !!}
-                                    </div>
-                                </div>
+                                <div class="col-md-4 input-group date-picker input-daterange" data-date-format="dd/mm/yyyy">
 
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        {!! Form::label('fecha_termino', 'Fecha Término', ['class' => 'control-label']) !!}
-                                        {!! Form::text('fecha_termino', null, ['class' => 'form-control form-control-inline date-picker']) !!}
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            {!! Form::label('fecha_inicio', 'Fecha Inicio', ['class' => 'control-label']) !!}
+                                            {!! Form::text('fecha_inicio', dateActual(), ['class' => 'form-control form-control-inline date-picker']) !!}
+                                        </div>
                                     </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            {!! Form::label('fecha_termino', 'Fecha Término', ['class' => 'control-label']) !!}
+                                            {!! Form::text('fecha_termino', null, ['class' => 'form-control form-control-inline date-picker']) !!}
+                                        </div>
+                                    </div>
+
                                 </div>
 
                             </div>
 
                             <div class="row">
 
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <div id="progressbar" class="progress progress-striped active">
-                                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                                                <span class="sr-only"> 40% Complete (success) </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                @include('partials.progressbar')
 
                             </div>
 
@@ -270,16 +268,8 @@
 
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        {!! Form::label('poder', 'Fecha Inicio de Poder', ['class' => 'control-label']) !!}
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                {!! Form::checkbox('poder', '1', null) !!}
-                                            </span>
-                                            <div class="input-group input-medium date date-picker" data-date-format="dd/mm/yyyy" data-date-viewmode="years">
-                                                {!! Form::text('fecha_poder', null, ['class' => 'form-control']) !!}
-                                                <span class="input-group-btn"><button class="btn default" type="button"><i class="fa fa-calendar"></i></button></span>
-                                            </div>
-                                        </div>
+                                        {!! Form::label('entidad', 'Entidad', ['class' => 'control-label']) !!}
+                                        {!! Form::select('entidad', ['' => ''] + $entidad, null, ['class' => 'form-control select2']) !!}
                                     </div>
                                 </div>
 
@@ -303,28 +293,6 @@
 
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        {!! Form::label('entidad', 'Entidad', ['class' => 'control-label']) !!}
-                                        {!! Form::select('entidad', ['' => ''] + $entidad, null, ['class' => 'form-control select2']) !!}
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        {!! Form::label('vencimiento', 'Fecha Vencimiento de Poder', ['class' => 'control-label']) !!}
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                {!! Form::checkbox('vencimiento', '1', null) !!}
-                                            </span>
-                                            <div class="input-group input-medium date date-picker" data-date-format="dd/mm/yyyy" data-date-viewmode="years">
-                                                {!! Form::text('fecha_vencimiento', null, ['class' => 'form-control']) !!}
-                                                <span class="input-group-btn"><button class="btn default" type="button"><i class="fa fa-calendar"></i></button></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <div class="form-group">
                                         {!! Form::label('encargado', 'Encargado', ['class' => 'control-label']) !!}
                                         {!! Form::text('encargado', null, ['class' => 'form-control']) !!}
                                     </div>
@@ -335,6 +303,40 @@
                                         {!! Form::label('jefe_area', 'Jefe Área', ['class' => 'control-label']) !!}
                                         {!! Form::text('jefe_area', null, ['class' => 'form-control']) !!}
                                     </div>
+                                </div>
+
+                                <div class="col-md-4 input-group date-picker input-daterange" data-date-format="dd/mm/yyyy">
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            {!! Form::label('poder', 'Fecha Inicio de Poder', ['class' => 'control-label']) !!}
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    {!! Form::checkbox('poder', '1', null) !!}
+                                                </span>
+                                                <div class="input-group input-medium date date-picker" data-date-format="dd/mm/yyyy" data-date-viewmode="years">
+                                                    {!! Form::text('fecha_poder', null, ['class' => 'form-control']) !!}
+                                                    <span class="input-group-btn"><button class="btn default" type="button"><i class="fa fa-calendar"></i></button></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            {!! Form::label('vencimiento', 'Fecha Vencimiento de Poder', ['class' => 'control-label']) !!}
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    {!! Form::checkbox('vencimiento', '1', null) !!}
+                                                </span>
+                                                <div class="input-group input-medium date date-picker" data-date-format="dd/mm/yyyy" data-date-viewmode="years">
+                                                    {!! Form::text('fecha_vencimiento', null, ['class' => 'form-control']) !!}
+                                                    <span class="input-group-btn"><button class="btn default" type="button"><i class="fa fa-calendar"></i></button></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
 
                             </div>
@@ -416,6 +418,7 @@
 {{-- Date Picker --}}
 {!! HTML::script('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') !!}
 {!! HTML::script('assets/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js') !!}
+{!! HTML::script('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') !!}
 
 {{-- Components --}}
 {!! HTML::script('assets/pages/scripts/components-date-time-pickers.js') !!}
@@ -426,7 +429,7 @@
 
         //DESACTIVAR INPUT
         $("#progressbar").hide();
-        $("#expediente_mask, #honorario_hora, #tope_monto, #retainer_fm, " +
+        $("#honorario_hora, #tope_monto, #retainer_fm, " +
                 "#numero_horas, #honorario_fijo, #hora_adicional").prop('disabled', true);
 
         //EXPEDIENTE MANUAL O AUTOMATICO
@@ -481,13 +484,38 @@
                 complete: function (){ $("#progressbar").hide(); },
                 success: function (result){
                     $("#numero_dias").val(result.dias);
-                    $("#fecha_limite").val(result.fecha);
+                    $("#fecha_termino").val(result.fecha);
+                },
+                error: function (result){
+                    $("#message-error").show();
+                    $("#message-error p").text("Se produjo un error. Intente de nuevo más tarde.");
+                    console.log(result);
+                }
+            });
+
+        });
+
+        //CAMBIAR FECHA TERMINO EN CASO CAMBIE LA FECHA DE INICIO
+        $("#fecha_inicio").on("change", function() {
+            var dias = $("#numero_dias").val();
+            var inicio = $("#fecha_inicio").val();
+
+            $.ajax({
+                method: 'POST',
+                url: '{{ route('service.fecha.suma') }}',
+                data: {'dias': dias, 'fecha': inicio},
+                headers: {'X-CSRF-TOKEN' : '{{ csrf_token() }}'},
+                beforeSend: function (){ $("#progressbar").show(); },
+                complete: function (){ $("#progressbar").hide(); },
+                success: function (result){
+                    $("#fecha_termino").val(result.fecha);
                 },
                 error: function (result){
                     $("#message-error").show();
                     $("#message-error p").text("Se produjo un error. Intente de nuevo más tarde.");
                 }
             });
+
 
         });
 
