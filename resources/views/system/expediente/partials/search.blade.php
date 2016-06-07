@@ -19,9 +19,6 @@
             Descripción
         </th>
         <th width="10%">
-            Inicio
-        </th>
-        <th width="10%">
             Estado
         </th>
         <th width="15%">Acciones</th>
@@ -30,7 +27,6 @@
         <td>{!! Form::text('kardex', null, ['class' => 'form-control form-filter input-sm']) !!}</td>
         <td>{!! Form::select('cliente', [''=>''] + $cliente, null, ['class' => 'form-control select2 form-filter input-sm']) !!}</td>
         <td>{!! Form::text('descripcion', null, ['class' => 'form-control form-filter input-sm']) !!}</td>
-        <td>{!! Form::text('inicio', null, ['class' => 'form-control form-filter input-sm']) !!}</td>
         <td>{!! Form::select('estado', ['' => 'Seleccionar', '0' => 'No activo', '1' => 'Activo'], null, ['class' => 'form-control form-filter input-sm']) !!}</td>
         <td>
             {!! Form::button('<i class="fa fa-search"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-success filter-submit margin-bottom']) !!}
