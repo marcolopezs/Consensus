@@ -68,6 +68,7 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
         //SERVICIOS
         Route::resource('service', 'ServiceController', ['names' => $prefixedResourceNames('service')]);
         Route::post('service-fecha/{service}', ['as' => 'service.fecha', 'uses' => 'ServiceController@serviceFecha']);
+        Route::post('service-fecha-sumadias', ['as' => 'service.fecha.suma', 'uses' => 'ServiceController@serviceFechaSuma']);
 
         //INSTANCIAS
         Route::resource('instance', 'InstanceController', ['names' => $prefixedResourceNames('instance')]);

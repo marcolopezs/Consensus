@@ -160,4 +160,20 @@ class ServiceController extends Controller {
             ]);
         }
     }
+
+
+    public function serviceFechaSuma(Request $request)
+    {
+        $carbon = Carbon::createFromFormat('d/m/Y', $request->input('fecha'));
+        $suma_dias = $carbon->addDays($request->input('dias'));
+        $format = $suma_dias->format('d/m/Y');
+
+        //AJAX
+        if($request->ajax())
+        {
+            return response()->json([
+                'fecha' => $format
+            ]);
+        }
+    }
 }
