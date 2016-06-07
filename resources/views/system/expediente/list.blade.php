@@ -21,6 +21,7 @@
         <div class="col-md-12 col-sm-12">
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
             <div class="portlet light portlet-datatable " id="form_wizard_1">
+
                 <div class="portlet-body">
 
                     <div class="table-toolbar">
@@ -43,20 +44,18 @@
 
                         <tbody>
                         @foreach($rows as $item)
-                            {{--*/
-                            $row_id = $item->id;
-                            $row_expediente = $item->expediente;
-                            $row_cliente = $item->cliente->cliente;
-                            $row_descripcion = $item->descripcion;
-                            $row_inicio = soloFecha($item->fecha_inicio);
-                            $row_estado = $item->estado;
-                            /*--}}
+                            @php
+                                $row_id = $item->id;
+                                $row_expediente = $item->expediente;
+                                $row_cliente = $item->cliente->cliente;
+                                $row_instancia = $item->instance->titulo;
+                                $row_estado = $item->state->titulo;
+                            @endphp
                             <tr class="odd gradeX" data-id="{{ $row_id }}" data-title="{{ $row_expediente }}">
                                 <td>{{ $row_expediente }}</td>
                                 <td>{{ $row_cliente }}</td>
-                                <td>{{ $row_descripcion }}</td>
-                                <td>{{ $row_inicio }}</td>
-                                <td class="text-center">{{ trans('system.estado.'.$row_estado) }}</td>
+                                <td>{{ $row_instancia }}</td>
+                                <td class="text-center">{{ $row_estado }}</td>
                                 <td class="text-center">
                                     <div class="btn-group">
                                         <button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Acciones
@@ -65,7 +64,6 @@
                                         <ul class="dropdown-menu" role="menu">
                                             <li><a href="{{ route('expedientes.show', $row_id) }}" data-target="#ajax" data-toggle="modal">Ver registro</a></li>
                                             <li><a href="{{ route('expedientes.edit', $row_id) }}">Editar</a></li>
-                                            <li><a href="#delete" class="btn-delete">Eliminar</a></li>
                                             <li><div class="divider"></div></li>
                                             <li><a href="javascript:;">Historial</a></li>
                                         </ul>
