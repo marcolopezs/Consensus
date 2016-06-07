@@ -114,6 +114,9 @@ return [
         'abogado_id' => [
             'required_if' => 'El campo Abogado es obligatorio cuando ha activado la casilla de Abogado'
         ],
+        'asistente' => [
+            'required_with' => 'Active la casilla de Asistente, en caso haya seleccionado un registro'
+        ],
         'asistente_id' => [
             'required_if' => 'El campo Asistente es obligatorio cuando ha activado la casilla de Asistente'
         ],
