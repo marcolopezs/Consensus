@@ -21,10 +21,10 @@
         <div class="col-md-12 col-sm-12">
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
             <div class="portlet light portlet-datatable " id="form_wizard_1">
+                <div class="portlet-title">
 
-                <div class="portlet-body">
+                    <div class="caption">
 
-                    <div class="table-toolbar">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="btn-group">
@@ -34,7 +34,22 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
+
+                    <div class="actions">
+                        <div class="btn-group btn-group-devided" data-toggle="buttons">
+                            <div class="btn-group">
+                                <a class="btn red btn-outline btn-circle" href="javascript:;">
+                                    <i class="fa fa-cog"></i>
+                                    <span class="hidden-xs"> Ajustes </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="portlet-body">
 
                     {!! Form::model(Request::all(), ['route' => 'expedientes.index', 'method' => 'GET']) !!}
 
@@ -64,7 +79,6 @@
                                         <ul class="dropdown-menu" role="menu">
                                             <li><a href="{{ route('expedientes.show', $row_id) }}" data-target="#ajax" data-toggle="modal">Ver registro</a></li>
                                             <li><a href="{{ route('expedientes.edit', $row_id) }}">Editar</a></li>
-                                            <li><div class="divider"></div></li>
                                             <li><a href="javascript:;">Historial</a></li>
                                         </ul>
                                     </div>
@@ -97,75 +111,31 @@
 
     </div>
 
-{!! Form::open(['route' => ['expedientes.destroy', ':REGISTER'], 'method' => 'DELETE', 'id' => 'FormDeleteRow']) !!}
-{!! Form::close() !!}
-
-<div class="modal-view-delete" id="delete" title="Eliminar registro">
-    <p>¿Desea eliminar el registro?</p>
-    <div id="deleteTitle"></div>
-</div>
-
 @stop
 
 @section('contenido_footer')
-{{-- Select2 --}}
-{!! HTML::script('assets/global/plugins/select2/js/select2.full.min.js') !!}
-{!! HTML::script('assets/global/plugins/select2/js/i18n/es.js') !!}
-<script>
-    $(document).on("ready", function(){
+    {{-- Select2 --}}
+    {!! HTML::script('assets/global/plugins/select2/js/select2.full.min.js') !!}
+    {!! HTML::script('assets/global/plugins/select2/js/i18n/es.js') !!}
+    <script>
+        $(document).on("ready", function(){
 
-        var placeholder = "Seleccionar";
+            var placeholder = "Seleccionar";
 
-        $('.select2').select2({
-            placeholder: placeholder
-        });
-    });
-</script>
-
-<script>
-
-    $(document).on("ready", function () {
-
-        $('.modal-view-delete, #mensajeAjax').hide();
-
-        $(".btn-delete").on("click", function(e){
-            e.preventDefault();
-            var row = $(this).parents("tr");
-            var id = row.data("id");
-            var title = row.data("title");
-            var form = $("#FormDeleteRow");
-            var url = form.attr("action").replace(':REGISTER', id);
-            var data = form.serialize();
-
-            $("#delete #deleteTitle").text(title);
-
-            $( "#delete" ).dialog({
-                resizable: true,
-                height: 250,
-                modal: false,
-                buttons: {
-                    "Borrar registro": function() {
-                        row.fadeOut();
-
-                        $.post(url, data, function(result){
-                            $("#mensajeAjax").show().removeClass('alert-danger').addClass('alert-success').text(result.message);
-                        }).fail(function(){
-                            $("#mensajeAjax").show().removeClass('alert-success').addClass('alert-danger').text("Se produjo un error al eliminar el registro");
-                            row.show();
-                        });
-
-                        $(this).dialog("close");
-                    },
-                    Cancel: function() {
-                        $(this).dialog("close");
-                    }
-                }
+            $('.select2').select2({
+                placeholder: placeholder
             });
+        });
+    </script>
+
+    <script>
+
+        $(document).on("ready", function () {
+
+            $('#mensajeAjax').hide();
 
         });
 
-    });
-
-</script>
+    </script>
 
 @stop
