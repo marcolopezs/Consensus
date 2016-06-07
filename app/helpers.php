@@ -26,6 +26,12 @@ function soloFecha($fecha)
     return date_format(new DateTime($fecha), 'd/m/Y');
 }
 
+/* FECHA ACTUAL */
+function dateActual(){
+    $fechaActual = date('d/m/Y');
+    return $fechaActual;
+}
+
 //FUNCION PARA MARCAR ORDEN
 function cssOrden($orden)
 {

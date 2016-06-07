@@ -108,11 +108,7 @@ abstract class BaseRepo {
     }
 
 
-    /* FECHA ACTUAL */
-    public function fechaActual(){
-        $fechaActual = date('Y-m-d H:i:s');
-        return $fechaActual;
-    }
+
 
 
 
