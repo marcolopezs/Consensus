@@ -20,9 +20,14 @@ class Expediente extends BaseEntity {
         return $this->belongsTo(Cliente::class);
     }
 
-    public function kardex()
+    public function money()
     {
-        return $this->hasMany(Kardex::class);
+        return $this->belongsTo(Money::class);
+    }
+
+    public function abogado()
+    {
+        return $this->belongsTo(Abogado::class);
     }
 
     public function tariff()
@@ -30,9 +35,44 @@ class Expediente extends BaseEntity {
         return $this->belongsTo(Tariff::class);
     }
 
+    public function asistente()
+    {
+        return $this->belongsTo(Abogado::class);
+    }
+
+    public function service()
+    {
+        return $this->belongsTo(Service::class);
+    }
+
+    public function matter()
+    {
+        return $this->belongsTo(Matter::class);
+    }
+
+    public function entity()
+    {
+        return $this->belongsTo(Entity::class);
+    }
+
     public function instance()
     {
         return $this->belongsTo(Instance::class);
+    }
+
+    public function area()
+    {
+        return $this->belongsTo(Area::class);
+    }
+
+    public function bienes()
+    {
+        return $this->belongsTo(Bienes::class);
+    }
+
+    public function situacionEspecial()
+    {
+        return $this->belongsTo(SituacionEspecial::class);
     }
 
     public function state()
@@ -40,14 +80,14 @@ class Expediente extends BaseEntity {
         return $this->belongsTo(State::class);
     }
 
-    public function money()
+    public function exito()
     {
-        return $this->belongsTo(Money::class);
+        return $this->belongsTo(Exito::class);
     }
 
-    public function service()
+    public function kardex()
     {
-        return $this->belongsTo(Service::class);
+        return $this->hasMany(Kardex::class);
     }
 
     public function scopeExpediente($query, $value)

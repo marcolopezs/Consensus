@@ -21,6 +21,8 @@ class ExpedienteRepo extends BaseRepo {
                     ->ruc($request->get('ruc'))
                     ->order($request->get('order'))
                     ->orderBy('created_at','desc')
+                    ->with('cliente','money','tariff','abogado','asistente','service','matter','entity',
+                        'instance','area','bienes','situacionEspecial','state','exito')
                     ->paginate();
     }
 

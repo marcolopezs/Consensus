@@ -231,15 +231,10 @@ class CreateInitialTables extends Migration
 
             $table->integer('cliente_id')->unsigned();
             $table->integer('money_id')->unsigned();
-
-            $table->boolean('abogado');
-            $table->integer('abogado_id')->unsigned();
-
-            $table->integer('tariff_id')->unsigned();
-
             $table->double('valor', 15, 2);
 
-            $table->boolean('asistente');
+            $table->integer('tariff_id')->unsigned();
+            $table->integer('abogado_id')->unsigned();
             $table->integer('asistente_id')->unsigned();
 
             $table->double('honorario_hora', 10, 2)->nullable()->default('0');
@@ -521,6 +516,22 @@ class CreateInitialTables extends Migration
             $table->nullableTimestamps();
             $table->softDeletes();
         });
+
+
+        /*===============================
+        = AJUSTES DEL SISTEMA =
+        ===============================*/
+
+        Schema::create('ajustes', function(Blueprint $table)
+        {
+            $table->increments('id');
+
+            $table->string('model');
+            $table->integer('user_id')->nullable();
+            $table->text('contenido');
+
+            $table->nullableTimestamps();
+        });
     }
 
     /**
@@ -564,5 +575,7 @@ class CreateInitialTables extends Migration
         Schema::drop('bienes');
         Schema::drop('situacion_especial');
         Schema::drop('exito');
+
+        Schema::drop('ajustes');
     }
 }

@@ -2,6 +2,8 @@
 
 use Auth;
 use Carbon\Carbon;
+use Consensus\Entities\Ajuste;
+use Consensus\Repositories\AjusteRepo;
 use Consensus\Repositories\BienesRepo;
 use Consensus\Repositories\ExitoRepo;
 use Consensus\Repositories\SituacionEspecialRepo;
@@ -43,6 +45,7 @@ class ExpedientesController extends Controller {
     protected $situacionEspecialRepo;
     protected $stateRepo;
     protected $tariffRepo;
+    protected $ajusteRepo;
 
     public function __construct(AbogadoRepo $abogadoRepo,
                                 AreaRepo $areaRepo,
@@ -58,7 +61,8 @@ class ExpedientesController extends Controller {
                                 ServiceRepo $serviceRepo,
                                 SituacionEspecialRepo $situacionEspecialRepo,
                                 StateRepo $stateRepo,
-                                TariffRepo $tariffRepo)
+                                TariffRepo $tariffRepo,
+                                AjusteRepo $ajusteRepo)
     {
         $this->abogadoRepo = $abogadoRepo;
         $this->areaRepo = $areaRepo;
@@ -75,6 +79,7 @@ class ExpedientesController extends Controller {
         $this->situacionEspecialRepo = $situacionEspecialRepo;
         $this->stateRepo = $stateRepo;
         $this->tariffRepo = $tariffRepo;
+        $this->ajusteRepo = $ajusteRepo;
     }
 
     /**
@@ -270,5 +275,17 @@ class ExpedientesController extends Controller {
         }
 
         return response()->json($options);
+    }
+
+    public function ajustes(Request $request)
+    {
+        $row = Expediente::class;
+
+        $ajuste = Ajuste::where('user_id', Auth::user()->id)->where('model', $row);
+
+        //GUARDAR HISTORIAL
+        $this->ajusteRepo->saveAjustes($ajuste, $request);
+
+        return redirect()->route('expedientes.index');
     }
 }
