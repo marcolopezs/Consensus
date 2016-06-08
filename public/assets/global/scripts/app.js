@@ -34,7 +34,7 @@ var App = function() {
     var modalLoading = function() {
         carga = '<div class="modal-body"><img src="/assets/global/img/loading-spinner-grey.gif" alt="" class="loading"><span> &nbsp;&nbsp;Cargando... </span></div>';
 
-        $("#ajax").on("hide.bs.modal", function() {
+        $("#ajax").on("hidden.bs.modal", function() {
             $("#ajax .modal-content").empty().html(carga);
         });
 

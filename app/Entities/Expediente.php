@@ -25,6 +25,11 @@ class Expediente extends BaseEntity {
         return $this->hasMany(Kardex::class);
     }
 
+    public function tarea()
+    {
+        return $this->hasMany(Tarea::class);
+    }
+
     public function tariff()
     {
         return $this->belongsTo(Tariff::class);

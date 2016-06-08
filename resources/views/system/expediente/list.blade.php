@@ -5,6 +5,9 @@
 @stop
 
 @section('contenido_header')
+{{-- Date Picker --}}
+{!! HTML::style('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') !!}
+
 {{-- Select2 --}}
 {!! HTML::style('assets/global/plugins/select2/css/select2.min.css') !!}
 {!! HTML::style('assets/global/plugins/select2/css/select2-bootstrap.min.css') !!}
@@ -62,6 +65,7 @@
                                             <i class="fa fa-angle-down"></i>
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
+                                            <li><a href="{{ route('expedientes.tareas.index', $row_id) }}" data-target="#ajax" data-toggle="modal">Tareas</a></li>
                                             <li><a href="{{ route('expedientes.show', $row_id) }}" data-target="#ajax" data-toggle="modal">Ver registro</a></li>
                                             <li><a href="{{ route('expedientes.edit', $row_id) }}">Editar</a></li>
                                             <li><div class="divider"></div></li>
@@ -120,7 +124,19 @@
 
         $('#mensajeAjax').hide();
 
+        $("#ajax").on("loaded.bs.modal", function() {
+            $('#mensajeAjax').hide();
+
+            var placeholder = "Seleccionar";
+
+            $('.select2').select2({
+                placeholder: placeholder
+            });
+        });
+
     });
+
+
 
 </script>
 

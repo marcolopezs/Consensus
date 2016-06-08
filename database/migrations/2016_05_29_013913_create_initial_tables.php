@@ -302,6 +302,29 @@ class CreateInitialTables extends Migration
         });
 
         /*==============================
+        =             TAREAS           =
+        ==============================*/
+
+        Schema::create('tareas', function(Blueprint $table)
+        {
+            $table->increments('id');
+
+            $table->integer('expediente_id')->unsigned();
+
+            $table->string('tarea');
+            $table->text('descripcion');
+
+            $table->date('solicitada');
+            $table->date('vencimiento');
+
+            $table->integer('abogado_id')->unsigned();
+            $table->boolean('estado');
+
+            $table->nullableTimestamps();
+            $table->softDeletes();
+        });
+
+        /*==============================
         =             KARDEX           =
         ==============================*/
 
