@@ -21,48 +21,7 @@
 
         <div id="mensajeAjax" class="alert alert-dismissable"></div>
 
-        <div class="col-md-12">
-
-            <div class="panel panel-default">
-                <div class="panel-heading"> Ajustes de Expediente </div>
-                <div class="panel-body">
-
-                    {!! Form::open(['route' => 'expedientes.ajustes', 'method' => 'POST']) !!}
-
-                        <label>{!! Form::checkbox('ch-expediente', '1', true, ['class' => 'col-hide', 'id' => 'col-expediente']) !!} Expediente </label>
-                        <label>{!! Form::checkbox('ch-cliente', '1', false, ['class' => 'col-hide', 'id' => 'col-cliente']) !!} Cliente </label>
-                        <label>{!! Form::checkbox('ch-moneda', '1', 'checked', ['class' => 'col-hide', 'id' => 'col-moneda']) !!} Moneda </label>
-                        <label>{!! Form::checkbox('ch-valor', '1', 'checked', ['class' => 'col-hide', 'id' => 'col-valor']) !!} Valor </label>
-                        <label>{!! Form::checkbox('ch-tarifa', '1', 'checked', ['class' => 'col-hide', 'id' => 'col-tarifa']) !!} Tarifa </label>
-                        <label>{!! Form::checkbox('ch-abogado', '1', 'checked', ['class' => 'col-hide', 'id' => 'col-abogado']) !!} Abogado </label>
-                        <label>{!! Form::checkbox('ch-asistente', '1', 'checked', ['class' => 'col-hide', 'id' => 'col-asistente']) !!} Asistente </label>
-                        <label>{!! Form::checkbox('ch-servicio', '1', 'checked', ['class' => 'col-hide', 'id' => 'col-servicio']) !!} Servicio </label>
-                        <label>{!! Form::checkbox('ch-fecha-inicio', '1', 'checked', ['class' => 'col-hide', 'id' => 'col-fecha-inicio']) !!} Fecha Inicio </label>
-                        <label>{!! Form::checkbox('ch-fecha-termino', '1', 'checked', ['class' => 'col-hide', 'id' => 'col-fecha-termino']) !!} Fecha Término </label>
-                        <label>{!! Form::checkbox('ch-materia', '1', 'checked', ['class' => 'col-hide', 'id' => 'col-materia']) !!} Materia </label>
-                        <label>{!! Form::checkbox('ch-entidad', '1', 'checked', ['class' => 'col-hide', 'id' => 'col-entidad']) !!} Entidad </label>
-                        <label>{!! Form::checkbox('ch-instancia', '1', 'checked', ['class' => 'col-hide', 'id' => 'col-instancia']) !!} Instancia </label>
-                        <label>{!! Form::checkbox('ch-encargado', '1', 'checked', ['class' => 'col-hide', 'id' => 'col-encargado']) !!} Encargado </label>
-                        <label>{!! Form::checkbox('ch-fecha-poder', '1', 'checked', ['class' => 'col-hide', 'id' => 'col-fecha-poder']) !!} Fecha Poder </label>
-                        <label>{!! Form::checkbox('ch-fecha-vencimiento', '1', 'checked', ['class' => 'col-hide', 'id' => 'col-fecha-vencimiento']) !!} Fecha Vencimiento </label>
-                        <label>{!! Form::checkbox('ch-area', '1', 'checked', ['class' => 'col-hide', 'id' => 'col-area']) !!} Área </label>
-                        <label>{!! Form::checkbox('ch-jefe-area', '1', 'checked', ['class' => 'col-hide', 'id' => 'col-jefe-area']) !!} Jefe de Área </label>
-                        <label>{!! Form::checkbox('ch-bienes', '1', 'checked', ['class' => 'col-hide', 'id' => 'col-bienes']) !!} Bienes </label>
-                        <label>{!! Form::checkbox('ch-situacion', '1', 'checked', ['class' => 'col-hide', 'id' => 'col-situacion']) !!} Situación Especial </label>
-                        <label>{!! Form::checkbox('ch-estado', '1', 'checked', ['class' => 'col-hide', 'id' => 'col-estado']) !!} Estado </label>
-                        <label>{!! Form::checkbox('ch-exito', '1', 'checked', ['class' => 'col-hide', 'id' => 'col-exito']) !!} Éxito </label>
-
-                        <div class="form-actions">
-                            <a href="{{ route('expedientes.index') }}" class="btn default">Cancelar</a>
-                            <button type="submit" class="btn blue"><i class='fa fa-check'></i> Aplicar cambios</button>
-                        </div>
-
-                    {!! Form::close() !!}
-
-                </div>
-            </div>
-
-        </div>
+        @include('partials.ajustes-expediente')
 
         <div class="col-md-12 col-sm-12">
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
@@ -86,7 +45,7 @@
                     <div class="actions">
                         <div class="btn-group btn-group-devided" data-toggle="buttons">
                             <div class="btn-group">
-                                <a class="btn red btn-outline btn-circle" href="javascript:;">
+                                <a id="ajustes-expediente" class="btn red btn-outline btn-circle" href="javascript:;">
                                     <i class="fa fa-cog"></i>
                                     <span class="hidden-xs"> Ajustes </span>
                                 </a>
@@ -237,6 +196,8 @@
         });
     </script>
 
+    {{-- FUNCIONES --}}
+    {!! HTML::script('js/js-funciones.js') !!}
     <script>
 
         $(document).on("ready", function () {
@@ -250,6 +211,41 @@
                 $(this).prop("checked") ? $('.'+id).show() : $('.'+id).hide();
 
             });
+
+            $("#ajustes-expediente").on("click", function() {
+                $("#ajustes-expediente-panel").slideToggle();
+            });
+
+            $("#ajustes-expediente-cancelar").on("click", function() {
+                $("#ajustes-expediente-panel").slideUp();
+            })
+
+            //MOSTRAR U OCULTAR COLUMNAS DE LA TABLA EXPEDIENTE
+            var ajustes = '{!! json_encode($ajustes, true) !!}';
+            var js = JSON.parse(ajustes);
+
+            getValues(js,'ch-expediente') == 1 ? $('.col-expediente').show() : $('.col-expediente').hide();
+            getValues(js,'ch-cliente') == 1 ? $('.col-cliente').show() : $('.col-cliente').hide();
+            getValues(js,'ch-moneda') == 1 ? $('.col-moneda').show() : $('.col-moneda').hide();
+            getValues(js,'ch-valor') == 1 ? $('.col-valor').show() : $('.col-valor').hide();
+            getValues(js,'ch-tarifa') == 1 ? $('.col-tarifa').show() : $('.col-tarifa').hide();
+            getValues(js,'ch-abogado') == 1 ? $('.col-abogado').show() : $('.col-abogado').hide();
+            getValues(js,'ch-asistente') == 1 ? $('.col-asistente').show() : $('.col-asistente').hide();
+            getValues(js,'ch-servicio') == 1 ? $('.col-servicio').show() : $('.col-servicio').hide();
+            getValues(js,'ch-fecha-inicio') == 1 ? $('.col-fecha-inicio').show() : $('.col-fecha-inicio').hide();
+            getValues(js,'ch-fecha-termino') == 1 ? $('.col-fecha-termino').show() : $('.col-fecha-termino').hide();
+            getValues(js,'ch-materia') == 1 ? $('.col-materia').show() : $('.col-materia').hide();
+            getValues(js,'ch-entidad') == 1 ? $('.col-entidad').show() : $('.col-entidad').hide();
+            getValues(js,'ch-instancia') == 1 ? $('.col-instancia').show() : $('.col-instancia').hide();
+            getValues(js,'ch-encargado') == 1 ? $('.col-encargado').show() : $('.col-encargado').hide();
+            getValues(js,'ch-fecha-poder') == 1 ? $('.col-fecha-poder').show() : $('.col-fecha-poder').hide();
+            getValues(js,'ch-fecha-vencimiento') == 1 ? $('.col-fecha-vencimiento').show() : $('.col-fecha-vencimiento').hide();
+            getValues(js,'ch-area') == 1 ? $('.col-area').show() : $('.col-area').hide();
+            getValues(js,'ch-jefe-area') == 1 ? $('.col-jefe-area').show() : $('.col-jefe-area').hide();
+            getValues(js,'ch-bienes') == 1 ? $('.col-bienes').show() : $('.col-bienes').hide();
+            getValues(js,'ch-situacion') == 1 ? $('.col-situacion').show() : $('.col-situacion').hide();
+            getValues(js,'ch-estado') == 1 ? $('.col-estado').show() : $('.col-estado').hide();
+            getValues(js,'ch-exito') == 1 ? $('.col-exito').show() : $('.col-exito').hide();
 
         });
 
