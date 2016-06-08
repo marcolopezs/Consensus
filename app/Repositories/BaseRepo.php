@@ -376,7 +376,7 @@ abstract class BaseRepo {
     //GUARDAR AJUSTES
     public function saveAjustes($entity, Request $request)
     {
-        $contenido = json_encode($request->except('_method','_token'));
+        $contenido = json_encode($request->except('_token'));
 
         $entity->update([
             'contenido' => $contenido
