@@ -69,19 +69,20 @@ class TareasController extends Controller {
         $row->solicitada = $solicitada;
         $row->vencimiento = $vencimiento;
         $row->abogado_id = $asignado;
-        $this->tareaRepo->create($row, $request->all());
+        $save = $this->tareaRepo->create($row, $request->all());
 
         //GUARDAR HISTORIAL
         $this->tareaRepo->saveHistory($row, $request, 'create');
-
-        //MENSAJE
-        $mensaje = 'El registro se agregó satisfactoriamente.';
 
         //AJAX
         if($request->ajax())
         {
             return response()->json([
-                'message' => $mensaje
+                'id' => $save->id,
+                'tarea' => $save->tarea,
+                'solicitada' => $save->solicitada,
+                'vencimiento' => $save->vencimiento,
+                'asignado' => $save->abogado->nombre
             ]);
         }
 

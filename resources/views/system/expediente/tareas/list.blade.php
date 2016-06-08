@@ -19,7 +19,7 @@
 
                 <div class="portlet-body">
 
-                    <table class="table table-striped table-bordered table-hover order-column">
+                    <table id="tarea-lista" class="table table-striped table-bordered table-hover order-column">
 
                         <thead>
                             <tr role="row" class="heading">
@@ -50,9 +50,13 @@
                         </tbody>
                     </table>
 
+                    <div class="form-actions text-right">
+                        <a id="btn-tarea-nueva" class="btn blue"><i class='fa fa-plus'></i> Agregar nueva tarea</a>
+                    </div>
+
                 </div>
 
-                <div class="portlet-body">
+                <div id="tarea-nueva" class="portlet-body" style="display: none;">
 
                     <h3 class="form-section">Nueva Tarea</h3>
 
@@ -101,7 +105,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             {!! Form::label('asignado', 'Asignado', ['class' => 'control-label']) !!}
-                                            {!! Form::select('asignado', [''=>''] + $abogados, null, ['class' => 'form-control select2']) !!}
+                                            {!! Form::select('asignado', [''=>''] + $abogados, null, ['class' => 'form-control select2', 'style' => 'width: 100%;']) !!}
                                         </div>
                                     </div>
 
@@ -128,7 +132,10 @@
 
                         </div>
 
+                        @include('partials.progressbar')
+
                         <div class="form-actions text-right">
+                            <a id="formCreateCancelar" class="btn default">Cancelar</a>
                             <a id="formCreateSubmit" class="btn blue"><i class='fa fa-check'></i> Guardar</a>
                         </div>
 
@@ -154,7 +161,29 @@
 {{-- Components --}}
 {!! HTML::script('assets/pages/scripts/components-date-time-pickers.js') !!}
 
+{{-- MOSTRAR U OCULTAR FORM DE TAREA --}}
 <script>
+
+    $("#btn-tarea-nueva").on("click", function() {
+        $("#tarea-nueva").slideDown();
+        $(this).hide();
+    });
+
+    $("#formCreateCancelar").on("click", function() {
+        $("#tarea-nueva").slideUp();
+        $("#btn-tarea-nueva").show();
+        $(".select2-selection__rendered").empty();
+        $(".form-content").empty();
+        $("#formCreate")[0].reset();
+    });
+
+</script>
+
+{{-- GUARDAR TAREA --}}
+<script>
+
+    $('.progress').hide();
+
     $("#formCreateSubmit").on("click", function(e){
 
         e.preventDefault();
@@ -168,10 +197,18 @@
             type: 'POST',
             data: data,
             success: function (result) {
-                successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>'+result.message+'</div>';
+                successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>El registro se agregó satisfactoriamente.</div>';
                 $(".form-content").html(successHtml);
                 $(".select2-selection__rendered").empty();
                 form[0].reset();
+
+                var html = '<tr class="odd gradeX" data-id="'+result.id+'" data-title="'+result.tarea+'">'+
+                        '<td>'+result.solicitada+'</td>'+
+                        '<td>'+result.vencimiento+'</td>'+
+                        '<td>'+result.tarea+'</td>'+
+                        '<td>'+result.asignado+'</td>';
+
+                $('.table#tarea-lista tbody tr:last').after(html);
             },
             beforeSend: function () { $('.progress').show(); },
             complete: function () { $('.progress').hide(); },

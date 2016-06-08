@@ -57,9 +57,6 @@ class AreaController extends Controller {
         //GUARDAR HISTORIAL
         $this->areaRepo->saveHistory($row, $request, 'create');
 
-        //MENSAJE
-        $mensaje = 'El registro se agregó satisfactoriamente.';
-
         //AJAX
         if($request->ajax())
         {
