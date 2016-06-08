@@ -17,4 +17,5 @@ elixir(function(mix) {
     mix.stylus('layout.styl', 'public/assets/layouts/layout3/css');
 
     mix.scripts(['js-delete.js'], 'public/js/js-delete.js');
+    mix.scripts(['js-funciones.js'], 'public/js/js-funciones.js');
 });
