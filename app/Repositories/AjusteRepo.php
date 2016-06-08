@@ -11,4 +11,20 @@ class AjusteRepo extends BaseRepo {
         return new Ajuste();
     }
 
+    public function findModelUser($model)
+    {
+        return $this->getModel()->where('user_id', Auth::user()->id)
+                                ->where('model', $model)
+                                ->first();
+    }
+
+    public function findModelUserReturnContenido($model)
+    {
+        $ajustes = $this->getModel()->where('user_id', Auth::user()->id)
+                                    ->where('model', $model)
+                                    ->first();
+
+        return json_decode($ajustes->contenido, true);
+    }
+
 }
