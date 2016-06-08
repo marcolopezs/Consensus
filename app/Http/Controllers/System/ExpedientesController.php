@@ -2,11 +2,6 @@
 
 use Auth;
 use Carbon\Carbon;
-use Consensus\Entities\Ajuste;
-use Consensus\Repositories\AjusteRepo;
-use Consensus\Repositories\BienesRepo;
-use Consensus\Repositories\ExitoRepo;
-use Consensus\Repositories\SituacionEspecialRepo;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
@@ -17,14 +12,18 @@ use Consensus\Repositories\ExpedienteRepo;
 use Consensus\Http\Requests\ExpedienteRequest;
 
 use Consensus\Repositories\AbogadoRepo;
+use Consensus\Repositories\AjusteRepo;
 use Consensus\Repositories\AreaRepo;
+use Consensus\Repositories\BienesRepo;
 use Consensus\Repositories\ClienteRepo;
 use Consensus\Repositories\EntityRepo;
+use Consensus\Repositories\ExitoRepo;
 use Consensus\Repositories\ExpedienteTipoRepo;
 use Consensus\Repositories\InstanceRepo;
 use Consensus\Repositories\MatterRepo;
 use Consensus\Repositories\MoneyRepo;
 use Consensus\Repositories\ServiceRepo;
+use Consensus\Repositories\SituacionEspecialRepo;
 use Consensus\Repositories\StateRepo;
 use Consensus\Repositories\TariffRepo;
 
@@ -47,22 +46,10 @@ class ExpedientesController extends Controller {
     protected $tariffRepo;
     protected $ajusteRepo;
 
-    public function __construct(AbogadoRepo $abogadoRepo,
-                                AreaRepo $areaRepo,
-                                BienesRepo $bienesRepo,
-                                ClienteRepo $clienteRepo,
-                                EntityRepo $entityRepo,
-                                ExitoRepo $exitoRepo,
-                                ExpedienteRepo $expedienteRepo,
-                                ExpedienteTipoRepo $expedienteTipoRepo,
-                                InstanceRepo $instanceRepo,
-                                MatterRepo $matterRepo,
-                                MoneyRepo $moneyRepo,
-                                ServiceRepo $serviceRepo,
-                                SituacionEspecialRepo $situacionEspecialRepo,
-                                StateRepo $stateRepo,
-                                TariffRepo $tariffRepo,
-                                AjusteRepo $ajusteRepo)
+    public function __construct(AbogadoRepo $abogadoRepo, AreaRepo $areaRepo, BienesRepo $bienesRepo, ClienteRepo $clienteRepo,
+                                EntityRepo $entityRepo, ExitoRepo $exitoRepo, ExpedienteRepo $expedienteRepo, ExpedienteTipoRepo $expedienteTipoRepo,
+                                InstanceRepo $instanceRepo, MatterRepo $matterRepo, MoneyRepo $moneyRepo, ServiceRepo $serviceRepo,
+                                SituacionEspecialRepo $situacionEspecialRepo, StateRepo $stateRepo, TariffRepo $tariffRepo, AjusteRepo $ajusteRepo)
     {
         $this->abogadoRepo = $abogadoRepo;
         $this->areaRepo = $areaRepo;
@@ -91,8 +78,9 @@ class ExpedientesController extends Controller {
     {
         $rows = $this->expedienteRepo->findOrder($request);
         $cliente = $this->clienteRepo->orderBy('cliente', 'asc')->lists('cliente', 'id')->toArray();
+        $ajustes = $this->ajusteRepo->findModelUserReturnContenido(Expediente::class);
 
-        return view('system.expediente.list', compact('rows','cliente'));
+        return view('system.expediente.list', compact('rows','cliente','ajustes'));
     }
 
     /**
@@ -279,11 +267,8 @@ class ExpedientesController extends Controller {
 
     public function ajustes(Request $request)
     {
-        $row = Expediente::class;
+        $ajuste = $this->ajusteRepo->findModelUser(Expediente::class);
 
-        $ajuste = Ajuste::where('user_id', Auth::user()->id)->where('model', $row);
-
-        //GUARDAR HISTORIAL
         $this->ajusteRepo->saveAjustes($ajuste, $request);
 
         return redirect()->route('expedientes.index');
