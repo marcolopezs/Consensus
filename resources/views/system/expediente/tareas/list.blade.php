@@ -35,8 +35,8 @@
                         @foreach($row->tarea as $item)
                             @php
                             $row_id = $item->id;
-                            $row_solicitada = $item->solicitada;
-                            $row_vencimiento = $item->vencimiento;
+                            $row_solicitada = soloFecha($item->solicitada);
+                            $row_vencimiento = soloFecha($item->vencimiento);
                             $row_tarea = $item->tarea;
                             $row_asignado = $item->abogado->nombre;
                             @endphp

@@ -80,8 +80,8 @@ class TareasController extends Controller {
             return response()->json([
                 'id' => $save->id,
                 'tarea' => $save->tarea,
-                'solicitada' => $save->solicitada,
-                'vencimiento' => $save->vencimiento,
+                'solicitada' => soloFecha($save->solicitada),
+                'vencimiento' => soloFecha($save->vencimiento),
                 'asignado' => $save->abogado->nombre
             ]);
         }
