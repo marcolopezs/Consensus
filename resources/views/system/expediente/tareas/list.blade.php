@@ -208,7 +208,7 @@
                         '<td>'+result.tarea+'</td>'+
                         '<td>'+result.asignado+'</td>';
 
-                $('.table#tarea-lista tbody tr:last').after(html);
+                $('.table#tarea-lista tbody').prepend(html);
             },
             beforeSend: function () { $('.progress').show(); },
             complete: function () { $('.progress').hide(); },
