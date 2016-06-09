@@ -152,7 +152,6 @@ return [
          * Externos
          */
         Collective\Html\HtmlServiceProvider::class,
-        Barryvdh\Debugbar\ServiceProvider::class,
         Jenssegers\Date\DateServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
@@ -215,7 +214,6 @@ return [
         /*
          * Externos
          */
-        'Debugbar'  => Barryvdh\Debugbar\Facade::class,
         'Date'      => Jenssegers\Date\Date::class,
         'Excel'     => Maatwebsite\Excel\Facades\Excel::class,
         'Flash'     => Laracasts\Flash\Flash::class,
