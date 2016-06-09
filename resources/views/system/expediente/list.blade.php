@@ -65,7 +65,8 @@
                                             <i class="fa fa-angle-down"></i>
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
-                                            <li><a href="{{ route('expedientes.tareas.index', $row_id) }}" data-target="#ajax" data-toggle="modal">Tareas</a></li>
+                                            <li><a href="{{ route('expedientes.tareas.index', $row_id) }}" data-target="#ajax" data-toggle="modal">Procesos</a></li>
+                                            <li><a href="{{ route('expedientes.flujo-caja.index', $row_id) }}" data-target="#ajax" data-toggle="modal">Flujo de Caja</a></li>
                                             <li><a href="{{ route('expedientes.show', $row_id) }}" data-target="#ajax" data-toggle="modal">Ver registro</a></li>
                                             <li><a href="{{ route('expedientes.edit', $row_id) }}">Editar</a></li>
                                             <li><div class="divider"></div></li>

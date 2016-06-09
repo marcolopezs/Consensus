@@ -325,6 +325,28 @@ class CreateInitialTables extends Migration
         });
 
         /*==============================
+        =         FLUJO DE CAJA        =
+        ==============================*/
+
+        Schema::create('flujo_caja', function(Blueprint $table)
+        {
+            $table->increments('id');
+
+            $table->integer('expediente_id')->unsigned();
+
+            $table->date('fecha');
+            $table->string('referencia');
+            $table->integer('money_id');
+            $table->double('monto', 15, 2);
+
+            $table->string('comprobante');
+            $table->string('comprobante_carpeta');
+
+            $table->nullableTimestamps();
+            $table->softDeletes();
+        });
+
+        /*==============================
         =             KARDEX           =
         ==============================*/
 
@@ -562,6 +584,9 @@ class CreateInitialTables extends Migration
         Schema::drop('expedientes');
         Schema::drop('expediente_documentos');
         Schema::drop('expediente_tipos');
+
+        Schema::drop('tareas');
+        Schema::drop('flujo_caja');
 
         Schema::drop('kardex');
 

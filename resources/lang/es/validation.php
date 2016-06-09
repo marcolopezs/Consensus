@@ -197,7 +197,9 @@ return [
         'apellidos'             => 'Apellidos',
         'bienes'                => 'Bienes',
         'especial'              => 'Situación Especial',
-        'exito'                 => 'Éxito'
+        'exito'                 => 'Éxito',
+        'referencia'            => 'Referencia',
+        'monto'                 => 'Monto'
     ],
 
 ];
