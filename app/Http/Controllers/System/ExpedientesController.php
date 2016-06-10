@@ -76,7 +76,7 @@ class ExpedientesController extends Controller {
      */
     public function index(Request $request)
     {
-        $rows = $this->expedienteRepo->findOrder($request);
+        $rows = $this->expedienteRepo->filterPaginate($request);
         $cliente = $this->clienteRepo->orderBy('cliente', 'asc')->lists('cliente', 'id')->toArray();
         $ajustes = $this->ajusteRepo->findModelUserReturnContenido(Expediente::class);
 

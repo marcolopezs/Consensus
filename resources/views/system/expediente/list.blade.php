@@ -30,7 +30,7 @@
                 <div class="panel-heading">Filtrar Expediente</div>
                 <div class="panel-body form">
 
-                    {!! Form::model(1, ['route' => 'expedientes.filtrar', 'method' => 'POST', 'class' => 'horizontal-form']) !!}
+                    {!! Form::model(Request::all(), ['route' => 'expedientes.index', 'method' => 'GET', 'class' => 'horizontal-form']) !!}
 
                         <div class="form-body">
 
@@ -57,12 +57,12 @@
                                     </div>
                                 </div>
 
-                                <div class="col-valor col-md-2">
-                                    <div class="form-group">
-                                        {!! Form::label('valor', 'Valor', ['class' => 'control-label']) !!}
-                                        {!! Form::text('valor', null, ['class' => 'form-control']) !!}
-                                    </div>
-                                </div>
+                                {{--<div class="col-valor col-md-2">--}}
+                                    {{--<div class="form-group">--}}
+                                        {{--{!! Form::label('valor', 'Valor', ['class' => 'control-label']) !!}--}}
+                                        {{--{!! Form::text('valor', null, ['class' => 'form-control']) !!}--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
 
                                 <div class="col-tarifa col-md-3">
                                     <div class="form-group">
@@ -96,9 +96,9 @@
                                     <div class="form-group">
                                         {!! Form::label('fecha_inicio', 'Fecha Inicio', ['class' => 'control-label']) !!}
                                         <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="dd/mm/yyyy">
-                                            <input type="text" class="form-control" name="fecha_inicio_from">
+                                            {!! Form::text('fecha_inicio_from', null, ['class' => 'form-control']) !!}
                                             <span class="input-group-addon"> A </span>
-                                            <input type="text" class="form-control" name="fecha_inicio_to">
+                                            {!! Form::text('fecha_inicio_to', null, ['class' => 'form-control']) !!}
                                         </div>
                                     </div>
                                 </div>
@@ -107,9 +107,9 @@
                                     <div class="form-group">
                                         {!! Form::label('fecha_termino', 'Fecha Término', ['class' => 'control-label']) !!}
                                         <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="dd/mm/yyyy">
-                                            <input type="text" class="form-control" name="fecha_termino_from">
+                                            {!! Form::text('fecha_termino_from', null, ['class' => 'form-control']) !!}
                                             <span class="input-group-addon"> A </span>
-                                            <input type="text" class="form-control" name="fecha_termino_to">
+                                            {!! Form::text('fecha_termino_to', null, ['class' => 'form-control']) !!}
                                         </div>
                                     </div>
                                 </div>
@@ -146,9 +146,9 @@
                                     <div class="form-group">
                                         {!! Form::label('fecha_poder', 'Fecha Poder', ['class' => 'control-label']) !!}
                                         <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="dd/mm/yyyy">
-                                            <input type="text" class="form-control" name="fecha_poder_from">
+                                            {!! Form::text('fecha_termino_from', null, ['class' => 'form-control']) !!}
                                             <span class="input-group-addon"> A </span>
-                                            <input type="text" class="form-control" name="fecha_poder_to">
+                                            {!! Form::text('fecha_poder_to', null, ['class' => 'form-control']) !!}
                                         </div>
                                     </div>
                                 </div>
@@ -157,9 +157,9 @@
                                     <div class="form-group">
                                         {!! Form::label('fecha_vencimiento', 'Fecha Vencimiento', ['class' => 'control-label']) !!}
                                         <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="dd/mm/yyyy">
-                                            <input type="text" class="form-control" name="fecha_vencimiento_from">
+                                            {!! Form::text('fecha_vencimiento_from', null, ['class' => 'form-control']) !!}
                                             <span class="input-group-addon"> A </span>
-                                            <input type="text" class="form-control" name="fecha_vencimiento_to">
+                                            {!! Form::text('fecha_vencimiento_to', null, ['class' => 'form-control']) !!}
                                         </div>
                                     </div>
                                 </div>
@@ -409,6 +409,7 @@
     {!! HTML::script('assets/global/plugins/moment.min.js') !!}
     {!! HTML::script('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') !!}
     {!! HTML::script('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') !!}
+    {!! HTML::script('assets/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js') !!}
     {!! HTML::script('assets/pages/scripts/components-date-time-pickers.js') !!}
 
 
