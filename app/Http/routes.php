@@ -31,6 +31,7 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
     Route::resource('expedientes', 'ExpedientesController');
     Route::get('expedientes/cliente/{id}', ['as' => 'expedientes.cliente', 'uses' => 'ExpedientesController@cliente']);
     Route::post('expedientes/ajustes', ['as' => 'expedientes.ajustes', 'uses' => 'ExpedientesController@ajustes']);
+    Route::get('expedientes/filtrar', ['as' => 'expedientes.filtrar', 'uses' => 'ExpedientesController@filtrar']);
 
     //CLIENTES
     Route::resource('cliente', 'ClienteController');

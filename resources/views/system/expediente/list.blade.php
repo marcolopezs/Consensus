@@ -5,12 +5,13 @@
 @stop
 
 @section('contenido_header')
-{!! HTML::style('assets/global/css/components.min.css') !!}
-{!! HTML::style('assets/global/css/plugins.min.css') !!}
-
 {{-- Select2 --}}
 {!! HTML::style('assets/global/plugins/select2/css/select2.min.css') !!}
 {!! HTML::style('assets/global/plugins/select2/css/select2-bootstrap.min.css') !!}
+
+{{-- DatePicker  --}}
+{!! HTML::style('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') !!}
+{!! HTML::style('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') !!}
 @stop
 
 @section('contenido_body')
@@ -21,7 +22,206 @@
 
         <div id="mensajeAjax" class="alert alert-dismissable"></div>
 
-        @include('partials.ajustes-expediente')
+        @include('partials.expediente-ajustes')
+
+        <div class="col-md-12">
+
+            <div id="filtrar-expediente-panel" class="panel panel-default" style="display: none;">
+                <div class="panel-heading">Filtrar Expediente</div>
+                <div class="panel-body form">
+
+                    {!! Form::model(1, ['route' => 'expedientes.filtrar', 'method' => 'POST', 'class' => 'horizontal-form']) !!}
+
+                        <div class="form-body">
+
+                            <div class="row">
+
+                                <div class="col-expediente col-md-2">
+                                    <div class="form-group">
+                                        {!! Form::label('expediente', 'Expediente', ['class' => 'control-label']) !!}
+                                        {!! Form::text('expediente', null, ['class' => 'form-control']) !!}
+                                    </div>
+                                </div>
+
+                                <div class="col-cliente col-md-3">
+                                    <div class="form-group">
+                                        {!! Form::label('cliente', 'Cliente', ['class' => 'control-label']) !!}
+                                        {!! Form::select('cliente', [''=>''], null,['class' => 'form-control select2']) !!}
+                                    </div>
+                                </div>
+
+                                <div class="col-moneda col-md-2">
+                                    <div class="form-group">
+                                        {!! Form::label('moneda', 'Moneda', ['class' => 'control-label']) !!}
+                                        {!! Form::select('moneda', [''=>''], null,['class' => 'form-control select2']) !!}
+                                    </div>
+                                </div>
+
+                                <div class="col-valor col-md-2">
+                                    <div class="form-group">
+                                        {!! Form::label('valor', 'Valor', ['class' => 'control-label']) !!}
+                                        {!! Form::text('valor', null, ['class' => 'form-control']) !!}
+                                    </div>
+                                </div>
+
+                                <div class="col-tarifa col-md-3">
+                                    <div class="form-group">
+                                        {!! Form::label('tarifa', 'Tarifa', ['class' => 'control-label']) !!}
+                                        {!! Form::select('tarifa', [''=>''], null,['class' => 'form-control select2']) !!}
+                                    </div>
+                                </div>
+
+                                <div class="col-abogado col-md-3">
+                                    <div class="form-group">
+                                        {!! Form::label('abogado', 'Abogado', ['class' => 'control-label']) !!}
+                                        {!! Form::select('abogado', [''=>''], null,['class' => 'form-control select2']) !!}
+                                    </div>
+                                </div>
+
+                                <div class="col-asistente col-md-3">
+                                    <div class="form-group">
+                                        {!! Form::label('asistente', 'Asistente', ['class' => 'control-label']) !!}
+                                        {!! Form::select('asistente', [''=>''], null,['class' => 'form-control select2']) !!}
+                                    </div>
+                                </div>
+
+                                <div class="col-servicio col-md-3">
+                                    <div class="form-group">
+                                        {!! Form::label('servicio', 'Servicio', ['class' => 'control-label']) !!}
+                                        {!! Form::select('servicio', [''=>''], null,['class' => 'form-control select2']) !!}
+                                    </div>
+                                </div>
+
+                                <div class="col-fecha-inicio col-md-3">
+                                    <div class="form-group">
+                                        {!! Form::label('fecha_inicio', 'Fecha Inicio', ['class' => 'control-label']) !!}
+                                        <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="dd/mm/yyyy">
+                                            <input type="text" class="form-control" name="fecha_inicio_from">
+                                            <span class="input-group-addon"> A </span>
+                                            <input type="text" class="form-control" name="fecha_inicio_to">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-fecha-termino col-md-3">
+                                    <div class="form-group">
+                                        {!! Form::label('fecha_termino', 'Fecha Término', ['class' => 'control-label']) !!}
+                                        <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="dd/mm/yyyy">
+                                            <input type="text" class="form-control" name="fecha_termino_from">
+                                            <span class="input-group-addon"> A </span>
+                                            <input type="text" class="form-control" name="fecha_termino_to">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-materia col-md-3">
+                                    <div class="form-group">
+                                        {!! Form::label('materia', 'Materia', ['class' => 'control-label']) !!}
+                                        {!! Form::select('materia', [''=>''], null,['class' => 'form-control select2']) !!}
+                                    </div>
+                                </div>
+
+                                <div class="col-entidad col-md-3">
+                                    <div class="form-group">
+                                        {!! Form::label('entidad', 'Entidad', ['class' => 'control-label']) !!}
+                                        {!! Form::select('entidad', [''=>''], null,['class' => 'form-control select2']) !!}
+                                    </div>
+                                </div>
+
+                                <div class="col-instancia col-md-3">
+                                    <div class="form-group">
+                                        {!! Form::label('instancia', 'Instancia', ['class' => 'control-label']) !!}
+                                        {!! Form::select('instancia', [''=>''], null,['class' => 'form-control select2']) !!}
+                                    </div>
+                                </div>
+
+                                <div class="col-encargado col-md-3">
+                                    <div class="form-group">
+                                        {!! Form::label('encargado', 'Encargado', ['class' => 'control-label']) !!}
+                                        {!! Form::text('encargado', null, ['class' => 'form-control']) !!}
+                                    </div>
+                                </div>
+
+                                <div class="col-fecha-poder col-md-3">
+                                    <div class="form-group">
+                                        {!! Form::label('fecha_poder', 'Fecha Poder', ['class' => 'control-label']) !!}
+                                        <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="dd/mm/yyyy">
+                                            <input type="text" class="form-control" name="fecha_poder_from">
+                                            <span class="input-group-addon"> A </span>
+                                            <input type="text" class="form-control" name="fecha_poder_to">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-fecha-vencimiento col-md-3">
+                                    <div class="form-group">
+                                        {!! Form::label('fecha_vencimiento', 'Fecha Vencimiento', ['class' => 'control-label']) !!}
+                                        <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="dd/mm/yyyy">
+                                            <input type="text" class="form-control" name="fecha_vencimiento_from">
+                                            <span class="input-group-addon"> A </span>
+                                            <input type="text" class="form-control" name="fecha_vencimiento_to">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-area col-md-3">
+                                    <div class="form-group">
+                                        {!! Form::label('area', 'Área', ['class' => 'control-label']) !!}
+                                        {!! Form::select('area', [''=>''], null,['class' => 'form-control select2']) !!}
+                                    </div>
+                                </div>
+
+                                <div class="col-jefe-area col-md-3">
+                                    <div class="form-group">
+                                        {!! Form::label('jefe_area', 'Jefe de Área', ['class' => 'control-label']) !!}
+                                        {!! Form::text('jefe_area', null, ['class' => 'form-control']) !!}
+                                    </div>
+                                </div>
+
+                                <div class="col-bienes col-md-2">
+                                    <div class="form-group">
+                                        {!! Form::label('bienes', 'Bienes', ['class' => 'control-label']) !!}
+                                        {!! Form::select('bienes', [''=>''], null,['class' => 'form-control select2']) !!}
+                                    </div>
+                                </div>
+
+                                <div class="col-situacion col-md-2">
+                                    <div class="form-group">
+                                        {!! Form::label('situacion', 'Situación', ['class' => 'control-label']) !!}
+                                        {!! Form::select('situacion', [''=>''], null,['class' => 'form-control select2']) !!}
+                                    </div>
+                                </div>
+
+                                <div class="col-estado col-md-3">
+                                    <div class="form-group">
+                                        {!! Form::label('estado', 'Estado', ['class' => 'control-label']) !!}
+                                        {!! Form::select('estado', [''=>''], null,['class' => 'form-control select2']) !!}
+                                    </div>
+                                </div>
+
+                                <div class="col-exito col-md-2">
+                                    <div class="form-group">
+                                        {!! Form::label('exito', 'Éxito', ['class' => 'control-label']) !!}
+                                        {!! Form::select('exito', [''=>''], null,['class' => 'form-control select2']) !!}
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-actions">
+                            <a id="filtrar-expediente-cancelar" href="javascript:;" class="btn default">Cancelar</a>
+                            <button type="submit" class="btn blue"><i class='fa fa-check'></i> Filtrar</button>
+                        </div>
+
+                    {!! Form::close() !!}
+
+                </div>
+
+            </div>
+
+        </div>
 
         <div class="col-md-12 col-sm-12">
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
@@ -43,6 +243,15 @@
                     </div>
 
                     <div class="actions">
+                        <div class="btn-group btn-group-devided" data-toggle="buttons">
+                            <div class="btn-group">
+                                <a id="filtrar-expediente" class="btn blue-steel btn-outline btn-circle" href="javascript:;">
+                                    <i class="fa fa-search"></i>
+                                    <span class="hidden-xs"> Filtrar </span>
+                                </a>
+                            </div>
+                        </div>
+
                         <div class="btn-group btn-group-devided" data-toggle="buttons">
                             <div class="btn-group">
                                 <a id="ajustes-expediente" class="btn red btn-outline btn-circle" href="javascript:;">
@@ -196,6 +405,13 @@
         });
     </script>
 
+    {{-- DatePicker --}}
+    {!! HTML::script('assets/global/plugins/moment.min.js') !!}
+    {!! HTML::script('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') !!}
+    {!! HTML::script('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') !!}
+    {!! HTML::script('assets/pages/scripts/components-date-time-pickers.js') !!}
+
+
     {{-- FUNCIONES --}}
     {!! HTML::script('js/js-funciones.js') !!}
     <script>
@@ -205,20 +421,27 @@
             $('#mensajeAjax').hide();
 
             $(".col-hide").on("click", function () {
-
                 var id = $(this).attr('id');
-
                 $(this).prop("checked") ? $('.'+id).show() : $('.'+id).hide();
-
             });
 
+            /* FILTRAR */
+            $("#filtrar-expediente").on("click", function() {
+                $("#filtrar-expediente-panel").slideToggle();
+            });
+
+            $("#filtrar-expediente-cancelar").on("click", function() {
+                $("#filtrar-expediente-panel").slideUp();
+            });
+
+            /* AJUSTES */
             $("#ajustes-expediente").on("click", function() {
                 $("#ajustes-expediente-panel").slideToggle();
             });
 
             $("#ajustes-expediente-cancelar").on("click", function() {
                 $("#ajustes-expediente-panel").slideUp();
-            })
+            });
 
             //MOSTRAR U OCULTAR COLUMNAS DE LA TABLA EXPEDIENTE
             var ajustes = '{!! json_encode($ajustes, true) !!}';
