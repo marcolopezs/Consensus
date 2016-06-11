@@ -1,5 +1,14 @@
 <?php
 
+use Carbon\Carbon;
+
+//CONVERTIR FORMATO DE FECHA
+function formatoFecha($date)
+{
+    $fecha = Carbon::createFromFormat('d/m/Y', $date);
+    return $fecha->format('Y-m-d');
+}
+
 //TIPO DE USUARIO
 function tipo_usuario($usuario)
 {

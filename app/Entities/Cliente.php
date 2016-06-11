@@ -25,4 +25,9 @@ class Cliente extends BaseEntity {
         return $this->hasMany(ClienteContacto::class);
     }
 
+    public function getNombreAttribute()
+    {
+        return $this->cliente;
+    }
+
 }

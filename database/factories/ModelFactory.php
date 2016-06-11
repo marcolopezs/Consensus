@@ -106,11 +106,9 @@ $factory->define(\Consensus\Entities\Expediente::class, function ($faker) use ($
         'expediente' => $faker->regexify('[A-Z]{1,1}-[0-9]{10,10}'),
         'cliente_id' => \Consensus\Entities\Cliente::all()->random()->id,
         'money_id' => \Consensus\Entities\Money::all()->random()->id,
-        'abogado' => $faker->randomElement([0,1]),
         'abogado_id' => \Consensus\Entities\Abogado::all()->random()->id,
         'tariff_id' => \Consensus\Entities\Tariff::all()->random()->id,
         'valor' => $faker->randomFloat(2, 5, 15),
-        'asistente' => $faker->randomElement([0,1]),
         'asistente_id' => \Consensus\Entities\Abogado::all()->random()->id,
         'service_id' => $servicio->id,
         'numero_dias' => $dias,
@@ -125,6 +123,9 @@ $factory->define(\Consensus\Entities\Expediente::class, function ($faker) use ($
         'area_id' => \Consensus\Entities\Area::all()->random()->id,
         'jefe_area' => $faker->name,
         'state_id' => \Consensus\Entities\State::all()->random()->id,
+        'bienes_id' => \Consensus\Entities\Bienes::all()->random()->id,
+        'situacion_especial_id' => \Consensus\Entities\SituacionEspecial::all()->random()->id,
+        'exito_id' => \Consensus\Entities\Exito::all()->random()->id,
         'observacion' => $faker->text(rand(100,255))
     ];
 });

@@ -373,6 +373,16 @@ abstract class BaseRepo {
         return $row;
     }
 
+    //GUARDAR AJUSTES
+    public function saveAjustes($entity, Request $request)
+    {
+        $contenido = json_encode($request->except('_token'));
+
+        $entity->update([
+            'contenido' => $contenido
+        ]);
+    }
+
     //CONVERTIR FORMATO DE FECHA
     public function formatoFecha($date)
     {
