@@ -1,7 +1,7 @@
 <div class="col-md-12">
 
-    <div id="filtrar-expediente-panel" class="panel panel-default" style="display: none;">
-        <div class="panel-heading">Filtrar Expediente</div>
+    <div id="filtrar-expediente-panel" class="panel panel-default" {!! (Request::all() ? '' : 'style="display: none;"') !!}>
+        <div class="panel-heading">Buscar</div>
         <div class="panel-body form">
 
             {!! Form::model(Request::all(), ['route' => 'expedientes.index', 'method' => 'GET', 'class' => 'horizontal-form']) !!}
@@ -282,8 +282,8 @@
             </div>
 
             <div class="form-actions">
-                <a id="filtrar-expediente-cancelar" href="javascript:;" class="btn default">Cancelar</a>
-                <button type="submit" class="btn blue"><i class='fa fa-check'></i> Filtrar</button>
+                <a id="filtrar-expediente-cancelar" href="{{ route('expedientes.index') }}" class="btn default">Cancelar busqueda</a>
+                <button type="submit" class="btn blue"><i class='fa fa-check'></i> Buscar</button>
             </div>
 
             {!! Form::close() !!}

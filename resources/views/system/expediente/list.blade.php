@@ -53,7 +53,7 @@
                             <div class="btn-group">
                                 <a id="filtrar-expediente" class="btn blue-steel btn-outline btn-circle" href="javascript:;">
                                     <i class="fa fa-search"></i>
-                                    <span class="hidden-xs"> Filtrar </span>
+                                    <span class="hidden-xs"> Buscar </span>
                                 </a>
                             </div>
                         </div>
@@ -247,7 +247,7 @@
         $(document).on("ready", function () {
 
             $('#mensajeAjax').hide();
-            
+
         });
 
     </script>
