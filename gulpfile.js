@@ -18,4 +18,5 @@ elixir(function(mix) {
 
     mix.scripts(['js-delete.js'], 'public/js/js-delete.js');
     mix.scripts(['js-funciones.js'], 'public/js/js-funciones.js');
+    mix.scripts(['js-expediente-columnas.js'], 'public/js/js-expediente-columnas.js');
 });
