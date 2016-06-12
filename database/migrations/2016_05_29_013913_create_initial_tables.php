@@ -309,8 +309,8 @@ class CreateInitialTables extends Migration
             $table->string('tarea');
             $table->text('descripcion');
 
-            $table->date('solicitada');
-            $table->date('vencimiento');
+            $table->date('fecha_solicitada');
+            $table->date('fecha_vencimiento');
 
             $table->integer('abogado_id')->unsigned();
             $table->boolean('estado');

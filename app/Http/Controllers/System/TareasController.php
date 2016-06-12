@@ -42,9 +42,18 @@ class TareasController extends Controller {
     public function index($expedientes, Request $request)
     {
         $row = $this->expedienteRepo->findOrFail($expedientes);
+
+        if($request->ajax())
+        {
+            return $row->tarea->toJson();
+        }
+    }
+
+    public function create($expediente)
+    {
         $abogados = $this->abogadoRepo->orderBy('nombre', 'asc')->lists('nombre', 'id')->toArray();
 
-        return view('system.expediente.tareas.list', compact('row','abogados'));
+        return view('system.expediente.tareas.create', compact('expediente','abogados'));
     }
 
     /**
@@ -60,14 +69,14 @@ class TareasController extends Controller {
 
         //VARIABLES
         $asignado = $request->input('asignado');
-        $solicitada = $this->tareaRepo->formatoFecha($request->input('solicitada'));
-        $vencimiento = $this->tareaRepo->formatoFecha($request->input('vencimiento'));
+        $solicitada = $this->tareaRepo->formatoFecha($request->input('fecha_solicitada'));
+        $vencimiento = $this->tareaRepo->formatoFecha($request->input('fecha_vencimiento'));
 
         //GUARDAR DATOS
         $row = new Tarea($request->all());
         $row->expediente_id = $expedientes;
-        $row->solicitada = $solicitada;
-        $row->vencimiento = $vencimiento;
+        $row->fecha_solicitada = $solicitada;
+        $row->fecha_vencimiento = $vencimiento;
         $row->abogado_id = $asignado;
         $save = $this->tareaRepo->create($row, $request->all());
 
@@ -80,8 +89,8 @@ class TareasController extends Controller {
             return response()->json([
                 'id' => $save->id,
                 'tarea' => $save->tarea,
-                'solicitada' => soloFecha($save->solicitada),
-                'vencimiento' => soloFecha($save->vencimiento),
+                'fecha_solicitada' => soloFecha($save->solicitada),
+                'fecha_vencimiento' => soloFecha($save->vencimiento),
                 'asignado' => $save->abogado->nombre
             ]);
         }
@@ -94,9 +103,8 @@ class TareasController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($expedientes, $id)
     {
-
         return view('system.cliente.edit', compact('row','pais'));
     }
 
@@ -109,29 +117,7 @@ class TareasController extends Controller {
      */
     public function update(Request $request, $id)
     {
-        //BUSCAR ID
-        $row = $this->clienteRepo->findOrFail($id);
 
-        //VARIABLES
-        $pais = $request->input('pais');
-
-        //GUARDAR DATOS
-        $row->pais_id = $pais;
-        $this->clienteRepo->update($row, $request->all());
-
-        //GUARDAR HISTORIAL
-        $this->clienteRepo->saveHistory($row, $request, 'update');
-
-        //MENSAJE
-        $mensaje = 'El registro se actualizó satisfactoriamente.';
-
-        //AJAX
-        if($request->ajax())
-        {
-            return response()->json([
-                'message' => $mensaje
-            ]);
-        }
     }
 
 }

@@ -8,7 +8,9 @@ class Tarea extends BaseEntity {
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['expediente_id','tarea','descripcion','solicitada','vencimiento','abogado_id','estado'];
+    protected $fillable = ['expediente_id','tarea','descripcion','fecha_solicitada','fecha_vencimiento','abogado_id','estado'];
+    protected $hidden = ['created_at','updated_at','deleted_at'];
+    protected $appends = ['asignado','url_editar'];
 
     public function expedientes()
     {
@@ -18,6 +20,26 @@ class Tarea extends BaseEntity {
     public function abogado()
     {
         return $this->belongsTo(Abogado::class);
+    }
+
+    public function getFechaSolicitadaAttribute($value)
+    {
+        return soloFecha($value);
+    }
+
+    public function getFechaVencimientoAttribute($value)
+    {
+        return soloFecha($value);
+    }
+
+    public function getAsignadoAttribute()
+    {
+        return $this->abogado->nombre;
+    }
+
+    public function getUrlEditarAttribute()
+    {
+        return route('expedientes.tareas.edit', [$this->expediente_id, $this->id]);
     }
 
 }

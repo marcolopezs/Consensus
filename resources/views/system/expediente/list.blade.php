@@ -68,6 +68,8 @@
                         </div>
                     </div>
 
+                    @include('partials.progressbar')
+
                 </div>
 
                 <div class="portlet-body">
@@ -131,7 +133,7 @@
                                     $row_estado = $item->state->titulo;
                                     $row_exito = $item->exito->titulo;
                                 @endphp
-                                <tr data-id="{{ $row_id }}" data-title="{{ $row_expediente }}">
+                                <tr id="exp-{{ $row_id }}" data-id="{{ $row_id }}" data-title="{{ $row_expediente }}">
                                     <td class="col-expediente">{{ $row_expediente }}</td>
                                     <td class="col-cliente">{{ $row_cliente }}</td>
                                     <td class="col-moneda">{{ $row_moneda }}</td>
@@ -160,7 +162,7 @@
                                                 <i class="fa fa-angle-down"></i>
                                             </button>
                                             <ul class="dropdown-menu pull-right" role="menu">
-                                                <li><a href="{{ route('expedientes.tareas.index', $row_id) }}" data-target="#ajax" data-toggle="modal">Procesos</a></li>
+                                                <li><a href="#" class="expediente-procesos" data-id="{{ $row_id }}" data-proceso="{{ route('expedientes.tareas.index', $row_id) }}" data-proceso-create="{{ route('expedientes.tareas.create', $row_id) }}">Procesos</a></li>
                                                 <li><a href="{{ route('expedientes.flujo-caja.index', $row_id) }}" data-target="#ajax" data-toggle="modal">Flujo de Caja</a></li>
                                                 <li><a href="{{ route('expedientes.show', $row_id) }}" data-target="#ajax" data-toggle="modal">Ver registro</a></li>
                                                 <li><a href="{{ route('expedientes.edit', $row_id) }}">Editar</a></li>
@@ -246,7 +248,70 @@
 
         $(document).on("ready", function () {
 
-            $('#mensajeAjax').hide();
+            $("#progressbar").hide();
+
+            $(".expediente-procesos").on("click", function(e) {
+                e.preventDefault();
+
+                var id = $(this).data('id');
+                var proceso = $(this).data('proceso');
+                var create = $(this).data('proceso-create');
+
+                $.ajax({
+                    url: proceso,
+                    type: 'GET',
+                    success: function(result){
+                        console.log(result);
+                        var html = '<tr id="tarea-'+id+'"><td style="padding:20px 15px;" colspan="23">' +
+                                        '<table id="tarea-lista-'+id+'" class="table table-striped table-bordered table-hover order-column">' +
+                                            '<thead>' +
+                                                '<tr role="row" class="heading">' +
+                                                    '<td>Solicitada</td>' +
+                                                    '<td>Vencimiento</td>' +
+                                                    '<td>Tarea</td>' +
+                                                    '<td>Asignado</td>' +
+                                                    '<td>Acciones</td>' +
+                                                '</tr>' +
+                                            '</thead>' +
+                                            '<tbody>' +
+                                            '</tbody>' +
+                                        '</table>' +
+                                        '<div class="btn-group pull-right">' +
+                                            '<a class="btn sbold default tarea-cerrar" href="#" data-id="'+id+'"> Cerrar </a>' +
+                                            '<a class="btn sbold blue" href="'+create+'" data-target="#ajax" data-toggle="modal"> Agregar nuevo proceso <i class="fa fa-plus"></i></a>' +
+                                        '</div>' +
+                                    '</td></tr>';
+
+                        $("#exp-" + id).after(html).slideDown();
+
+                        var tr;
+                        $.each(JSON.parse(result), function(idx, obj) {
+                            tr = $("<tr>");
+                            tr.append('<td>'+ obj.fecha_solicitada +'</td>');
+                            tr.append('<td>'+ obj.fecha_vencimiento +'</td>');
+                            tr.append('<td>'+ obj.tarea +'</td>');
+                            tr.append('<td>'+ obj.asignado +'</td>');
+                            tr.append('<td><a href="'+ obj.url_editar +'" data-target="#ajax" data-toggle="modal">Editar</a></td>');
+                            $("#tarea-lista-"+id+" tbody").prepend(tr);
+                        });
+
+                        $(".tarea-cerrar").on("click", function (e) {
+                            e.preventDefault();
+
+                            var id = $(this).data('id');
+
+                            $("#tarea-" + id).hide();
+
+                        });
+                    },
+                    beforeSend: function () { $('.progress').show(); },
+                    complete: function () { $('.progress').hide(); },
+                    error: function() {
+
+                    }
+                });
+
+            });
 
         });
 
