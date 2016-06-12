@@ -136,8 +136,8 @@ $factory->define(\Consensus\Entities\Tarea::class, function ($faker) use ($facto
        'expediente_id' => \Consensus\Entities\Expediente::all()->random()->id,
        'tarea' => $faker->sentence(),
        'descripcion' => $faker->text(rand(100,255)),
-       'fecha_solicitada' => $faker->dateTimeBetween('-2 years', 'now'),
-       'fecha_vencimiento' => $faker->dateTimeBetween('now', '+2 years'),
+       'fecha_solicitada' => $faker->date('d/m/Y', '+5 years'),
+       'fecha_vencimiento' => $faker->date('d/m/Y', '+5 years'),
        'abogado_id' => \Consensus\Entities\Abogado::all()->random()->id,
        'estado' => $faker->randomElement([0,1])
    ];
