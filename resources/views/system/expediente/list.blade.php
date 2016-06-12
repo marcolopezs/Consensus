@@ -261,8 +261,8 @@
                     url: proceso,
                     type: 'GET',
                     success: function(result){
-                        console.log(result);
-                        var html = '<tr id="tarea-'+id+'"><td style="padding:20px 15px;" colspan="23">' +
+
+                        var html = '<tr id="tarea-'+id+'" class="bg-default" style="display:none;"><td style="padding:20px 15px;" colspan="23">' +
                                         '<table id="tarea-lista-'+id+'" class="table table-striped table-bordered table-hover order-column">' +
                                             '<thead>' +
                                                 '<tr role="row" class="heading">' +
@@ -277,16 +277,17 @@
                                             '</tbody>' +
                                         '</table>' +
                                         '<div class="btn-group pull-right">' +
-                                            '<a class="btn sbold default tarea-cerrar" href="#" data-id="'+id+'"> Cerrar </a>' +
-                                            '<a class="btn sbold blue" href="'+create+'" data-target="#ajax" data-toggle="modal"> Agregar nuevo proceso <i class="fa fa-plus"></i></a>' +
+                                            '<a class="btn sbold white tarea-cerrar" href="#" data-id="'+id+'"> Cerrar </a>' +
+                                            '<a class="btn sbold blue-soft" href="'+create+'" data-target="#ajax" data-toggle="modal"> Agregar nuevo proceso <i class="fa fa-plus"></i></a>' +
                                         '</div>' +
                                     '</td></tr>';
 
-                        $("#exp-" + id).after(html).slideDown();
+                        $("#exp-" + id).after(html);
+                        $("#tarea-" + id).fadeIn();
 
                         var tr;
                         $.each(JSON.parse(result), function(idx, obj) {
-                            tr = $("<tr>");
+                            tr = $('<tr id="tarea-select-'+ obj.id +'">');
                             tr.append('<td>'+ obj.fecha_solicitada +'</td>');
                             tr.append('<td>'+ obj.fecha_vencimiento +'</td>');
                             tr.append('<td>'+ obj.tarea +'</td>');
@@ -297,11 +298,8 @@
 
                         $(".tarea-cerrar").on("click", function (e) {
                             e.preventDefault();
-
                             var id = $(this).data('id');
-
-                            $("#tarea-" + id).hide();
-
+                            $("#tarea-" + id).fadeOut();
                         });
                     },
                     beforeSend: function () { $('.progress').show(); },

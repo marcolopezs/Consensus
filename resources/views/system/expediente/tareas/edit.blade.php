@@ -1,6 +1,6 @@
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-    <h4 class="modal-title">Nuevo proceso</h4>
+    <h4 class="modal-title">Editar proceso</h4>
 </div>
 <div class="modal-body">
     <div class="row">
@@ -21,7 +21,7 @@
                     <div class="form-content"></div>
                 </div>
 
-                {!! Form::open(['route' => ['expedientes.tareas.store', $row->id], 'method' => 'POST', 'id' => 'formCreate', 'class' => 'horizontal-form', 'autocomplete' => 'off']) !!}
+                {!! Form::model($prin, ['route' => ['expedientes.tareas.update', $row->id, $prin->id], 'method' => 'PUT', 'id' => 'formCreate', 'class' => 'horizontal-form', 'autocomplete' => 'off']) !!}
 
                     <div class="form-body">
 
@@ -44,7 +44,7 @@
                                     <div class="form-group">
                                         {!! Form::label('fecha_solicitada', 'Solicitada', ['class' => 'control-label']) !!}
                                         <div class="input-group input-medium date date-picker" data-date-format="dd/mm/yyyy" data-date-viewmode="years">
-                                            {!! Form::text('fecha_solicitada', dateActual(), ['class' => 'form-control']) !!}
+                                            {!! Form::text('fecha_solicitada', null, ['class' => 'form-control']) !!}
                                             <span class="input-group-btn"><button class="btn default" type="button"><i class="fa fa-calendar"></i></button></span>
                                         </div>
                                     </div>
@@ -67,7 +67,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         {!! Form::label('asignado', 'Asignado', ['class' => 'control-label']) !!}
-                                        {!! Form::select('asignado', [''=>''] + $abogados, null, ['class' => 'form-control select2', 'style' => 'width: 100%;']) !!}
+                                        {!! Form::select('asignado', [''=>''] + $abogados, $prin->abogado_id, ['class' => 'form-control select2', 'style' => 'width: 100%;']) !!}
                                     </div>
                                 </div>
 
@@ -134,10 +134,10 @@
             type: 'POST',
             data: data,
             success: function (result) {
-                successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>El registro se agregó satisfactoriamente.</div>';
+                successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>El registro se actualizó satisfactoriamente.</div>';
                 $(".form-content").html(successHtml);
-                $(".select2").val(null).trigger('change');
-                form[0].reset();
+
+                $("#tarea-select-"+ result.id).remove();
 
                 var html = '<tr id="tarea-select-'+ result.id +'">' +
                                 '<td>'+ result.fecha_solicitada +'</td>' +
@@ -153,6 +153,7 @@
             beforeSend: function () { $('.progress').show(); },
             complete: function () { $('.progress').hide(); },
             error: function (result){
+                console.log(result);
                 if(result.status === 422){
                     var errors = result.responseJSON;
                     errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';

@@ -15,8 +15,8 @@ class TareasController extends Controller {
 
     protected $rules = [
         'tarea' => 'required',
-        'solicitada' => 'required',
-        'vencimiento' => 'required',
+        'fecha_solicitada' => 'required',
+        'fecha_vencimiento' => 'required',
         'asignado' => 'required|exists:abogados,id',
         'descripcion' => 'string'
     ];
@@ -49,11 +49,12 @@ class TareasController extends Controller {
         }
     }
 
-    public function create($expediente)
+    public function create($expedientes)
     {
+        $row = $this->expedienteRepo->findOrFail($expedientes);
         $abogados = $this->abogadoRepo->orderBy('nombre', 'asc')->lists('nombre', 'id')->toArray();
 
-        return view('system.expediente.tareas.create', compact('expediente','abogados'));
+        return view('system.expediente.tareas.create', compact('row','abogados'));
     }
 
     /**
@@ -69,14 +70,10 @@ class TareasController extends Controller {
 
         //VARIABLES
         $asignado = $request->input('asignado');
-        $solicitada = $this->tareaRepo->formatoFecha($request->input('fecha_solicitada'));
-        $vencimiento = $this->tareaRepo->formatoFecha($request->input('fecha_vencimiento'));
 
         //GUARDAR DATOS
         $row = new Tarea($request->all());
         $row->expediente_id = $expedientes;
-        $row->fecha_solicitada = $solicitada;
-        $row->fecha_vencimiento = $vencimiento;
         $row->abogado_id = $asignado;
         $save = $this->tareaRepo->create($row, $request->all());
 
@@ -89,9 +86,10 @@ class TareasController extends Controller {
             return response()->json([
                 'id' => $save->id,
                 'tarea' => $save->tarea,
-                'fecha_solicitada' => soloFecha($save->solicitada),
-                'fecha_vencimiento' => soloFecha($save->vencimiento),
-                'asignado' => $save->abogado->nombre
+                'fecha_solicitada' => $save->fecha_solicitada,
+                'fecha_vencimiento' => $save->fecha_vencimiento,
+                'asignado' => $save->asignado,
+                'url_editar' => $save->url_editar
             ]);
         }
 
@@ -105,7 +103,11 @@ class TareasController extends Controller {
      */
     public function edit($expedientes, $id)
     {
-        return view('system.cliente.edit', compact('row','pais'));
+        $row = $this->expedienteRepo->findOrFail($expedientes);
+        $prin = $this->tareaRepo->findOrFail($id);
+        $abogados = $this->abogadoRepo->orderBy('nombre', 'asc')->lists('nombre', 'id')->toArray();
+
+        return view('system.expediente.tareas.edit', compact('row','prin','abogados'));
     }
 
     /**
@@ -115,9 +117,36 @@ class TareasController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $expedientes, $id)
     {
+        //BUSCAR ID
+        $row = $this->tareaRepo->findOrFail($id);
 
+        //VALIDACION
+        $this->validate($request, $this->rules);
+
+        //VARIABLES
+        $asignado = $request->input('asignado');
+
+        //GUARDAR DATOS
+        $row->abogado_id = $asignado;
+        $save = $this->tareaRepo->update($row, $request->all());
+
+        //GUARDAR HISTORIAL
+        $this->tareaRepo->saveHistory($row, $request, 'update');
+
+        //AJAX
+        if($request->ajax())
+        {
+            return response()->json([
+                'id' => $save->id,
+                'tarea' => $save->tarea,
+                'fecha_solicitada' => $row->fecha_solicitada,
+                'fecha_vencimiento' => $row->fecha_vencimiento,
+                'asignado' => $save->asignado,
+                'url_editar' => $save->url_editar
+            ]);
+        }
     }
 
 }

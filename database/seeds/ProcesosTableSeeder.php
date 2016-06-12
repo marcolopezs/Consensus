@@ -11,6 +11,6 @@ class ProcesosTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\Consensus\Entities\Tarea::class, 1000)->create();
+        factory(\Consensus\Entities\Tarea::class, 600)->create();
     }
 }
