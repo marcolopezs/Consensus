@@ -130,6 +130,19 @@ $factory->define(\Consensus\Entities\Expediente::class, function ($faker) use ($
     ];
 });
 
+//TAREAS DE EXPEDIENTE
+$factory->define(\Consensus\Entities\Tarea::class, function ($faker) use ($factory) {
+   return [
+       'expediente_id' => \Consensus\Entities\Expediente::all()->random()->id,
+       'tarea' => $faker->sentence(),
+       'descripcion' => $faker->text(rand(100,255)),
+       'fecha_solicitada' => $faker->dateTimeBetween('-2 years', 'now'),
+       'fecha_vencimiento' => $faker->dateTimeBetween('now', '+2 years'),
+       'abogado_id' => \Consensus\Entities\Abogado::all()->random()->id,
+       'estado' => $faker->randomElement([0,1])
+   ];
+});
+
 //KARDEX
 $factory->define(\Consensus\Entities\Kardex::class, function ($faker) use ($factory) {
     $cliente = \Consensus\Entities\Cliente::all()->random();
