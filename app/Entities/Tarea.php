@@ -22,6 +22,16 @@ class Tarea extends BaseEntity {
         return $this->belongsTo(Abogado::class);
     }
 
+    public function setFechaSolicitadaAttribute($value)
+    {
+        $this->attributes['fecha_solicitada'] = formatoFecha($value);
+    }
+
+    public function setFechaVencimientoAttribute($value)
+    {
+        $this->attributes['fecha_vencimiento'] = formatoFecha($value);
+    }
+
     public function getFechaSolicitadaAttribute($value)
     {
         return soloFecha($value);
