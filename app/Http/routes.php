@@ -131,6 +131,6 @@ Route::group(['namespace' => 'Auth'], function () {
     Route::post('login-password/reset', 'PasswordController@postReset');
 
     //LOGOUT
-    Route::get('logout', ['as' => 'logout', 'uses' => 'AuthController@getLogout']);
+    Route::get('logout', ['as' => 'logout', 'uses' => 'AuthController@logout']);
 
 });
