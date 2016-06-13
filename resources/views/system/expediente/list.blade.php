@@ -74,108 +74,104 @@
 
                 <div class="portlet-body">
 
-                    <div class="table-scrollable">
+                   <table class="table table-striped table-bordered table-hover">
 
-                       <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th class="col-expediente" scope="col" style="width: 140px !important;"> Expediente </th>
+                                <th class="col-cliente" scope="col"> Cliente </th>
+                                <th class="col-moneda" scope="col"> Moneda </th>
+                                <th class="col-valor" scope="col"> Valor </th>
+                                <th class="col-tarifa" scope="col"> Tarifa </th>
+                                <th class="col-abogado" scope="col"> Abogado </th>
+                                <th class="col-asistente" scope="col"> Asistente </th>
+                                <th class="col-servicio" scope="col"> Servicio </th>
+                                <th class="col-fecha-inicio" scope="col"> Fecha Inicio </th>
+                                <th class="col-fecha-termino" scope="col"> Fecha Término </th>
+                                <th class="col-materia" scope="col"> Materia </th>
+                                <th class="col-entidad" scope="col"> Entidad </th>
+                                <th class="col-instancia" scope="col"> Instancia </th>
+                                <th class="col-encargado" scope="col"> Encargado </th>
+                                <th class="col-fecha-poder" scope="col"> Fecha Poder </th>
+                                <th class="col-fecha-vencimiento" scope="col"> Fecha Vencimiento </th>
+                                <th class="col-area" scope="col"> Área </th>
+                                <th class="col-jefe-area" scope="col"> Jefe de Área </th>
+                                <th class="col-bienes" scope="col"> Bienes </th>
+                                <th class="col-situacion" scope="col"> Situación Especial </th>
+                                <th class="col-estado" scope="col"> Estado </th>
+                                <th class="col-exito" scope="col"> Éxito </th>
+                                <th scope="col"> Acciones </th>
+                            </tr>
+                        </thead>
 
-                            <thead>
-                                <tr>
-                                    <th class="col-expediente" scope="col" style="width: 140px !important;"> Expediente </th>
-                                    <th class="col-cliente" scope="col"> Cliente </th>
-                                    <th class="col-moneda" scope="col"> Moneda </th>
-                                    <th class="col-valor" scope="col"> Valor </th>
-                                    <th class="col-tarifa" scope="col"> Tarifa </th>
-                                    <th class="col-abogado" scope="col"> Abogado </th>
-                                    <th class="col-asistente" scope="col"> Asistente </th>
-                                    <th class="col-servicio" scope="col"> Servicio </th>
-                                    <th class="col-fecha-inicio" scope="col"> Fecha Inicio </th>
-                                    <th class="col-fecha-termino" scope="col"> Fecha Término </th>
-                                    <th class="col-materia" scope="col"> Materia </th>
-                                    <th class="col-entidad" scope="col"> Entidad </th>
-                                    <th class="col-instancia" scope="col"> Instancia </th>
-                                    <th class="col-encargado" scope="col"> Encargado </th>
-                                    <th class="col-fecha-poder" scope="col"> Fecha Poder </th>
-                                    <th class="col-fecha-vencimiento" scope="col"> Fecha Vencimiento </th>
-                                    <th class="col-area" scope="col"> Área </th>
-                                    <th class="col-jefe-area" scope="col"> Jefe de Área </th>
-                                    <th class="col-bienes" scope="col"> Bienes </th>
-                                    <th class="col-situacion" scope="col"> Situación Especial </th>
-                                    <th class="col-estado" scope="col"> Estado </th>
-                                    <th class="col-exito" scope="col"> Éxito </th>
-                                    <th scope="col"> Acciones </th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                            @foreach($rows as $item)
-                                @php
-                                    $row_id = $item->id;
-                                    $row_expediente = $item->expediente;
-                                    $row_cliente = $item->cliente->nombre;
-                                    $row_moneda = $item->money->titulo;
-                                    $row_valor = $item->valor;
-                                    $row_tarifa = $item->tariff->titulo;
-                                    $row_abogado = $item->abogado->nombre;
-                                    $row_asistente = $item->asistente->nombre;
-                                    $row_servicio = $item->service->titulo;
-                                    $row_fecha_inicio = soloFecha($item->fecha_inicio);
-                                    $row_fecha_termino = soloFecha($item->fecha_termino);
-                                    $row_materia = $item->matter->titulo;
-                                    $row_entidad = $item->entity->titulo;
-                                    $row_instancia = $item->instance->titulo;
-                                    $row_encargado = $item->encargado;
-                                    $row_fecha_poder = soloFecha($item->fecha_poder);
-                                    $row_fecha_vencimiento = soloFecha($item->fecha_vencimiento);
-                                    $row_area = $item->area->titulo;
-                                    $row_jefe_area = $item->jefe_area;
-                                    $row_bienes = $item->bienes->titulo;
-                                    $row_situacion_especial = $item->situacionEspecial->titulo;
-                                    $row_estado = $item->state->titulo;
-                                    $row_exito = $item->exito->titulo;
-                                @endphp
-                                <tr id="exp-{{ $row_id }}" data-id="{{ $row_id }}" data-title="{{ $row_expediente }}">
-                                    <td class="col-expediente">{{ $row_expediente }}</td>
-                                    <td class="col-cliente">{{ $row_cliente }}</td>
-                                    <td class="col-moneda">{{ $row_moneda }}</td>
-                                    <td class="col-valor">{{ $row_valor }}</td>
-                                    <td class="col-tarifa">{{ $row_tarifa }}</td>
-                                    <td class="col-abogado">{{ $row_abogado }}</td>
-                                    <td class="col-asistente">{{ $row_asistente }}</td>
-                                    <td class="col-servicio">{{ $row_servicio }}</td>
-                                    <td class="col-fecha-inicio">{{ $row_fecha_inicio }}</td>
-                                    <td class="col-fecha-termino">{{ $row_fecha_termino }}</td>
-                                    <td class="col-materia">{{ $row_materia }}</td>
-                                    <td class="col-entidad">{{ $row_entidad }}</td>
-                                    <td class="col-instancia">{{ $row_instancia }}</td>
-                                    <td class="col-encargado">{{ $row_encargado }}</td>
-                                    <td class="col-fecha-poder">{{ $row_fecha_poder }}</td>
-                                    <td class="col-fecha-vencimiento">{{ $row_fecha_vencimiento }}</td>
-                                    <td class="col-area">{{ $row_area }}</td>
-                                    <td class="col-jefe-area">{{ $row_jefe_area }}</td>
-                                    <td class="col-bienes">{{ $row_bienes }}</td>
-                                    <td class="col-situacion">{{ $row_situacion_especial }}</td>
-                                    <td class="col-estado">{{ $row_estado }}</td>
-                                    <td class="col-exito">{{ $row_exito }}</td>
-                                    <td class="text-center">
-                                        <div class="btn-group">
-                                            <button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Acciones
-                                                <i class="fa fa-angle-down"></i>
-                                            </button>
-                                            <ul class="dropdown-menu pull-right" role="menu">
-                                                <li><a href="#" class="expediente-procesos" data-id="{{ $row_id }}" data-proceso="{{ route('expedientes.tareas.index', $row_id) }}" data-proceso-create="{{ route('expedientes.tareas.create', $row_id) }}">Procesos</a></li>
-                                                <li><a href="{{ route('expedientes.flujo-caja.index', $row_id) }}" data-target="#ajax" data-toggle="modal">Flujo de Caja</a></li>
-                                                <li><a href="{{ route('expedientes.show', $row_id) }}" data-target="#ajax" data-toggle="modal">Ver registro</a></li>
-                                                <li><a href="{{ route('expedientes.edit', $row_id) }}">Editar</a></li>
-                                                <li><a href="javascript:;">Historial</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-
-                    </div>
+                        <tbody>
+                        @foreach($rows as $item)
+                            @php
+                                $row_id = $item->id;
+                                $row_expediente = $item->expediente;
+                                $row_cliente = $item->cliente->nombre;
+                                $row_moneda = $item->money->titulo;
+                                $row_valor = $item->valor;
+                                $row_tarifa = $item->tariff->titulo;
+                                $row_abogado = $item->abogado->nombre;
+                                $row_asistente = $item->asistente->nombre;
+                                $row_servicio = $item->service->titulo;
+                                $row_fecha_inicio = soloFecha($item->fecha_inicio);
+                                $row_fecha_termino = soloFecha($item->fecha_termino);
+                                $row_materia = $item->matter->titulo;
+                                $row_entidad = $item->entity->titulo;
+                                $row_instancia = $item->instance->titulo;
+                                $row_encargado = $item->encargado;
+                                $row_fecha_poder = soloFecha($item->fecha_poder);
+                                $row_fecha_vencimiento = soloFecha($item->fecha_vencimiento);
+                                $row_area = $item->area->titulo;
+                                $row_jefe_area = $item->jefe_area;
+                                $row_bienes = $item->bienes->titulo;
+                                $row_situacion_especial = $item->situacionEspecial->titulo;
+                                $row_estado = $item->state->titulo;
+                                $row_exito = $item->exito->titulo;
+                            @endphp
+                            <tr id="exp-{{ $row_id }}" data-id="{{ $row_id }}" data-title="{{ $row_expediente }}">
+                                <td class="col-expediente">{{ $row_expediente }}</td>
+                                <td class="col-cliente">{{ $row_cliente }}</td>
+                                <td class="col-moneda">{{ $row_moneda }}</td>
+                                <td class="col-valor">{{ $row_valor }}</td>
+                                <td class="col-tarifa">{{ $row_tarifa }}</td>
+                                <td class="col-abogado">{{ $row_abogado }}</td>
+                                <td class="col-asistente">{{ $row_asistente }}</td>
+                                <td class="col-servicio">{{ $row_servicio }}</td>
+                                <td class="col-fecha-inicio">{{ $row_fecha_inicio }}</td>
+                                <td class="col-fecha-termino">{{ $row_fecha_termino }}</td>
+                                <td class="col-materia">{{ $row_materia }}</td>
+                                <td class="col-entidad">{{ $row_entidad }}</td>
+                                <td class="col-instancia">{{ $row_instancia }}</td>
+                                <td class="col-encargado">{{ $row_encargado }}</td>
+                                <td class="col-fecha-poder">{{ $row_fecha_poder }}</td>
+                                <td class="col-fecha-vencimiento">{{ $row_fecha_vencimiento }}</td>
+                                <td class="col-area">{{ $row_area }}</td>
+                                <td class="col-jefe-area">{{ $row_jefe_area }}</td>
+                                <td class="col-bienes">{{ $row_bienes }}</td>
+                                <td class="col-situacion">{{ $row_situacion_especial }}</td>
+                                <td class="col-estado">{{ $row_estado }}</td>
+                                <td class="col-exito">{{ $row_exito }}</td>
+                                <td class="text-center">
+                                    <div class="btn-group">
+                                        <button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Acciones
+                                            <i class="fa fa-angle-down"></i>
+                                        </button>
+                                        <ul class="dropdown-menu pull-right" role="menu">
+                                            <li><a href="#" class="expediente-procesos" data-id="{{ $row_id }}" data-proceso="{{ route('expedientes.tareas.index', $row_id) }}" data-proceso-create="{{ route('expedientes.tareas.create', $row_id) }}">Procesos</a></li>
+                                            <li><a href="#" class="expediente-caja" data-id="{{ $row_id }}" data-caja="{{ route('expedientes.flujo-caja.index', $row_id) }}" data-caja-create="{{ route('expedientes.flujo-caja.create', $row_id) }}">Flujo de Caja</a></li>
+                                            <li><a href="{{ route('expedientes.show', $row_id) }}" data-target="#ajax" data-toggle="modal">Ver registro</a></li>
+                                            <li><a href="{{ route('expedientes.edit', $row_id) }}">Editar</a></li>
+                                            <li><a href="javascript:;">Historial</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
 
                     <div class="row">
 
@@ -240,79 +236,13 @@
     {!! HTML::script('assets/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js') !!}
     {!! HTML::script('assets/pages/scripts/components-date-time-pickers.js') !!}
 
-
     {{-- FUNCIONES --}}
     {!! HTML::script('js/js-funciones.js') !!}
-    {!! HTML::script('js/js-expediente-columnas.js') !!}
+    {!! HTML::script('js/js-expediente.js') !!}
     <script>
-
         $(document).on("ready", function () {
-
             $("#progressbar").hide();
-
-            $(".expediente-procesos").on("click", function(e) {
-                e.preventDefault();
-
-                var id = $(this).data('id');
-                var proceso = $(this).data('proceso');
-                var create = $(this).data('proceso-create');
-
-                $.ajax({
-                    url: proceso,
-                    type: 'GET',
-                    success: function(result){
-
-                        var html = '<tr id="tarea-'+id+'" class="bg-default" style="display:none;"><td style="padding:20px 15px;" colspan="23">' +
-                                        '<table id="tarea-lista-'+id+'" class="table table-striped table-bordered table-hover order-column">' +
-                                            '<thead>' +
-                                                '<tr role="row" class="heading">' +
-                                                    '<td>Solicitada</td>' +
-                                                    '<td>Vencimiento</td>' +
-                                                    '<td>Tarea</td>' +
-                                                    '<td>Asignado</td>' +
-                                                    '<td>Acciones</td>' +
-                                                '</tr>' +
-                                            '</thead>' +
-                                            '<tbody>' +
-                                            '</tbody>' +
-                                        '</table>' +
-                                        '<div class="btn-group pull-right">' +
-                                            '<a class="btn sbold white tarea-cerrar" href="#" data-id="'+id+'"> Cerrar </a>' +
-                                            '<a class="btn sbold blue-soft" href="'+create+'" data-target="#ajax" data-toggle="modal"> Agregar nuevo proceso <i class="fa fa-plus"></i></a>' +
-                                        '</div>' +
-                                    '</td></tr>';
-
-                        $("#exp-" + id).after(html);
-                        $("#tarea-" + id).fadeIn();
-
-                        var tr;
-                        $.each(JSON.parse(result), function(idx, obj) {
-                            tr = $('<tr id="tarea-select-'+ obj.id +'">');
-                            tr.append('<td>'+ obj.fecha_solicitada +'</td>');
-                            tr.append('<td>'+ obj.fecha_vencimiento +'</td>');
-                            tr.append('<td>'+ obj.tarea +'</td>');
-                            tr.append('<td>'+ obj.asignado +'</td>');
-                            tr.append('<td><a href="'+ obj.url_editar +'" data-target="#ajax" data-toggle="modal">Editar</a></td>');
-                            $("#tarea-lista-"+id+" tbody").prepend(tr);
-                        });
-
-                        $(".tarea-cerrar").on("click", function (e) {
-                            e.preventDefault();
-                            var id = $(this).data('id');
-                            $("#tarea-" + id).fadeOut();
-                        });
-                    },
-                    beforeSend: function () { $('.progress').show(); },
-                    complete: function () { $('.progress').hide(); },
-                    error: function() {
-
-                    }
-                });
-
-            });
-
         });
-
     </script>
 
 @stop
