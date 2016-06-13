@@ -40,9 +40,20 @@ class FlujoCajaController extends Controller {
     public function index($expedientes, Request $request)
     {
         $row = $this->expedienteRepo->findOrFail($expedientes);
+
+        if($request->ajax())
+        {
+            return $row->flujoCaja->toJson();
+        }
+
+    }
+
+    public function create($expedientes)
+    {
+        $row = $this->expedienteRepo->findOrFail($expedientes);
         $moneda = $this->moneyRepo->orderBy('titulo', 'asc')->lists('titulo', 'id')->toArray();
 
-        return view('system.expediente.caja.list', compact('row','moneda'));
+        return view('system.expediente.caja.create', compact('row','moneda'));
     }
 
     /**
@@ -75,7 +86,7 @@ class FlujoCajaController extends Controller {
         {
             return response()->json([
                 'id' => $save->id,
-                'fecha' => soloFecha($save->fecha),
+                'fecha_caja' => soloFecha($save->fecha),
                 'referencia' => $save->referencia,
                 'moneda' => $save->money->titulo,
                 'monto' => $save->monto

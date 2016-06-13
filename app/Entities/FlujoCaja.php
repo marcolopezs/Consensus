@@ -9,6 +9,8 @@ class FlujoCaja extends BaseEntity {
     protected $dates = ['deleted_at'];
 
     protected $fillable = ['expediente_id','fecha','referencia','money_id','monto','comprobante','comprobante_carpeta'];
+    protected $hidden = ['created_at','updated_at','deleted_at'];
+    protected $appends = ['fecha_caja','moneda','url_editar'];
 
     protected $table = 'flujo_caja';
 
@@ -20,6 +22,21 @@ class FlujoCaja extends BaseEntity {
     public function money()
     {
         return $this->belongsTo(Money::class);
+    }
+
+    public function getFechaCajaAttribute()
+    {
+        return soloFecha($this->fecha);
+    }
+
+    public function getMonedaAttribute()
+    {
+        return $this->money->titulo;
+    }
+
+    public function getUrlEditarAttribute()
+    {
+        return route('expedientes.flujo-caja.edit', [$this->expediente_id, $this->id]);
     }
 
 }

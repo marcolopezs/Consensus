@@ -143,6 +143,17 @@ $factory->define(\Consensus\Entities\Tarea::class, function ($faker) use ($facto
    ];
 });
 
+//FLUJO DE CAJA
+$factory->define(\Consensus\Entities\FlujoCaja::class, function ($faker) use ($factory) {
+    return [
+        'expediente_id' => \Consensus\Entities\Expediente::all()->random()->id,
+        'referencia' => $faker->sentence(),
+        'fecha' => $faker->dateTimeBetween('-2 years', 'now'),
+        'money_id' => \Consensus\Entities\Money::all()->random()->id,
+        'monto' => $faker->randomFloat(2, 5, 15),
+    ];
+});
+
 //KARDEX
 $factory->define(\Consensus\Entities\Kardex::class, function ($faker) use ($factory) {
     $cliente = \Consensus\Entities\Cliente::all()->random();
