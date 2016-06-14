@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 class BaseEntity extends Model{
 
+    protected $hidden = ['created_at','updated_at','deleted_at'];
+
     //HISTORIAL
     public function histories()
     {
