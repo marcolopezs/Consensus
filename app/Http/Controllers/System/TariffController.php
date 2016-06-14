@@ -116,4 +116,28 @@ class TariffController extends Controller {
         }
     }
 
+
+    /*
+     * Cambiar Estado
+     */
+    public function estado($id, Request $request)
+    {
+        //BUSCAR ID
+        $row = $this->tariffRepo->findOrFail($id);
+
+        if($row->estado == 0){ $estado = 1; }else{ $estado = 0; }
+
+        $row->estado = $estado;
+        $this->tariffRepo->update($row, $request->all());
+
+        $message = 'El registro se modificó satisfactoriamente.';
+
+        if($request->ajax())
+        {
+            return response()->json([
+                'message' => $message,
+                'estado'  => $estado
+            ]);
+        }
+    }
 }
