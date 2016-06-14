@@ -142,31 +142,6 @@ class ClienteController extends Controller {
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id, ClienteRequest $request)
-    {
-        //BUSCAR ID PARA ELIMINAR
-        $row = $this->clienteRepo->findOrFail($id);
-        $row->delete();
-
-        //GUARDAR HISTORIAL
-        $this->clienteRepo->saveHistory($row, $request, 'delete');
-
-        $message = 'El registro se eliminó satisfactoriamente.';
-
-        if($request->ajax())
-        {
-            return response()->json([
-                'message' => $message
-            ]);
-        }
-    }
-
 
     /*
      *  Busqueda de Cliente por medio de JSON

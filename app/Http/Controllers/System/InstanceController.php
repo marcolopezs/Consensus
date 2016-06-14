@@ -115,28 +115,4 @@ class InstanceController extends Controller {
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id, Request $request)
-    {
-        //BUSCAR ID PARA ELIMINAR
-        $row = $this->instanceRepo->findOrFail($id);
-        $row->delete();
-
-        //GUARDAR HISTORIAL
-        $this->instanceRepo->saveHistory($row, $request, 'delete');
-
-        $message = 'El registro se eliminó satisfactoriamente.';
-
-        if($request->ajax())
-        {
-            return response()->json([
-                'message' => $message
-            ]);
-        }
-    }
 }

@@ -92,11 +92,7 @@
 
     </div>
 
-{!! Form::open(['route' => ['users.destroy', ':REGISTER'], 'method' => 'DELETE', 'id' => 'FormDeleteRow']) !!}
-{!! Form::close() !!}
-
 @stop
 
 @section('contenido_footer')
-
 @stop

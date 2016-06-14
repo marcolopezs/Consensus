@@ -209,31 +209,4 @@ class KardexController extends Controller {
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id, Request $request)
-    {
-        //GUARDAR HISTORIAL
-        $history = new History;
-        $this->historyRepo->saveHistory($history, $this->tabla, $id, $request, 'delete');
-
-        //BUSCAR ID PARA ELIMINAR
-        $post = $this->kardexRepo->findOrFail($id);
-        $post->delete();
-
-        $message = 'El registro se eliminó satisfactoriamente.';
-
-        if($request->ajax())
-        {
-            return response()->json([
-                'message' => $message
-            ]);
-        }
-    }
-
-
 }

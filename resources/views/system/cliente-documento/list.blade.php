@@ -66,7 +66,6 @@
                                             <li><a href="{{ route('cliente.documentos.download', [$prin->id, $row_id]) }}">Descargar</a></li>
                                             <li><div class="divider"></div></li>
                                             <li><a class="modal-view" data-url="{{ route('cliente.documentos.edit', [$prin->id, $row_id]) }}" data-toggle="modal">Editar</a></li>
-                                            <li><a href="#delete" class="btn-delete">Eliminar</a></li>
                                         </ul>
                                     </div>
                                 </td>
@@ -97,17 +96,6 @@
 
     </div>
 
-<!-- ajax -->
-<div id="ajax-modal" class="modal container fade" tabindex="-1"></div>
-
-{!! Form::open(['route' => ['cliente.documentos.destroy', $prin->id, ':REGISTER'], 'method' => 'DELETE', 'id' => 'FormDeleteRow']) !!}
-{!! Form::close() !!}
-
-<div class="modal-view-delete" id="delete" title="Eliminar registro">
-    <p>¿Desea eliminar el registro?</p>
-    <div id="deleteTitle"></div>
-</div>
-
 @stop
 
 @section('contenido_footer')
@@ -120,6 +108,8 @@
 {!! HTML::script('assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js') !!}
 
 <script>
+    $('#mensajeAjax').hide();
+
     //ajax demo:
     var $modal = $('#ajax-modal');
 
@@ -155,52 +145,6 @@
             });
         }, 100);
     });
-</script>
-
-<script>
-
-    $(document).on("ready", function () {
-
-        $('.modal-view-delete, #mensajeAjax').hide();
-
-        $(".btn-delete").on("click", function(e){
-            e.preventDefault();
-            var row = $(this).parents("tr");
-            var id = row.data("id");
-            var title = row.data("title");
-            var form = $("#FormDeleteRow");
-            var url = form.attr("action").replace(':REGISTER', id);
-            var data = form.serialize();
-
-            $("#delete #deleteTitle").text(title);
-
-            $( "#delete" ).dialog({
-                resizable: true,
-                height: 250,
-                modal: false,
-                buttons: {
-                    "Borrar registro": function() {
-                        row.fadeOut();
-
-                        $.post(url, data, function(result){
-                            $("#mensajeAjax").show().removeClass('alert-danger').addClass('alert-success').text(result.message);
-                        }).fail(function(){
-                            $("#mensajeAjax").show().removeClass('alert-success').addClass('alert-danger').text("Se produjo un error al eliminar el registro");
-                            row.show();
-                        });
-
-                        $(this).dialog("close");
-                    },
-                    Cancel: function() {
-                        $(this).dialog("close");
-                    }
-                }
-            });
-
-        });
-
-    });
-
 </script>
 
 @stop

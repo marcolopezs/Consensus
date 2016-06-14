@@ -116,31 +116,6 @@ class ServiceController extends Controller {
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id, Request $request)
-    {
-        //BUSCAR ID PARA ELIMINAR
-        $row = $this->serviceRepo->findOrFail($id);
-        $row->delete();
-
-        //GUARDAR HISTORIAL
-        $this->serviceRepo->saveHistory($row, $request, 'delete');
-
-        $message = 'El registro se eliminó satisfactoriamente.';
-
-        if($request->ajax())
-        {
-            return response()->json([
-                'message' => $message
-            ]);
-        }
-    }
-
 
     public function serviceFecha($service, Request $request)
     {

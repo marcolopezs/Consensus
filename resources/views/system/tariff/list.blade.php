@@ -60,8 +60,6 @@
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
                                             <li><a href="{{ route('tariff.edit', $row_id) }}" data-target="#ajax" data-toggle="modal">Editar</a></li>
-                                            <li><a href="#" class="btn-delete">Eliminar</a></li>
-                                            <li><div class="divider"></div></li>
                                             <li><a href="javascript:;">Historial</a></li>
                                         </ul>
                                     </div>
@@ -93,15 +91,9 @@
 
     </div>
 
-{!! Form::open(['route' => ['tariff.destroy', ':REGISTER'], 'method' => 'DELETE', 'id' => 'FormDeleteRow']) !!}
-{!! Form::close() !!}
-
 @stop
 
 @section('contenido_footer')
 {{-- BootBox --}}
 {!! HTML::script('assets/global/plugins/bootbox/bootbox.min.js') !!}
-
-{{-- Delete --}}
-{!! HTML::script('js/js-delete.js') !!}
 @stop
