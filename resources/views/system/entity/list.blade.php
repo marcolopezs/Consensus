@@ -13,11 +13,14 @@
 
         @include('flash::message')
 
-        @include('partials.message')
-
         <div class="col-md-12 col-sm-12">
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
             <div class="portlet light portlet-datatable " id="form_wizard_1">
+
+                @include('partials.message')
+
+                @include('partials.progressbar')
+
                 <div class="portlet-body">
 
                     <div class="table-toolbar">
@@ -53,7 +56,11 @@
                                 <td>{{ $row_area }}</td>
                                 <td>{{ $row_funcionario }}</td>
                                 <td>{{ $row_otro }}</td>
-                                <td class="text-center">{{ trans('system.estado.'.$row_estado) }}</td>
+                                <td class="text-center">
+                                    <a id="estado-{{ $row_id }}" href="#" class="btn-estado" data-id="{{ $row_id }}" data-title="{{ $row_titulo }}" data-url="{{ route('entity.estado', $row_id) }}">
+                                        {!! $row_estado ? '<span class="label label-success">'.trans('system.estado.'.$row_estado).'</span>' : '<span class="label label-default">'.trans('system.estado.'.$row_estado).'</span>' !!}
+                                    </a>
+                                </td>
                                 <td class="text-center">
                                     <div class="btn-group">
                                         <button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Acciones
@@ -99,4 +106,7 @@
 @section('contenido_footer')
 {{-- BootBox --}}
 {!! HTML::script('assets/global/plugins/bootbox/bootbox.min.js') !!}
+
+{{-- Cambiar Estado --}}
+{!! HTML::script('js/js-cambiar-estado.js') !!}
 @stop

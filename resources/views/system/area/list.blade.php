@@ -104,5 +104,4 @@
 
 {{-- Cambiar Estado --}}
 {!! HTML::script('js/js-cambiar-estado.js') !!}
-
 @stop
