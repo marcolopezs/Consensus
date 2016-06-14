@@ -45,12 +45,14 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
 
     //CLIENTES
     Route::resource('cliente', 'ClienteController', ['except' => 'destroy']);
+    Route::post('cliente/{id}/estado', ['as' => 'cliente.estado', 'uses' => 'ClienteController@estado']);
     Route::get('cliente/{cliente}/user', ['as' => 'cliente.user.get', 'uses' => 'ClienteController@userGet']);
     Route::post('cliente/{cliente}/user', ['as' => 'cliente.user.post', 'uses' => 'ClienteController@userPost']);
     Route::post('cliente/{cliente}/user-name', ['as' => 'cliente.user.name', 'uses' => 'ClienteController@userName']);
 
     //CLIENTE - CONTACTO
     Route::resource('cliente.contactos', 'ClienteContactosController', ['except' => 'destroy']);
+    Route::post('cliente/contactos/{id}/estado', ['as' => 'cliente.contactos.estado', 'uses' => 'ClienteContactosController@estado']);
 
     //CLIENTE - DOCUMENTOS
     Route::resource('cliente.documentos', 'ClienteDocumentosController', ['except' => 'destroy']);
@@ -61,6 +63,7 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
 
     //KARDEX
     Route::resource('kardex', 'KardexController', ['except' => 'destroy']);
+    Route::post('kardex/{id}/estado', ['as' => 'kardex.estado', 'uses' => 'KardexController@estado']);
 
     //CLIENTE - JSON
     Route::get('cliente-all', ['as' => 'cliente.all', 'uses' => 'ClienteController@buscarCliente']);
@@ -70,44 +73,57 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
 
         //TIPO DE CAMBIO
         Route::resource('money', 'MoneyController', ['names' => $prefixedResourceNames('money'), 'except' => 'destroy']);
+        Route::post('mony/{id}/estado', ['as' => 'money.estado', 'uses' => 'MoneyController@estado']);
 
         //FORMAS DE PAGO
         Route::resource('payment-method', 'PaymentMethodController', ['names' => $prefixedResourceNames('payment-method'), 'except' => 'destroy']);
+        Route::post('payment-method/{id}/estado', ['as' => 'payment-method.estado', 'uses' => 'PaymentMethodController@estado']);
 
         //TARIFAS
         Route::resource('tariff', 'TariffController', ['names' => $prefixedResourceNames('tariff'), 'except' => 'destroy']);
+        Route::post('tariff/{id}/estado', ['as' => 'tariff.estado', 'uses' => 'TariffController@estado']);
 
         //SERVICIOS
         Route::resource('service', 'ServiceController', ['names' => $prefixedResourceNames('service'), 'except' => 'destroy']);
+        Route::post('service/{id}/estado', ['as' => 'service.estado', 'uses' => 'ServiceController@estado']);
         Route::post('service-fecha/{service}', ['as' => 'service.fecha', 'uses' => 'ServiceController@serviceFecha']);
         Route::post('service-fecha-sumadias', ['as' => 'service.fecha.suma', 'uses' => 'ServiceController@serviceFechaSuma']);
 
         //INSTANCIAS
         Route::resource('instance', 'InstanceController', ['names' => $prefixedResourceNames('instance'), 'except' => 'destroy']);
+        Route::post('instance/{id}/estado', ['as' => 'instance.estado', 'uses' => 'InstanceController@estado']);
 
         //MATERIAS
         Route::resource('matter', 'MatterController', ['names' => $prefixedResourceNames('matter'), 'except' => 'destroy']);
+        Route::post('matter/{id}/estado', ['as' => 'matter.estado', 'uses' => 'MatterController@estado']);
 
         //ENTIDADES
         Route::resource('entity', 'EntityController', ['names' => $prefixedResourceNames('entity'), 'except' => 'destroy']);
+        Route::post('entity/{id}/estado', ['as' => 'entity.estado', 'uses' => 'EntityController@estado']);
 
         //AREAS
         Route::resource('area', 'AreaController', ['names' => $prefixedResourceNames('area'), 'except' => 'destroy']);
+        Route::post('area/{id}/estado', ['as' => 'area.estado', 'uses' => 'AreaController@estado']);
 
         //SITUACION
         Route::resource('ubicacion', 'UbicacionController', ['names' => $prefixedResourceNames('ubicacion'), 'except' => 'destroy']);
+        Route::post('ubicacion/{id}/estado', ['as' => 'ubicacion.estado', 'uses' => 'UbicacionController@estado']);
 
         //ESTADOS
         Route::resource('state', 'StateController', ['names' => $prefixedResourceNames('state'), 'except' => 'destroy']);
+        Route::post('state/{id}/estado', ['as' => 'state.estado', 'uses' => 'StateController@estado']);
 
         //ESTADOS
         Route::resource('intervener', 'IntervenerController', ['names' => $prefixedResourceNames('intervener'), 'except' => 'destroy']);
+        Route::post('intervener/{id}/estado', ['as' => 'intervener.estado', 'uses' => 'IntervenerController@estado']);
 
         //TIPOS DE GASTOS
         Route::resource('expense-type', 'ExpenseTypeController', ['names' => $prefixedResourceNames('expense-type'), 'except' => 'destroy']);
+        Route::post('expense-type/{id}/estado', ['as' => 'expense-type.estado', 'uses' => 'ExpenseTypeController@estado']);
 
         //TIPOS DE KARDEX
         Route::resource('expediente-tipo', 'ExpedienteTipoController', ['names' => $prefixedResourceNames('expediente-tipo'), 'except' => 'destroy']);
+        Route::post('expediente-tipo/{id}/estado', ['as' => 'expediente-tipo.estado', 'uses' => 'ExpedienteTipoController@estado']);
 
     });
 
