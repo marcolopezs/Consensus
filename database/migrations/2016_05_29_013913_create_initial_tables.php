@@ -233,6 +233,7 @@ class CreateInitialTables extends Migration
             $table->decimal('valor', 8, 5)->nullable();
             $table->string('simbolo');
             $table->string('abrev', 5);
+            $table->boolean('estado');
 
             $table->nullableTimestamps();
             $table->softDeletes();
@@ -356,6 +357,7 @@ class CreateInitialTables extends Migration
             $table->string('referencia');
             $table->integer('money_id');
             $table->double('monto', 15, 2);
+            $table->boolean('estado');
 
             $table->nullableTimestamps();
             $table->softDeletes();
