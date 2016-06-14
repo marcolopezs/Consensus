@@ -5,6 +5,8 @@
     <title>Consensus</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     {!! HTML::style('http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all') !!}
     {!! HTML::style('https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css') !!}

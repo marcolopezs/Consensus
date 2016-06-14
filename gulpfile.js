@@ -18,4 +18,5 @@ elixir(function(mix) {
 
     mix.scripts(['js-funciones.js'], 'public/js/js-funciones.js');
     mix.scripts(['js-expediente.js'], 'public/js/js-expediente.js');
+    mix.scripts(['js-cambiar-estado.js'], 'public/js/js-cambiar-estado.js');
 });
