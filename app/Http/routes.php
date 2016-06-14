@@ -27,12 +27,15 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
 
     Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
 
+    //DOCUMENTOS
+    Route::get('documentos/{id}/download', ['as' => 'documentos.download', 'uses' => 'DocumentosController@download']);
+    Route::post('documentos/upload', ['as' => 'documentos.upload', 'uses' => 'DocumentosController@upload']);
+
     //EXPEDIENTES
     Route::resource('expedientes', 'ExpedientesController');
     Route::get('expedientes/cliente/{id}', ['as' => 'expedientes.cliente', 'uses' => 'ExpedientesController@cliente']);
     Route::resource('expedientes.tareas', 'TareasController');
     Route::resource('expedientes.flujo-caja', 'FlujoCajaController');
-    Route::post('expedientes/flujo-caja-file', ['as' => 'expedientes.flujo-caja.file', 'uses' => 'FlujoCajaController@file']);
     Route::post('expedientes/ajustes', ['as' => 'expedientes.ajustes', 'uses' => 'ExpedientesController@ajustes']);
     Route::get('expedientes/filtrar', ['as' => 'expedientes.filtrar', 'uses' => 'ExpedientesController@filtrar']);
 

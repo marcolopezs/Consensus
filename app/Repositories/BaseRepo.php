@@ -365,6 +365,17 @@ abstract class BaseRepo {
         ]);
     }
 
+    //GUARDAR HISTORIAL DE DOCUMENTO
+    public function saveDocumento($entity, Request $request, $type)
+    {
+        $entity->documentos()->create([
+            'user_id' => Auth::user()->id,
+            'documento' => $request->input('documento'),
+            'carpeta' => $request->input('carpeta'),
+            'type' => $type,
+        ]);
+    }
+
     //BUSCAR HISTORIAL
     public function findHistory($entity, $id)
     {

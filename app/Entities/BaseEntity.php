@@ -17,6 +17,12 @@ class BaseEntity extends Model{
         return $this->morphMany(History::class, 'historyble')->where('opcion','file')->orderBy('created_at','desc');
     }
 
+    //DOCUMENTOS
+    public function documentos()
+    {
+        return $this->morphMany(Documento::class, 'documentable');
+    }
+
     public function scopeClienteId($query, $value)
     {
         $rows = Cliente::all();

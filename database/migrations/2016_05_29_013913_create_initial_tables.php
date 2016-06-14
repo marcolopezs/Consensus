@@ -94,6 +94,27 @@ class CreateInitialTables extends Migration
         });
 
         /*==============================
+        =          DOCUMENTOS          =
+        ==============================*/
+
+        Schema::create('documentos', function(Blueprint $table)
+        {
+            $table->increments('id');
+
+            $table->integer('documentable_id')->unsigned();
+            $table->string('documentable_type');
+
+            $table->integer('user_id')->nullable()->default(NULL);
+
+            $table->enum('type', ['create','update', 'restore', 'delete']);
+            $table->string('documento');
+            $table->string('carpeta');
+
+            $table->nullableTimestamps();
+            $table->softDeletes();
+        });
+
+        /*==============================
         =            CLIENTES          =
         ==============================*/
 
@@ -217,6 +238,8 @@ class CreateInitialTables extends Migration
             $table->softDeletes();
         });
 
+
+
         /*==============================
         =          EXPEDIENTE          =
         ==============================*/
@@ -333,9 +356,6 @@ class CreateInitialTables extends Migration
             $table->string('referencia');
             $table->integer('money_id');
             $table->double('monto', 15, 2);
-
-            $table->string('comprobante');
-            $table->string('comprobante_carpeta');
 
             $table->nullableTimestamps();
             $table->softDeletes();
@@ -591,6 +611,7 @@ class CreateInitialTables extends Migration
         Schema::drop('user_roles');
         Schema::drop('password_resets');
         Schema::drop('histories');
+        Schema::drop('documentos');
 
         Schema::drop('expedientes');
         Schema::drop('expediente_documentos');
