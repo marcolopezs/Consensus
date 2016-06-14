@@ -13,11 +13,14 @@
 
         @include('flash::message')
 
-        @include('partials.message')
-
         <div class="col-md-12 col-sm-12">
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
             <div class="portlet light portlet-datatable " id="form_wizard_1">
+
+                @include('partials.message')
+
+                @include('partials.progressbar')
+
                 <div class="portlet-body">
 
                     <div class="table-toolbar">
@@ -40,14 +43,20 @@
 
                         <tbody>
                         @foreach($rows as $item)
-                            {{--*/
+                            @php
                             $row_id = $item->id;
                             $row_titulo = $item->titulo;
                             $row_email = $item->email;
-                            /*--}}
+                            $row_estado = $item->estado;
+                            @endphp
                             <tr class="odd gradeX" data-id="{{ $row_id }}" data-title="{{ $row_titulo }}">
                                 <td>{{ $row_titulo }}</td>
                                 <td>{{ $row_email }}</td>
+                                <td class="text-center">
+                                    <a id="estado-{{ $row_id }}" href="#" class="btn-estado" data-id="{{ $row_id }}" data-title="{{ $row_titulo }}" data-url="{{ route('area.estado', $row_id) }}">
+                                        {!! $row_estado ? '<span class="label label-success">'.trans('system.estado.'.$row_estado).'</span>' : '<span class="label label-default">'.trans('system.estado.'.$row_estado).'</span>' !!}
+                                    </a>
+                                </td>
                                 <td class="text-center">
                                     <div class="btn-group">
                                         <button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Acciones
@@ -55,7 +64,6 @@
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
                                             <li><a href="{{ route('area.edit', $row_id) }}" data-target="#ajax" data-toggle="modal">Editar</a></li>
-                                            <li><div class="divider"></div></li>
                                             <li><a href="javascript:;">Historial</a></li>
                                         </ul>
                                     </div>
@@ -93,4 +101,8 @@
 @section('contenido_footer')
 {{-- BootBox --}}
 {!! HTML::script('assets/global/plugins/bootbox/bootbox.min.js') !!}
+
+{{-- Cambiar Estado --}}
+{!! HTML::script('js/js-cambiar-estado.js') !!}
+
 @stop
