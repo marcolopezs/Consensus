@@ -10,4 +10,29 @@ class Area extends BaseEntity {
 
     protected $fillable = ['titulo','email','estado'];
 
+    public function scopeOrder($query, $order)
+    {
+        switch ($order){
+            case '':
+                $query->orderBy('titulo', 'asc');
+                break;
+
+            case 'tituloAsc':
+                $query->orderBy('titulo', 'asc');
+                break;
+
+            case 'tituloDesc':
+                $query->orderBy('titulo', 'desc');
+                break;
+
+            case 'emailAsc':
+                $query->orderBy('email', 'asc');
+                break;
+
+            case 'emailDesc':
+                $query->orderBy('email', 'desc');
+                break;
+        }
+    }
+
 }
