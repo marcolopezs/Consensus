@@ -31,7 +31,7 @@ $(".btn-estado").on("click", function(e){
                         else if(result.estado == 0){ $("#estado-"+id+" span").removeClass('label-success').addClass('label-default').text('No activo'); }
                         $("#mensajeAjax").show();
                         $("#mensajeAjax .alert").removeClass('alert-danger').addClass('alert-success');
-                        $("#mensajeAjax .alert span").text("Se cambió es estado del registro " + title);
+                        $("#mensajeAjax .alert span").text("Se cambió es estado del registro: " + title);
                     },
                     error: function(result){
                         $("#mensajeAjax").show();
