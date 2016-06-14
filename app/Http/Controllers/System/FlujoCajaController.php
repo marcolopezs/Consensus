@@ -76,20 +76,24 @@ class FlujoCajaController extends Controller {
         $row->expediente_id = $expedientes;
         $row->fecha = $fecha;
         $row->money_id = $moneda;
-        $save = $this->flujoCajaRepo->create($row, $request->except('file'));
+        $save = $this->flujoCajaRepo->create($row, $request->all());
 
         //GUARDAR HISTORIAL
         $this->flujoCajaRepo->saveHistory($row, $request, 'create');
+
+        //GUARDAR DOCUMENTO
+        $this->flujoCajaRepo->saveDocumento($row, $request, 'create');
 
         //AJAX
         if($request->ajax())
         {
             return response()->json([
                 'id' => $save->id,
-                'fecha_caja' => soloFecha($save->fecha),
+                'fecha_caja' => $save->fecha_caja,
                 'referencia' => $save->referencia,
-                'moneda' => $save->money->titulo,
-                'monto' => $save->monto
+                'moneda' => $save->moneda,
+                'monto' => $save->monto,
+                'url_editar' => $save->url_editar
             ]);
         }
 
@@ -101,9 +105,13 @@ class FlujoCajaController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($expedientes, $id)
     {
+        $row = $this->expedienteRepo->findOrFail($expedientes);
+        $prin = $this->flujoCajaRepo->findOrFail($id);
+        $moneda = $this->moneyRepo->orderBy('titulo', 'asc')->lists('titulo', 'id')->toArray();
 
+        return view('system.expediente.caja.edit', compact('row','prin','moneda'));
     }
 
     /**
@@ -113,19 +121,40 @@ class FlujoCajaController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($expedientes, $id, Request $request)
     {
+        //BUSCAR ID
+        $row = $this->flujoCajaRepo->findOrFail($id);
 
-    }
+        //VALIDACION
+        $this->validate($request, $this->rules);
 
+        //VARIABLES
+        $fecha = $this->flujoCajaRepo->formatoFecha($request->input('fecha_caja'));
+        $moneda = $request->input('moneda');
 
-    public function file(Request $request)
-    {
-        $archivo = $this->flujoCajaRepo->UploadFile('documento', $request->file('file'));
+        //GUARDAR DATOS
+        $row->fecha = $fecha;
+        $row->money_id = $moneda;
+        $save = $this->flujoCajaRepo->update($row, $request->all());
 
+        //GUARDAR HISTORIAL
+        $this->flujoCajaRepo->saveHistory($row, $request, 'update');
+
+        //GUARDAR DOCUMENTO
+        $this->flujoCajaRepo->saveDocumento($row, $request, 'update');
+
+        //AJAX
         if($request->ajax())
         {
-            return $archivo;
+            return response()->json([
+                'id' => $save->id,
+                'fecha_caja' => $save->fecha_caja,
+                'referencia' => $save->referencia,
+                'moneda' => $save->moneda,
+                'monto' => $save->monto,
+                'url_editar' => $save->url_editar
+            ]);
         }
     }
 

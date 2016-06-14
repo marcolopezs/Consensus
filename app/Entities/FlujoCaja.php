@@ -8,7 +8,7 @@ class FlujoCaja extends BaseEntity {
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['expediente_id','fecha','referencia','money_id','monto','comprobante','comprobante_carpeta'];
+    protected $fillable = ['expediente_id','fecha','referencia','money_id','monto'];
     protected $hidden = ['created_at','updated_at','deleted_at'];
     protected $appends = ['fecha_caja','moneda','url_editar'];
 

@@ -4,7 +4,7 @@
 
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-    <h4 class="modal-title">Nuevo flujo de caja</h4>
+    <h4 class="modal-title">Editar flujo de caja</h4>
 </div>
 <div class="modal-body">
     <div class="row">
@@ -25,7 +25,7 @@
                     <div class="form-content"></div>
                 </div>
 
-                {!! Form::open(['route' => ['expedientes.flujo-caja.store', $row->id], 'method' => 'POST', 'id' => 'formCreate', 'class' => 'horizontal-form', 'autocomplete' => 'off', 'files' => 'true']) !!}
+                {!! Form::model($prin, ['route' => ['expedientes.flujo-caja.update', $row->id, $prin->id], 'method' => 'PUT', 'id' => 'formCreate', 'class' => 'horizontal-form', 'autocomplete' => 'off', 'files' => 'true']) !!}
 
                 <div class="form-body">
 
@@ -42,9 +42,9 @@
 
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    {!! Form::label('fecha', 'Fecha', ['class' => 'control-label']) !!}
+                                    {!! Form::label('fecha_caja', 'Fecha', ['class' => 'control-label']) !!}
                                     <div class="input-group input-medium date date-picker" data-date-format="dd/mm/yyyy" data-date-viewmode="years">
-                                        {!! Form::text('fecha', dateActual(), ['class' => 'form-control']) !!}
+                                        {!! Form::text('fecha_caja', null, ['class' => 'form-control']) !!}
                                         <span class="input-group-btn"><button class="btn default" type="button"><i class="fa fa-calendar"></i></button></span>
                                     </div>
                                 </div>
@@ -60,7 +60,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     {!! Form::label('moneda', 'Moneda', ['class' => 'control-label']) !!}
-                                    {!! Form::select('moneda', [''=>''] + $moneda, null, ['class' => 'form-control select2', 'style' => 'width: 100%;']) !!}
+                                    {!! Form::select('moneda', [''=>''] + $moneda, $prin->money_id, ['class' => 'form-control select2', 'style' => 'width: 100%;']) !!}
                                 </div>
                             </div>
 
@@ -68,7 +68,23 @@
 
                         <div class="col-md-8">
 
-                            <div class="col-md-12">
+                            <div class="col-md-7">
+                                {!! Form::label('version', 'Versiones del Comprobante', ['class' => 'control-label']) !!}
+                                <ul class="documento-lista">
+                                    @foreach($prin->documentos as $documento)
+                                        <li>
+                                            <span class="archivo">
+                                                <a href="{{ route('documentos.download', $documento->id) }}">
+                                                    {{ $documento->documento }}
+                                                </a>
+                                            </span>
+                                            <span class="fecha">Fecha: {{ fecha($documento->created_at) }}</span>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+
+                            <div class="col-md-5">
                                 <div class="form-group">
                                     {!! Form::label('file', 'Comprobante', ['class' => 'control-label']) !!}
                                     <div class="dropzone"></div>
@@ -140,12 +156,12 @@
             data: data,
             processData: false,
             success: function (result) {
-                successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>El registro se agregó satisfactoriamente.</div>';
+                successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>El registro se actualizó satisfactoriamente.</div>';
                 $(".form-content").html(successHtml);
-                $(".select2").val(null).trigger('change');
-                form[0].reset();
 
                 myDropzone.removeAllFiles();
+
+                $("#caja-select-"+ result.id).remove();
 
                 var html = '<tr id="caja-select-'+ result.id +'">' +
                                 '<td>'+ result.fecha_caja +'</td>' +
@@ -161,6 +177,7 @@
             beforeSend: function () { $('.progress').show(); },
             complete: function () { $('.progress').hide(); },
             error: function (result){
+                console.log(result);
                 if(result.status === 422){
                     var errors = result.responseJSON;
                     errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';
