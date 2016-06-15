@@ -10,4 +10,9 @@ class Intervener extends BaseEntity {
 
     protected $fillable = ['titulo','estado'];
 
+    public function expInterviniente()
+    {
+        return $this->hasMany(ExpedienteInterviniente::class);
+    }
+
 }

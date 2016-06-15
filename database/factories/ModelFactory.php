@@ -130,6 +130,19 @@ $factory->define(\Consensus\Entities\Expediente::class, function ($faker) use ($
     ];
 });
 
+//INTERVINIENTES DE EXPEDIENTE
+$factory->define(\Consensus\Entities\ExpedienteInterviniente::class, function ($faker) use ($factory) {
+    return [
+        'expediente_id' => \Consensus\Entities\Expediente::all()->random()->id,
+        'nombre' => $faker->name." ".$faker->lastName,
+        'dni' => $faker->regexify('[0-9]{8,8}'),
+        'email' => $faker->email,
+        'telefono' => $faker->phoneNumber,
+        'celular' => $faker->phoneNumber,
+        'intervener_id' => \Consensus\Entities\Intervener::all()->random()->id
+    ];
+});
+
 //TAREAS DE EXPEDIENTE
 $factory->define(\Consensus\Entities\Tarea::class, function ($faker) use ($factory) {
    return [

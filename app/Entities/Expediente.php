@@ -40,6 +40,11 @@ class Expediente extends BaseEntity {
         return $this->hasMany(FlujoCaja::class);
     }
 
+    public function expInterviniente()
+    {
+        return $this->hasMany(ExpedienteInterviniente::class);
+    }
+
     public function tariff()
     {
         return $this->belongsTo(Tariff::class);

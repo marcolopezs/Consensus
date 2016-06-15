@@ -37,6 +37,9 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
     Route::post('expedientes/ajustes', ['as' => 'expedientes.ajustes', 'uses' => 'ExpedientesController@ajustes']);
     Route::get('expedientes/filtrar', ['as' => 'expedientes.filtrar', 'uses' => 'ExpedientesController@filtrar']);
 
+    //EXPEDIENTES - INTERVINIENTES
+    Route::resource('expedientes.intervinientes', 'IntervinientesController', ['except' => 'destroy']);
+
     //EXPEDIENTES - TAREAS
     Route::resource('expedientes.tareas', 'TareasController', ['except' => 'destroy']);
 

@@ -65,11 +65,11 @@ $(".expediente-procesos").on("click", function(e) {
     e.preventDefault();
 
     var id = $(this).data('id');
-    var proceso = $(this).data('proceso');
-    var create = $(this).data('proceso-create');
+    var list = $(this).data('list');
+    var create = $(this).data('create');
 
     $.ajax({
-        url: proceso,
+        url: list,
         type: 'GET',
         success: function(result){
 
@@ -131,11 +131,11 @@ $(".expediente-caja").on("click", function(e) {
     e.preventDefault();
 
     var id = $(this).data('id');
-    var caja = $(this).data('caja');
-    var create = $(this).data('caja-create');
+    var list = $(this).data('list');
+    var create = $(this).data('create');
 
     $.ajax({
-        url: caja,
+        url: list,
         type: 'GET',
         success: function(result){
             var html = '<tr id="caja-'+id+'" class="bg-default" style="display:none;"><td style="padding:20px 15px;" colspan="23">' +
@@ -185,6 +185,75 @@ $(".expediente-caja").on("click", function(e) {
         complete: function () { $('.progress').hide(); },
         error: function() {
 
+        }
+    });
+
+});
+
+
+//MOSTRAR INTERVINIENTES DE EXPEDIENTE
+$(".expediente-interviniente").on("click", function(e) {
+    e.preventDefault();
+
+    var id = $(this).data('id');
+    var list = $(this).data('list');
+    var create = $(this).data('create');
+
+    $.ajax({
+        url: list,
+        type: 'GET',
+        success: function(result){
+            var html = '<tr id="interviniente-'+id+'" class="bg-default" style="display:none;"><td style="padding:20px 15px;" colspan="23">' +
+                '<div class="btn-group pull-left">' +
+                '<h3 class="table-title">Intervinientes</h3>' +
+                '</div>' +
+                '<div class="btn-group pull-right table-botones">' +
+                '<a class="btn sbold white interviniente-cerrar" href="#" data-id="'+id+'"> Cerrar </a>' +
+                '<a class="btn sbold blue-soft" href="'+create+'" data-target="#ajax" data-toggle="modal"> Agregar nuevo interviniente <i class="fa fa-plus"></i></a>' +
+                '</div>' +
+                '<table id="interviniente-lista-'+id+'" class="table table-striped table-bordered table-hover order-column">' +
+                '<thead>' +
+                '<tr role="row" class="heading">' +
+                '<td>Nombre</td>' +
+                '<td>Tipo</td>' +
+                '<td>DNI</td>' +
+                '<td>Teléfono</td>' +
+                '<td>Celular</td>' +
+                '<td>Email</td>' +
+                '<td>Acciones</td>' +
+                '</tr>' +
+                '</thead>' +
+                '<tbody>' +
+                '</tbody>' +
+                '</table>' +
+                '</td></tr>';
+
+            $("#exp-" + id).after(html);
+            $("#interviniente-" + id).fadeIn();
+
+            var tr;
+            $.each(JSON.parse(result), function(idx, obj) {
+                tr = $('<tr id="interviniente-select-'+ obj.id +'">');
+                tr.append('<td>'+ obj.nombre +'</td>');
+                tr.append('<td>'+ obj.tipo +'</td>');
+                tr.append('<td>'+ obj.dni +'</td>');
+                tr.append('<td>'+ obj.telefono +'</td>');
+                tr.append('<td>'+ obj.celular +'</td>');
+                tr.append('<td>'+ obj.email +'</td>');
+                tr.append('<td><a href="'+ obj.url_editar +'" data-target="#ajax" data-toggle="modal">Editar</a></td>');
+                $("#interviniente-lista-"+id+" tbody").prepend(tr);
+            });
+
+            $(".interviniente-cerrar").on("click", function (e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                $("#interviniente-" + id).fadeOut();
+            });
+        },
+        beforeSend: function () { $('.progress').show(); },
+        complete: function () { $('.progress').hide(); },
+        error: function(result) {
+            console.log()
         }
     });
 

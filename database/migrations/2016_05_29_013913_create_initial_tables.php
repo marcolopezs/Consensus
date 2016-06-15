@@ -107,6 +107,9 @@ class CreateInitialTables extends Migration
             $table->integer('user_id')->nullable()->default(NULL);
 
             $table->enum('type', ['create','update', 'restore', 'delete']);
+
+            $table->string('titulo');
+            $table->text('descripcion');
             $table->string('documento');
             $table->string('carpeta');
 
@@ -300,12 +303,6 @@ class CreateInitialTables extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('expediente_documentos', function(Blueprint $table)
-        {
-            $table->increments('id');
-
-        });
-
         Schema::create('expediente_tipos', function(Blueprint $table)
         {
             $table->increments('id');
@@ -315,6 +312,24 @@ class CreateInitialTables extends Migration
             $table->integer('num');
 
             $table->boolean('estado');
+
+            $table->nullableTimestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('expediente_intervinientes', function(Blueprint $table)
+        {
+            $table->increments('id');
+
+            $table->integer('expediente_id');
+
+            $table->string('nombre');
+            $table->string('dni', 8);
+            $table->string('telefono', 30);
+            $table->string('celular', 30);
+            $table->string('email', 50);
+
+            $table->integer('intervener_id');
 
             $table->nullableTimestamps();
             $table->softDeletes();
@@ -616,8 +631,8 @@ class CreateInitialTables extends Migration
         Schema::drop('documentos');
 
         Schema::drop('expedientes');
-        Schema::drop('expediente_documentos');
         Schema::drop('expediente_tipos');
+        Schema::drop('expediente_intervinientes');
 
         Schema::drop('tareas');
         Schema::drop('flujo_caja');

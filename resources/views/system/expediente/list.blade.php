@@ -30,8 +30,11 @@
         @include('partials.expediente-filtrar')
 
         <div class="col-md-12 col-sm-12">
-            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+
             <div class="portlet light">
+
+                @include('partials.progressbar')
+
                 <div class="portlet-title">
 
                     <div class="caption">
@@ -67,8 +70,6 @@
                             </div>
                         </div>
                     </div>
-
-                    @include('partials.progressbar')
 
                 </div>
 
@@ -160,8 +161,9 @@
                                             <i class="fa fa-angle-down"></i>
                                         </button>
                                         <ul class="dropdown-menu pull-right" role="menu">
-                                            <li><a href="#" class="expediente-procesos" data-id="{{ $row_id }}" data-proceso="{{ route('expedientes.tareas.index', $row_id) }}" data-proceso-create="{{ route('expedientes.tareas.create', $row_id) }}">Procesos</a></li>
-                                            <li><a href="#" class="expediente-caja" data-id="{{ $row_id }}" data-caja="{{ route('expedientes.flujo-caja.index', $row_id) }}" data-caja-create="{{ route('expedientes.flujo-caja.create', $row_id) }}">Flujo de Caja</a></li>
+                                            <li><a href="#" class="expediente-procesos" data-id="{{ $row_id }}" data-list="{{ route('expedientes.tareas.index', $row_id) }}" data-create="{{ route('expedientes.tareas.create', $row_id) }}">Procesos</a></li>
+                                            <li><a href="#" class="expediente-caja" data-id="{{ $row_id }}" data-list="{{ route('expedientes.flujo-caja.index', $row_id) }}" data-create="{{ route('expedientes.flujo-caja.create', $row_id) }}">Flujo de Caja</a></li>
+                                            <li><a href="#" class="expediente-interviniente" data-id="{{ $row_id }}" data-list="{{ route('expedientes.intervinientes.index', $row_id) }}" data-create="{{ route('expedientes.intervinientes.create', $row_id) }}">Intervinientes</a></li>
                                             <li><a href="{{ route('expedientes.show', $row_id) }}" data-target="#ajax" data-toggle="modal">Ver registro</a></li>
                                             <li><a href="{{ route('expedientes.edit', $row_id) }}">Editar</a></li>
                                             <li><a href="javascript:;">Historial</a></li>
