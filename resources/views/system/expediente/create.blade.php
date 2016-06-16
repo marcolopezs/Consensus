@@ -375,21 +375,10 @@
 
                             <div class="row">
 
-                                <div class="col-md-7">
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         {!! Form::label('observacion', 'Observación', ['class' => 'control-label']) !!}
                                         {!! Form::textarea('observacion', null, ['class' => 'form-control', 'rows' => '4']) !!}
-                                    </div>
-                                </div>
-
-                                <div class="col-md-5">
-                                    {!! Form::label('opciones', 'Opciones', ['class' => 'control-label']) !!}
-                                    <div class="form-group util-btn-margin-bottom-5">
-                                        <a href="javascript:;" class="btn default red-stripe btn-lg"> Historial </a>
-                                        <a href="javascript:;" class="btn default red-stripe btn-lg"> Comprobantes emitidos al Cliente </a>
-                                        <a href="javascript:;" class="btn default red-stripe btn-lg"> Flujo de Caja </a>
-                                        <a href="javascript:;" class="btn default red-stripe btn-lg"> Procesos </a>
-                                        <a href="javascript:;" class="btn default red-stripe btn-lg"> Documentos </a>
                                     </div>
                                 </div>
 

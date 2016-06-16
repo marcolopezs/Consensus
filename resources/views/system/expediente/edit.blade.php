@@ -43,23 +43,15 @@
 
                     <div class="form-body">
 
-                        <h3 class="form-section">Expediente: <strong>{{ $row->expediente }}</strong></h3>
+                        <div class="col-md-6">
+                            <h3 class="form-section">Cliente: <strong>{{ $row->cliente->cliente }}</strong></h3>
+                        </div>
+
+                        <div class="col-md-6 -pull-left">
+                            <h3 class="form-section">Expediente: <strong>{{ $row->expediente }}</strong></h3>
+                        </div>
 
                         <div class="row">
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    {!! Form::label('cliente', 'Cliente', ['class' => 'control-label']) !!}
-                                    {!! Form::select('cliente', [''=>''] + $cliente, $row->cliente_id, ['class' => 'form-control select2']) !!}
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    {!! Form::label('abogado', 'Abogado', ['class' => 'control-label']) !!}
-                                    {!! Form::select('abogado', [''=>''] + $tarifa, $row->tariff_id, ['class' => 'form-control select2']) !!}
-                                </div>
-                            </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -68,9 +60,12 @@
                                 </div>
                             </div>
 
-                        </div>
-
-                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    {!! Form::label('valor', 'Valor', ['class' => 'control-label']) !!}
+                                    {!! Form::text('valor', 0, ['class' => 'form-control']) !!}
+                                </div>
+                            </div>
 
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -79,17 +74,45 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-2">
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-3">
                                 <div class="form-group">
-                                    {!! Form::label('fecha_inicio', 'Fecha Inicio', ['class' => 'control-label']) !!}
-                                    {!! Form::text('fecha_inicio', soloFecha($row->fecha_inicio), ['class' => 'form-control form-control-inline date-picker']) !!}
+                                    {!! Form::label('abogado', 'Abogado', ['class' => 'control-label']) !!}
+                                    <div class="input-group">
+                                        <span class="input-group-addon">{!! Form::checkbox('abogado', '1', null) !!}</span>
+                                        <div class="input-group input-medium">
+                                            {!! Form::select('abogado_id', [''=>''] + $abogado, $row->abogado_id, ['class' => 'form-control select2']) !!}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="form-group">
-                                    {!! Form::label('fecha_termino', 'Fecha Término', ['class' => 'control-label']) !!}
-                                    {!! Form::text('fecha_termino', soloFecha($row->fecha_termino), ['class' => 'form-control form-control-inline date-picker']) !!}
+                                    {!! Form::label('asistente', 'Asistente', ['class' => 'control-label']) !!}
+                                    <div class="input-group">
+                                        <span class="input-group-addon">{!! Form::checkbox('asistente', '1', null) !!}</span>
+                                        <div class="input-group input-medium">
+                                            {!! Form::select('asistente_id', [''=>''] + $abogado, $row->asistente_id, ['class' => 'form-control select2']) !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    {!! Form::label('honorario_hora', 'Honorario por Hora', ['class' => 'control-label']) !!}
+                                    {!! Form::text('honorario_hora', null, ['class' => 'form-control']) !!}
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    {!! Form::label('tope_monto', 'Tope Monto', ['class' => 'control-label']) !!}
+                                    {!! Form::text('tope_monto', null, ['class' => 'form-control']) !!}
                                 </div>
                             </div>
 
@@ -97,42 +120,28 @@
 
                         <div class="row">
 
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    {!! Form::label('honorario_hora', 'Honorario por Hora', ['class' => 'control-label']) !!}
-                                    {!! Form::text('honorario_hora', null, ['class' => 'form-control']) !!}
-                                </div>
-                            </div>
-
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    {!! Form::label('tope_monto', 'Tope Monto', ['class' => 'control-label']) !!}
-                                    {!! Form::text('tope_monto', null, ['class' => 'form-control']) !!}
-                                </div>
-                            </div>
-
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     {!! Form::label('retainer_fm', 'Retainer FM', ['class' => 'control-label']) !!}
                                     {!! Form::text('retainer_fm', null, ['class' => 'form-control']) !!}
                                 </div>
                             </div>
 
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     {!! Form::label('numero_horas', 'Número de Horas', ['class' => 'control-label']) !!}
                                     {!! Form::text('numero_horas', null, ['class' => 'form-control']) !!}
                                 </div>
                             </div>
 
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     {!! Form::label('honorario_fijo', 'Honorario Fijo', ['class' => 'control-label']) !!}
                                     {!! Form::text('honorario_fijo', null, ['class' => 'form-control']) !!}
                                 </div>
                             </div>
 
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     {!! Form::label('hora_adicional', 'Hora Adicional', ['class' => 'control-label']) !!}
                                     {!! Form::text('hora_adicional', null, ['class' => 'form-control']) !!}
@@ -150,48 +159,47 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     {!! Form::label('numero_dias', 'Número de Días', ['class' => 'control-label']) !!}
                                     {!! Form::text('numero_dias', null, ['class' => 'form-control']) !!}
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    {!! Form::label('fecha_limite', 'Fecha Limite', ['class' => 'control-label']) !!}
-                                    {!! Form::text('fecha_limite', soloFecha($row->fecha_limite), ['class' => 'form-control form-control-inline date-picker']) !!}
-                                </div>
-                            </div>
+                            <div class="col-md-4 input-group date-picker input-daterange" data-date-format="dd/mm/yyyy">
 
-                        </div>
-
-                        <div class="row">
-
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <div id="progressbar" class="progress progress-striped active">
-                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                                            <span class="sr-only"> 40% Complete (success) </span>
-                                        </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {!! Form::label('fecha_inicio', 'Fecha Inicio', ['class' => 'control-label']) !!}
+                                        {!! Form::text('fecha_inicio', soloFecha($row->fecha_inicio), ['class' => 'form-control form-control-inline date-picker']) !!}
                                     </div>
                                 </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {!! Form::label('fecha_termino', 'Fecha Término', ['class' => 'control-label']) !!}
+                                        {!! Form::text('fecha_termino', soloFecha($row->fecha_termino), ['class' => 'form-control form-control-inline date-picker']) !!}
+                                    </div>
+                                </div>
+
                             </div>
 
                         </div>
 
                         <div class="row">
 
-                            <div class="col-md-12">
+                            @include('partials.progressbar')
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     {!! Form::label('descripcion', 'Descripción', ['class' => 'control-label']) !!}
-                                    {!! Form::textarea('descripcion', null, ['class' => 'form-control', 'rows' => '3']) !!}
+                                    {!! Form::textarea('descripcion', null, ['class' => 'form-control', 'rows' => '4']) !!}
                                 </div>
                             </div>
-
-                        </div>
-
-                        <div class="row">
 
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -200,7 +208,129 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                        </div>
+
+                        <h3 class="form-section">Kardex</h3>
+
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    {!! Form::label('materia', 'Materia', ['class' => 'control-label']) !!}
+                                    {!! Form::select('materia', ['' => ''] + $materia, $row->matter_id, ['class' => 'form-control select2']) !!}
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    {!! Form::label('entidad', 'Entidad', ['class' => 'control-label']) !!}
+                                    {!! Form::select('entidad', ['' => ''] + $entidad, $row->entity_id, ['class' => 'form-control select2']) !!}
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    {!! Form::label('area', 'Área', ['class' => 'control-label']) !!}
+                                    {!! Form::select('area', ['' => ''] + $area, $row->area_id, ['class' => 'form-control select2']) !!}
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    {!! Form::label('instancia', 'Instancia', ['class' => 'control-label']) !!}
+                                    {!! Form::select('instancia', ['' => ''] + $instancia, $row->instance_id, ['class' => 'form-control select2']) !!}
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    {!! Form::label('encargado', 'Encargado', ['class' => 'control-label']) !!}
+                                    {!! Form::text('encargado', null, ['class' => 'form-control']) !!}
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    {!! Form::label('jefe_area', 'Jefe Área', ['class' => 'control-label']) !!}
+                                    {!! Form::text('jefe_area', null, ['class' => 'form-control']) !!}
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 input-group date-picker input-daterange" data-date-format="dd/mm/yyyy">
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {!! Form::label('poder', 'Fecha Inicio de Poder', ['class' => 'control-label']) !!}
+                                        <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    {!! Form::checkbox('poder', '1', null) !!}
+                                                </span>
+                                            <div class="input-group input-medium date date-picker" data-date-format="dd/mm/yyyy" data-date-viewmode="years">
+                                                {!! Form::text('fecha_poder', soloFecha($row->fecha_poder), ['class' => 'form-control']) !!}
+                                                <span class="input-group-btn"><button class="btn default" type="button"><i class="fa fa-calendar"></i></button></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {!! Form::label('vencimiento', 'Fecha Vencimiento de Poder', ['class' => 'control-label']) !!}
+                                        <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    {!! Form::checkbox('vencimiento', '1', null) !!}
+                                                </span>
+                                            <div class="input-group input-medium date date-picker" data-date-format="dd/mm/yyyy" data-date-viewmode="years">
+                                                {!! Form::text('fecha_vencimiento', soloFecha($row->fecha_vencimiento), ['class' => 'form-control']) !!}
+                                                <span class="input-group-btn"><button class="btn default" type="button"><i class="fa fa-calendar"></i></button></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    {!! Form::label('bienes', 'Bienes', ['class' => 'control-label']) !!}
+                                    {!! Form::select('bienes', ['' => 'Seleccionar'] + $bienes , $row->bienes_id , ['class' => 'form-control select2']) !!}
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    {!! Form::label('especial', 'Situación Especial', ['class' => 'control-label']) !!}
+                                    {!! Form::select('especial', ['' => 'Seleccionar'] + $especial , $row->situacion_especial_id, ['class' => 'form-control select2']) !!}
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    {!! Form::label('estado', 'Estado', ['class' => 'control-label']) !!}
+                                    {!! Form::select('estado', ['' => ''] + $estado, $row->state_id, ['class' => 'form-control select2']) !!}
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    {!! Form::label('exito', 'Éxito', ['class' => 'control-label']) !!}
+                                    {!! Form::select('exito', ['' => 'Seleccionar'] + $exito , $row->exito_id , ['class' => 'form-control select2']) !!}
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     {!! Form::label('observacion', 'Observación', ['class' => 'control-label']) !!}
                                     {!! Form::textarea('observacion', null, ['class' => 'form-control', 'rows' => '4']) !!}
@@ -232,6 +362,7 @@
     {{-- Date Picker --}}
     {!! HTML::script('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') !!}
     {!! HTML::script('assets/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js') !!}
+    {!! HTML::script('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') !!}
 
     {{-- Components --}}
     {!! HTML::script('assets/pages/scripts/components-date-time-pickers.js') !!}

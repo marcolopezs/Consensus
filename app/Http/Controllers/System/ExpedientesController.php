@@ -219,13 +219,22 @@ class ExpedientesController extends Controller {
     public function edit($id)
     {
         $row = $this->expedienteRepo->findOrFail($id);
-        $cliente = $this->clienteRepo->orderBy('cliente', 'asc')->lists('cliente', 'id')->toArray();
+
+        $abogado = $this->abogadoRepo->orderBy('nombre', 'asc')->lists('nombre', 'id')->toArray();
         $tarifa = $this->tariffRepo->estadoListArray();
         $moneda = $this->moneyRepo->lists('titulo', 'id')->toArray();
         $servicio = $this->serviceRepo->estadoListArray();
         $expediente_tipo = $this->expedienteTipoRepo->estadoListArray();
+        $area = $this->areaRepo->estadoListArray();
+        $entidad = $this->entityRepo->estadoListArray();
+        $instancia = $this->instanceRepo->estadoListArray();
+        $materia = $this->matterRepo->estadoListArray();
+        $estado = $this->stateRepo->estadoListArray();
+        $bienes = $this->bienesRepo->estadoListArray();
+        $especial = $this->situacionEspecialRepo->estadoListArray();
+        $exito = $this->exitoRepo->estadoListArray();
 
-        return view('system.expediente.edit', compact('row','cliente','tarifa','moneda','servicio','expediente_tipo'));
+        return view('system.expediente.edit', compact('row','abogado','area','cliente','entidad','instancia','materia','estado','tarifa','moneda','servicio','expediente_tipo','bienes','especial','exito'));
     }
 
     /**
