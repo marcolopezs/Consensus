@@ -142,7 +142,10 @@ class FlujoCajaController extends Controller {
         $this->flujoCajaRepo->saveHistory($row, $request, 'update');
 
         //GUARDAR DOCUMENTO
-        $this->flujoCajaRepo->saveDocumento($row, $request, 'update');
+        if($request->input('documento') <> "")
+        {
+            $this->flujoCajaRepo->saveDocumento($row, $request, 'update');
+        }
 
         //AJAX
         if($request->ajax())
