@@ -22,7 +22,7 @@ class BaseEntity extends Model{
     //DOCUMENTOS
     public function documentos()
     {
-        return $this->morphMany(Documento::class, 'documentable');
+        return $this->morphMany(Documento::class, 'documentable')->orderBy('created_at','desc');
     }
 
     public function scopeClienteId($query, $value)
