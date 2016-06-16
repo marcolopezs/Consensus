@@ -164,6 +164,7 @@
                                             <li><a href="#" class="expediente-procesos" data-id="{{ $row_id }}" data-list="{{ route('expedientes.tareas.index', $row_id) }}" data-create="{{ route('expedientes.tareas.create', $row_id) }}">Procesos</a></li>
                                             <li><a href="#" class="expediente-caja" data-id="{{ $row_id }}" data-list="{{ route('expedientes.flujo-caja.index', $row_id) }}" data-create="{{ route('expedientes.flujo-caja.create', $row_id) }}">Flujo de Caja</a></li>
                                             <li><a href="#" class="expediente-interviniente" data-id="{{ $row_id }}" data-list="{{ route('expedientes.intervinientes.index', $row_id) }}" data-create="{{ route('expedientes.intervinientes.create', $row_id) }}">Intervinientes</a></li>
+                                            <li><a href="#" class="expediente-documento" data-id="{{ $row_id }}" data-list="{{ route('expedientes.documentos.index', $row_id) }}" data-create="{{ route('expedientes.documentos.create', $row_id) }}">Documentos</a></li>
                                             <li><a href="{{ route('expedientes.show', $row_id) }}" data-target="#ajax" data-toggle="modal">Ver registro</a></li>
                                             <li><a href="{{ route('expedientes.edit', $row_id) }}">Editar</a></li>
                                             <li><a href="javascript:;">Historial</a></li>

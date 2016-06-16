@@ -108,10 +108,8 @@ class CreateInitialTables extends Migration
 
             $table->enum('type', ['create','update', 'restore', 'delete']);
 
-            $table->string('titulo');
-            $table->text('descripcion');
-            $table->string('documento');
-            $table->string('carpeta');
+            $table->string('documento')->nullable();
+            $table->string('carpeta')->nullable();
 
             $table->nullableTimestamps();
             $table->softDeletes();
@@ -330,6 +328,19 @@ class CreateInitialTables extends Migration
             $table->string('email', 50);
 
             $table->integer('intervener_id');
+
+            $table->nullableTimestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('expediente_documentos', function(Blueprint $table)
+        {
+            $table->increments('id');
+
+            $table->integer('expediente_id');
+
+            $table->string('titulo');
+            $table->text('descripcion');
 
             $table->nullableTimestamps();
             $table->softDeletes();
@@ -633,6 +644,7 @@ class CreateInitialTables extends Migration
         Schema::drop('expedientes');
         Schema::drop('expediente_tipos');
         Schema::drop('expediente_intervinientes');
+        Schema::drop('expediente_documentos');
 
         Schema::drop('tareas');
         Schema::drop('flujo_caja');
