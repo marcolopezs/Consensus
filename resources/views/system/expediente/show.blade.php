@@ -14,36 +14,92 @@
 
                         <div class="form-body">
 
-                            <h3>Kardex: <strong>{{ $row->kardex }}</strong></h3>
+                            <h3>Expediente: <strong>{{ $row->expediente }}</strong></h3>
 
                             <div class="form-group">
-                                {!! Form::label('cliente', 'Cliente', ['class' => 'control-label col-md-3']) !!}
+                                {!! Form::label('cliente', 'Cliente', ['class' => 'control-label col-md-2']) !!}
                                 <div class="col-md-9">
                                     <p class="form-control-static">{{ $row->cliente->cliente }}</p>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                {!! Form::label('abogado', 'Abogado', ['class' => 'control-label col-md-3']) !!}
-                                <div class="col-md-9">
-                                    <p class="form-control-static">{{ $row->tariff->titulo }}</p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                {!! Form::label('moneda', 'Moneda', ['class' => 'control-label col-md-3']) !!}
-                                <div class="col-md-3">
+                                {!! Form::label('moneda', 'Moneda', ['class' => 'control-label col-md-2']) !!}
+                                <div class="col-md-2">
                                     <p class="form-control-static">{{ $row->money->titulo }}</p>
                                 </div>
 
-                                {!! Form::label('tarifa', 'Tárifa', ['class' => 'control-label col-md-3']) !!}
-                                <div class="col-md-3">
+                                {!! Form::label('valor', 'Valor', ['class' => 'control-label col-md-2']) !!}
+                                <div class="col-md-2">
+                                    <p class="form-control-static">{{ $row->valor }}</p>
+                                </div>
+
+                                {!! Form::label('tarifa', 'Tárifa', ['class' => 'control-label col-md-2']) !!}
+                                <div class="col-md-2">
                                     <p class="form-control-static">{{ $row->tariff->titulo }}</p>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                {!! Form::label('fecha_inicio', 'Fecha Inicio', ['class' => 'control-label col-md-3']) !!}
+                                {!! Form::label('abogado', 'Abogado', ['class' => 'control-label col-md-2']) !!}
+                                <div class="col-md-3">
+                                    <p class="form-control-static">{{ $row->abogado->nombre }}</p>
+                                </div>
+
+                                {!! Form::label('asistente', 'Asistente', ['class' => 'control-label col-md-3']) !!}
+                                <div class="col-md-3">
+                                    <p class="form-control-static">{{ $row->asistente->nombre }}</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                {!! Form::label('honorario_hora', 'Honorario por Hora', ['class' => 'control-label col-md-2']) !!}
+                                <div class="col-md-2">
+                                    <p class="form-control-static">{{ $row->honorario_hora }}</p>
+                                </div>
+
+                                {!! Form::label('tope_monto', 'Tope Monto', ['class' => 'control-label col-md-2']) !!}
+                                <div class="col-md-2">
+                                    <p class="form-control-static">{{ $row->tope_monto }}</p>
+                                </div>
+
+                                {!! Form::label('retainer_fm', 'Retainer FM', ['class' => 'control-label col-md-2']) !!}
+                                <div class="col-md-2">
+                                    <p class="form-control-static">{{ $row->retainer_fm }}</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                {!! Form::label('numero_horas', 'Número de Horas', ['class' => 'control-label col-md-2']) !!}
+                                <div class="col-md-2">
+                                    <p class="form-control-static">{{ $row->numero_horas }}</p>
+                                </div>
+
+                                {!! Form::label('honorario_fijo', 'Honorario Fijo', ['class' => 'control-label col-md-2']) !!}
+                                <div class="col-md-2">
+                                    <p class="form-control-static">{{ $row->honorario_fijo }}</p>
+                                </div>
+
+                                {!! Form::label('hora_adicional', 'Hora Adicional', ['class' => 'control-label col-md-2']) !!}
+                                <div class="col-md-2">
+                                    <p class="form-control-static">{{ $row->hora_adicional }}</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                {!! Form::label('servicio', 'Servicio', ['class' => 'control-label col-md-2']) !!}
+                                <div class="col-md-4">
+                                    <p class="form-control-static">{{ $row->service->titulo }}</p>
+                                </div>
+
+                                {!! Form::label('numero_dias', 'Número de Días', ['class' => 'control-label col-md-2']) !!}
+                                <div class="col-md-3">
+                                    <p class="form-control-static">{{ $row->numero_dias }}</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                {!! Form::label('fecha_inicio', 'Fecha Inicio', ['class' => 'control-label col-md-2']) !!}
                                 <div class="col-md-3">
                                     <p class="form-control-static">{{ soloFecha($row->fecha_inicio) }}</p>
                                 </div>
@@ -55,77 +111,96 @@
                             </div>
 
                             <div class="form-group">
-                                {!! Form::label('honorario_hora', 'Honorario por Hora', ['class' => 'control-label col-md-3']) !!}
-                                <div class="col-md-3">
-                                    <p class="form-control-static">{{ $row->honorario_hora }}</p>
-                                </div>
-
-                                {!! Form::label('tope_monto', 'Tope Monto', ['class' => 'control-label col-md-3']) !!}
-                                <div class="col-md-3">
-                                    <p class="form-control-static">{{ $row->tope_monto }}</p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                {!! Form::label('retainer_fm', 'Retainer FM', ['class' => 'control-label col-md-3']) !!}
-                                <div class="col-md-3">
-                                    <p class="form-control-static">{{ $row->retainer_fm }}</p>
-                                </div>
-
-                                {!! Form::label('numero_horas', 'Número de Horas', ['class' => 'control-label col-md-3']) !!}
-                                <div class="col-md-3">
-                                    <p class="form-control-static">{{ $row->numero_horas }}</p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                {!! Form::label('honorario_fijo', 'Honorario Fijo', ['class' => 'control-label col-md-3']) !!}
-                                <div class="col-md-3">
-                                    <p class="form-control-static">{{ $row->honorario_fijo }}</p>
-                                </div>
-
-                                {!! Form::label('hora_adicional', 'Hora Adicional', ['class' => 'control-label col-md-3']) !!}
-                                <div class="col-md-3">
-                                    <p class="form-control-static">{{ $row->hora_adicional }}</p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                {!! Form::label('servicio', 'Servicio', ['class' => 'control-label col-md-3']) !!}
-                                <div class="col-md-9">
-                                    <p class="form-control-static">{{ $row->service->titulo }}</p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                {!! Form::label('numero_dias', 'Número de Días', ['class' => 'control-label col-md-3']) !!}
-                                <div class="col-md-3">
-                                    <p class="form-control-static">{{ $row->numero_dias }}</p>
-                                </div>
-
-                                {!! Form::label('fecha_limite', 'Fecha Limite', ['class' => 'control-label col-md-3']) !!}
-                                <div class="col-md-3">
-                                    <p class="form-control-static">{{ soloFecha($row->fecha_limite) }}</p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                {!! Form::label('descripcion', 'Descripción', ['class' => 'control-label col-md-3']) !!}
-                                <div class="col-md-9">
+                                {!! Form::label('descripcion', 'Descripción', ['class' => 'control-label col-md-2']) !!}
+                                <div class="col-md-10">
                                     <p class="form-control-static">{{ $row->descripcion }}</p>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                {!! Form::label('concepto', 'Concepto', ['class' => 'control-label col-md-3']) !!}
-                                <div class="col-md-9">
+                                {!! Form::label('concepto', 'Concepto', ['class' => 'control-label col-md-2']) !!}
+                                <div class="col-md-10">
                                     <p class="form-control-static">{{ $row->concepto }}</p>
                                 </div>
                             </div>
 
+                            <h3>Kardex</h3>
+
                             <div class="form-group">
-                                {!! Form::label('observacion', 'Observación', ['class' => 'control-label col-md-3']) !!}
-                                <div class="col-md-9">
+                                {!! Form::label('materia', 'Materia', ['class' => 'control-label col-md-2']) !!}
+                                <div class="col-md-4">
+                                    <p class="form-control-static">{{ $row->matter->titulo }}</p>
+                                </div>
+
+                                {!! Form::label('entidad', 'Entidad', ['class' => 'control-label col-md-2']) !!}
+                                <div class="col-md-4">
+                                    <p class="form-control-static">{{ $row->entity->titulo }}</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                {!! Form::label('area', 'Área', ['class' => 'control-label col-md-2']) !!}
+                                <div class="col-md-4">
+                                    <p class="form-control-static">{{ $row->area->titulo }}</p>
+                                </div>
+
+                                {!! Form::label('jefe_area', 'Jefe de Área', ['class' => 'control-label col-md-2']) !!}
+                                <div class="col-md-4">
+                                    <p class="form-control-static">{{ $row->jefe_area }}</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                {!! Form::label('instancia', 'Instancia', ['class' => 'control-label col-md-2']) !!}
+                                <div class="col-md-4">
+                                    <p class="form-control-static">{{ $row->instance->titulo }}</p>
+                                </div>
+
+                                {!! Form::label('encargado', 'Encargado', ['class' => 'control-label col-md-2']) !!}
+                                <div class="col-md-4">
+                                    <p class="form-control-static">{{ $row->encargado }}</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                {!! Form::label('fecha_poder', 'Fecha Poder', ['class' => 'control-label col-md-2']) !!}
+                                <div class="col-md-3">
+                                    <p class="form-control-static">{{ soloFecha($row->fecha_poder) }}</p>
+                                </div>
+
+                                {!! Form::label('fecha_vencimiento', 'Fecha Vencimiento', ['class' => 'control-label col-md-3']) !!}
+                                <div class="col-md-4">
+                                    <p class="form-control-static">{{ soloFecha($row->fecha_vencimiento) }}</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                {!! Form::label('bienes', 'Bienes', ['class' => 'control-label col-md-2']) !!}
+                                <div class="col-md-4">
+                                    <p class="form-control-static">{{ $row->bienes->titulo }}</p>
+                                </div>
+
+                                {!! Form::label('situacion', 'Situación Especial', ['class' => 'control-label col-md-3']) !!}
+                                <div class="col-md-3">
+                                    <p class="form-control-static">{{ $row->situacionEspecial->titulo }}</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                {!! Form::label('estado', 'Estado', ['class' => 'control-label col-md-2']) !!}
+                                <div class="col-md-4">
+                                    <p class="form-control-static">{{ $row->state->titulo }}</p>
+                                </div>
+
+                                {!! Form::label('exito', 'Éxito', ['class' => 'control-label col-md-3']) !!}
+                                <div class="col-md-3">
+                                    <p class="form-control-static">{{ $row->exito->titulo }}</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                {!! Form::label('observacion', 'Observación', ['class' => 'control-label col-md-2']) !!}
+                                <div class="col-md-10">
                                     <p class="form-control-static">{{ $row->observacion }}</p>
                                 </div>
                             </div>
