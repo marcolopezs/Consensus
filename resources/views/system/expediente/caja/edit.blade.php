@@ -131,7 +131,7 @@
     var carpeta = '';
 
     var myDropzone = new Dropzone(".dropzone", {
-        dictDefaultMessage: 'Da clic para seleccionar para cargar archivo del comprobante',
+        dictDefaultMessage: 'Da clic para seleccionar el archivo del comprobante',
         dictMaxFilesExceeded: 'No se puede cargar más archivos',
         url: "{{ route('documentos.upload') }}",
         method: 'POST',
