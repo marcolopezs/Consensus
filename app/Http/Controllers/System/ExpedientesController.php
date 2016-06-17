@@ -64,13 +64,13 @@ class ExpedientesController extends Controller {
         $moneda = $request->input('moneda');
         $tarifa = $request->input('tarifa');
         $servicio = $request->input('servicio');
-        $fecha_inicio = $this->expedienteRepo->formatoFecha($request->input('fecha_inicio'));
-        $fecha_termino = $this->expedienteRepo->formatoFecha($request->input('fecha_termino'));
+        $fecha_inicio = formatoFecha($request->input('fecha_inicio'));
+        $fecha_termino = formatoFecha($request->input('fecha_termino'));
         $materia = $request->input('materia');
         $entidad = $request->input('entidad');
         $instancia = $request->input('instancia');
-        $fecha_poder = $this->expedienteRepo->formatoFecha($request->input('fecha_poder'));
-        $fecha_vencimiento = $this->expedienteRepo->formatoFecha($request->input('fecha_vencimiento'));
+        $fecha_poder = formatoFecha($request->input('fecha_poder'));
+        $fecha_vencimiento = formatoFecha($request->input('fecha_vencimiento'));
         $area = $request->input('area');
         $bienes = $request->input('bienes');
         $especial = $request->input('especial');

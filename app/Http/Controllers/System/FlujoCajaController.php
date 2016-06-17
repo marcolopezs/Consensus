@@ -68,7 +68,7 @@ class FlujoCajaController extends Controller {
         $this->validate($request, $this->rules);
 
         //VARIABLES
-        $fecha = $this->flujoCajaRepo->formatoFecha($request->input('fecha'));
+        $fecha = formatoFecha($request->input('fecha'));
         $moneda = $request->input('moneda');
 
         //GUARDAR DATOS
@@ -130,7 +130,7 @@ class FlujoCajaController extends Controller {
         $this->validate($request, $this->rules);
 
         //VARIABLES
-        $fecha = $this->flujoCajaRepo->formatoFecha($request->input('fecha_caja'));
+        $fecha = formatoFecha($request->input('fecha_caja'));
         $moneda = $request->input('moneda');
 
         //GUARDAR DATOS
