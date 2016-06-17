@@ -39,7 +39,7 @@
                         </div>
                     @endif
 
-                    {!! Form::model($row, ['route' => ['expedientes.update', $row->id], 'method' => 'PUT', 'id' => 'formCreate', 'class' => 'horizontal-form']) !!}
+                    {!! Form::model($row, ['route' => ['expedientes.update', $row->id], 'method' => 'PUT', 'id' => 'formCreate', 'class' => 'horizontal-form', 'autocomplete' => 'off']) !!}
 
                     <div class="form-body">
 
@@ -82,7 +82,7 @@
                                 <div class="form-group">
                                     {!! Form::label('abogado', 'Abogado', ['class' => 'control-label']) !!}
                                     <div class="input-group">
-                                        <span class="input-group-addon">{!! Form::checkbox('abogado', '1', null) !!}</span>
+                                        <span class="input-group-addon">{!! Form::checkbox('check_abogado', '1', null) !!}</span>
                                         <div class="input-group input-medium">
                                             {!! Form::select('abogado_id', [''=>''] + $abogado, $row->abogado_id, ['class' => 'form-control select2']) !!}
                                         </div>
@@ -94,7 +94,7 @@
                                 <div class="form-group">
                                     {!! Form::label('asistente', 'Asistente', ['class' => 'control-label']) !!}
                                     <div class="input-group">
-                                        <span class="input-group-addon">{!! Form::checkbox('asistente', '1', null) !!}</span>
+                                        <span class="input-group-addon">{!! Form::checkbox('check_asistente', '1', null) !!}</span>
                                         <div class="input-group input-medium">
                                             {!! Form::select('asistente_id', [''=>''] + $abogado, $row->asistente_id, ['class' => 'form-control select2']) !!}
                                         </div>
@@ -171,14 +171,14 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         {!! Form::label('fecha_inicio', 'Fecha Inicio', ['class' => 'control-label']) !!}
-                                        {!! Form::text('fecha_inicio', soloFecha($row->fecha_inicio), ['class' => 'form-control form-control-inline date-picker']) !!}
+                                        {!! Form::text('fecha_inicio', $row->exp_fecha_inicio, ['class' => 'form-control form-control-inline date-picker']) !!}
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         {!! Form::label('fecha_termino', 'Fecha Término', ['class' => 'control-label']) !!}
-                                        {!! Form::text('fecha_termino', soloFecha($row->fecha_termino), ['class' => 'form-control form-control-inline date-picker']) !!}
+                                        {!! Form::text('fecha_termino', $row->exp_fecha_termino, ['class' => 'form-control form-control-inline date-picker']) !!}
                                     </div>
                                 </div>
 
@@ -266,11 +266,9 @@
                                     <div class="form-group">
                                         {!! Form::label('poder', 'Fecha Inicio de Poder', ['class' => 'control-label']) !!}
                                         <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    {!! Form::checkbox('poder', '1', null) !!}
-                                                </span>
+                                                <span class="input-group-addon">{!! Form::checkbox('check_poder', '1', null) !!}</span>
                                             <div class="input-group input-medium date date-picker" data-date-format="dd/mm/yyyy" data-date-viewmode="years">
-                                                {!! Form::text('fecha_poder', soloFecha($row->fecha_poder), ['class' => 'form-control']) !!}
+                                                {!! Form::text('fecha_poder', $row->exp_fecha_poder, ['class' => 'form-control']) !!}
                                                 <span class="input-group-btn"><button class="btn default" type="button"><i class="fa fa-calendar"></i></button></span>
                                             </div>
                                         </div>
@@ -281,11 +279,9 @@
                                     <div class="form-group">
                                         {!! Form::label('vencimiento', 'Fecha Vencimiento de Poder', ['class' => 'control-label']) !!}
                                         <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    {!! Form::checkbox('vencimiento', '1', null) !!}
-                                                </span>
+                                                <span class="input-group-addon">{!! Form::checkbox('check_vencimiento', '1', null) !!}</span>
                                             <div class="input-group input-medium date date-picker" data-date-format="dd/mm/yyyy" data-date-viewmode="years">
-                                                {!! Form::text('fecha_vencimiento', soloFecha($row->fecha_vencimiento), ['class' => 'form-control']) !!}
+                                                {!! Form::text('fecha_vencimiento', $row->exp_fecha_vencimiento, ['class' => 'form-control']) !!}
                                                 <span class="input-group-btn"><button class="btn default" type="button"><i class="fa fa-calendar"></i></button></span>
                                             </div>
                                         </div>

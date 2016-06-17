@@ -39,7 +39,7 @@
                         </div>
                     @endif
 
-                    {!! Form::open(['route' => 'expedientes.store', 'method' => 'POST', 'id' => 'formCreate', 'class' => 'horizontal-form']) !!}
+                    {!! Form::open(['route' => 'expedientes.store', 'method' => 'POST', 'id' => 'formCreate', 'class' => 'horizontal-form', 'autocomplete' => 'off']) !!}
 
                         <div class="form-body">
 
@@ -127,7 +127,7 @@
                                     <div class="form-group">
                                         {!! Form::label('abogado', 'Abogado', ['class' => 'control-label']) !!}
                                         <div class="input-group">
-                                            <span class="input-group-addon">{!! Form::checkbox('abogado', '1', null) !!}</span>
+                                            <span class="input-group-addon">{!! Form::checkbox('check_abogado', '1', null) !!}</span>
                                             <div class="input-group input-medium">
                                                 {!! Form::select('abogado_id', [''=>''] + $abogado, null, ['class' => 'form-control select2']) !!}
                                             </div>
@@ -139,7 +139,7 @@
                                     <div class="form-group">
                                         {!! Form::label('asistente', 'Asistente', ['class' => 'control-label']) !!}
                                         <div class="input-group">
-                                            <span class="input-group-addon">{!! Form::checkbox('asistente', '1', null) !!}</span>
+                                            <span class="input-group-addon">{!! Form::checkbox('check_asistente', '1', null) !!}</span>
                                             <div class="input-group input-medium">
                                                 {!! Form::select('asistente_id', [''=>''] + $abogado, null, ['class' => 'form-control select2']) !!}
                                             </div>
@@ -311,9 +311,7 @@
                                         <div class="form-group">
                                             {!! Form::label('poder', 'Fecha Inicio de Poder', ['class' => 'control-label']) !!}
                                             <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    {!! Form::checkbox('poder', '1', null) !!}
-                                                </span>
+                                                <span class="input-group-addon">{!! Form::checkbox('check_poder', '1', null) !!}</span>
                                                 <div class="input-group input-medium date date-picker" data-date-format="dd/mm/yyyy" data-date-viewmode="years">
                                                     {!! Form::text('fecha_poder', null, ['class' => 'form-control']) !!}
                                                     <span class="input-group-btn"><button class="btn default" type="button"><i class="fa fa-calendar"></i></button></span>
@@ -326,9 +324,7 @@
                                         <div class="form-group">
                                             {!! Form::label('vencimiento', 'Fecha Vencimiento de Poder', ['class' => 'control-label']) !!}
                                             <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    {!! Form::checkbox('vencimiento', '1', null) !!}
-                                                </span>
+                                                <span class="input-group-addon">{!! Form::checkbox('check_vencimiento', '1', null) !!}</span>
                                                 <div class="input-group input-medium date date-picker" data-date-format="dd/mm/yyyy" data-date-viewmode="years">
                                                     {!! Form::text('fecha_vencimiento', null, ['class' => 'form-control']) !!}
                                                     <span class="input-group-btn"><button class="btn default" type="button"><i class="fa fa-calendar"></i></button></span>

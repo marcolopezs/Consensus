@@ -114,7 +114,7 @@ return [
         'abogado_id' => [
             'required_if' => 'El campo Abogado es obligatorio cuando ha activado la casilla de Abogado'
         ],
-        'asistente' => [
+        'check_asistente' => [
             'required_with' => 'Active la casilla de Asistente, en caso haya seleccionado un registro'
         ],
         'asistente_id' => [
@@ -157,21 +157,21 @@ return [
         'minute'                => 'minuto',
         'second'                => 'segundo',
         'title'                 => 'Título',
-        'body'                  => 'contenido',
-        'description'           => 'descripción',
+        'body'                  => 'Contenido',
+        'description'           => 'Cescripción',
         'excerpt'               => 'extracto',
-        'date'                  => 'fecha',
-        'time'                  => 'hora',
-        'subject'               => 'asunto',
-        'message'               => 'mensaje',
+        'date'                  => 'Fecha',
+        'time'                  => 'Hora',
+        'subject'               => 'Asunto',
+        'message'               => 'Mensaje',
         'expediente_tipo'       => 'tipo de Expediente',
         'expediente_opcion'     => 'opción de Expediente',
         'auto'                  => 'Automático',
         'manual'                => 'Manual',
         'expediente'            => 'Expediente',
         'kardex'                => 'Kardex',
-        'abogado'               => 'Abogado',
-        'asistente'             => 'Asistente',
+        'check_abogado'         => 'Abogado',
+        'check_asistente'       => 'Asistente',
         'cliente'               => 'Cliente',
         'moneda'                => 'Moneda',
         'tarifa'                => 'Tarifa',

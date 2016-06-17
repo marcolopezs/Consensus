@@ -259,8 +259,10 @@ class CreateInitialTables extends Migration
             $table->double('valor', 15, 2);
 
             $table->integer('tariff_id')->unsigned();
+            $table->boolean('check_abogado');
             $table->integer('abogado_id')->unsigned();
-            $table->integer('asistente_id')->unsigned();
+            $table->boolean('check_asistente');
+            $table->integer('asistente_id')->unsigned()->nullable();
 
             $table->double('honorario_hora', 10, 2)->nullable()->default('0');
             $table->double('tope_monto', 10, 2)->nullable()->default('0');
@@ -271,8 +273,8 @@ class CreateInitialTables extends Migration
 
             $table->integer('service_id')->unsigned();
             $table->integer('numero_dias')->nullable()->default('0');
-            $table->date('fecha_inicio');
-            $table->date('fecha_termino');
+            $table->date('fecha_inicio')->nullable();
+            $table->date('fecha_termino')->nullable();
 
             $table->text('descripcion');
             $table->text('concepto');
@@ -282,10 +284,10 @@ class CreateInitialTables extends Migration
             $table->integer('instance_id')->unsigned();
             $table->string('encargado');
 
-            $table->boolean('poder');
-            $table->date('fecha_poder');
-            $table->boolean('vencimiento');
-            $table->date('fecha_vencimiento');
+            $table->boolean('check_poder');
+            $table->date('fecha_poder')->nullable();
+            $table->boolean('check_vencimiento');
+            $table->date('fecha_vencimiento')->nullable();
 
             $table->integer('area_id')->unsigned();
             $table->string('jefe_area');
