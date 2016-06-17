@@ -72,7 +72,7 @@
                                         <ul class="dropdown-menu" role="menu">
                                             <li><a href="{{ route('cliente.edit', $row_id) }}" data-target="#ajax" data-toggle="modal">Editar</a></li>
                                             <li><a href="#" class="cliente-contacto" data-id="{{ $row_id }}" data-list="{{ route('cliente.contactos.index', $row_id) }}" data-create="{{ route('cliente.contactos.create', $row_id) }}">Contacto</a></li>
-                                            <li><a href="{{ route('cliente.documentos.index', $row_id) }}">Documentos</a></li>
+                                            <li><a href="#" class="cliente-documento" data-id="{{ $row_id }}" data-list="{{ route('cliente.documentos.index', $row_id) }}" data-create="{{ route('cliente.documentos.create', $row_id) }}">Documentos</a></li>
                                             <li><a href="{{ route('cliente.user.get', $row_id) }}">Crear usuario</a></li>
                                             <li><a href="javascript:;">Historial</a></li>
                                         </ul>
@@ -114,6 +114,8 @@
 {!! HTML::script('assets/global/plugins/select2/js/select2.full.min.js') !!}
 {!! HTML::script('assets/global/plugins/select2/js/i18n/es.js') !!}
 
+{{-- Script Cliente --}}
+{!! HTML::script('js/js-cliente.js') !!}
 <script>
 
     $(document).on("ready", function () {
@@ -127,72 +129,6 @@
         });
 
         $('#mensajeAjax').hide();
-
-
-
-        //MOSTRAR CONTACTOS DE CLIENTE
-        $(".cliente-contacto").on("click", function(e) {
-            e.preventDefault();
-
-            var id = $(this).data('id');
-            var list = $(this).data('list');
-            var create = $(this).data('create');
-
-            $.ajax({
-                url: list,
-                type: 'GET',
-                success: function(result){
-                    var html = '<tr id="contacto-'+id+'" class="bg-default" style="display:none;"><td style="padding:20px 15px;" colspan="23">' +
-                            '<div class="btn-group pull-left">' +
-                            '<h3 class="table-title">Contactos</h3>' +
-                            '</div>' +
-                            '<div class="btn-group pull-right table-botones">' +
-                            '<a class="btn sbold white contacto-cerrar" href="#" data-id="'+id+'"> Cerrar </a>' +
-                            '<a class="btn sbold blue-soft" href="'+create+'" data-target="#ajax" data-toggle="modal"> Agregar nuevo contacto <i class="fa fa-plus"></i></a>' +
-                            '</div>' +
-                            '<table id="contacto-lista-'+id+'" class="table table-striped table-bordered table-hover order-column">' +
-                            '<thead>' +
-                            '<tr role="row" class="heading">' +
-                            '<td>Contacto</td>' +
-                            '<td>DNI</td>' +
-                            '<td>RUC</td>' +
-                            '<td>Email</td>' +
-                            '<td>Acciones</td>' +
-                            '</tr>' +
-                            '</thead>' +
-                            '<tbody>' +
-                            '</tbody>' +
-                            '</table>' +
-                            '</td></tr>';
-
-                    $("#cliente-" + id).after(html);
-                    $("#contacto-" + id).fadeIn();
-
-                    var tr;
-                    $.each(JSON.parse(result), function(idx, obj) {
-                        tr = $('<tr id="contacto-select-'+ obj.id +'">');
-                        tr.append('<td>'+ obj.contacto +'</td>');
-                        tr.append('<td>'+ obj.dni +'</td>');
-                        tr.append('<td>'+ obj.ruc +'</td>');
-                        tr.append('<td>'+ obj.email +'</td>');
-                        tr.append('<td><a href="'+ obj.url_editar +'" data-target="#ajax" data-toggle="modal">Editar</a></td>');
-                        $("#contacto-lista-"+id+" tbody").prepend(tr);
-                    });
-
-                    $(".contacto-cerrar").on("click", function (e) {
-                        e.preventDefault();
-                        var id = $(this).data('id');
-                        $("#contacto-" + id).fadeOut();
-                    });
-                },
-                beforeSend: function () { $('.progress').show(); },
-                complete: function () { $('.progress').hide(); },
-                error: function(result) {
-                    console.log(result)
-                }
-            });
-
-        });
 
     });
 

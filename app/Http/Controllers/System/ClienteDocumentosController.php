@@ -13,9 +13,9 @@ use Consensus\Repositories\ClienteDocumentoRepo;
 
 class ClienteDocumentosController extends Controller {
 
-    protected  $rules = [
+    protected $rules = [
         'titulo' => 'required',
-        'descripcion' => 'string'
+        'descripcion' => '',
     ];
 
     protected $clienteRepo;
@@ -31,67 +31,90 @@ class ClienteDocumentosController extends Controller {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param $cliente
+     * @param Request $request
+     * @return Response
      */
-    public function index($cliente)
+    public function index($cliente, Request $request)
     {
-        $prin = $this->clienteRepo->findOrFail($cliente);
-        $rows = $this->clienteDocumentoRepo->where('cliente_id', $cliente)->orderby('created_at', 'desc')->paginate();
+        $row = $this->clienteRepo->findOrFail($cliente);
 
-        return view('system.cliente-documento.list', compact('rows','prin'));
+        if($request->ajax())
+        {
+            return $row->cliDocumento->toJson();
+        }
     }
 
+    /**
+     * @param $cliente
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create($cliente)
     {
-        $prin = $this->clienteRepo->findOrFail($cliente);
+        $row = $this->clienteRepo->findOrFail($cliente);
 
-        return view('system.cliente-documento.create', compact('prin'));
+        return view('system.cliente.documento.create', compact('row'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param $cliente
+     * @param  \Illuminate\Http\Request $request
+     * @return Response
      */
     public function store($cliente, Request $request)
     {
-        //CREAR CARPETA CON FECHA Y MOVER IMAGEN
-        $archivo = $this->clienteDocumentoRepo->UploadFile('documento', $request->file('file'));
+        //VALIDACION
+        $this->validate($request, $this->rules);
 
         //GUARDAR DATOS
-        $row = new ClienteDocumento();
+        $row = new ClienteDocumento($request->all());
         $row->cliente_id = $cliente;
-        $row->titulo = $archivo['nombre'];
-        $row->tipo = $archivo['extension'];
-        $row->documento = $archivo['archivo'];
-        $row->carpeta = $archivo['carpeta'];
-        $this->clienteDocumentoRepo->create($row, $request->all());
+        $save = $this->clienteDocumentoRepo->create($row, $request->all());
 
         //GUARDAR HISTORIAL
-        $this->clienteDocumentoRepo->saveHistoryFile($row, $archivo, 'create');
+        $this->clienteDocumentoRepo->saveHistoryFile($row, $request, 'create');
+
+        //GUARDAR DOCUMENTO
+        $this->clienteDocumentoRepo->saveDocumento($row, $request, 'create');
+
+        //AJAX
+        if($request->ajax())
+        {
+            return response()->json([
+                'id' => $save->id,
+                'titulo' => $save->titulo,
+                'descripcion' => $save->descripcion,
+                'fecha_subida' => $save->fecha_subida,
+                'descargar' => $save->descargar,
+                'url_editar' => $save->url_editar
+            ]);
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $cliente
+     * @param  int $id
+     * @return Response
      */
     public function edit($cliente, $id)
     {
-        $prin = $this->clienteRepo->findOrFail($cliente);
-        $row = $this->clienteDocumentoRepo->findOrFail($id);
+        $row = $this->clienteRepo->findOrFail($cliente);
+        $prin = $this->clienteDocumentoRepo->findOrFail($id);
 
-        return view('system.cliente-documento.edit', compact('prin','row'));
+        return view('system.cliente.documento.edit', compact('prin','row'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $cliente
+     * @param  int $id
+     * @param  \Illuminate\Http\Request $request
+     * @return Response
      */
     public function update($cliente, $id, Request $request)
     {
@@ -101,76 +124,30 @@ class ClienteDocumentosController extends Controller {
         //VALIDACION DE DATOS
         $this->validate($request, $this->rules);
 
-        //GUARDAR DATOS
-        $this->clienteDocumentoRepo->update($row, $request->all());
+        //ACTUALIZAR
+        $save = $this->clienteDocumentoRepo->update($row, $request->all());
 
         //GUARDAR HISTORIAL
         $this->clienteDocumentoRepo->saveHistory($row, $request, 'update');
 
-        //MENSAJE
-        $mensaje = 'El registro se actualizó satisfactoriamente.';
+        //GUARDAR DOCUMENTO
+        if($request->input('documento') <> "")
+        {
+            $this->clienteDocumentoRepo->saveDocumento($row, $request, 'update');
+        }
 
         //AJAX
         if($request->ajax())
         {
             return response()->json([
-                'message' => $mensaje
+                'id' => $save->id,
+                'titulo' => $save->titulo,
+                'descripcion' => $save->descripcion,
+                'fecha_subida' => $save->fecha_subida,
+                'descargar' => $save->descargar,
+                'url_editar' => $save->url_editar
             ]);
         }
-    }
-
-
-
-    public function download($cliente, $id)
-    {
-        $row = $this->clienteDocumentoRepo->findOrFail($id);
-
-        $carpeta = $row->carpeta;
-        $archivo = $row->documento;
-        $pathFile = public_path().'/documento/'.$carpeta.$archivo;
-
-        return response()->download($pathFile);
-    }
-
-    public function downloadHistory($cliente, $id, $his)
-    {
-        $row = $this->clienteDocumentoRepo->findOrFail($id);
-        $history = $this->clienteDocumentoRepo->findHistory($row, $his);
-
-        $contenido = json_decode($history->descripcion, true);
-
-        $carpeta = $contenido['carpeta'];
-        $archivo = $contenido['archivo'];
-        $pathFile = public_path().'/documento/'.$carpeta.$archivo;
-
-        return response()->download($pathFile);
-    }
-
-    public function uploadGet($cliente, $id)
-    {
-        $prin = $this->clienteRepo->findOrFail($cliente);
-        $row = $this->clienteDocumentoRepo->findOrFail($id);
-
-        return view('system.cliente-documento.upload', compact('prin','row'));
-    }
-
-    public function uploadPut($cliente, $id, Request $request)
-    {
-        //CREAR CARPETA CON FECHA Y MOVER IMAGEN
-        $archivo = $this->clienteDocumentoRepo->UploadFile('documento', $request->file('file'));
-
-        //BUSCAR ID
-        $row = $this->clienteDocumentoRepo->findOrFail($id);
-
-        //GUARDAR DATOS
-        $row->cliente_id = $cliente;
-        $row->tipo = $archivo['extension'];
-        $row->documento = $archivo['archivo'];
-        $row->carpeta = $archivo['carpeta'];
-        $this->clienteDocumentoRepo->update($row, $request->all());
-
-        //GUARDAR HISTORIAL
-        $this->clienteDocumentoRepo->saveHistoryFile($row, $archivo, 'update');
     }
 
 }

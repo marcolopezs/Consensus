@@ -185,10 +185,6 @@ class CreateInitialTables extends Migration
             $table->string('titulo');
             $table->text('descripcion');
 
-            $table->string('documento');
-            $table->string('carpeta')->nullable();
-            $table->string('tipo')->nullable();
-
             $table->nullableTimestamps();
             $table->softDeletes();
         });

@@ -92,9 +92,7 @@ $factory->define(\Consensus\Entities\ClienteDocumento::class, function ($faker) 
     return [
         'cliente_id' => \Consensus\Entities\Cliente::all()->random()->id,
         'titulo' => $faker->sentence(),
-        'descripcion' => $faker->text(rand(100,255)),
-        'documento' => $faker->file(public_path('images'), public_path('documento'), false),
-        'tipo' => $faker->fileExtension
+        'descripcion' => $faker->text(rand(100,255))
     ];
 });
 

@@ -62,10 +62,6 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
 
     //CLIENTE - DOCUMENTOS
     Route::resource('cliente.documentos', 'ClienteDocumentosController', ['except' => 'destroy']);
-    Route::get('cliente/{cliente}/documentos/{doc}/download', ['as' => 'cliente.documentos.download', 'uses' => 'ClienteDocumentosController@download']);
-    Route::get('cliente/{cliente}/documentos/{doc}/downloadHis/{his}', ['as' => 'cliente.documentos.download.his', 'uses' => 'ClienteDocumentosController@downloadHistory']);
-    Route::get('cliente/{cliente}/documentos/{doc}/upload', ['as' => 'cliente.documentos.upload.get', 'uses' => 'ClienteDocumentosController@uploadGet']);
-    Route::put('cliente/{cliente}/documentos/{doc}/upload', ['as' => 'cliente.documentos.upload.put', 'uses' => 'ClienteDocumentosController@uploadPut']);
 
     //KARDEX
     Route::resource('kardex', 'KardexController', ['except' => 'destroy']);
