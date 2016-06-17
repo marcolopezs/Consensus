@@ -12,9 +12,9 @@ class DataTableSeeder extends Seeder
     public function run()
     {
         DB::table('money')->insert([
-            ['id' => '1', 'titulo' => 'Dólar', 'valor' => '3.29330', 'simbolo' => 'US$', 'abrev' => 'USD'],
-            ['id' => '2', 'titulo' => 'Euro', 'valor' => '3.72860', 'simbolo' => '€', 'abrev' => 'EUR'],
-            ['id' => '3', 'titulo' => 'Nuevo Sol', 'valor' => '1', 'simbolo' => 'S/.', 'abrev' => 'PEN']
+            ['id' => '1', 'titulo' => 'Dólar', 'valor' => '3.29330', 'simbolo' => 'US$', 'abrev' => 'USD', 'estado' => '1'],
+            ['id' => '2', 'titulo' => 'Euro', 'valor' => '3.72860', 'simbolo' => '€', 'abrev' => 'EUR', 'estado' => '1'],
+            ['id' => '3', 'titulo' => 'Nuevo Sol', 'valor' => '1', 'simbolo' => 'S/.', 'abrev' => 'PEN', 'estado' => '1'],
         ]);
 
         DB::table('payment_methods')->insert([
