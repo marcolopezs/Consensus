@@ -35,20 +35,22 @@ class ClienteContactosController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($cliente)
+    public function index($cliente, Request $request)
     {
-        $prin = $this->clienteRepo->findOrFail($cliente);
-        $rows = $this->clienteContactoRepo->where('cliente_id', $cliente)->orderby('contacto', 'asc')->paginate();
+        $row = $this->clienteRepo->findOrFail($cliente);
 
-        return view('system.cliente-contacto.list', compact('rows','prin'));
+        if($request->ajax())
+        {
+            return $row->contactos->toJson();
+        }
     }
 
     public function create($cliente)
     {
-        $prin = $this->clienteRepo->findOrFail($cliente);
+        $row = $this->clienteRepo->findOrFail($cliente);
         $pais = $this->paisRepo->estadoListArray();
 
-        return view('system.cliente-contacto.create', compact('pais','prin'));
+        return view('system.cliente.contacto.create', compact('row','pais'));
     }
 
     /**
@@ -66,19 +68,21 @@ class ClienteContactosController extends Controller {
         $row = new ClienteContacto($request->all());
         $row->pais_id = $pais;
         $row->cliente_id = $cliente;
-        $this->clienteRepo->create($row, $request->all());
+        $save = $this->clienteRepo->create($row, $request->all());
 
         //GUARDAR HISTORIAL
         $this->clienteContactoRepo->saveHistory($row, $request, 'create');
-
-        //MENSAJE
-        $mensaje = 'El registro se agregó satisfactoriamente.';
 
         //AJAX
         if($request->ajax())
         {
             return response()->json([
-                'message' => $mensaje
+                'id' => $save->id,
+                'contacto' => $save->contacto,
+                'dni' => $save->dni,
+                'ruc' => $save->ruc,
+                'email' => $save->email,
+                'url_editar' => $save->url_editar
             ]);
         }
     }
@@ -91,11 +95,11 @@ class ClienteContactosController extends Controller {
      */
     public function edit($cliente, $id)
     {
-        $prin = $this->clienteRepo->findOrFail($cliente);
-        $row = $this->clienteContactoRepo->findOrFail($id);
+        $row = $this->clienteRepo->findOrFail($cliente);
+        $prin = $this->clienteContactoRepo->findOrFail($id);
         $pais = $this->paisRepo->estadoListArray();
 
-        return view('system.cliente-contacto.edit', compact('prin','row','pais'));
+        return view('system.cliente.contacto.edit', compact('prin','row','pais'));
     }
 
     /**
@@ -115,19 +119,21 @@ class ClienteContactosController extends Controller {
 
         //GUARDAR DATOS
         $row->pais_id = $pais;
-        $this->clienteContactoRepo->update($row, $request->all());
+        $save = $this->clienteContactoRepo->update($row, $request->all());
 
         //GUARDAR HISTORIAL
         $this->clienteContactoRepo->saveHistory($row, $request, 'update');
-
-        //MENSAJE
-        $mensaje = 'El registro se actualizó satisfactoriamente.';
 
         //AJAX
         if($request->ajax())
         {
             return response()->json([
-                'message' => $mensaje
+                'id' => $save->id,
+                'contacto' => $save->contacto,
+                'dni' => $save->dni,
+                'ruc' => $save->ruc,
+                'email' => $save->email,
+                'url_editar' => $save->url_editar
             ]);
         }
     }

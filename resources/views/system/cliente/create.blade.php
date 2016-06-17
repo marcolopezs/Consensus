@@ -168,13 +168,5 @@
 
     });
 
-    $("#formCreateClose").on("click", function (e) {
-        e.preventDefault();
-
-        $("#ajax-modal").modal('hide');
-        location.reload();
-
-    });
-
 </script>
 
