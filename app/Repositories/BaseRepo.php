@@ -109,9 +109,6 @@ abstract class BaseRepo {
 
 
 
-
-
-
     /* URL AMIGABLE */
     public function SlugUrl($texto){
         return $this->getUrlAmigable($this->eliminarTextoURL($texto));

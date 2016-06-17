@@ -164,6 +164,7 @@ return [
         Consensus\Providers\AuthServiceProvider::class,
         Consensus\Providers\EventServiceProvider::class,
         Consensus\Providers\RouteServiceProvider::class,
+        Consensus\Providers\SystemServiceProvider::class,
 
     ],
 

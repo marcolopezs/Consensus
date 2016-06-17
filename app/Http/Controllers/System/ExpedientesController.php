@@ -11,61 +11,19 @@ use Consensus\Entities\Expediente;
 use Consensus\Repositories\ExpedienteRepo;
 use Consensus\Http\Requests\ExpedienteRequest;
 
-use Consensus\Repositories\AbogadoRepo;
 use Consensus\Repositories\AjusteRepo;
-use Consensus\Repositories\AreaRepo;
-use Consensus\Repositories\BienesRepo;
-use Consensus\Repositories\ClienteRepo;
-use Consensus\Repositories\EntityRepo;
-use Consensus\Repositories\ExitoRepo;
 use Consensus\Repositories\ExpedienteTipoRepo;
-use Consensus\Repositories\InstanceRepo;
-use Consensus\Repositories\MatterRepo;
-use Consensus\Repositories\MoneyRepo;
-use Consensus\Repositories\ServiceRepo;
-use Consensus\Repositories\SituacionEspecialRepo;
-use Consensus\Repositories\StateRepo;
-use Consensus\Repositories\TariffRepo;
 
 class ExpedientesController extends Controller {
 
-    protected $abogadoRepo;
-    protected $areaRepo;
-    protected $bienesRepo;
-    protected $clienteRepo;
-    protected $entityRepo;
-    protected $exitoRepo;
     protected $expedienteRepo;
     protected $expedienteTipoRepo;
-    protected $instanceRepo;
-    protected $matterRepo;
-    protected $moneyRepo;
-    protected $serviceRepo;
-    protected $situacionEspecialRepo;
-    protected $stateRepo;
-    protected $tariffRepo;
     protected $ajusteRepo;
 
-    public function __construct(AbogadoRepo $abogadoRepo, AreaRepo $areaRepo, BienesRepo $bienesRepo, ClienteRepo $clienteRepo,
-                                EntityRepo $entityRepo, ExitoRepo $exitoRepo, ExpedienteRepo $expedienteRepo, ExpedienteTipoRepo $expedienteTipoRepo,
-                                InstanceRepo $instanceRepo, MatterRepo $matterRepo, MoneyRepo $moneyRepo, ServiceRepo $serviceRepo,
-                                SituacionEspecialRepo $situacionEspecialRepo, StateRepo $stateRepo, TariffRepo $tariffRepo, AjusteRepo $ajusteRepo)
+    public function __construct(ExpedienteRepo $expedienteRepo, ExpedienteTipoRepo $expedienteTipoRepo, AjusteRepo $ajusteRepo)
     {
-        $this->abogadoRepo = $abogadoRepo;
-        $this->areaRepo = $areaRepo;
-        $this->bienesRepo = $bienesRepo;
-        $this->clienteRepo = $clienteRepo;
-        $this->entityRepo = $entityRepo;
-        $this->exitoRepo = $exitoRepo;
         $this->expedienteRepo = $expedienteRepo;
         $this->expedienteTipoRepo = $expedienteTipoRepo;
-        $this->instanceRepo = $instanceRepo;
-        $this->matterRepo = $matterRepo;
-        $this->moneyRepo = $moneyRepo;
-        $this->serviceRepo = $serviceRepo;
-        $this->situacionEspecialRepo = $situacionEspecialRepo;
-        $this->stateRepo = $stateRepo;
-        $this->tariffRepo = $tariffRepo;
         $this->ajusteRepo = $ajusteRepo;
     }
 
@@ -79,23 +37,7 @@ class ExpedientesController extends Controller {
         $rows = $this->expedienteRepo->filterPaginate($request);
         $ajustes = $this->ajusteRepo->findModelUserReturnContenido(Expediente::class);
 
-        $cliente = $this->clienteRepo->orderBy('cliente', 'asc')->lists('cliente', 'id')->toArray();
-        $abogado = $this->abogadoRepo->orderBy('nombre', 'asc')->lists('nombre', 'id')->toArray();
-        $tarifa = $this->tariffRepo->estadoListArray();
-        $moneda = $this->moneyRepo->lists('titulo', 'id')->toArray();
-        $servicio = $this->serviceRepo->estadoListArray();
-        $expediente_tipo = $this->expedienteTipoRepo->estadoListArray();
-        $area = $this->areaRepo->estadoListArray();
-        $entidad = $this->entityRepo->estadoListArray();
-        $instancia = $this->instanceRepo->estadoListArray();
-        $materia = $this->matterRepo->estadoListArray();
-        $estado = $this->stateRepo->estadoListArray();
-        $bienes = $this->bienesRepo->estadoListArray();
-        $especial = $this->situacionEspecialRepo->estadoListArray();
-        $exito = $this->exitoRepo->estadoListArray();
-
-        return view('system.expediente.list',
-            compact('rows','cliente','ajustes','abogado','area','cliente','entidad','instancia','materia','estado','tarifa','moneda','servicio','expediente_tipo','bienes','especial','exito'));
+        return view('system.expediente.list', compact('rows','ajustes'));
     }
 
     /**
@@ -105,23 +47,7 @@ class ExpedientesController extends Controller {
      */
     public function create()
     {
-        $cliente = $this->clienteRepo->orderBy('cliente', 'asc')->lists('cliente', 'id')->toArray();
-        $abogado = $this->abogadoRepo->orderBy('nombre', 'asc')->lists('nombre', 'id')->toArray();
-        $tarifa = $this->tariffRepo->estadoListArray();
-        $moneda = $this->moneyRepo->lists('titulo', 'id')->toArray();
-        $servicio = $this->serviceRepo->estadoListArray();
-        $expediente_tipo = $this->expedienteTipoRepo->estadoListArray();
-        $area = $this->areaRepo->estadoListArray();
-        $entidad = $this->entityRepo->estadoListArray();
-        $instancia = $this->instanceRepo->estadoListArray();
-        $materia = $this->matterRepo->estadoListArray();
-        $estado = $this->stateRepo->estadoListArray();
-        $bienes = $this->bienesRepo->estadoListArray();
-        $especial = $this->situacionEspecialRepo->estadoListArray();
-        $exito = $this->exitoRepo->estadoListArray();
-
-        return view('system.expediente.create',
-            compact('abogado','area','cliente','entidad','instancia','materia','estado','tarifa','moneda','servicio','expediente_tipo','bienes','especial','exito'));
+        return view('system.expediente.create');
     }
 
     /**
@@ -220,21 +146,7 @@ class ExpedientesController extends Controller {
     {
         $row = $this->expedienteRepo->findOrFail($id);
 
-        $abogado = $this->abogadoRepo->orderBy('nombre', 'asc')->lists('nombre', 'id')->toArray();
-        $tarifa = $this->tariffRepo->estadoListArray();
-        $moneda = $this->moneyRepo->lists('titulo', 'id')->toArray();
-        $servicio = $this->serviceRepo->estadoListArray();
-        $expediente_tipo = $this->expedienteTipoRepo->estadoListArray();
-        $area = $this->areaRepo->estadoListArray();
-        $entidad = $this->entityRepo->estadoListArray();
-        $instancia = $this->instanceRepo->estadoListArray();
-        $materia = $this->matterRepo->estadoListArray();
-        $estado = $this->stateRepo->estadoListArray();
-        $bienes = $this->bienesRepo->estadoListArray();
-        $especial = $this->situacionEspecialRepo->estadoListArray();
-        $exito = $this->exitoRepo->estadoListArray();
-
-        return view('system.expediente.edit', compact('row','abogado','area','cliente','entidad','instancia','materia','estado','tarifa','moneda','servicio','expediente_tipo','bienes','especial','exito'));
+        return view('system.expediente.edit', compact('row'));
     }
 
     /**
