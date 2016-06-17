@@ -48,7 +48,7 @@
 
                                 {!! Form::label('asistente', 'Asistente', ['class' => 'control-label col-md-3']) !!}
                                 <div class="col-md-3">
-                                    <p class="form-control-static">{{ $row->asistente->nombre }}</p>
+                                    <p class="form-control-static">{{ $row->exp_asistente }}</p>
                                 </div>
                             </div>
 
@@ -101,12 +101,12 @@
                             <div class="form-group">
                                 {!! Form::label('fecha_inicio', 'Fecha Inicio', ['class' => 'control-label col-md-2']) !!}
                                 <div class="col-md-3">
-                                    <p class="form-control-static">{{ soloFecha($row->fecha_inicio) }}</p>
+                                    <p class="form-control-static">{{ $row->exp_fecha_inicio }}</p>
                                 </div>
 
                                 {!! Form::label('fecha_termino', 'Fecha Término', ['class' => 'control-label col-md-3']) !!}
                                 <div class="col-md-3">
-                                    <p class="form-control-static">{{ soloFecha($row->fecha_termino) }}</p>
+                                    <p class="form-control-static">{{ $row->exp_fecha_termino }}</p>
                                 </div>
                             </div>
 
@@ -165,12 +165,12 @@
                             <div class="form-group">
                                 {!! Form::label('fecha_poder', 'Fecha Poder', ['class' => 'control-label col-md-2']) !!}
                                 <div class="col-md-3">
-                                    <p class="form-control-static">{{ soloFecha($row->fecha_poder) }}</p>
+                                    <p class="form-control-static">{{ $row->exp_fecha_poder }}</p>
                                 </div>
 
                                 {!! Form::label('fecha_vencimiento', 'Fecha Vencimiento', ['class' => 'control-label col-md-3']) !!}
                                 <div class="col-md-4">
-                                    <p class="form-control-static">{{ soloFecha($row->fecha_vencimiento) }}</p>
+                                    <p class="form-control-static">{{ $row->exp_fecha_vencimiento }}</p>
                                 </div>
                             </div>
 
