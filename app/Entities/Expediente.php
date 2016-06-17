@@ -8,12 +8,18 @@ class Expediente extends BaseEntity {
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['expediente_opcion','expediente_tipo_id','expediente','cliente_id','money_id','abogado','abogado_id','tariff_id',
-        'valor','asistente','asistente_id','honorario_hora','tope_monto','retainer_fm','numero_horas','honorario_fijo','hora_adicional',
+    protected $fillable = ['expediente_opcion','expediente_tipo_id','expediente','cliente_id','money_id','valor','tariff_id','check_abogado','abogado_id',
+        'check_asistente','asistente_id','honorario_hora','tope_monto','retainer_fm','numero_horas','honorario_fijo','hora_adicional',
         'service_id','numero_dias','fecha_inicio','fecha_termino','descripcion','concepto','matter_id','entity_id','instance_id','encargado',
         'poder','fecha_poder','vencimiento','fecha_vencimiento','area_id','jefe_area','bienes_id','situacion_especial_id','state_id','exito_id','observacion'];
 
+    protected $appends = ['exp_asistente','exp_fecha_inicio','exp_fecha_termino','exp_fecha_poder','exp_fecha_vencimiento'];
+
     protected $table = 'expedientes';
+
+    /*
+     * RELACIONES
+     */
 
     public function cliente()
     {
@@ -109,6 +115,45 @@ class Expediente extends BaseEntity {
     {
         return $this->hasMany(Kardex::class);
     }
+
+    /*
+     * APPENDS
+     */
+
+    public function getExpAsistenteAttribute()
+    {
+        if($this->asistente_id > 0){ return $this->asistente->nombre; }
+        else{ return ""; }
+    }
+
+    public function getExpFechaInicioAttribute()
+    {
+        if($this->fecha_inicio <> "0000-00-00"){ return soloFecha($this->fecha_inicio); }
+        else{ return ""; }
+    }
+
+    public function getExpFechaTerminoAttribute()
+    {
+        if($this->fecha_termino <> "0000-00-00"){ return soloFecha($this->fecha_termino); }
+        else{ return ""; }
+    }
+
+    public function getExpFechaPoderAttribute()
+    {
+        if($this->fecha_poder <> "0000-00-00"){ return soloFecha($this->fecha_poder); }
+        else{ return ""; }
+    }
+
+    public function getExpFechaVencimientoAttribute()
+    {
+        if($this->fecha_vencimiento <> "0000-00-00"){ return soloFecha($this->fecha_vencimiento); }
+        else{ return ""; }
+    }
+
+
+    /*
+     * SCOPES
+     */
 
     public function scopeExpediente($query, $value)
     {
