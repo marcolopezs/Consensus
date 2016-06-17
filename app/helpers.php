@@ -5,8 +5,12 @@ use Carbon\Carbon;
 //CONVERTIR FORMATO DE FECHA
 function formatoFecha($date)
 {
-    $fecha = Carbon::createFromFormat('d/m/Y', $date);
-    return $fecha->format('Y-m-d');
+    if($date <> ""){
+        $fecha = Carbon::createFromFormat('d/m/Y', $date);
+        return $fecha->format('Y-m-d');
+    }else{
+        return "";
+    }
 }
 
 //TIPO DE USUARIO

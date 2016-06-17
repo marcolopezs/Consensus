@@ -391,10 +391,4 @@ abstract class BaseRepo {
         ]);
     }
 
-    //CONVERTIR FORMATO DE FECHA
-    public function formatoFecha($date)
-    {
-        $fecha = Carbon::createFromFormat('d/m/Y', $date);
-        return $fecha->format('Y-m-d');
-    }
 }
