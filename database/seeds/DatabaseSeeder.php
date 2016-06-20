@@ -14,13 +14,13 @@ class DatabaseSeeder extends Seeder
         $this->call('UserTableSeeder');
         $this->call('AjustesTableSeeder');
         $this->call('DataTableSeeder');
-        $this->call('AbogadoTableSeeder');
-        $this->call('ClienteTableSeeder');
-        $this->call('ClienteContactoTableSeeder');
-        $this->call('ExpedienteTableSeeder');
-        $this->call('IntervinienteTableSeeder');
-        $this->call('ProcesosTableSeeder');
-        $this->call('CajaTableSeeder');
-        $this->call('KardexTableSeeder');
+        //$this->call('AbogadoTableSeeder');
+        //$this->call('ClienteTableSeeder');
+        //$this->call('ClienteContactoTableSeeder');
+        //$this->call('ExpedienteTableSeeder');
+        //$this->call('IntervinienteTableSeeder');
+        //$this->call('ProcesosTableSeeder');
+        //$this->call('CajaTableSeeder');
+        //$this->call('KardexTableSeeder');
     }
 }
