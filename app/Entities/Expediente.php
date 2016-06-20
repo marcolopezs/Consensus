@@ -8,7 +8,7 @@ class Expediente extends BaseEntity {
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['expediente_opcion','expediente_tipo_id','expediente','cliente_id','money_id','valor','tariff_id','check_abogado','abogado_id',
+    protected $fillable = ['id','expediente_opcion','expediente_tipo_id','expediente','cliente_id','money_id','valor','tariff_id','check_abogado','abogado_id',
         'check_asistente','asistente_id','honorario_hora','tope_monto','retainer_fm','numero_horas','honorario_fijo','hora_adicional',
         'service_id','numero_dias','fecha_inicio','fecha_termino','descripcion','concepto','matter_id','entity_id','instance_id','encargado',
         'poder','fecha_poder','vencimiento','fecha_vencimiento','area_id','jefe_area','bienes_id','situacion_especial_id','state_id','exito_id','observacion'];
@@ -150,6 +150,78 @@ class Expediente extends BaseEntity {
         else{ return ""; }
     }
 
+    public function getExpClienteAttribute()
+    {
+        if($this->cliente_id <> 0){ return $this->cliente->nombre; }
+        else{ return ""; }
+    }
+
+    public function getExpMonedaAttribute()
+    {
+        if($this->money_id <> 0){ return $this->money->nombre; }
+        else{ return ""; }
+    }
+
+    public function getExpTarifaAttribute()
+    {
+        if($this->tariff_id <> 0){ return $this->tariff->nombre; }
+        else{ return ""; }
+    }
+
+    public function getExpServicioAttribute()
+    {
+        if($this->service_id <> 0){ return $this->service->titulo; }
+        else{ return ""; }
+    }
+
+    public function getExpMateriaAttribute()
+    {
+        if($this->matter_id <> 0){ return $this->matter->titulo; }
+        else{ return ""; }
+    }
+
+    public function getExpEntidadAttribute()
+    {
+        if($this->entity_id <> 0){ return $this->entity->titulo; }
+        else{ return ""; }
+    }
+
+    public function getExpInstanciaAttribute()
+    {
+        if($this->instance_id <> 0){ return $this->instance->titulo; }
+        else{ return ""; }
+    }
+
+    public function getExpAreaAttribute()
+    {
+        if($this->area_id <> 0){ return $this->area->titulo; }
+        else{ return ""; }
+    }
+
+    public function getExpBienesAttribute()
+    {
+        if($this->bienes_id <> 0){ return $this->bienes->titulo; }
+        else{ return ""; }
+    }
+
+    public function getExpSituacionEspecialAttribute()
+    {
+        if($this->situacion_especial_id <> 0){ return $this->situacionEspecial->titulo; }
+        else{ return ""; }
+    }
+
+    public function getExpEstadoAttribute()
+    {
+        if($this->state_id <> 0){ return $this->state->titulo; }
+        else{ return ""; }
+    }
+
+    public function getExpExitoAttribute()
+    {
+        if($this->exito_id <> 0){ return $this->exito->titulo; }
+        else{ return ""; }
+    }
+
 
     /*
      * SCOPES
@@ -165,9 +237,7 @@ class Expediente extends BaseEntity {
 
     public function scopeMonedaId($query, $value)
     {
-        $rows = Money::all();
-
-        if($value != "" && isset($rows[$value]))
+        if($value != "")
         {
             $query->where('money_id', $value);
         }
@@ -175,9 +245,7 @@ class Expediente extends BaseEntity {
 
     public function scopeTarifaId($query, $value)
     {
-        $rows = Tariff::all();
-
-        if($value != "" && isset($rows[$value]))
+        if($value != "")
         {
             $query->where('tariff_id', $value);
         }
@@ -185,9 +253,7 @@ class Expediente extends BaseEntity {
 
     public function scopeAbogadoId($query, $value)
     {
-        $rows = Abogado::all();
-
-        if($value != "" && isset($rows[$value]))
+        if($value != "")
         {
             $query->where('abogado_id', $value);
         }
@@ -195,9 +261,7 @@ class Expediente extends BaseEntity {
 
     public function scopeAsistenteId($query, $value)
     {
-        $rows = Abogado::all();
-
-        if($value != "" && isset($rows[$value]))
+        if($value != "")
         {
             $query->where('asistente_id', $value);
         }
@@ -205,9 +269,7 @@ class Expediente extends BaseEntity {
 
     public function scopeServicioId($query, $value)
     {
-        $rows = Service::all();
-
-        if($value != "" && isset($rows[$value]))
+        if($value != "")
         {
             $query->where('service_id', $value);
         }
@@ -215,9 +277,7 @@ class Expediente extends BaseEntity {
 
     public function scopeMateriaId($query, $value)
     {
-        $rows = Matter::all();
-
-        if($value != "" && isset($rows[$value]))
+        if($value != "")
         {
             $query->where('matter_id', $value);
         }
@@ -225,9 +285,7 @@ class Expediente extends BaseEntity {
 
     public function scopeEntidadId($query, $value)
     {
-        $rows = Entity::all();
-
-        if($value != "" && isset($rows[$value]))
+        if($value != "")
         {
             $query->where('entity_id', $value);
         }
@@ -235,9 +293,7 @@ class Expediente extends BaseEntity {
 
     public function scopeInstanciaId($query, $value)
     {
-        $rows = Instance::all();
-
-        if($value != "" && isset($rows[$value]))
+        if($value != "")
         {
             $query->where('instance_id', $value);
         }
@@ -245,9 +301,7 @@ class Expediente extends BaseEntity {
 
     public function scopeAreaId($query, $value)
     {
-        $rows = Area::all();
-
-        if($value != "" && isset($rows[$value]))
+        if($value != "")
         {
             $query->where('area_id', $value);
         }
@@ -255,9 +309,7 @@ class Expediente extends BaseEntity {
 
     public function scopeBienesId($query, $value)
     {
-        $rows = Bienes::all();
-
-        if($value != "" && isset($rows[$value]))
+        if($value != "")
         {
             $query->where('bienes_id', $value);
         }
@@ -265,9 +317,7 @@ class Expediente extends BaseEntity {
 
     public function scopeSituacionId($query, $value)
     {
-        $rows = SituacionEspecial::all();
-
-        if($value != "" && isset($rows[$value]))
+        if($value != "")
         {
             $query->where('situacion_especial_id', $value);
         }
@@ -275,9 +325,7 @@ class Expediente extends BaseEntity {
 
     public function scopeEstadoId($query, $value)
     {
-        $rows = State::all();
-
-        if($value != "" && isset($rows[$value]))
+        if($value != "")
         {
             $query->where('state_id', $value);
         }
@@ -285,9 +333,7 @@ class Expediente extends BaseEntity {
 
     public function scopeExitoId($query, $value)
     {
-        $rows = Exito::all();
-
-        if($value != "" && isset($rows[$value]))
+        if($value != "")
         {
             $query->where('exito_id', $value);
         }
