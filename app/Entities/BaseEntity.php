@@ -27,9 +27,7 @@ class BaseEntity extends Model{
 
     public function scopeClienteId($query, $value)
     {
-        $rows = Cliente::all();
-
-        if($value != "" && isset($rows[$value]))
+        if($value != "")
         {
             $query->where('cliente_id', $value);
         }
