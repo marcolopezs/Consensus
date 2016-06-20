@@ -110,27 +110,27 @@
                             @php
                                 $row_id = $item->id;
                                 $row_expediente = $item->expediente;
-                                $row_cliente = $item->cliente->nombre;
-                                $row_moneda = $item->money->titulo;
+                                $row_cliente = $item->exp_cliente;
+                                $row_moneda = $item->exp_moneda;
                                 $row_valor = $item->valor;
-                                $row_tarifa = $item->tariff->titulo;
+                                $row_tarifa = $item->exp_tarifa;
                                 $row_abogado = $item->abogado->nombre;
                                 $row_asistente = $item->exp_asistente;
-                                $row_servicio = $item->service->titulo;
+                                $row_servicio = $item->exp_servicio;
                                 $row_fecha_inicio = $item->exp_fecha_inicio;
                                 $row_fecha_termino = $item->exp_fecha_termino;
-                                $row_materia = $item->matter->titulo;
-                                $row_entidad = $item->entity->titulo;
-                                $row_instancia = $item->instance->titulo;
+                                $row_materia = $item->exp_materia;
+                                $row_entidad = $item->exp_entidad;
+                                $row_instancia = $item->exp_instancia;
                                 $row_encargado = $item->encargado;
                                 $row_fecha_poder = $item->exp_fecha_poder;
                                 $row_fecha_vencimiento = $item->exp_fecha_vencimiento;
-                                $row_area = $item->area->titulo;
+                                $row_area = $item->exp_area;
                                 $row_jefe_area = $item->jefe_area;
-                                $row_bienes = $item->bienes->titulo;
-                                $row_situacion_especial = $item->situacionEspecial->titulo;
-                                $row_estado = $item->state->titulo;
-                                $row_exito = $item->exito->titulo;
+                                $row_bienes = $item->exp_bienes;
+                                $row_situacion_especial = $item->exp_situacion_especial;
+                                $row_estado = $item->exp_state;
+                                $row_exito = $item->exp_exito;
                             @endphp
                             <tr id="exp-{{ $row_id }}" data-id="{{ $row_id }}" data-title="{{ $row_expediente }}">
                                 <td class="col-expediente">{{ $row_expediente }}</td>
