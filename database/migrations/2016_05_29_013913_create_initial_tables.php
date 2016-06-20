@@ -123,22 +123,22 @@ class CreateInitialTables extends Migration
         {
             $table->increments('id');
 
-            $table->string('cliente');
+            $table->string('cliente')->nullable();
 
-            $table->string('dni', 8);
-            $table->string('ruc', 11);
-            $table->string('carnet_extranjeria', 12);
-            $table->string('pasaporte', 12);
-            $table->string('partida_nacimiento', 15);
-            $table->string('otros', 15);
+            $table->string('dni', 8)->nullable();
+            $table->string('ruc', 11)->nullable();
+            $table->string('carnet_extranjeria', 12)->nullable();
+            $table->string('pasaporte', 12)->nullable();
+            $table->string('partida_nacimiento', 15)->nullable();
+            $table->string('otros', 15)->nullable();
 
-            $table->string('email');
+            $table->string('email')->nullable();
 
-            $table->string('telefono', 25);
-            $table->string('fax', 20);
+            $table->string('telefono', 25)->nullable();
+            $table->string('fax', 20)->nullable();
 
-            $table->text('direccion');
-            $table->integer('pais_id')->unsigned();
+            $table->text('direccion')->nullable();
+            $table->integer('pais_id')->unsigned()->nullable();
 
             $table->string('imagen');
             $table->string('imagen_carpeta');
@@ -248,16 +248,16 @@ class CreateInitialTables extends Migration
 
             $table->enum('expediente_opcion', ['auto', 'manual'])->default('auto');
             $table->integer('expediente_tipo_id')->nullable()->unsigned();
-            $table->string('expediente');
+            $table->string('expediente')->nullable();
 
-            $table->integer('cliente_id')->unsigned();
+            $table->integer('cliente_id')->unsigned()->nullable();
             $table->integer('money_id')->unsigned();
-            $table->double('valor', 15, 2);
+            $table->double('valor', 15, 2)->nullable();
 
             $table->integer('tariff_id')->unsigned();
-            $table->boolean('check_abogado');
-            $table->integer('abogado_id')->unsigned();
-            $table->boolean('check_asistente');
+            $table->boolean('check_abogado')->nullable();
+            $table->integer('abogado_id')->unsigned()->nullable();
+            $table->boolean('check_asistente')->nullable();
             $table->integer('asistente_id')->unsigned()->nullable();
 
             $table->double('honorario_hora', 10, 2)->nullable()->default('0');
@@ -272,28 +272,28 @@ class CreateInitialTables extends Migration
             $table->date('fecha_inicio')->nullable();
             $table->date('fecha_termino')->nullable();
 
-            $table->text('descripcion');
-            $table->text('concepto');
+            $table->text('descripcion')->nullable();
+            $table->text('concepto')->nullable();
 
-            $table->integer('matter_id')->unsigned();
-            $table->integer('entity_id')->unsigned();
-            $table->integer('instance_id')->unsigned();
-            $table->string('encargado');
+            $table->integer('matter_id')->unsigned()->nullable();
+            $table->integer('entity_id')->unsigned()->nullable();
+            $table->integer('instance_id')->unsigned()->nullable();
+            $table->string('encargado')->nullable()->nullable();
 
-            $table->boolean('check_poder');
+            $table->boolean('check_poder')->nullable();
             $table->date('fecha_poder')->nullable();
-            $table->boolean('check_vencimiento');
+            $table->boolean('check_vencimiento')->nullable();
             $table->date('fecha_vencimiento')->nullable();
 
-            $table->integer('area_id')->unsigned();
-            $table->string('jefe_area');
+            $table->integer('area_id')->unsigned()->nullable();
+            $table->string('jefe_area')->nullable();
 
-            $table->integer('bienes_id')->unsigned();
-            $table->integer('situacion_especial_id')->unsigned();
-            $table->integer('state_id')->unsigned();
-            $table->boolean('exito_id')->unsigned();
+            $table->integer('bienes_id')->unsigned()->nullable();
+            $table->integer('situacion_especial_id')->unsigned()->nullable();
+            $table->integer('state_id')->unsigned()->nullable();
+            $table->boolean('exito_id')->unsigned()->nullable();
 
-            $table->text('observacion');
+            $table->text('observacion')->nullable();
 
             $table->nullableTimestamps();
             $table->softDeletes();
