@@ -21,6 +21,5 @@ class DatabaseSeeder extends Seeder
         //$this->call('IntervinienteTableSeeder');
         //$this->call('ProcesosTableSeeder');
         //$this->call('CajaTableSeeder');
-        //$this->call('KardexTableSeeder');
     }
 }

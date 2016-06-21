@@ -164,22 +164,3 @@ $factory->define(\Consensus\Entities\FlujoCaja::class, function ($faker) use ($f
         'monto' => $faker->randomFloat(2, 5, 15),
     ];
 });
-
-//KARDEX
-$factory->define(\Consensus\Entities\Kardex::class, function ($faker) use ($factory) {
-    $cliente = \Consensus\Entities\Cliente::all()->random();
-    $expediente = $cliente->expedientes->random()->id;
-    return [
-        'titulo' => $faker->sentence(),
-        'cliente_id' => $cliente->id,
-        'expediente_id' => $expediente,
-        'matter_id' => \Consensus\Entities\Matter::all()->random()->id,
-        'entity_id' => \Consensus\Entities\Entity::all()->random()->id,
-        'instance_id' => \Consensus\Entities\Instance::all()->random()->id,
-        'encargado' => $faker->name,
-        'area_id' => \Consensus\Entities\Area::all()->random()->id,
-        'jefe_area' => $faker->name,
-        'state_id' => \Consensus\Entities\State::all()->random()->id,
-        'estado' => $faker->randomElement([0,1])
-    ];
-});

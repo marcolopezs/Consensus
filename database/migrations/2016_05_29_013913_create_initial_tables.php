@@ -388,52 +388,6 @@ class CreateInitialTables extends Migration
         });
 
         /*==============================
-        =             KARDEX           =
-        ==============================*/
-
-        Schema::create('kardex', function(Blueprint $table)
-        {
-            $table->increments('id');
-
-            $table->string('titulo');
-
-            $table->integer('cliente_id')->unsigned();
-            $table->integer('expediente_id')->unsigned();
-
-            $table->integer('matter_id')->unsigned();
-            $table->integer('entity_id')->unsigned();
-            $table->integer('instance_id')->unsigned();
-            $table->string('encargado');
-
-            $table->boolean('poder');
-            $table->date('fecha_poder');
-            $table->boolean('vencimiento');
-            $table->date('fecha_vencimiento');
-
-            $table->integer('area_id')->unsigned();
-            $table->string('jefe_area');
-
-            $table->string('abogado');
-            $table->string('asistente');
-
-            $table->integer('state_id')->unsigned();
-
-            $table->date('fecha_inicio');
-            $table->date('fecha_fin');
-
-            $table->double('valor', 10, 2);
-            $table->integer('money_id')->unsigned();
-
-            $table->integer('bienes');
-            $table->integer('especial');
-            $table->boolean('exito');
-            $table->boolean('estado');
-
-            $table->nullableTimestamps();
-            $table->softDeletes();
-        });
-
-        /*==============================
         =                              =
         ==============================*/
 
@@ -646,8 +600,6 @@ class CreateInitialTables extends Migration
 
         Schema::drop('tareas');
         Schema::drop('flujo_caja');
-
-        Schema::drop('kardex');
 
         Schema::drop('cliente_documentos');
         Schema::drop('cliente_contactos');

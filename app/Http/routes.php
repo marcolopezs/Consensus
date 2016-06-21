@@ -63,10 +63,6 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
     //CLIENTE - DOCUMENTOS
     Route::resource('cliente.documentos', 'ClienteDocumentosController', ['except' => 'destroy']);
 
-    //KARDEX
-    Route::resource('kardex', 'KardexController', ['except' => 'destroy']);
-    Route::post('kardex/{id}/estado', ['as' => 'kardex.estado', 'uses' => 'KardexController@estado']);
-
     //CLIENTE - JSON
     Route::get('cliente-all', ['as' => 'cliente.all', 'uses' => 'ClienteController@buscarCliente']);
 
