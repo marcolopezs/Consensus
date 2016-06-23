@@ -19,6 +19,10 @@ class TariffController extends Controller {
 
     protected $tariffRepo;
 
+    /**
+     * TariffController constructor.
+     * @param TariffRepo $tariffRepo
+     */
     public function __construct(TariffRepo $tariffRepo)
     {
         $this->tariffRepo = $tariffRepo;
@@ -27,7 +31,8 @@ class TariffController extends Controller {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function index(Request $request)
     {
@@ -36,6 +41,9 @@ class TariffController extends Controller {
         return view('system.tariff.list', compact('rows'));
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create()
     {
         return view('system.tariff.create');
@@ -73,8 +81,9 @@ class TariffController extends Controller {
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int $id
+     * @param Request $request
+     * @return Response
      */
     public function edit($id, Request $request)
     {
@@ -119,6 +128,11 @@ class TariffController extends Controller {
 
     /*
      * Cambiar Estado
+     */
+    /**
+     * @param $id
+     * @param Request $request
+     * @return mixed
      */
     public function estado($id, Request $request)
     {

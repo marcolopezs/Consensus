@@ -18,6 +18,10 @@ class ExpenseTypeController extends Controller {
 
     protected $expenseTypeRepo;
 
+    /**
+     * ExpenseTypeController constructor.
+     * @param ExpenseTypeRepo $expenseTypeRepo
+     */
     public function __construct(ExpenseTypeRepo $expenseTypeRepo)
     {
         $this->expenseTypeRepo = $expenseTypeRepo;
@@ -26,7 +30,8 @@ class ExpenseTypeController extends Controller {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function index(Request $request)
     {
@@ -72,8 +77,9 @@ class ExpenseTypeController extends Controller {
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int $id
+     * @param Request $request
+     * @return Response
      */
     public function edit($id, Request $request)
     {
@@ -118,6 +124,11 @@ class ExpenseTypeController extends Controller {
 
     /*
      * Cambiar Estado
+     */
+    /**
+     * @param $id
+     * @param Request $request
+     * @return mixed
      */
     public function estado($id, Request $request)
     {

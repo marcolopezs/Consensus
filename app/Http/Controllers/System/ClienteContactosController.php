@@ -21,6 +21,12 @@ class ClienteContactosController extends Controller {
     protected $clienteContactoRepo;
     protected $paisRepo;
 
+    /**
+     * ClienteContactosController constructor.
+     * @param ClienteRepo $clienteRepo
+     * @param ClienteContactoRepo $clienteContactoRepo
+     * @param PaisRepo $paisRepo
+     */
     public function __construct(ClienteRepo $clienteRepo,
                                 ClienteContactoRepo $clienteContactoRepo,
                                 PaisRepo $paisRepo)
@@ -33,7 +39,9 @@ class ClienteContactosController extends Controller {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param $cliente
+     * @param Request $request
+     * @return Response
      */
     public function index($cliente, Request $request)
     {
@@ -45,6 +53,10 @@ class ClienteContactosController extends Controller {
         }
     }
 
+    /**
+     * @param $cliente
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create($cliente)
     {
         $row = $this->clienteRepo->findOrFail($cliente);
@@ -56,8 +68,9 @@ class ClienteContactosController extends Controller {
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param $cliente
+     * @param ClienteContactoRequest|Request $request
+     * @return Response
      */
     public function store($cliente, ClienteContactoRequest $request)
     {
@@ -90,8 +103,9 @@ class ClienteContactosController extends Controller {
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $cliente
+     * @param  int $id
+     * @return Response
      */
     public function edit($cliente, $id)
     {
@@ -105,9 +119,10 @@ class ClienteContactosController extends Controller {
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $cliente
+     * @param  int $id
+     * @param ClienteContactoRequest|Request $request
+     * @return Response
      */
     public function update($cliente, $id, ClienteContactoRequest $request)
     {

@@ -19,6 +19,10 @@ class MoneyController extends Controller {
 
     protected $moneyRepo;
 
+    /**
+     * MoneyController constructor.
+     * @param MoneyRepo $moneyRepo
+     */
     public function __construct(MoneyRepo $moneyRepo)
     {
         $this->moneyRepo = $moneyRepo;
@@ -27,7 +31,8 @@ class MoneyController extends Controller {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function index(Request $request)
     {
@@ -73,8 +78,9 @@ class MoneyController extends Controller {
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int $id
+     * @param Request $request
+     * @return Response
      */
     public function edit($id, Request $request)
     {

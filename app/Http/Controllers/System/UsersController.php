@@ -23,6 +23,12 @@ class UsersController extends Controller
     protected $userRepo;
     protected $userProfileRepo;
 
+    /**
+     * UsersController constructor.
+     * @param AbogadoRepo $abogadoRepo
+     * @param UserRepo $userRepo
+     * @param UserProfileRepo $userProfileRepo
+     */
     public function __construct(AbogadoRepo $abogadoRepo,
                                 UserRepo $userRepo,
                                 UserProfileRepo $userProfileRepo)
@@ -57,8 +63,8 @@ class UsersController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param UserRequest $request
+     * @return Response
      */
     public function store(UserRequest $request)
     {

@@ -32,6 +32,13 @@ class ClienteController extends Controller {
     protected $userProfileRepo;
     protected $historyRepo;
 
+    /**
+     * ClienteController constructor.
+     * @param ClienteRepo $clienteRepo
+     * @param PaisRepo $paisRepo
+     * @param UserRepo $userRepo
+     * @param UserProfileRepo $userProfileRepo
+     */
     public function __construct(ClienteRepo $clienteRepo,
                                 PaisRepo $paisRepo,
                                 UserRepo $userRepo,
@@ -46,7 +53,8 @@ class ClienteController extends Controller {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function index(Request $request)
     {
@@ -65,8 +73,8 @@ class ClienteController extends Controller {
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param ClienteRequest $request
+     * @return Response
      */
     public function store(ClienteRequest $request)
     {
@@ -111,9 +119,9 @@ class ClienteController extends Controller {
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param ClienteRequest $request
+     * @param  int $id
+     * @return Response
      */
     public function update(ClienteRequest $request, $id)
     {
@@ -146,6 +154,10 @@ class ClienteController extends Controller {
     /*
      *  Busqueda de Cliente por medio de JSON
      */
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function buscarCliente(Request $request)
     {
         $cliente = $this->clienteRepo->buscarCliente($request);
@@ -157,6 +169,10 @@ class ClienteController extends Controller {
     /*
      * Creación de Usuario para Cliente
      */
+    /**
+     * @param $cliente
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function userGet($cliente)
     {
         $row = $this->clienteRepo->findOrFail($cliente);
@@ -165,6 +181,11 @@ class ClienteController extends Controller {
         return view('system.cliente.user', compact('row','usuario'));
     }
 
+    /**
+     * @param $cliente
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function userPost($cliente, Request $request)
     {
         //VALIDACION
@@ -221,6 +242,11 @@ class ClienteController extends Controller {
         return redirect()->route('cliente.index');
     }
 
+    /**
+     * @param $cliente
+     * @param Request $request
+     * @return mixed
+     */
     public function userName($cliente, Request $request)
     {
         $usuario = $this->clienteRepo->NombreAleatorio();

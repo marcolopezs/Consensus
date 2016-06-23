@@ -18,6 +18,10 @@ class PaymentMethodController extends Controller {
 
     protected $paymentMethodRepo;
 
+    /**
+     * PaymentMethodController constructor.
+     * @param PaymentMethodRepo $paymentMethodRepo
+     */
     public function __construct(PaymentMethodRepo $paymentMethodRepo)
     {
         $this->paymentMethodRepo = $paymentMethodRepo;
@@ -26,7 +30,8 @@ class PaymentMethodController extends Controller {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function index(Request $request)
     {
@@ -35,6 +40,9 @@ class PaymentMethodController extends Controller {
         return view('system.payment-method.list', compact('rows'));
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create()
     {
         return view('system.payment-method.create');
@@ -72,8 +80,9 @@ class PaymentMethodController extends Controller {
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int $id
+     * @param Request $request
+     * @return Response
      */
     public function edit($id, Request $request)
     {
@@ -118,6 +127,11 @@ class PaymentMethodController extends Controller {
 
     /*
      * Cambiar Estado
+     */
+    /**
+     * @param $id
+     * @param Request $request
+     * @return mixed
      */
     public function estado($id, Request $request)
     {

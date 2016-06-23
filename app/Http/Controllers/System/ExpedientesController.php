@@ -20,6 +20,12 @@ class ExpedientesController extends Controller {
     protected $expedienteTipoRepo;
     protected $ajusteRepo;
 
+    /**
+     * ExpedientesController constructor.
+     * @param ExpedienteRepo $expedienteRepo
+     * @param ExpedienteTipoRepo $expedienteTipoRepo
+     * @param AjusteRepo $ajusteRepo
+     */
     public function __construct(ExpedienteRepo $expedienteRepo, ExpedienteTipoRepo $expedienteTipoRepo, AjusteRepo $ajusteRepo)
     {
         $this->expedienteRepo = $expedienteRepo;
@@ -30,7 +36,8 @@ class ExpedientesController extends Controller {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function index(Request $request)
     {
@@ -53,8 +60,8 @@ class ExpedientesController extends Controller {
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param ExpedienteRequest $request
+     * @return Response
      */
     public function store(ExpedienteRequest $request)
     {
@@ -162,6 +169,10 @@ class ExpedientesController extends Controller {
     }
 
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function cliente($id)
     {
         $expedientes = $this->expedienteRepo->where('cliente_id', $id)->get();
@@ -174,6 +185,10 @@ class ExpedientesController extends Controller {
         return response()->json($options);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function ajustes(Request $request)
     {
         $ajuste = $this->ajusteRepo->findModelUser(Expediente::class);

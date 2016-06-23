@@ -18,6 +18,10 @@ class MatterController extends Controller {
 
     protected $matterRepo;
 
+    /**
+     * MatterController constructor.
+     * @param MatterRepo $matterRepo
+     */
     public function __construct(MatterRepo $matterRepo)
     {
         $this->matterRepo = $matterRepo;
@@ -26,7 +30,8 @@ class MatterController extends Controller {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function index(Request $request)
     {
@@ -35,6 +40,9 @@ class MatterController extends Controller {
         return view('system.matter.list', compact('rows'));
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create()
     {
         return view('system.matter.create');
@@ -72,8 +80,9 @@ class MatterController extends Controller {
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int $id
+     * @param Request $request
+     * @return Response
      */
     public function edit($id, Request $request)
     {
@@ -118,6 +127,11 @@ class MatterController extends Controller {
 
     /*
      * Cambiar Estado
+     */
+    /**
+     * @param $id
+     * @param Request $request
+     * @return mixed
      */
     public function estado($id, Request $request)
     {

@@ -19,6 +19,10 @@ class ExpedienteTipoController extends Controller {
 
     protected $expedienteTipoRepo;
 
+    /**
+     * ExpedienteTipoController constructor.
+     * @param ExpedienteTipoRepo $expedienteTipoRepo
+     */
     public function __construct(ExpedienteTipoRepo $expedienteTipoRepo)
     {
         $this->expedienteTipoRepo = $expedienteTipoRepo;
@@ -27,7 +31,8 @@ class ExpedienteTipoController extends Controller {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function index(Request $request)
     {
@@ -73,8 +78,9 @@ class ExpedienteTipoController extends Controller {
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int $id
+     * @param Request $request
+     * @return Response
      */
     public function edit($id, Request $request)
     {
@@ -119,6 +125,11 @@ class ExpedienteTipoController extends Controller {
 
     /*
      * Cambiar Estado
+     */
+    /**
+     * @param $id
+     * @param Request $request
+     * @return mixed
      */
     public function estado($id, Request $request)
     {

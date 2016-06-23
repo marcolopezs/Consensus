@@ -12,11 +12,19 @@ class DocumentosController extends Controller {
 
     protected $documentoRepo;
 
+    /**
+     * DocumentosController constructor.
+     * @param DocumentoRepo $documentoRepo
+     */
     public function __construct(DocumentoRepo $documentoRepo)
     {
         $this->documentoRepo = $documentoRepo;
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function download($id)
     {
         $row = $this->documentoRepo->findOrFail($id);
@@ -29,6 +37,10 @@ class DocumentosController extends Controller {
     }
 
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function upload(Request $request)
     {
         $archivo = $this->documentoRepo->UploadFile('documento', $request->file('file'));

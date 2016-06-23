@@ -20,6 +20,10 @@ class ServiceController extends Controller {
 
     protected $serviceRepo;
 
+    /**
+     * ServiceController constructor.
+     * @param ServiceRepo $serviceRepo
+     */
     public function __construct(ServiceRepo $serviceRepo)
     {
         $this->serviceRepo = $serviceRepo;
@@ -28,7 +32,8 @@ class ServiceController extends Controller {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function index(Request $request)
     {
@@ -37,6 +42,9 @@ class ServiceController extends Controller {
         return view('system.service.list', compact('rows'));
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create()
     {
         return view('system.service.create');
@@ -73,8 +81,9 @@ class ServiceController extends Controller {
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @param Request $request
+     * @return Response
      */
     public function edit($id, Request $request)
     {
@@ -117,6 +126,11 @@ class ServiceController extends Controller {
     }
 
 
+    /**
+     * @param $service
+     * @param Request $request
+     * @return mixed
+     */
     public function serviceFecha($service, Request $request)
     {
         $row = $this->serviceRepo->findOrFail($service);
@@ -137,6 +151,10 @@ class ServiceController extends Controller {
     }
 
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function serviceFechaSuma(Request $request)
     {
         $carbon = Carbon::createFromFormat('d/m/Y', $request->input('fecha'));
@@ -155,6 +173,11 @@ class ServiceController extends Controller {
 
     /*
      * Cambiar Estado
+     */
+    /**
+     * @param $id
+     * @param Request $request
+     * @return mixed
      */
     public function estado($id, Request $request)
     {

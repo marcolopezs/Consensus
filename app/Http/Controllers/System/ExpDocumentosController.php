@@ -21,6 +21,11 @@ class ExpDocumentosController extends Controller {
     protected $expedienteRepo;
     protected $expedienteDocumentoRepo;
 
+    /**
+     * ExpDocumentosController constructor.
+     * @param ExpedienteRepo $expedienteRepo
+     * @param ExpedienteDocumentoRepo $expedienteDocumentoRepo
+     */
     public function __construct(ExpedienteRepo $expedienteRepo,
                                 ExpedienteDocumentoRepo $expedienteDocumentoRepo)
     {
@@ -61,8 +66,9 @@ class ExpDocumentosController extends Controller {
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param $expedientes
+     * @param  \Illuminate\Http\Request $request
+     * @return Response
      */
     public function store($expedientes, Request $request)
     {

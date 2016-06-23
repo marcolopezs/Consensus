@@ -21,6 +21,11 @@ class ClienteDocumentosController extends Controller {
     protected $clienteRepo;
     protected $clienteDocumentoRepo;
 
+    /**
+     * ClienteDocumentosController constructor.
+     * @param ClienteRepo $clienteRepo
+     * @param ClienteDocumentoRepo $clienteDocumentoRepo
+     */
     public function __construct(ClienteRepo $clienteRepo,
                                 ClienteDocumentoRepo $clienteDocumentoRepo)
     {

@@ -25,6 +25,12 @@ class TareasController extends Controller {
     protected $expedienteRepo;
     protected $tareaRepo;
 
+    /**
+     * TareasController constructor.
+     * @param AbogadoRepo $abogadoRepo
+     * @param ExpedienteRepo $expedienteRepo
+     * @param TareaRepo $tareaRepo
+     */
     public function __construct(AbogadoRepo $abogadoRepo,
                                 ExpedienteRepo $expedienteRepo,
                                 TareaRepo $tareaRepo)
@@ -37,7 +43,9 @@ class TareasController extends Controller {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param $expedientes
+     * @param Request $request
+     * @return Response
      */
     public function index($expedientes, Request $request)
     {
@@ -49,6 +57,10 @@ class TareasController extends Controller {
         }
     }
 
+    /**
+     * @param $expedientes
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create($expedientes)
     {
         $row = $this->expedienteRepo->findOrFail($expedientes);
@@ -60,8 +72,9 @@ class TareasController extends Controller {
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param $expedientes
+     * @param  \Illuminate\Http\Request $request
+     * @return Response
      */
     public function store($expedientes, Request $request)
     {
@@ -98,8 +111,9 @@ class TareasController extends Controller {
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $expedientes
+     * @param  int $id
+     * @return Response
      */
     public function edit($expedientes, $id)
     {

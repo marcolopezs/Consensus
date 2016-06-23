@@ -18,6 +18,10 @@ class UbicacionController extends Controller {
 
     protected $ubicacionRepo;
 
+    /**
+     * UbicacionController constructor.
+     * @param UbicacionRepo $ubicacionRepo
+     */
     public function __construct(UbicacionRepo $ubicacionRepo)
     {
         $this->ubicacionRepo = $ubicacionRepo;
@@ -26,7 +30,8 @@ class UbicacionController extends Controller {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function index(Request $request)
     {
@@ -35,6 +40,9 @@ class UbicacionController extends Controller {
         return view('system.ubicacion.list', compact('rows'));
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create()
     {
         return view('system.ubicacion.create');
@@ -72,8 +80,9 @@ class UbicacionController extends Controller {
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int $id
+     * @param Request $request
+     * @return Response
      */
     public function edit($id, Request $request)
     {
@@ -118,6 +127,11 @@ class UbicacionController extends Controller {
 
     /*
      * Cambiar Estado
+     */
+    /**
+     * @param $id
+     * @param Request $request
+     * @return mixed
      */
     public function estado($id, Request $request)
     {
