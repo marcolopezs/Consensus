@@ -60,8 +60,8 @@ $(".text-clear").on("click", function(){
 });
 
 
-//MOSTRAR PROCESOS DE EXPEDIENTE
-$(".expediente-procesos").on("click", function(e) {
+//MOSTRAR TAREAS DE EXPEDIENTE
+$(".expediente-tareas").on("click", function(e) {
     e.preventDefault();
 
     var id = $(this).data('id');
@@ -75,11 +75,11 @@ $(".expediente-procesos").on("click", function(e) {
 
             var html = '<tr id="tarea-'+id+'" class="bg-default" style="display:none;"><td style="padding:20px 15px;" colspan="23">' +
                 '<div class="btn-group pull-left">' +
-                '<h3 class="table-title">Procesos</h3>' +
+                '<h3 class="table-title">Tareas</h3>' +
                 '</div>' +
                 '<div class="btn-group pull-right table-botones">' +
                 '<a class="btn sbold white tarea-cerrar" href="#" data-id="'+id+'"> Cerrar </a>' +
-                '<a class="btn sbold blue-soft" href="'+create+'" data-target="#ajax" data-toggle="modal"> Agregar nuevo proceso <i class="fa fa-plus"></i></a>' +
+                '<a class="btn sbold blue-soft" href="'+create+'" data-target="#ajax" data-toggle="modal"> Agregar nuevo tarea <i class="fa fa-plus"></i></a>' +
                 '</div>' +
                 '<table id="tarea-lista-'+id+'" class="table table-striped table-bordered table-hover order-column">' +
                 '<thead>' +

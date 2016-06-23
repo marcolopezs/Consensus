@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         //$this->call('ClienteContactoTableSeeder');
         //$this->call('ExpedienteTableSeeder');
         //$this->call('IntervinienteTableSeeder');
-        //$this->call('ProcesosTableSeeder');
+        //$this->call('TareasTableSeeder');
         //$this->call('CajaTableSeeder');
     }
 }
