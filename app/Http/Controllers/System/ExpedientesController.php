@@ -13,6 +13,7 @@ use Consensus\Http\Requests\ExpedienteRequest;
 
 use Consensus\Repositories\AjusteRepo;
 use Consensus\Repositories\ExpedienteTipoRepo;
+use Illuminate\Support\Facades\Gate;
 
 class ExpedientesController extends Controller {
 
@@ -54,6 +55,8 @@ class ExpedientesController extends Controller {
      */
     public function create()
     {
+        $this->authorize('create');
+
         return view('system.expediente.create');
     }
 
@@ -65,6 +68,8 @@ class ExpedientesController extends Controller {
      */
     public function store(ExpedienteRequest $request)
     {
+        $this->authorize('create');
+
         //VARIABLES
         $expediente_opcion = $request->input('expediente_opcion');
         $cliente = $request->input('cliente');
@@ -140,6 +145,8 @@ class ExpedientesController extends Controller {
     {
         $row = $this->expedienteRepo->findOrFail($id);
 
+        $this->authorize('clienteExpedientes', $row);
+
         return view('system.expediente.show', compact('row'));
     }
 
@@ -153,6 +160,8 @@ class ExpedientesController extends Controller {
     {
         $row = $this->expedienteRepo->findOrFail($id);
 
+        $this->authorize('update');
+
         return view('system.expediente.edit', compact('row'));
     }
 
@@ -165,7 +174,7 @@ class ExpedientesController extends Controller {
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->authorize('update');
     }
 
 
