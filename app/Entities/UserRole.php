@@ -2,7 +2,7 @@
 
 class UserRole extends BaseEntity {
 
-    protected $fillable = ['create','update','delete','print'];
+    protected $fillable = ['user_id','create','update','delete','exporta','print'];
 
     public function user()
     {

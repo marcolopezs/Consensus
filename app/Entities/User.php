@@ -27,7 +27,7 @@ class User extends BaseEntity implements AuthenticatableContract, CanResetPasswo
      *
      * @var array
      */
-    protected $fillable = ['username', 'password'];
+    protected $fillable = ['id','username', 'password','active','admin','cliente_id','abogado_id'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -53,6 +53,8 @@ class User extends BaseEntity implements AuthenticatableContract, CanResetPasswo
     {
         if($this->admin === 1)
         {
+            return true;
+        }elseif($this->admin === 1 AND $this->isAbogado()){
             return true;
         }
     }

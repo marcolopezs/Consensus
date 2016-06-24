@@ -6,7 +6,7 @@ class UserProfile extends BaseEntity {
 
     public function user()
     {
-        return $this->hasOne('Consensus\Entities\User', 'user_id');
+        return $this->hasOne(User::class, 'user_id');
     }
 
 }
