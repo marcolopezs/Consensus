@@ -42,6 +42,8 @@ class AreaController extends Controller {
 
     public function create()
     {
+        $this->authorize('create');
+
         return view('system.area.create');
     }
 
@@ -53,6 +55,8 @@ class AreaController extends Controller {
      */
     public function store(Request $request)
     {
+        $this->authorize('create');
+
         $this->validate($request, $this->rules);
 
         //GUARDAR DATOS
@@ -78,6 +82,8 @@ class AreaController extends Controller {
      */
     public function edit($id, Request $request)
     {
+        $this->authorize('update');
+
         $row = $this->areaRepo->findOrFail($id);
 
         return view('system.area.edit', compact('row'));
@@ -92,6 +98,8 @@ class AreaController extends Controller {
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('update');
+
         //BUSCAR ID
         $row = $this->areaRepo->findOrFail($id);
 
