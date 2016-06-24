@@ -116,8 +116,8 @@
                 <div class="hor-menu  ">
                     <ul class="nav navbar-nav">
                         <li {!! (Request::is('/') ? 'class="active"' : '') !!}><a href="/">Dashboard</a></li>
-                        @can('mostrar-menu')
                         <li {!! (Request::is('expediente*') ? 'class="active"' : '') !!}><a href="{{ route('expedientes.index') }}">Expedientes</a></li>
+                        @can('mostrar-menu')
                         <li {!! (Request::is('cliente*') ? 'class="active"' : '') !!}><a href="{{ route('cliente.index') }}">Clientes</a></li>
                         <li class="menu-dropdown mega-menu-dropdown {!! (Request::is('options*') ? 'active' : '') !!}">
                             <a href="javascript:;">Opciones</a><span class="arrow"></span>
