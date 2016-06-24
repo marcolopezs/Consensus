@@ -109,7 +109,7 @@ class UserTableSeeder extends Seeder
         factory(UserRole::class)->create([
             'user_id' => 4,
             'create' => 0,
-            'update' => 1,
+            'update' => 0,
             'delete' => 0,
             'printer' => 0
         ]);
@@ -130,6 +130,14 @@ class UserTableSeeder extends Seeder
             'apellidos' => 'Consensus',
             'email' => 'cliente@consensus.com',
             'user_id' => '5'
+        ]);
+
+        factory(UserRole::class)->create([
+            'user_id' => 5,
+            'create' => 0,
+            'update' => 0,
+            'delete' => 0,
+            'printer' => 0
         ]);
 
     }
