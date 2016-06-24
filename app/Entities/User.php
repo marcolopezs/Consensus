@@ -44,6 +44,30 @@ class User extends BaseEntity implements AuthenticatableContract, CanResetPasswo
         return $this->hasOne('Consensus\Entities\UserProfile', 'user_id', 'id');
     }
 
+    public function isAdmin()
+    {
+        if($this->admin === 1)
+        {
+            return true;
+        }
+    }
+
+    public function isCliente()
+    {
+        if($this->cliente_id <> 0)
+        {
+            return true;
+        }
+    }
+
+    public function isAbogado()
+    {
+        if($this->abogado_id <> 0)
+        {
+            return true;
+        }
+    }
+
     public function setPasswordAttribute($value)
     {
         if (!empty ($value)) {
