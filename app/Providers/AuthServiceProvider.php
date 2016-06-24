@@ -1,8 +1,8 @@
-<?php
+<?php namespace Consensus\Providers;
 
-namespace Consensus\Providers;
-
+use Consensus\Entities\Expediente;
 use Consensus\Entities\User;
+use Consensus\Policies\ExpedientePolicy;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -14,7 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'Consensus\Model' => 'Consensus\Policies\ModelPolicy',
+        Expediente::class => ExpedientePolicy::class,
     ];
 
     /**
@@ -27,15 +27,16 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies($gate);
 
-        $gate->before(function (User $user){
-            if($user->isAdmin()){
-                return true;
-            }
-        });
+        $gate->define('mostrar-menu', 'Consensus\Policies\SystemPolicy@menu');
 
-        $gate->define('mostrar-menu', function(User $user){
-            return $user->isAbogado();
-        });
+        $gate->define('cliente-expedientes-home', 'Consensus\Policies\SystemPolicy@clienteExpedientesHome');
 
+        $gate->define('create', 'Consensus\Policies\SystemPolicy@create');
+
+        $gate->define('update', 'Consensus\Policies\SystemPolicy@update');
+
+        $gate->define('delete', 'Consensus\Policies\SystemPolicy@delete');
+
+        $gate->define('printer', 'Consensus\Policies\SystemPolicy@printer');
     }
 }
