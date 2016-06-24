@@ -38,14 +38,14 @@ class CreateInitialTables extends Migration
         {
             $table->increments('id');
 
+            $table->integer('user_id')->unsigned();
+
             $table->string('nombre');
             $table->string('apellidos');
             $table->string('email')->unique();
 
             $table->string('imagen');
             $table->string('imagen_carpeta');
-
-            $table->integer('user_id')->unsigned();
 
             $table->nullableTimestamps();
             $table->softDeletes();
@@ -57,7 +57,6 @@ class CreateInitialTables extends Migration
 
             $table->integer('user_id')->unsigned();
 
-            $table->boolean('admin');
             $table->boolean('create');
             $table->boolean('update');
             $table->boolean('delete');

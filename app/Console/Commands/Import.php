@@ -5,6 +5,9 @@ namespace Consensus\Console\Commands;
 use Consensus\Entities\Abogado;
 use Consensus\Entities\Cliente;
 use Consensus\Entities\Expediente;
+use Consensus\Entities\User;
+use Consensus\Entities\UserProfile;
+use Consensus\Entities\UserRole;
 use Illuminate\Console\Command;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -41,6 +44,9 @@ class Import extends Command
      */
     public function handle()
     {
+        /*
+         * IMPORTAR EXPEDIENTES
+         */
         Excel::load('public/expedientes.csv', function($reader){
 
             foreach($reader->get() as $item)
@@ -82,6 +88,9 @@ class Import extends Command
 
         $this->line('<info>Se importó</info> Expedientes');
 
+        /*
+         * IMPORTAR CLIENTES
+         */
         Excel::load('public/clientes.csv', function($reader){
 
             foreach($reader->get() as $item)
@@ -103,6 +112,9 @@ class Import extends Command
 
         $this->line('<info>Se importó</info> Clientes');
 
+        /*
+         * IMPORTAR ABOGADOS
+         */
         Excel::load('public/abogados.csv', function($reader){
 
             foreach($reader->get() as $item)
@@ -117,5 +129,66 @@ class Import extends Command
         });
 
         $this->line('<info>Se importó</info> Abogados');
+
+        /*
+         * IMPORTAR USUARIOS
+         */
+        Excel::load('public/usuarios.csv', function($reader){
+
+            foreach($reader->get() as $item)
+            {
+                User::create([
+                    'id' => $item->id,
+                    'username' => $item->username,
+                    'password' => $item->password,
+                    'active' => $item->active,
+                    'admin' => $item->admin,
+                    'abogado_id' => $item->abogado_id
+                ]);
+            }
+
+        });
+
+        $this->line('<info>Se importó</info> Usuarios');
+
+        /*
+         * IMPORTAR PERFIL  DE USUARIOS
+         */
+        Excel::load('public/usuarios.csv', function($reader){
+
+            foreach($reader->get() as $item)
+            {
+               UserProfile::create([
+                    'user_id' => $item->user_id,
+                    'nombre' => $item->nombre,
+                    'apellidos' => $item->apellidos,
+                    'email' => $item->email
+                ]);
+            }
+
+        });
+
+        $this->line('<info>Se importó</info> Perfil de Usuarios');
+
+        /*
+         * IMPORTAR ROLES DE USUARIOS
+         */
+        Excel::load('public/usuarios.csv', function($reader){
+
+            foreach($reader->get() as $item)
+            {
+                UserRole::create([
+                    'user_id' => $item->user_id,
+                    'create' => $item->create,
+                    'update' => $item->update,
+                    'delete' => $item->delete,
+                    'exporta' => $item->exporta,
+                    'printer' => $item->printer
+                ]);
+            }
+
+        });
+
+        $this->line('<info>Se importó</info> Roles de Usuario');
     }
 }
