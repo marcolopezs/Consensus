@@ -22,6 +22,7 @@
                         </div>
                     </div>
 
+                    @cannot('cliente')
                     <div class="col-cliente col-md-5">
                         <div class="form-group">
                             {!! Form::label('cliente', 'Cliente', ['class' => 'control-label']) !!}
@@ -33,6 +34,7 @@
                             </div>
                         </div>
                     </div>
+                    @endcan
 
                     <div class="col-moneda col-md-2">
                         <div class="form-group">
