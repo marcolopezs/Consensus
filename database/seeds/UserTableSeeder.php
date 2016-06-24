@@ -27,5 +27,35 @@ class UserTableSeeder extends Seeder
             'user_id' => '1'
         ]);
 
+        factory(User::class)->create([
+            'username' => 'abogado',
+            'password' => 'abogado',
+            'active' => 1,
+            'admin' => 0,
+            'abogado_id' => 12,
+        ]);
+
+        factory(UserProfile::class)->create([
+            'nombre' => 'Abogado',
+            'apellidos' => 'Consensus',
+            'email' => 'abogado@consensus.com',
+            'user_id' => '2'
+        ]);
+
+        factory(User::class)->create([
+            'username' => 'cliente',
+            'password' => 'cliente',
+            'active' => 1,
+            'admin' => 0,
+            'cliente_id' => 5,
+        ]);
+
+        factory(UserProfile::class)->create([
+            'nombre' => 'Cliente',
+            'apellidos' => 'Consensus',
+            'email' => 'cliente@consensus.com',
+            'user_id' => '3'
+        ]);
+
     }
 }

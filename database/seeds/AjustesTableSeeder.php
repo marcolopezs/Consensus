@@ -17,6 +17,16 @@ class AjustesTableSeeder extends Seeder
                 'user_id' => 1,
                 'contenido' => '{"ch-expediente":"1","ch-cliente":"1","ch-abogado":"1","ch-servicio":"1","ch-estado":"1"}'
             ],
+            [
+                'model' => \Consensus\Entities\Expediente::class,
+                'user_id' => 2,
+                'contenido' => '{"ch-expediente":"1","ch-cliente":"1","ch-abogado":"1","ch-servicio":"1","ch-estado":"1"}'
+            ],
+            [
+                'model' => \Consensus\Entities\Expediente::class,
+                'user_id' => 3,
+                'contenido' => '{"ch-expediente":"1","ch-cliente":"1","ch-abogado":"1","ch-servicio":"1","ch-estado":"1"}'
+            ],
         ]);
     }
 }
