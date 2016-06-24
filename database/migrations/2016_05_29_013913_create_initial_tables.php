@@ -55,12 +55,14 @@ class CreateInitialTables extends Migration
         {
             $table->increments('id');
 
+            $table->integer('user_id')->unsigned();
+
             $table->boolean('admin');
-            $table->boolean('agrega');
-            $table->boolean('modifica');
-            $table->boolean('borra');
+            $table->boolean('create');
+            $table->boolean('update');
+            $table->boolean('delete');
             $table->boolean('exporta');
-            $table->boolean('imprime');
+            $table->boolean('printer');
 
             $table->nullableTimestamps();
             $table->softDeletes();
