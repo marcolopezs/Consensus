@@ -28,7 +28,7 @@ class HomeController extends Controller {
         $this->clienteRepo = $clienteRepo;
         $this->expedienteRepo = $expedienteRepo;
 
-        if(Gate::allows('cliente-expedientes-home')) {
+        if(Gate::allows('cliente')) {
             $this->usuario = auth()->user()->cliente_id;
             $this->cliente = $this->clienteRepo->findOrFail($this->usuario);
         }
@@ -37,7 +37,7 @@ class HomeController extends Controller {
 
     public function index()
     {
-        if(Gate::allows('cliente-expedientes-home')){
+        if(Gate::allows('cliente')){
             $expedientes = $this->cliente->expedientes()->orderBy('created_at','desc')->paginate(6);
 
             return view('system.index', compact('expedientes'));

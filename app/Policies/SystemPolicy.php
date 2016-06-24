@@ -18,7 +18,7 @@ class SystemPolicy
         return $user->isAdmin() || $user->isAbogado();
     }
 
-    public function clienteExpedientesHome($user)
+    public function cliente($user)
     {
         return $user->isCliente();
     }
