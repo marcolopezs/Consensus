@@ -18,6 +18,16 @@ class SystemPolicy
         return $user->isAdmin() || $user->isAbogado();
     }
 
+    public function admin($user)
+    {
+        return $user->isAdmin();
+    }
+
+    public function abogado($user)
+    {
+        return $user->isAbogado();
+    }
+
     public function cliente($user)
     {
         return $user->isCliente();

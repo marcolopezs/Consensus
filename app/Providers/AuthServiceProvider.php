@@ -29,6 +29,10 @@ class AuthServiceProvider extends ServiceProvider
 
         $gate->define('mostrar-menu', 'Consensus\Policies\SystemPolicy@menu');
 
+        $gate->define('admin', 'Consensus\Policies\SystemPolicy@admin');
+
+        $gate->define('abogado', 'Consensus\Policies\SystemPolicy@abogado');
+
         $gate->define('cliente', 'Consensus\Policies\SystemPolicy@cliente');
 
         $gate->define('create', 'Consensus\Policies\SystemPolicy@create');
