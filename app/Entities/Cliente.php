@@ -15,11 +15,6 @@ class Cliente extends BaseEntity {
         return $this->hasMany(Expediente::class);
     }
 
-    public function kardexs()
-    {
-        return $this->hasMany(Kardex::class);
-    }
-
     public function contactos()
     {
         return $this->hasMany(ClienteContacto::class);

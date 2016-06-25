@@ -36,6 +36,11 @@ class Expediente extends BaseEntity {
         return $this->belongsTo(Abogado::class);
     }
 
+    public function asistente()
+    {
+        return $this->belongsTo(Abogado::class);
+    }
+
     public function tarea()
     {
         return $this->hasMany(Tarea::class);
@@ -59,11 +64,6 @@ class Expediente extends BaseEntity {
     public function tariff()
     {
         return $this->belongsTo(Tariff::class);
-    }
-
-    public function asistente()
-    {
-        return $this->belongsTo(Abogado::class);
     }
 
     public function service()
@@ -109,11 +109,6 @@ class Expediente extends BaseEntity {
     public function exito()
     {
         return $this->belongsTo(Exito::class);
-    }
-
-    public function kardex()
-    {
-        return $this->hasMany(Kardex::class);
     }
 
     /*
