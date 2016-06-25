@@ -1,16 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
-
 $prefixedResourceNames = function($prefix) {
     return [
         'index'   => $prefix . '.index',
@@ -26,6 +15,10 @@ $prefixedResourceNames = function($prefix) {
 Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use ($prefixedResourceNames) {
 
     Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
+
+    //TAREAS ASIGNADAS A ABOGADO
+    Route::get('tareas-asignadas', ['as' => 'tareas.asignadas', 'uses' => 'TareasAsignadasController@tareas']);
+    Route::resource('tareas-acciones', 'TareasAsignadasController');
 
     //DOCUMENTOS
     Route::get('documentos/{id}/download', ['as' => 'documentos.download', 'uses' => 'DocumentosController@download']);
@@ -119,7 +112,7 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
         Route::resource('expense-type', 'ExpenseTypeController', ['names' => $prefixedResourceNames('expense-type'), 'except' => 'destroy']);
         Route::post('expense-type/{id}/estado', ['as' => 'expense-type.estado', 'uses' => 'ExpenseTypeController@estado']);
 
-        //TIPOS DE KARDEX
+        //TIPOS DE EXPEDIENTE
         Route::resource('expediente-tipo', 'ExpedienteTipoController', ['names' => $prefixedResourceNames('expediente-tipo'), 'except' => 'destroy']);
         Route::post('expediente-tipo/{id}/estado', ['as' => 'expediente-tipo.estado', 'uses' => 'ExpedienteTipoController@estado']);
 
