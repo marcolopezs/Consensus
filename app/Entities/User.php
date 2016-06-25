@@ -51,10 +51,8 @@ class User extends BaseEntity implements AuthenticatableContract, CanResetPasswo
 
     public function isAdmin()
     {
-        if($this->admin === 1)
+        if($this->admin === 1 OR $this->admin === 1 AND $this->isAbogado())
         {
-            return true;
-        }elseif($this->admin === 1 AND $this->isAbogado()){
             return true;
         }
     }
