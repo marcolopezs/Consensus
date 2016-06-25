@@ -7,13 +7,11 @@
             {!! Form::model($ajustes, ['route' => 'expedientes.ajustes', 'method' => 'POST']) !!}
 
             <label>{!! Form::checkbox('ch-expediente', '1', null, ['class' => 'col-hide', 'id' => 'col-expediente']) !!} Expediente </label>
-            @cannot('cliente')
-            <label>{!! Form::checkbox('ch-cliente', '1', null, ['class' => 'col-hide', 'id' => 'col-cliente']) !!} Cliente </label>
-            @endcan
+            @cannot('cliente')<label>{!! Form::checkbox('ch-cliente', '1', null, ['class' => 'col-hide', 'id' => 'col-cliente']) !!} Cliente </label>@endcan
             <label>{!! Form::checkbox('ch-moneda', '1', null, ['class' => 'col-hide', 'id' => 'col-moneda']) !!} Moneda </label>
             <label>{!! Form::checkbox('ch-valor', '1', null, ['class' => 'col-hide', 'id' => 'col-valor']) !!} Valor </label>
             <label>{!! Form::checkbox('ch-tarifa', '1', null, ['class' => 'col-hide', 'id' => 'col-tarifa']) !!} Tarifa </label>
-            <label>{!! Form::checkbox('ch-abogado', '1', null, ['class' => 'col-hide', 'id' => 'col-abogado']) !!} Abogado </label>
+            @cannot('abogado')<label>{!! Form::checkbox('ch-abogado', '1', null, ['class' => 'col-hide', 'id' => 'col-abogado']) !!} Abogado </label>@endcan
             <label>{!! Form::checkbox('ch-asistente', '1', null, ['class' => 'col-hide', 'id' => 'col-asistente']) !!} Asistente </label>
             <label>{!! Form::checkbox('ch-servicio', '1', null, ['class' => 'col-hide', 'id' => 'col-servicio']) !!} Servicio </label>
             <label>{!! Form::checkbox('ch-fecha-inicio', '1', null, ['class' => 'col-hide', 'id' => 'col-fecha-inicio']) !!} Fecha Inicio </label>
