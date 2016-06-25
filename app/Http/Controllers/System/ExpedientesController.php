@@ -42,13 +42,15 @@ class ExpedientesController extends Controller {
      */
     public function index(Request $request)
     {
-        if(Gate::allows('cliente')){
-            $rows = $this->expedienteRepo->filterPaginateCliente($request);
-            $ajustes = $this->ajusteRepo->findModelUserReturnContenido(Expediente::class);
-        }else{
+        if(Gate::allows('admin')){
             $rows = $this->expedienteRepo->filterPaginate($request);
-            $ajustes = $this->ajusteRepo->findModelUserReturnContenido(Expediente::class);
+        }elseif(Gate::allows('abogado')){
+            $rows = $this->expedienteRepo->filterPaginateAbogado($request);
+        }elseif(Gate::allows('cliente')){
+            $rows = $this->expedienteRepo->filterPaginateCliente($request);
         }
+
+        $ajustes = $this->ajusteRepo->findModelUserReturnContenido(Expediente::class);
 
         return view('system.expediente.list', compact('rows','ajustes'));
     }
