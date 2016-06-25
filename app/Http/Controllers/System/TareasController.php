@@ -1,15 +1,14 @@
 <?php namespace Consensus\Http\Controllers\System;
 
-use Auth;
-use Consensus\Entities\Tarea;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Routing\Redirector;
 use Consensus\Http\Controllers\Controller;
 
+use Consensus\Entities\Tarea;
 use Consensus\Repositories\AbogadoRepo;
 use Consensus\Repositories\ExpedienteRepo;
 use Consensus\Repositories\TareaRepo;
+use Consensus\Repositories\TareaConceptoRepo;
 
 class TareasController extends Controller {
 
@@ -24,20 +23,24 @@ class TareasController extends Controller {
     protected $abogadoRepo;
     protected $expedienteRepo;
     protected $tareaRepo;
+    protected $tareaConceptoRepo;
 
     /**
      * TareasController constructor.
      * @param AbogadoRepo $abogadoRepo
      * @param ExpedienteRepo $expedienteRepo
      * @param TareaRepo $tareaRepo
+     * @param TareaConceptoRepo $tareaConceptoRepo
      */
     public function __construct(AbogadoRepo $abogadoRepo,
                                 ExpedienteRepo $expedienteRepo,
-                                TareaRepo $tareaRepo)
+                                TareaRepo $tareaRepo,
+                                TareaConceptoRepo $tareaConceptoRepo)
     {
         $this->abogadoRepo = $abogadoRepo;
         $this->expedienteRepo = $expedienteRepo;
         $this->tareaRepo = $tareaRepo;
+        $this->tareaConceptoRepo = $tareaConceptoRepo;
     }
 
     /**
@@ -64,9 +67,10 @@ class TareasController extends Controller {
     public function create($expedientes)
     {
         $row = $this->expedienteRepo->findOrFail($expedientes);
+        $concepto = $this->tareaConceptoRepo->where('estado',1)->orderBy('titulo', 'asc')->lists('titulo', 'id')->toArray();
         $abogados = $this->abogadoRepo->orderBy('nombre', 'asc')->lists('nombre', 'id')->toArray();
 
-        return view('system.expediente.tareas.create', compact('row','abogados'));
+        return view('system.expediente.tareas.create', compact('row','concepto','abogados'));
     }
 
     /**
@@ -83,10 +87,13 @@ class TareasController extends Controller {
 
         //VARIABLES
         $asignado = $request->input('asignado');
+        $concepto = $request->input('tarea');
 
         //GUARDAR DATOS
         $row = new Tarea($request->all());
         $row->expediente_id = $expedientes;
+        $row->tarea_concepto_id = $concepto;
+        $row->titular_id = auth()->user()->id;
         $row->abogado_id = $asignado;
         $save = $this->tareaRepo->create($row, $request->all());
 
@@ -98,7 +105,7 @@ class TareasController extends Controller {
         {
             return response()->json([
                 'id' => $save->id,
-                'tarea' => $save->tarea,
+                'titulo_tarea' => $save->titulo_tarea,
                 'fecha_solicitada' => $save->fecha_solicitada,
                 'fecha_vencimiento' => $save->fecha_vencimiento,
                 'asignado' => $save->asignado,
@@ -119,17 +126,19 @@ class TareasController extends Controller {
     {
         $row = $this->expedienteRepo->findOrFail($expedientes);
         $prin = $this->tareaRepo->findOrFail($id);
+        $concepto = $this->tareaConceptoRepo->where('estado',1)->orderBy('titulo', 'asc')->lists('titulo', 'id')->toArray();
         $abogados = $this->abogadoRepo->orderBy('nombre', 'asc')->lists('nombre', 'id')->toArray();
 
-        return view('system.expediente.tareas.edit', compact('row','prin','abogados'));
+        return view('system.expediente.tareas.edit', compact('row','prin','concepto','abogados'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request $request
+     * @param $expedientes
+     * @param  int $id
+     * @return Response
      */
     public function update(Request $request, $expedientes, $id)
     {
@@ -141,8 +150,10 @@ class TareasController extends Controller {
 
         //VARIABLES
         $asignado = $request->input('asignado');
+        $concepto = $request->input('tarea');
 
         //GUARDAR DATOS
+        $row->tarea_concepto_id = $concepto;
         $row->abogado_id = $asignado;
         $save = $this->tareaRepo->update($row, $request->all());
 
@@ -154,7 +165,7 @@ class TareasController extends Controller {
         {
             return response()->json([
                 'id' => $save->id,
-                'tarea' => $save->tarea,
+                'titulo_tarea' => $save->titulo_tarea,
                 'fecha_solicitada' => $row->fecha_solicitada,
                 'fecha_vencimiento' => $row->fecha_vencimiento,
                 'asignado' => $save->asignado,
