@@ -355,13 +355,25 @@ class CreateInitialTables extends Migration
 
             $table->integer('expediente_id')->unsigned();
 
-            $table->string('tarea');
+            $table->integer('tarea_concepto_id');
             $table->text('descripcion');
 
             $table->date('fecha_solicitada');
             $table->date('fecha_vencimiento');
 
+            $table->integer('titular_id')->unsigned();
             $table->integer('abogado_id')->unsigned();
+            $table->boolean('estado');
+
+            $table->nullableTimestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('tarea_conceptos', function(Blueprint $table)
+        {
+            $table->increments('id');
+
+            $table->string('titulo')->nullable();
             $table->boolean('estado');
 
             $table->nullableTimestamps();
@@ -600,6 +612,8 @@ class CreateInitialTables extends Migration
         Schema::drop('expediente_documentos');
 
         Schema::drop('tareas');
+        Schema::drop('tarea_conceptos');
+
         Schema::drop('flujo_caja');
 
         Schema::drop('cliente_documentos');
