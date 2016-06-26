@@ -40,9 +40,9 @@
                                 <th class="col-expediente" scope="col" style="width: 140px !important;"> Expediente </th>
                                 <th class="col-tarea" scope="col"> Tarea </th>
                                 <th class="col-descripcion" scope="col"> Descripción </th>
-                                <th class="col-solicitada" scope="col"> Fecha Solicitada </th>
-                                <th class="col-vencimiento" scope="col"> Fecha Vencimiento </th>
-                                <th class="col-estado" scope="col"> Estado </th>
+                                <th class="col-solicitada text-center" scope="col"> Fecha Solicitada </th>
+                                <th class="col-vencimiento text-center" scope="col"> Fecha Vencimiento </th>
+                                <th class="col-estado text-center" scope="col"> Estado </th>
                                 <th class="col-estado" scope="col"></th>
                             </tr>
                         </thead>
@@ -51,6 +51,7 @@
                         @foreach($rows as $item)
                             @php
                                 $row_id = $item->id;
+                                $row_expediente_id = $item->expedientes->id;
                                 $row_expediente = $item->expedientes->expediente;
                                 $row_tarea = $item->titulo_tarea;
                                 $row_descripcion = $item->descripcion;
@@ -64,14 +65,15 @@
                                 <td class="col-descripcion">{{ $row_descripcion }}</td>
                                 <td class="col-solicitada text-center">{{ $row_solicitada }}</td>
                                 <td class="col-vencimiento text-center">{{ $row_vencimiento }}</td>
-                                <td class="col-estado">{{ $row_estado }}</td>
+                                <td class="col-estado">{{ $row_estado ? 'Terminado' : 'Pendiente' }}</td>
                                 <td class="text-center">
                                     <div class="btn-group">
                                         <button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Movimientos
                                             <i class="fa fa-angle-down"></i>
                                         </button>
                                         <ul class="dropdown-menu pull-right" role="menu">
-                                            <li><a href="@{{ route('expedientes.show', $row_id) }}" data-target="#ajax" data-toggle="modal">Ver registro</a></li>
+                                            <li><a href="{{ route('expedientes.show', $row_expediente_id) }}" data-target="#ajax" data-toggle="modal">Ver expediente</a></li>
+                                            <li><a href="@{{ route('expedientes.show', $row_id) }}" data-target="#ajax" data-toggle="modal">Agregar acciones</a></li>
                                         </ul>
                                     </div>
                                 </td>
