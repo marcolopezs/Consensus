@@ -32,6 +32,11 @@ class Tarea extends BaseEntity {
         return $this->belongsTo(TareaConcepto::class, 'tarea_concepto_id');
     }
 
+    public function acciones()
+    {
+        return $this->hasMany(TareaAccion::class);
+    }
+
     public function setFechaSolicitadaAttribute($value)
     {
         $this->attributes['fecha_solicitada'] = formatoFecha($value);
