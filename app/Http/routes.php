@@ -18,7 +18,7 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
 
     //TAREAS ASIGNADAS A ABOGADO
     Route::get('tareas-asignadas', ['as' => 'tareas.asignadas', 'uses' => 'TareasAsignadasController@tareas']);
-    Route::resource('tareas-acciones', 'TareasAsignadasController');
+    Route::resource('tareas.acciones', 'TareasAsignadasController');
 
     //DOCUMENTOS
     Route::get('documentos/{id}/download', ['as' => 'documentos.download', 'uses' => 'DocumentosController@download']);
