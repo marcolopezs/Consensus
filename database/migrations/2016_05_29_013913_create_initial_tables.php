@@ -369,6 +369,21 @@ class CreateInitialTables extends Migration
             $table->softDeletes();
         });
 
+        Schema::create('tarea_acciones', function(Blueprint $table)
+        {
+            $table->increments('id');
+
+            $table->integer('tarea_id')->unsigned();
+            $table->date('fecha');
+            $table->time('desde');
+            $table->time('hasta');
+            $table->time('horas');
+            $table->text('descripcion');
+
+            $table->nullableTimestamps();
+            $table->softDeletes();
+        });
+
         Schema::create('tarea_conceptos', function(Blueprint $table)
         {
             $table->increments('id');
@@ -612,6 +627,7 @@ class CreateInitialTables extends Migration
         Schema::drop('expediente_documentos');
 
         Schema::drop('tareas');
+        Schema::drop('tarea_acciones');
         Schema::drop('tarea_conceptos');
 
         Schema::drop('flujo_caja');
