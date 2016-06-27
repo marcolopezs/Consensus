@@ -14,9 +14,9 @@ class TareaAccion extends BaseEntity {
 
     protected $table = 'tarea_acciones';
 
-    public function getFechaAccionAttribute($value)
+    public function getFechaAccionAttribute()
     {
-        return soloFecha($value);
+        return soloFecha($this->fecha);
     }
 
     public function getDesdeAttribute($value)
