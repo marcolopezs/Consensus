@@ -59,7 +59,7 @@
                                 $row_vencimiento = $item->fecha_vencimiento;
                                 $row_estado = $item->estado;
                             @endphp
-                            <tr id="exp-{{ $row_id }}" data-id="{{ $row_id }}" data-title="{{ $row_expediente }}">
+                            <tr id="tarea-{{ $row_id }}" data-id="{{ $row_id }}" data-title="{{ $row_expediente }}">
                                 <td class="col-expediente">{{ $row_expediente }}</td>
                                 <td class="col-tarea">{{ $row_tarea }}</td>
                                 <td class="col-descripcion">{{ $row_descripcion }}</td>
@@ -73,7 +73,7 @@
                                         </button>
                                         <ul class="dropdown-menu pull-right" role="menu">
                                             <li><a href="{{ route('expedientes.show', $row_expediente_id) }}" data-target="#ajax" data-toggle="modal">Ver expediente</a></li>
-                                            <li><a href="@{{ route('expedientes.show', $row_id) }}" data-target="#ajax" data-toggle="modal">Agregar acciones</a></li>
+                                            <li><a href="#" class="tarea-acciones" data-id="{{ $row_id }}" data-list="{{ route('tareas.acciones.index', $row_id) }}" data-create="{{ route('tareas.acciones.create', $row_id) }}">Acciones</a></li>
                                         </ul>
                                     </div>
                                 </td>
@@ -144,6 +144,7 @@
     {!! HTML::script('assets/pages/scripts/components-date-time-pickers.js') !!}
 
     {{-- FUNCIONES --}}
+    {!! HTML::script('js/js-tarea.js') !!}
     <script>
         $(document).on("ready", function () {
             $("#progressbar").hide();
