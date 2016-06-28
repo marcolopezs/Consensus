@@ -7,7 +7,6 @@ use Consensus\Http\Controllers\Controller;
 
 use Consensus\Entities\TareaAccion;
 
-use Consensus\Repositories\MoneyRepo;
 use Consensus\Repositories\TareaRepo;
 use Consensus\Repositories\TareaAccionRepo;
 
@@ -20,20 +19,16 @@ class TareasAsignadasController extends Controller {
         'descripcion' => 'required'
     ];
 
-    protected $moneyRepo;
     protected $tareaRepo;
     protected $tareaAccionRepo;
 
     /**
-     * @param MoneyRepo $moneyRepo
      * @param TareaRepo $tareaRepo
      * @param TareaAccionRepo $tareaAccionRepo
      */
-    public function __construct(MoneyRepo $moneyRepo,
-                                TareaRepo $tareaRepo,
+    public function __construct(TareaRepo $tareaRepo,
                                 TareaAccionRepo $tareaAccionRepo)
     {
-        $this->moneyRepo = $moneyRepo;
         $this->tareaRepo = $tareaRepo;
         $this->tareaAccionRepo = $tareaAccionRepo;
     }
@@ -70,9 +65,8 @@ class TareasAsignadasController extends Controller {
     public function create($tarea)
     {
         $row = $this->tareaRepo->findOrFail($tarea);
-        $money = $this->moneyRepo->estadoListArray();
 
-        return view('system.tareas-asignadas.acciones.create', compact('row','money'));
+        return view('system.tareas-asignadas.acciones.create', compact('row'));
     }
 
     /**

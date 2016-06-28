@@ -70,41 +70,6 @@
                             </div>
                         </div>
 
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <a id="gasto_boton" class="btn blue-dark" href="#"><i class="fa fa-money" aria-hidden="true"></i> Gastos</a>
-                            </div>
-                        </div>
-
-                        <div id="gastos_inputs" style="display: none;">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <a id="gasto_agregar" class="btn green-soft" href="#">Agregar nuevo gasto</a>
-                                </div>
-
-                                <div class="added" id="gasto">
-                                    <div class="form-group">
-                                        <div class="col-md-5">
-                                            <div class="form-group">
-                                                {!! Form::text('gasto_referencia[]', null, ['class' => 'form-control', 'placeholder' => 'Referencia']) !!}
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                {!! Form::select('gasto_moneda[]', [''=>''] + $money, null, ['class' => 'form-control select2', 'placeholder' => 'Moneda']) !!}
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                {!! Form::text('gasto_monto[]', null, ['class' => 'form-control', 'placeholder' => 'Monto']) !!}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
                     </div>
 
                     @include('partials.progressbar')
@@ -139,68 +104,7 @@
 
     $('.progress').hide();
 
-    $("#gasto_boton").on("click", function() {
-        $("#gastos_inputs").slideToggle();
-    });
-
-    var MaxInputs = 50; //Número Maximo de Campos
-    var contenedor = $("#gastos_inputs div.col-md-12"); //ID del contenedor
-
-    //var x = número de campos existentes en el contenedor
-    var x = $("#gastos_inputs div.col-md-12").length + 1;
-    var FieldCount = x-1; //para el seguimiento de los campos
-
-    $("#gasto_agregar").on("click", function(e) {
-        var html = '<div class="added" id="gasto-'+x+'">'+
-                        '<div class="form-group">' +
-                            '<div class="col-md-5">' +
-                                '<div class="form-group">' +
-                                    '{!! Form::text('gasto_referencia[]', null, ['class' => 'form-control', 'placeholder' => 'Referencia']) !!}' +
-                                '</div>' +
-                            '</div>' +
-                            '<div class="col-md-3">' +
-                                '<div class="form-group">' +
-                                    '{!! Form::select('gasto_moneda[]', [''=>''] + $money, null,['class' => 'form-control select2', 'placeholder' => 'Moneda']) !!}' +
-                                '</div>' +
-                            '</div>' +
-                            '<div class="col-md-3">' +
-                                '<div class="form-group">' +
-                                    '{!! Form::text('gasto_monto[]', null, ['class' => 'form-control', 'placeholder' => 'Monto']) !!}' +
-                                '</div>' +
-                            '</div>'+
-                            '<div class="col-md-1">' +
-                                '<div class="form-group">' +
-                                    '<a href="#" class="eliminar" data-id="'+x+'"><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></a>' +
-                                '</div>' +
-                            '</div>' +
-                        '</div>' +
-                    '</div>';
-
-        if(x <= MaxInputs) //max input box allowed
-        {
-            FieldCount++;
-            //agregar campo
-            $(contenedor).append(html);
-
-            $('.select2').select2({
-                placeholder: "Seleccionar Moneda"
-            });
-
-            x++; //text box increment
-        }
-        return false;
-    });
-
-    $("body").on("click",".eliminar", function(e){ //click en eliminar campo
-        var id = $(this).data("id");
-        $("#gasto-"+id).remove(); //eliminar el campo
-        console.log($("#gasto-"+id));
-        if( x > 1 ) { x--; }
-        return false;
-    });
-
     $("#formCreateSubmit").on("click", function(e){
-
         e.preventDefault();
 
         var form = $("#formCreate");
@@ -212,7 +116,7 @@
             type: 'POST',
             data: data,
             success: function (result) {
-                successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>El registro se agregó satisfactoriamente.</div>';
+                var successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>El registro se agregó satisfactoriamente.</div>';
                 $(".form-content").html(successHtml);
                 $(".select2").val(null).trigger('change');
                 form[0].reset();
@@ -233,7 +137,7 @@
             error: function (result){
                 if(result.status === 422){
                     var errors = result.responseJSON;
-                    errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';
+                    var errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';
                     $.each( errors, function( key, value ) {
                         errorsHtml += '<li>' + value[0] + '</li>';
                     });

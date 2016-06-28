@@ -27,6 +27,7 @@ $(".tarea-acciones").on("click", function(e) {
                 '<td>Hasta</td>' +
                 '<td>Horas</td>' +
                 '<td>Descripcion</td>' +
+                '<td>Movimientos</td>' +
                 '</tr>' +
                 '</thead>' +
                 '<tbody>' +
@@ -45,6 +46,7 @@ $(".tarea-acciones").on("click", function(e) {
                 tr.append('<td>'+ obj.hasta +'</td>');
                 tr.append('<td>'+ obj.horas +'</td>');
                 tr.append('<td>'+ obj.descripcion +'</td>');
+                tr.append('<td><a href="'+ obj.url_lista_gastos +'" data-target="#ajax" data-toggle="modal">Ver Gastos</a></td>');
                 $("#accion-lista-"+id+" tbody").prepend(tr);
             });
 

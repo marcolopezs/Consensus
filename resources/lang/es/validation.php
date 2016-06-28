@@ -199,7 +199,8 @@ return [
         'especial'              => 'Situación Especial',
         'exito'                 => 'Éxito',
         'referencia'            => 'Referencia',
-        'monto'                 => 'Monto'
+        'monto'                 => 'Monto',
+        'money_id'              => 'Moneda'
     ],
 
 ];
