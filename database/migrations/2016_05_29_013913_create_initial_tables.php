@@ -117,6 +117,30 @@ class CreateInitialTables extends Migration
         });
 
         /*==============================
+        =         FLUJO DE CAJA        =
+        ==============================*/
+
+        Schema::create('flujo_caja', function(Blueprint $table)
+        {
+            $table->increments('id');
+
+            $table->integer('flujo_cajatable_id')->unsigned();
+            $table->string('flujo_cajatable_type');
+
+            $table->integer('user_id')->nullable()->default(NULL);
+
+            $table->date('fecha');
+            $table->string('referencia');
+            $table->integer('money_id');
+            $table->double('monto', 15, 2);
+            $table->enum('tipo', ['ingreso','egreso']);
+            $table->boolean('estado');
+
+            $table->nullableTimestamps();
+            $table->softDeletes();
+        });
+
+        /*==============================
         =            CLIENTES          =
         ==============================*/
 
@@ -236,8 +260,6 @@ class CreateInitialTables extends Migration
             $table->nullableTimestamps();
             $table->softDeletes();
         });
-
-
 
         /*==============================
         =          EXPEDIENTE          =
@@ -395,25 +417,7 @@ class CreateInitialTables extends Migration
             $table->softDeletes();
         });
 
-        /*==============================
-        =         FLUJO DE CAJA        =
-        ==============================*/
 
-        Schema::create('flujo_caja', function(Blueprint $table)
-        {
-            $table->increments('id');
-
-            $table->integer('expediente_id')->unsigned();
-
-            $table->date('fecha');
-            $table->string('referencia');
-            $table->integer('money_id');
-            $table->double('monto', 15, 2);
-            $table->boolean('estado');
-
-            $table->nullableTimestamps();
-            $table->softDeletes();
-        });
 
         /*==============================
         =                              =

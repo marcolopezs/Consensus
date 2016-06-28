@@ -8,14 +8,19 @@ class FlujoCaja extends BaseEntity {
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['expediente_id','fecha','referencia','money_id','monto'];
+    protected $fillable = ['expediente_id','fecha','referencia','money_id','monto','tipo'];
     protected $appends = ['fecha_caja','moneda','url_editar'];
 
     protected $table = 'flujo_caja';
 
-    public function expedientes()
+    public function user()
     {
-        return $this->belongsTo(Expediente::class);
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function flujo_cajatable()
+    {
+        return $this->morphTo();
     }
 
     public function money()
