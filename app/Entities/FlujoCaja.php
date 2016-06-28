@@ -9,7 +9,7 @@ class FlujoCaja extends BaseEntity {
     protected $dates = ['deleted_at'];
 
     protected $fillable = ['expediente_id','fecha','referencia','money_id','monto','tipo'];
-    protected $appends = ['fecha_caja','moneda','url_editar'];
+    protected $appends = ['fecha_caja','moneda','url_editar','url_editar_gasto'];
 
     protected $table = 'flujo_caja';
 
@@ -41,6 +41,11 @@ class FlujoCaja extends BaseEntity {
     public function getUrlEditarAttribute()
     {
         return route('expedientes.flujo-caja.edit', [$this->expediente_id, $this->id]);
+    }
+
+    public function getUrlEditarGastoAttribute()
+    {
+        return route('accion.gastos.edit', [$this->flujo_cajatable_id, $this->id]);
     }
 
 }
