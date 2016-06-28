@@ -380,7 +380,7 @@ abstract class BaseRepo {
             'user_id' => auth()->user()->id,
             'fecha' => $entity->fecha,
             'referencia' => $request->input('referencia'),
-            'money_id' => $request->input('money_id'),
+            'money_id' => $request->input('moneda'),
             'monto' => $request->input('monto'),
             'tipo' => $tipo
         ]);
