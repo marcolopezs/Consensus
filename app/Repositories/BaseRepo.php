@@ -343,7 +343,7 @@ abstract class BaseRepo {
         $contenido = json_encode($request->except('_method','_token'));
 
         $entity->histories()->create([
-            'user_id' => Auth::user()->id,
+            'user_id' => auth()->user()->id,
             'type' => $type,
             'opcion' => 'text',
             'descripcion' => $contenido
@@ -355,7 +355,7 @@ abstract class BaseRepo {
         $contenido = json_encode($archivo);
 
         $entity->histories()->create([
-            'user_id' => Auth::user()->id,
+            'user_id' => auth()->user()->id,
             'type' => $type,
             'opcion' => 'file',
             'descripcion' => $contenido
@@ -366,10 +366,23 @@ abstract class BaseRepo {
     public function saveDocumento($entity, Request $request, $type)
     {
         $entity->documentos()->create([
-            'user_id' => Auth::user()->id,
+            'user_id' => auth()->user()->id,
             'documento' => $request->input('documento'),
             'carpeta' => $request->input('carpeta'),
             'type' => $type,
+        ]);
+    }
+
+    //GUARDAR FLUJO DE CAJA
+    public function saveFlujoCaja($entity, Request $request, $tipo)
+    {
+        return $entity->flujo_cajas()->create([
+            'user_id' => auth()->user()->id,
+            'fecha' => $entity->fecha,
+            'referencia' => $request->input('referencia'),
+            'money_id' => $request->input('money_id'),
+            'monto' => $request->input('monto'),
+            'tipo' => $tipo
         ]);
     }
 
