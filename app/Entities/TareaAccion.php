@@ -10,7 +10,7 @@ class TareaAccion extends BaseEntity {
     protected $dates = ['deleted_at'];
 
     protected $fillable = ['tarea_id','fecha','desde','hasta','horas','descripcion'];
-    protected $appends = ['fecha_accion'];
+    protected $appends = ['url_lista_gastos','fecha_accion'];
 
     protected $table = 'tarea_acciones';
 
@@ -32,6 +32,11 @@ class TareaAccion extends BaseEntity {
     public function getHorasAttribute($value)
     {
         return formatoHoraHM($value);
+    }
+
+    public function getUrlListaGastosAttribute()
+    {
+        return route('accion.gastos.index', [$this->id]);
     }
 
 }
