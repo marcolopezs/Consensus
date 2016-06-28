@@ -1,32 +1,37 @@
 <?php namespace Consensus\Http\Controllers\System;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Routing\Redirector;
 use Consensus\Http\Controllers\Controller;
 
-use Consensus\Entities\TareaAccion;
-
+use Consensus\Repositories\FlujoCajaRepo;
+use Consensus\Repositories\MoneyRepo;
 use Consensus\Repositories\TareaAccionRepo;
 
 class TareasAccionGastosController extends Controller {
 
     protected $rulesGastos = [
-        'gasto_referencia' => 'required',
-        'gasto_moneda' => 'required|exists:money,id',
-        'gasto_monto' => 'required'
+        'referencia' => 'required',
+        'moneda' => 'required|exists:money,id',
+        'monto' => 'required'
     ];
 
+    protected $flujoCajaRepo;
     protected $tareaAccionRepo;
+    protected $moneyRepo;
 
     /**
+     * @param FlujoCajaRepo $flujoCajaRepo
+     * @param MoneyRepo $moneyRepo
      * @param TareaAccionRepo $tareaAccionRepo
      */
-    public function __construct(TareaAccionRepo $tareaAccionRepo)
+    public function __construct(FlujoCajaRepo $flujoCajaRepo,
+                                MoneyRepo $moneyRepo,
+                                TareaAccionRepo $tareaAccionRepo)
     {
+        $this->flujoCajaRepo = $flujoCajaRepo;
+        $this->moneyRepo = $moneyRepo;
         $this->tareaAccionRepo = $tareaAccionRepo;
     }
-
 
     /**
      * @param $accion
@@ -35,71 +40,98 @@ class TareasAccionGastosController extends Controller {
     public function index($accion)
     {
         $rows = $this->tareaAccionRepo->findOrFail($accion);
+        $money = $this->moneyRepo->estadoListArray();
 
-        return view('system.tareas-asignadas.acciones.gastos.list', compact('rows'));
+        return view('system.tareas-asignadas.acciones.gastos.list', compact('rows','money'));
     }
 
     /**
-     * @param $tarea
+     * @param $accion
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @internal param $tarea
      */
-    public function create($tarea)
+    public function create($accion)
     {
         return view('system.tareas-asignadas.acciones.create', compact('row','money'));
     }
 
     /**
      * @param Request $request
-     * @param $tarea
+     * @param $accion
+     * @return array
      */
-    public function store(Request $request, $tarea)
+    public function store(Request $request, $accion)
     {
-        $this->validate($request, $this->rules);
+        $this->validate($request, $this->rulesGastos);
 
-        //VARAIBLES
-        $fecha = formatoFecha($request->input('fecha'));
-        $hora_desde = $request->input('desde');
-        $hora_hasta = $request->input('hasta');
-
-        $horas = restarHoras($fecha, $hora_desde, $hora_hasta);
-
-        $row = new TareaAccion($request->all());
-        $row->tarea_id = $tarea;
-        $row->fecha = $fecha;
-        $row->horas = $horas;
-        $save = $this->tareaAccionRepo->create($row, $request->all());
+        $row = $this->tareaAccionRepo->findOrFail($accion);
+        $save = $this->tareaAccionRepo->saveFlujoCaja($row, $request, 'egreso');
 
         //GUARDAR HISTORIAL
         $this->tareaAccionRepo->saveHistory($row, $request, 'create');
 
-        //AJAX
-        if($request->ajax())
-        {
-            return response()->json([
-                'id' => $save->id,
-                'fecha_accion' => $save->fecha_accion,
-                'desde' => $save->desde,
-                'hasta' => $save->hasta,
-                'horas' => $save->horas,
-                'descripcion' => $save->descripcion,
-                'url_editar' => $save->id
-            ]);
-        }
+        //GUARDAR DOCUMENTO
+        $this->tareaAccionRepo->saveDocumento($row, $request, 'create');
+
+        //RETORNAR ARRAY
+        return [
+            'id' => $save->id,
+            'referencia' => $save->referencia,
+            'moneda' => $save->money->titulo,
+            'monto' => $save->monto
+        ];
     }
 
-    public function show($id)
+    /**
+     * @param $accion
+     * @param $id
+     * @return array
+     */
+    public function edit($accion, $id)
     {
+        //BUSCAR ID
+        $row = $this->flujoCajaRepo->findOrFail($id);
 
+        //RETORNAR ARRAY
+        return [
+            'id' => $row->id,
+            'referencia' => $row->referencia,
+            'money_id' => $row->money_id,
+            'monto' => $row->monto
+        ];
     }
 
-    public function edit($id)
+    /**
+     * @param $accion
+     * @param $id
+     * @param Request $request
+     * @return array
+     */
+    public function update($accion, $id, Request $request)
     {
+        //VALIDACION
+        $this->validate($request, $this->rulesGastos);
 
-    }
+        //BUSCAR ID
+        $row = $this->flujoCajaRepo->findOrFail($id);
 
-    public function update($id)
-    {
+        //GUARDAR
+        $row->referencia = $request->input('referencia');
+        $row->money_id = $request->input('moneda');
+        $row->monto = $request->input('monto');
+        $save = $this->flujoCajaRepo->update($row, $request->all());
 
+        //GUARDAR HISTORIAL
+        $this->tareaAccionRepo->saveHistory($row, $request, 'update');
+
+        //RETORNAR ARRAY
+        return [
+            'id' => $save->id,
+            'referencia' => $save->referencia,
+            'moneda' => $save->money->titulo,
+            'monto' => $save->monto,
+            'url_editar_gasto' => $save->url_editar_gasto
+        ];
     }
 
 }
