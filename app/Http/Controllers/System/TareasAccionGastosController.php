@@ -78,7 +78,9 @@ class TareasAccionGastosController extends Controller {
             'id' => $save->id,
             'referencia' => $save->referencia,
             'moneda' => $save->money->titulo,
-            'monto' => $save->monto
+            'monto' => $save->monto,
+            'url_editar_gasto' => $save->url_editar_gasto,
+            'url_update_gasto' => $save->url_update_gasto
         ];
     }
 
@@ -97,7 +99,9 @@ class TareasAccionGastosController extends Controller {
             'id' => $row->id,
             'referencia' => $row->referencia,
             'money_id' => $row->money_id,
-            'monto' => $row->monto
+            'monto' => $row->monto,
+            'url_editar_gasto' => $row->url_editar_gasto,
+            'url_update_gasto' => $row->url_update_gasto
         ];
     }
 
@@ -130,7 +134,8 @@ class TareasAccionGastosController extends Controller {
             'referencia' => $save->referencia,
             'moneda' => $save->money->titulo,
             'monto' => $save->monto,
-            'url_editar_gasto' => $save->url_editar_gasto
+            'url_editar_gasto' => $save->url_editar_gasto,
+            'url_update_gasto' => $save->url_update_gasto
         ];
     }
 

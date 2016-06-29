@@ -59,67 +59,9 @@
                     <!-- END EXAMPLE TABLE PORTLET-->
                 </div>
 
-                <div id="form-agregar">
+                @include('system.tareas-asignadas.acciones.gastos.form-agregar')
 
-                    <div class="col-md-12 text-left">
-                        <h3>Agregar nuevo gasto</h3>
-                    </div>
-
-                    {!! Form::open(['route' => ['accion.gastos.store', $rows->id], 'method' => 'POST', 'id' => 'formCreate', 'class' => 'horizontal-form', 'autocomplete' => 'off']) !!}
-
-                        <div class="form-body">
-
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    {!! Form::label('referencia', 'Referencia', ['class' => 'control-label']) !!}
-                                    {!! Form::text('referencia', null, ['class' => 'form-control']) !!}
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-
-                                <div class="row">
-
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            {!! Form::label('moneda', 'Moneda', ['class' => 'control-label']) !!}
-                                            {!! Form::select('moneda', [''=>''] + $money, null, ['class' => 'form-control select2']) !!}
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            {!! Form::label('monto', 'Monto', ['class' => 'control-label']) !!}
-                                            {!! Form::text('monto', null, ['class' => 'form-control']) !!}
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-8">
-                                <div class="form-group">
-                                    {!! Form::label('file', 'Comprobante', ['class' => 'control-label']) !!}
-                                    <div class="dropzone"></div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    {!! Form::close() !!}
-
-                </div>
-
-                <div id="form-editar" style="display:none;">
-
-                    <div class="col-md-12 text-left">
-                        <h3>Editar gasto</h3>
-                    </div>
-
-                    <div id="formulario-contenido"></div>
-
-                </div>
+                @include('system.tareas-asignadas.acciones.gastos.form-editar')
 
             </div>
 
@@ -139,9 +81,14 @@
 
 {{-- GASTOS DE ACCION --}}
 <script>
+    //INICIALIZANDO EDITAR GASTO
+    editarGasto();
+
+    //VARIABLES DE DOCUMENTO
     var archivo = '';
     var carpeta = '';
 
+    //INICIALIZANDO DROPZONE
     var myDropzone = new Dropzone(".dropzone", {
         dictDefaultMessage: 'Da clic para seleccionar el comprobante',
         dictMaxFilesExceeded: 'No se puede cargar más archivos',
@@ -155,6 +102,7 @@
         }
     });
 
+    //ACCION AL GUARDAR
     $("#formCreateSubmit").on("click", function(e){
         e.preventDefault();
 
@@ -176,12 +124,18 @@
                 myDropzone.removeAllFiles();
 
                 var html = '<tr id="gasto-'+ result.id +'">' +
-                        '<td>'+ result.referencia +'</td>' +
-                        '<td>'+ result.moneda +'</td>' +
-                        '<td>'+ result.monto +'</td>' +
-                        '</tr>';
+                                '<td>'+ result.referencia +'</td>' +
+                                '<td>'+ result.moneda +'</td>' +
+                                '<td>'+ result.monto +'</td>' +
+                                '<td>' +
+                                    '<a href="#" class="editar-gasto" ' +
+                                        'data-url="'+ result.url_editar_gasto +'" ' +
+                                        'data-update="'+ result.url_update_gasto +'">Editar</a>' +
+                                '</td>' +
+                            '</tr>';
 
                 $("#gasto-lista tbody").prepend(html);
+                editarGasto();
             },
             beforeSend: function () { $('.progress').show(); },
             complete: function () { $('.progress').hide(); },
@@ -205,56 +159,62 @@
 
     });
 
-    $(".editar-gasto").on("click", function(e){
-        e.preventDefault();
+    //FUNCION PARA EDITAR GASTO
+    var editarGasto = function () {
 
-        var url = $(this).data('url');
-        var update = $(this).data('update');
+        $(".editar-gasto").on("click", function(e){
+            e.preventDefault();
 
-        $.ajax({
-            url: url,
-            type: 'GET',
-            beforeSend: function () { $('.progress').show(); },
-            complete: function () {
-                $('.progress').hide();
-                $("#form-agregar").fadeOut();
-                $("#formCreateSubmit").fadeOut();
-                $("#form-editar").fadeIn();
-                $("#formUpdateSubmit").fadeIn();
-            },
-            success: function(result){
-                var html = '<form method="POST" action='+ update +' id="formEdit" class="horizontal-form" autocomplete="off">' +
+            var url = $(this).data('url');
+            var update = $(this).data('update');
+
+            $.ajax({
+                url: url,
+                type: 'GET',
+                beforeSend: function () { $('.progress').show(); },
+                complete: function () {
+                    $('.progress').hide();
+                    $("#form-agregar").fadeOut();
+                    $("#formCreateSubmit").fadeOut();
+                    $("#form-editar").fadeIn();
+                    $("#formUpdateSubmit").fadeIn();
+                },
+                success: function(result){
+                    var html = '<form method="POST" action='+ update +' id="formEdit" class="horizontal-form" autocomplete="off">' +
                             '<input name="_method" type="hidden" value="PUT">' +
                             '<input name="_token" type="hidden" value="{{ csrf_token() }}">' +
-                        '<div class="form-body">' +
+                            '<div class="form-body">' +
                             '<div class="col-md-4">' +
-                                '<div class="form-group">' +
-                                '<label for="referencia" class="control-label">Referencia</label>' +
-                                '<input class="form-control" name="referencia" type="text" value="'+ result.referencia +'" id="referencia">' +
-                                '</div>' +
+                            '<div class="form-group">' +
+                            '<label for="referencia" class="control-label">Referencia</label>' +
+                            '<input class="form-control" name="referencia" type="text" value="'+ result.referencia +'" id="referencia">' +
+                            '</div>' +
                             '</div>' +
                             '<div class="col-md-4">' +
-                                '<div class="form-group">' +
-                                '{!! Form::label('moneda', 'Moneda', ['class' => 'control-label']) !!}' +
-                                '{!! Form::select('moneda', [''=>''] + $money, null, ['class' => 'form-control select2']) !!}' +
-                                '</div>' +
+                            '<div class="form-group">' +
+                            '{!! Form::label('moneda', 'Moneda', ['class' => 'control-label']) !!}' +
+                            '{!! Form::select('moneda', [''=>''] + $money, null, ['class' => 'form-control select2']) !!}' +
+                            '</div>' +
                             '</div>' +
                             '<div class="col-md-4">' +
-                                '<div class="form-group">' +
-                                '<label for="monto" class="control-label">Monto</label>' +
-                                '<input class="form-control" name="monto" type="text" value="'+ result.monto +'" id="monto">' +
-                                '</div>' +
+                            '<div class="form-group">' +
+                            '<label for="monto" class="control-label">Monto</label>' +
+                            '<input class="form-control" name="monto" type="text" value="'+ result.monto +'" id="monto">' +
                             '</div>' +
-                        '</div>' +
-                        '</form>';
+                            '</div>' +
+                            '</div>' +
+                            '</form>';
 
-                $("#formulario-contenido").append(html);
-                $("#formEdit #moneda").val(result.money_id);
-                $("#form-editar").fadeIn();
-            }
+                    $("#formulario-contenido").append(html);
+                    $("#formEdit #moneda").val(result.money_id);
+                    $("#form-editar").fadeIn();
+                }
+            });
         });
-    })
 
+    };
+
+    //ACCION AL ACTUALIZAR
     $("#formUpdateSubmit").on("click", function (e) {
         e.preventDefault();
 
@@ -269,16 +229,20 @@
             beforeSend: function () { $('.progress').show(); },
             complete: function () { $('.progress').hide(); },
             success: function(result) {
-                successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>El registro se actualizó satisfactoriamente.</div>';
+                var successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>El registro se actualizó satisfactoriamente.</div>';
                 $(".form-content").html(successHtml);
 
                 $("#gasto-"+ result.id).remove();
 
-                var html = '<tr id="tarea-select-'+ result.id +'">' +
+                var html = '<tr id="gasto-'+ result.id +'">' +
                         '<td>'+ result.referencia +'</td>' +
                         '<td>'+ result.moneda +'</td>' +
                         '<td>'+ result.monto +'</td>' +
-                        '<td><a href="#" class="editar-gasto" data-url="'+ result.url_editar_gasto +'">Editar</a></td>' +
+                        '<td>' +
+                            '<a href="#" class="editar-gasto" ' +
+                                'data-url="'+ result.url_editar_gasto +'" ' +
+                                'data-update="'+ result.url_update_gasto +'">Editar</a>' +
+                        '</td>' +
                         '</tr>';
 
                 $("#gasto-lista tbody").prepend(html);
@@ -292,7 +256,7 @@
                 console.log(result);
                 if(result.status === 422){
                     var errors = result.responseJSON;
-                    errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';
+                    var errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';
                     $.each( errors, function( key, value ) {
                         errorsHtml += '<li>' + value[0] + '</li>';
                     });
