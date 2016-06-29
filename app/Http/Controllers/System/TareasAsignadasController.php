@@ -72,6 +72,7 @@ class TareasAsignadasController extends Controller {
     /**
      * @param Request $request
      * @param $tarea
+     * @return array
      */
     public function store(Request $request, $tarea)
     {
@@ -94,18 +95,17 @@ class TareasAsignadasController extends Controller {
         $this->tareaAccionRepo->saveHistory($row, $request, 'create');
 
         //AJAX
-        if($request->ajax())
-        {
-            return response()->json([
-                'id' => $save->id,
-                'fecha_accion' => $save->fecha_accion,
-                'desde' => $save->desde,
-                'hasta' => $save->hasta,
-                'horas' => $save->horas,
-                'descripcion' => $save->descripcion,
-                'url_editar' => $save->id
-            ]);
-        }
+        return [
+            'id' => $save->id,
+            'fecha_accion' => $save->fecha_accion,
+            'desde' => $save->desde,
+            'hasta' => $save->hasta,
+            'horas' => $save->horas,
+            'descripcion' => $save->descripcion,
+            'url_editar' => $save->id,
+            'url_lista_gastos' => $save->url_lista_gastos
+        ];
+
     }
 
     public function show($id)
