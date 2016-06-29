@@ -127,6 +127,7 @@
                                 '<td>'+ result.hasta +'</td>' +
                                 '<td>'+ result.horas +'</td>' +
                                 '<td>'+ result.descripcion +'</td>' +
+                                '<td><a href="'+ result.url_lista_gastos +'" data-target="#ajax" data-toggle="modal">Ver Gastos</a></td>' +
                            '</tr>';
 
                 $("#accion-lista-{{ $row->id }} tbody").prepend(html);
