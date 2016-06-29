@@ -32,6 +32,10 @@
     {!! HTML::style('assets/layouts/layout3/css/custom.css') !!}
     <!-- END THEME LAYOUT STYLES -->
 
+    {{-- DropZone --}}
+    {!! HTML::style('https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/basic.min.css') !!}
+    {!! HTML::style('https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.css') !!}
+
     @yield('contenido_header')
 </head>
 
@@ -227,6 +231,10 @@
     {!! HTML::script('assets/global/plugins/uniform/jquery.uniform.min.js') !!}
     {!! HTML::script('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js') !!}
     <!-- END CORE PLUGINS -->
+
+    {{-- DropZone --}}
+    {!! HTML::script('https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.js') !!}
+    {!! HTML::script('https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone-amd-module.min.js') !!}
 
     <!-- BEGIN THEME GLOBAL SCRIPTS -->
     {!! HTML::script('assets/global/scripts/app.js') !!}

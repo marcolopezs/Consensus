@@ -1,7 +1,3 @@
-{{-- DROPZONE --}}
-{!! HTML::style('https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/basic.min.css') !!}
-{!! HTML::style('https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.css') !!}
-
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
     <h4 class="modal-title">Nuevo documento</h4>
@@ -66,10 +62,6 @@
     <a class="btn default" id="formCreateClose" data-dismiss="modal">Cerrar</a>
     <a id="formCreateSubmit" class="btn blue"><i class='fa fa-check'></i> Guardar</a>
 </div>
-
-{{-- DROPZONE --}}
-{!! HTML::script('https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.js') !!}
-{!! HTML::script('https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone-amd-module.min.js') !!}
 
 {{-- GUARDAR TAREA --}}
 <script>

@@ -1,7 +1,3 @@
-{{-- DROPZONE --}}
-{!! HTML::style('https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/basic.min.css') !!}
-{!! HTML::style('https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.css') !!}
-
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
     <h4 class="modal-title">Lista de gastos de Tarea</h4>
@@ -142,8 +138,6 @@
 {!! HTML::script('assets/global/plugins/select2/js/i18n/es.js') !!}
 
 {{-- GASTOS DE ACCION --}}
-{!! HTML::script('https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.js') !!}
-{!! HTML::script('https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone-amd-module.min.js') !!}
 <script>
     var archivo = '';
     var carpeta = '';
