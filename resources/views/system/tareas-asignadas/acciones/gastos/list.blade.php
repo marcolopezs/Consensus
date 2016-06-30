@@ -36,7 +36,7 @@
                                 </thead>
 
                                 <tbody>
-                                    @foreach($rows->flujo_cajas as $item)
+                                    @foreach($caja as $item)
                                         @php
                                             $row_id = $item->id;
                                             $row_referencia = $item->referencia;
@@ -82,7 +82,7 @@
 {{-- GASTOS DE ACCION --}}
 <script>
     //INICIALIZANDO EDITAR GASTO
-    editarGasto();
+    $.fn.editarGasto();
 
     //VARIABLES DE DOCUMENTO
     var archivo = '';
@@ -135,7 +135,7 @@
                             '</tr>';
 
                 $("#gasto-lista tbody").prepend(html);
-                editarGasto();
+                $.fn.editarGasto();
             },
             beforeSend: function () { $('.progress').show(); },
             complete: function () { $('.progress').hide(); },
@@ -160,7 +160,7 @@
     });
 
     //FUNCION PARA EDITAR GASTO
-    var editarGasto = function () {
+    $.fn.editarGasto = function () {
 
         $(".editar-gasto").on("click", function(e){
             e.preventDefault();
@@ -270,5 +270,6 @@
                 }
             }
         });
-    })
+    });
+
 </script>
