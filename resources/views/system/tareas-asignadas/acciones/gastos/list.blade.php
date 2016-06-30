@@ -82,7 +82,7 @@
 {{-- GASTOS DE ACCION --}}
 <script>
     //INICIALIZANDO EDITAR GASTO
-    $.fn.editarGasto();
+    editarGasto();
 
     //VARIABLES DE DOCUMENTO
     var archivo = '';
@@ -135,7 +135,7 @@
                             '</tr>';
 
                 $("#gasto-lista tbody").prepend(html);
-                $.fn.editarGasto();
+                editarGasto();
             },
             beforeSend: function () { $('.progress').show(); },
             complete: function () { $('.progress').hide(); },
@@ -160,7 +160,7 @@
     });
 
     //FUNCION PARA EDITAR GASTO
-    $.fn.editarGasto = function () {
+    function editarGasto() {
 
         $(".editar-gasto").on("click", function(e){
             e.preventDefault();
