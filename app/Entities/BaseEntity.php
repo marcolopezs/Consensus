@@ -24,12 +24,6 @@ class BaseEntity extends Model{
         return $this->morphMany(Documento::class, 'documentable')->orderBy('created_at','desc');
     }
 
-    //FLUJO CAJA
-    public function flujo_cajas()
-    {
-        return $this->morphMany(FlujoCaja::class, 'flujo_cajatable');
-    }
-
     //SCOPES
     public function scopeClienteId($query, $value)
     {
