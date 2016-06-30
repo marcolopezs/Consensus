@@ -18,9 +18,14 @@ class FlujoCaja extends BaseEntity {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function flujo_cajatable()
+    public function expedientes()
     {
-        return $this->morphTo();
+        return $this->belongsTo(Expediente::class, 'expediente_id');
+    }
+
+    public function tarea_accion()
+    {
+        return $this->belongsTo(TareaAccion::class, 'tarea_accion_id');
     }
 
     public function money()
@@ -38,6 +43,11 @@ class FlujoCaja extends BaseEntity {
         return $this->money->titulo;
     }
 
+    public function getTipoAttribute($value)
+    {
+        return ucfirst($value);
+    }
+
     public function getUrlEditarAttribute()
     {
         return route('expedientes.flujo-caja.edit', [$this->expediente_id, $this->id]);
@@ -45,12 +55,12 @@ class FlujoCaja extends BaseEntity {
 
     public function getUrlEditarGastoAttribute()
     {
-        return route('accion.gastos.edit', [$this->flujo_cajatable_id, $this->id]);
+        return route('accion.gastos.edit', [$this->tarea_accion_id, $this->id]);
     }
 
     public function getUrlUpdateGastoAttribute()
     {
-        return route('accion.gastos.update', [$this->flujo_cajatable_id, $this->id]);
+        return route('accion.gastos.update', [$this->tarea_accion_id, $this->id]);
     }
 
 }
