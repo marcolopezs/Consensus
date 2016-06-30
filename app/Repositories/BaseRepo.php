@@ -372,20 +372,7 @@ abstract class BaseRepo {
             'type' => $type,
         ]);
     }
-
-    //GUARDAR FLUJO DE CAJA
-    public function saveFlujoCaja($entity, Request $request, $tipo)
-    {
-        return $entity->flujo_cajas()->create([
-            'user_id' => auth()->user()->id,
-            'fecha' => $entity->fecha,
-            'referencia' => $request->input('referencia'),
-            'money_id' => $request->input('moneda'),
-            'monto' => $request->input('monto'),
-            'tipo' => $tipo
-        ]);
-    }
-
+    
     //BUSCAR HISTORIAL
     public function findHistory($entity, $id)
     {
