@@ -46,7 +46,7 @@ class Expediente extends BaseEntity {
         return $this->hasMany(Tarea::class);
     }
 
-    public function flujoCaja()
+    public function flujo_caja()
     {
         return $this->hasMany(FlujoCaja::class);
     }
