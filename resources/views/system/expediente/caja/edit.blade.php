@@ -28,10 +28,24 @@
                     <div class="row">
 
                         <div class="col-md-12">
-                            <div class="form-group">
-                                {!! Form::label('referencia', 'Referencia', ['class' => 'control-label']) !!}
-                                {!! Form::text('referencia', null, ['class' => 'form-control']) !!}
+
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    {!! Form::label('referencia', 'Referencia', ['class' => 'control-label']) !!}
+                                    {!! Form::text('referencia', null, ['class' => 'form-control']) !!}
+                                </div>
                             </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    {!! Form::label('tipo', 'Tipo', ['class' => 'control-label']) !!}
+                                    <div class="mt-radio-inline">
+                                        <label class="mt-radio">{!! Form::radio('tipo', 'ingreso', null,  ['id' => 'tipo']) !!}Ingreso</label>
+                                        <label class="mt-radio">{!! Form::radio('tipo', 'egreso', null,  ['id' => 'tipo']) !!}Egreso</label>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
 
                         <div class="col-md-4">
