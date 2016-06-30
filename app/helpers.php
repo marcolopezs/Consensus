@@ -2,6 +2,17 @@
 
 use Carbon\Carbon;
 
+//RESTAR HORAS
+function restarHoras($fecha, $desde, $hasta)
+{
+    $hora_desde = new DateTime($fecha.' '.$desde.':00');
+    $hora_hasta = $hora_desde->diff(new DateTime($fecha.' '.$hasta.':00'));
+
+    $dt = Carbon::createFromTime($hora_hasta->h, $hora_hasta->i, $hora_hasta->s);
+
+    return $dt->toTimeString();
+}
+
 //CONVERTIR FORMATO DE FECHA
 function formatoFecha($date)
 {
@@ -31,6 +42,12 @@ function tipo_usuario($usuario)
 function fecha($fecha)
 {
     return date_format(new DateTime($fecha), 'd/m/Y H:i');
+}
+
+//FORMATO SOLO HORA
+function formatoHoraHM($value)
+{
+    return date_format(new DateTime($value), 'H:i');
 }
 
 //SOLO FECHA

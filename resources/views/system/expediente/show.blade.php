@@ -26,7 +26,7 @@
                             <div class="form-group">
                                 {!! Form::label('moneda', 'Moneda', ['class' => 'control-label col-md-2']) !!}
                                 <div class="col-md-2">
-                                    <p class="form-control-static">{{ $row->money->titulo }}</p>
+                                    <p class="form-control-static">{{ $row->exp_moneda }}</p>
                                 </div>
 
                                 {!! Form::label('valor', 'Valor', ['class' => 'control-label col-md-2']) !!}
@@ -36,7 +36,7 @@
 
                                 {!! Form::label('tarifa', 'Tárifa', ['class' => 'control-label col-md-2']) !!}
                                 <div class="col-md-2">
-                                    <p class="form-control-static">{{ $row->tariff->titulo }}</p>
+                                    <p class="form-control-static">{{ $row->exp_tarifa }}</p>
                                 </div>
                             </div>
 
@@ -89,7 +89,7 @@
                             <div class="form-group">
                                 {!! Form::label('servicio', 'Servicio', ['class' => 'control-label col-md-2']) !!}
                                 <div class="col-md-4">
-                                    <p class="form-control-static">{{ $row->service->titulo }}</p>
+                                    <p class="form-control-static">{{ $row->exp_servicio }}</p>
                                 </div>
 
                                 {!! Form::label('numero_dias', 'Número de Días', ['class' => 'control-label col-md-2']) !!}
@@ -129,19 +129,19 @@
                             <div class="form-group">
                                 {!! Form::label('materia', 'Materia', ['class' => 'control-label col-md-2']) !!}
                                 <div class="col-md-4">
-                                    <p class="form-control-static">{{ $row->matter->titulo }}</p>
+                                    <p class="form-control-static">{{ $row->exp_materia }}</p>
                                 </div>
 
                                 {!! Form::label('entidad', 'Entidad', ['class' => 'control-label col-md-2']) !!}
                                 <div class="col-md-4">
-                                    <p class="form-control-static">{{ $row->entity->titulo }}</p>
+                                    <p class="form-control-static">{{ $row->exp_entidad }}</p>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 {!! Form::label('area', 'Área', ['class' => 'control-label col-md-2']) !!}
                                 <div class="col-md-4">
-                                    <p class="form-control-static">{{ $row->area->titulo }}</p>
+                                    <p class="form-control-static">{{ $row->exp_area }}</p>
                                 </div>
 
                                 {!! Form::label('jefe_area', 'Jefe de Área', ['class' => 'control-label col-md-2']) !!}
@@ -153,7 +153,7 @@
                             <div class="form-group">
                                 {!! Form::label('instancia', 'Instancia', ['class' => 'control-label col-md-2']) !!}
                                 <div class="col-md-4">
-                                    <p class="form-control-static">{{ $row->instance->titulo }}</p>
+                                    <p class="form-control-static">{{ $row->exp_instancia }}</p>
                                 </div>
 
                                 {!! Form::label('encargado', 'Encargado', ['class' => 'control-label col-md-2']) !!}
@@ -177,24 +177,24 @@
                             <div class="form-group">
                                 {!! Form::label('bienes', 'Bienes', ['class' => 'control-label col-md-2']) !!}
                                 <div class="col-md-4">
-                                    <p class="form-control-static">{{ $row->bienes->titulo }}</p>
+                                    <p class="form-control-static">{{ $row->exp_bienes }}</p>
                                 </div>
 
                                 {!! Form::label('situacion', 'Situación Especial', ['class' => 'control-label col-md-3']) !!}
                                 <div class="col-md-3">
-                                    <p class="form-control-static">{{ $row->situacionEspecial->titulo }}</p>
+                                    <p class="form-control-static">{{ $row->exp_situacion_especial }}</p>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 {!! Form::label('estado', 'Estado', ['class' => 'control-label col-md-2']) !!}
                                 <div class="col-md-4">
-                                    <p class="form-control-static">{{ $row->state->titulo }}</p>
+                                    <p class="form-control-static">{{ $row->exp_estado }}</p>
                                 </div>
 
                                 {!! Form::label('exito', 'Éxito', ['class' => 'control-label col-md-3']) !!}
                                 <div class="col-md-3">
-                                    <p class="form-control-static">{{ $row->exito->titulo }}</p>
+                                    <p class="form-control-static">{{ $row->exp_exito }}</p>
                                 </div>
                             </div>
 

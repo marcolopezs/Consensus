@@ -39,6 +39,7 @@
 
                     <div class="caption">
 
+                        @can('create')
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="btn-group">
@@ -48,6 +49,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endcan
 
                     </div>
 
@@ -80,11 +82,11 @@
                         <thead>
                             <tr>
                                 <th class="col-expediente" scope="col" style="width: 140px !important;"> Expediente </th>
-                                <th class="col-cliente" scope="col"> Cliente </th>
+                                @cannot('cliente')<th class="col-cliente" scope="col"> Cliente </th>@endcan
                                 <th class="col-moneda" scope="col"> Moneda </th>
                                 <th class="col-valor" scope="col"> Valor </th>
                                 <th class="col-tarifa" scope="col"> Tarifa </th>
-                                <th class="col-abogado" scope="col"> Abogado </th>
+                                @cannot('abogado')<th class="col-abogado" scope="col"> Abogado </th>@endcan
                                 <th class="col-asistente" scope="col"> Asistente </th>
                                 <th class="col-servicio" scope="col"> Servicio </th>
                                 <th class="col-fecha-inicio" scope="col"> Fecha Inicio </th>
@@ -114,7 +116,7 @@
                                 $row_moneda = $item->exp_moneda;
                                 $row_valor = $item->valor;
                                 $row_tarifa = $item->exp_tarifa;
-                                $row_abogado = $item->abogado->nombre;
+                                $row_abogado = $item->exp_abogado;
                                 $row_asistente = $item->exp_asistente;
                                 $row_servicio = $item->exp_servicio;
                                 $row_fecha_inicio = $item->exp_fecha_inicio;
@@ -134,11 +136,11 @@
                             @endphp
                             <tr id="exp-{{ $row_id }}" data-id="{{ $row_id }}" data-title="{{ $row_expediente }}">
                                 <td class="col-expediente">{{ $row_expediente }}</td>
-                                <td class="col-cliente">{{ $row_cliente }}</td>
+                                @cannot('cliente')<td class="col-cliente">{{ $row_cliente }}</td>@endcan
                                 <td class="col-moneda">{{ $row_moneda }}</td>
                                 <td class="col-valor">{{ $row_valor }}</td>
                                 <td class="col-tarifa">{{ $row_tarifa }}</td>
-                                <td class="col-abogado">{{ $row_abogado }}</td>
+                                @cannot('abogado')<td class="col-abogado">{{ $row_abogado }}</td>@endcan
                                 <td class="col-asistente">{{ $row_asistente }}</td>
                                 <td class="col-servicio">{{ $row_servicio }}</td>
                                 <td class="col-fecha-inicio">{{ $row_fecha_inicio }}</td>
@@ -157,12 +159,14 @@
                                 <td class="col-exito">{{ $row_exito }}</td>
                                 <td class="text-center">
                                     <div class="btn-group">
-                                        <button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Acciones
+                                        <button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Movimientos
                                             <i class="fa fa-angle-down"></i>
                                         </button>
                                         <ul class="dropdown-menu pull-right" role="menu">
                                             <li><a href="{{ route('expedientes.show', $row_id) }}" data-target="#ajax" data-toggle="modal">Ver registro</a></li>
+                                            @can('update')
                                             <li><a href="{{ route('expedientes.edit', $row_id) }}">Editar</a></li>
+                                            @endcan
                                             <li><a href="#" class="expediente-tareas" data-id="{{ $row_id }}" data-list="{{ route('expedientes.tareas.index', $row_id) }}" data-create="{{ route('expedientes.tareas.create', $row_id) }}">Tareas</a></li>
                                             <li><a href="#" class="expediente-caja" data-id="{{ $row_id }}" data-list="{{ route('expedientes.flujo-caja.index', $row_id) }}" data-create="{{ route('expedientes.flujo-caja.create', $row_id) }}">Flujo de Caja</a></li>
                                             <li><a href="#" class="expediente-interviniente" data-id="{{ $row_id }}" data-list="{{ route('expedientes.intervinientes.index', $row_id) }}" data-create="{{ route('expedientes.intervinientes.create', $row_id) }}">Intervinientes</a></li>

@@ -32,6 +32,10 @@
     {!! HTML::style('assets/layouts/layout3/css/custom.css') !!}
     <!-- END THEME LAYOUT STYLES -->
 
+    {{-- DropZone --}}
+    {!! HTML::style('https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/basic.min.css') !!}
+    {!! HTML::style('https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.css') !!}
+
     @yield('contenido_header')
 </head>
 
@@ -116,7 +120,9 @@
                 <div class="hor-menu  ">
                     <ul class="nav navbar-nav">
                         <li {!! (Request::is('/') ? 'class="active"' : '') !!}><a href="/">Dashboard</a></li>
+                        <li {!! (Request::is('tareas-*') ? 'class="active"' : '') !!}><a href="{{ route('tareas.asignadas') }}">Tareas Asignadas</a></li>
                         <li {!! (Request::is('expediente*') ? 'class="active"' : '') !!}><a href="{{ route('expedientes.index') }}">Expedientes</a></li>
+                        @can('mostrar-menu')
                         <li {!! (Request::is('cliente*') ? 'class="active"' : '') !!}><a href="{{ route('cliente.index') }}">Clientes</a></li>
                         <li class="menu-dropdown mega-menu-dropdown {!! (Request::is('options*') ? 'active' : '') !!}">
                             <a href="javascript:;">Opciones</a><span class="arrow"></span>
@@ -151,6 +157,7 @@
                             </ul>
                         </li>
                         <li {!! (Request::is('users*') ? 'class="active"' : '') !!}><a href="{{ route('users.index') }}">Usuarios</a></li>
+                        @endcan
                     </ul>
                 </div>
                 <!-- END MEGA MENU -->
@@ -224,6 +231,10 @@
     {!! HTML::script('assets/global/plugins/uniform/jquery.uniform.min.js') !!}
     {!! HTML::script('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js') !!}
     <!-- END CORE PLUGINS -->
+
+    {{-- DropZone --}}
+    {!! HTML::script('https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.js') !!}
+    {!! HTML::script('https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone-amd-module.min.js') !!}
 
     <!-- BEGIN THEME GLOBAL SCRIPTS -->
     {!! HTML::script('assets/global/scripts/app.js') !!}

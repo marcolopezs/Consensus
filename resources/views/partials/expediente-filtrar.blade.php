@@ -1,6 +1,6 @@
 <div class="col-md-12">
 
-    <div id="filtrar-expediente-panel" class="panel panel-default" {!! (Request::all() ? '' : 'style="display: none;"') !!}>
+    <div id="filtrar-expediente-panel" class="panel panel-default" {!! (Request::except('page') ? '' : 'style="display: none;"') !!}>
         <div class="panel-heading">Buscar</div>
         <div class="panel-body form">
 
@@ -22,6 +22,7 @@
                         </div>
                     </div>
 
+                    @cannot('cliente')
                     <div class="col-cliente col-md-5">
                         <div class="form-group">
                             {!! Form::label('cliente', 'Cliente', ['class' => 'control-label']) !!}
@@ -33,6 +34,7 @@
                             </div>
                         </div>
                     </div>
+                    @endcan
 
                     <div class="col-moneda col-md-2">
                         <div class="form-group">
@@ -65,6 +67,7 @@
                         </div>
                     </div>
 
+                    @cannot('abogado')
                     <div class="col-abogado col-md-3">
                         <div class="form-group">
                             {!! Form::label('abogado', 'Abogado', ['class' => 'control-label']) !!}
@@ -76,6 +79,7 @@
                             </div>
                         </div>
                     </div>
+                    @endcan
 
                     <div class="col-asistente col-md-3">
                         <div class="form-group">

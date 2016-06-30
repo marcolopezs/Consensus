@@ -29,6 +29,16 @@ $factory->define(\Consensus\Entities\UserProfile::class, function ($faker) use (
     ];
 });
 
+//ROLE DE USUARIO
+$factory->define(\Consensus\Entities\UserRole::class, function ($faker) use ($factory) {
+    return [
+        'create' => 0,
+        'update' => 0,
+        'delete' => 0,
+        'printer' => 0
+    ];
+});
+
 //CLIENTES
 $factory->define(\Consensus\Entities\Cliente::class, function ($faker) use ($factory) {
     return [

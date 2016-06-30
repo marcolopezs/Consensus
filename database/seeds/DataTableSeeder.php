@@ -588,5 +588,22 @@ class DataTableSeeder extends Seeder
             ['id' => '1', 'titulo' => 'Si', 'estado' => '1'],
             ['id' => '2', 'titulo' => 'No', 'estado' => '1']
         ]);
+        
+        DB::table('tarea_conceptos')->insert([
+            ['titulo' => 'BOLETA INFORMATIVA', 'estado' => '1'],
+            ['titulo' => 'CANCELACION DE PAPELETA', 'estado' => '1'],
+            ['titulo' => 'ENVIAR PAGARE A NOTARIA', 'estado' => '1'],
+            ['titulo' => 'ESCANEAR DOCUMENTOS', 'estado' => '1'],
+            ['titulo' => 'ESTADO DE CUENTA', 'estado' => '1'],
+            ['titulo' => 'GRAVAMEN', 'estado' => '1'],
+            ['titulo' => 'TRAMITE EN NOTARIA', 'estado' => '1'],
+            ['titulo' => 'LEVANTAMIENTO DE GARANTIA MOBILIARIA', 'estado' => '1'],
+            ['titulo' => 'PRESENTE ESCRITO AL PODER JUDICIAL', 'estado' => '1'],
+            ['titulo' => 'RECOGER PAGARE DEL BANCO', 'estado' => '1'],
+            ['titulo' => 'SACAR COPIA', 'estado' => '1'],
+            ['titulo' => 'SEGUIMIENTO', 'estado' => '1'],
+            ['titulo' => 'SOLICITAR DOCUMENTOS', 'estado' => '1'],
+            ['titulo' => 'VISITA', 'estado' => '1']
+        ]);
     }
 }

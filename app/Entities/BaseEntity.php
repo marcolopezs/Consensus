@@ -2,7 +2,6 @@
 
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 
 class BaseEntity extends Model{
 
@@ -25,6 +24,7 @@ class BaseEntity extends Model{
         return $this->morphMany(Documento::class, 'documentable')->orderBy('created_at','desc');
     }
 
+    //SCOPES
     public function scopeClienteId($query, $value)
     {
         if($value != "")

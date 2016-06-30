@@ -27,7 +27,7 @@ class User extends BaseEntity implements AuthenticatableContract, CanResetPasswo
      *
      * @var array
      */
-    protected $fillable = ['username', 'password'];
+    protected $fillable = ['id','username', 'password','active','admin','cliente_id','abogado_id'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -41,7 +41,68 @@ class User extends BaseEntity implements AuthenticatableContract, CanResetPasswo
      */
     public function profile()
     {
-        return $this->hasOne('Consensus\Entities\UserProfile', 'user_id', 'id');
+        return $this->hasOne(UserProfile::class, 'user_id', 'id');
+    }
+
+    public function role()
+    {
+        return $this->hasOne(UserRole::class, 'user_id', 'id');
+    }
+
+    public function isAdmin()
+    {
+        if($this->admin === 1 OR $this->admin === 1 AND $this->isAbogado())
+        {
+            return true;
+        }
+    }
+
+    public function isCliente()
+    {
+        if($this->cliente_id <> 0)
+        {
+            return true;
+        }
+    }
+
+    public function isAbogado()
+    {
+        if($this->abogado_id <> 0)
+        {
+            return true;
+        }
+    }
+
+    public function yesCreate()
+    {
+        if($this->role->create == 1)
+        {
+            return true;
+        }
+    }
+
+    public function yesUpdate()
+    {
+        if($this->role->update == 1)
+        {
+            return true;
+        }
+    }
+
+    public function yesDelete()
+    {
+        if($this->role->delete == 1)
+        {
+            return true;
+        }
+    }
+
+    public function yesPrint()
+    {
+        if($this->role->print == 1)
+        {
+            return true;
+        }
     }
 
     public function setPasswordAttribute($value)

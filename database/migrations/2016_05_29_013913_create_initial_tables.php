@@ -38,14 +38,14 @@ class CreateInitialTables extends Migration
         {
             $table->increments('id');
 
+            $table->integer('user_id')->unsigned();
+
             $table->string('nombre');
             $table->string('apellidos');
             $table->string('email')->unique();
 
             $table->string('imagen');
             $table->string('imagen_carpeta');
-
-            $table->integer('user_id')->unsigned();
 
             $table->nullableTimestamps();
             $table->softDeletes();
@@ -55,12 +55,13 @@ class CreateInitialTables extends Migration
         {
             $table->increments('id');
 
-            $table->boolean('admin');
-            $table->boolean('agrega');
-            $table->boolean('modifica');
-            $table->boolean('borra');
+            $table->integer('user_id')->unsigned();
+
+            $table->boolean('create');
+            $table->boolean('update');
+            $table->boolean('delete');
             $table->boolean('exporta');
-            $table->boolean('imprime');
+            $table->boolean('printer');
 
             $table->nullableTimestamps();
             $table->softDeletes();
@@ -110,6 +111,30 @@ class CreateInitialTables extends Migration
 
             $table->string('documento')->nullable();
             $table->string('carpeta')->nullable();
+
+            $table->nullableTimestamps();
+            $table->softDeletes();
+        });
+
+        /*==============================
+        =         FLUJO DE CAJA        =
+        ==============================*/
+
+        Schema::create('flujo_caja', function(Blueprint $table)
+        {
+            $table->increments('id');
+
+            $table->integer('expediente_id')->nullable()->unsigned();
+            $table->integer('tarea_accion_id')->nullable()->unsigned();
+
+            $table->integer('user_id')->nullable()->default(NULL);
+
+            $table->date('fecha');
+            $table->string('referencia');
+            $table->integer('money_id');
+            $table->double('monto', 15, 2);
+            $table->enum('tipo', ['ingreso','egreso']);
+            $table->boolean('estado');
 
             $table->nullableTimestamps();
             $table->softDeletes();
@@ -236,8 +261,6 @@ class CreateInitialTables extends Migration
             $table->softDeletes();
         });
 
-
-
         /*==============================
         =          EXPEDIENTE          =
         ==============================*/
@@ -354,12 +377,13 @@ class CreateInitialTables extends Migration
 
             $table->integer('expediente_id')->unsigned();
 
-            $table->string('tarea');
+            $table->integer('tarea_concepto_id');
             $table->text('descripcion');
 
             $table->date('fecha_solicitada');
             $table->date('fecha_vencimiento');
 
+            $table->integer('titular_id')->unsigned();
             $table->integer('abogado_id')->unsigned();
             $table->boolean('estado');
 
@@ -367,25 +391,33 @@ class CreateInitialTables extends Migration
             $table->softDeletes();
         });
 
-        /*==============================
-        =         FLUJO DE CAJA        =
-        ==============================*/
-
-        Schema::create('flujo_caja', function(Blueprint $table)
+        Schema::create('tarea_acciones', function(Blueprint $table)
         {
             $table->increments('id');
 
-            $table->integer('expediente_id')->unsigned();
-
+            $table->integer('tarea_id')->unsigned();
             $table->date('fecha');
-            $table->string('referencia');
-            $table->integer('money_id');
-            $table->double('monto', 15, 2);
+            $table->time('desde');
+            $table->time('hasta');
+            $table->time('horas');
+            $table->text('descripcion');
+
+            $table->nullableTimestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('tarea_conceptos', function(Blueprint $table)
+        {
+            $table->increments('id');
+
+            $table->string('titulo')->nullable();
             $table->boolean('estado');
 
             $table->nullableTimestamps();
             $table->softDeletes();
         });
+
+
 
         /*==============================
         =                              =
@@ -599,6 +631,9 @@ class CreateInitialTables extends Migration
         Schema::drop('expediente_documentos');
 
         Schema::drop('tareas');
+        Schema::drop('tarea_acciones');
+        Schema::drop('tarea_conceptos');
+
         Schema::drop('flujo_caja');
 
         Schema::drop('cliente_documentos');

@@ -3,6 +3,7 @@ $(".col-hide").on("click", function () {
     $(this).prop("checked") ? $('.'+id).show() : $('.'+id).hide();
 });
 
+
 /* AJUSTES */
 $("#ajustes-expediente").on("click", function() {
     $("#ajustes-expediente-panel").slideToggle();
@@ -11,6 +12,7 @@ $("#ajustes-expediente").on("click", function() {
 $("#ajustes-expediente-cancelar").on("click", function() {
     $("#ajustes-expediente-panel").slideUp();
 });
+
 
 //MOSTRAR U OCULTAR COLUMNAS DE LA TABLA EXPEDIENTE
 var ajustes = $("#expediente-ajustes-data").text();
@@ -104,7 +106,7 @@ $(".expediente-tareas").on("click", function(e) {
                 tr = $('<tr id="tarea-select-'+ obj.id +'">');
                 tr.append('<td>'+ obj.fecha_solicitada +'</td>');
                 tr.append('<td>'+ obj.fecha_vencimiento +'</td>');
-                tr.append('<td>'+ obj.tarea +'</td>');
+                tr.append('<td>'+ obj.titulo_tarea +'</td>');
                 tr.append('<td>'+ obj.asignado +'</td>');
                 tr.append('<td><a href="'+ obj.url_editar +'" data-target="#ajax" data-toggle="modal">Editar</a></td>');
                 $("#tarea-lista-"+id+" tbody").prepend(tr);
@@ -153,6 +155,7 @@ $(".expediente-caja").on("click", function(e) {
                 '<td>Referencia</td>' +
                 '<td>Monto</td>' +
                 '<td>Moneda</td>' +
+                '<td>Tipo</td>' +
                 '<td>Acciones</td>' +
                 '</tr>' +
                 '</thead>' +
@@ -171,6 +174,7 @@ $(".expediente-caja").on("click", function(e) {
                 tr.append('<td>'+ obj.referencia +'</td>');
                 tr.append('<td>'+ obj.monto +'</td>');
                 tr.append('<td>'+ obj.moneda +'</td>');
+                tr.append('<td>'+ obj.tipo +'</td>');
                 tr.append('<td><a href="'+ obj.url_editar +'" data-target="#ajax" data-toggle="modal">Editar</a></td>');
                 $("#caja-lista-"+id+" tbody").prepend(tr);
             });

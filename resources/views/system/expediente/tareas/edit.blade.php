@@ -32,7 +32,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         {!! Form::label('tarea', 'Tarea', ['class' => 'control-label']) !!}
-                                        {!! Form::text('tarea', null, ['class' => 'form-control']) !!}
+                                        {!! Form::select('tarea', ['' => ''] + $concepto, $prin->tarea_concepto_id, ['class' => 'form-control select2']) !!}
                                     </div>
                                 </div>
 
@@ -142,7 +142,7 @@
                 var html = '<tr id="tarea-select-'+ result.id +'">' +
                                 '<td>'+ result.fecha_solicitada +'</td>' +
                                 '<td>'+ result.fecha_vencimiento +'</td>' +
-                                '<td>'+ result.tarea +'</td>' +
+                                '<td>'+ result.titulo_tarea +'</td>' +
                                 '<td>'+ result.asignado +'</td>' +
                                 '<td><a href="'+ result.url_editar +'" data-target="#ajax" data-toggle="modal">Editar</a></td>' +
                            '</tr>';

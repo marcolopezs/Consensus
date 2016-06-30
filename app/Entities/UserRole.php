@@ -1,8 +1,8 @@
 <?php namespace Consensus\Entities;
 
-class UserProfile extends BaseEntity {
+class UserRole extends BaseEntity {
 
-    protected $fillable = ['nombre','apellidos','email','user_id'];
+    protected $fillable = ['user_id','create','update','delete','exporta','print'];
 
     public function user()
     {

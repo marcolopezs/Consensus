@@ -1,7 +1,3 @@
-{{-- DROPZONE --}}
-{!! HTML::style('https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/basic.min.css') !!}
-{!! HTML::style('https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.css') !!}
-
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
     <h4 class="modal-title">Editar documento</h4>
@@ -97,10 +93,6 @@
 
 {{-- Components --}}
 {!! HTML::script('assets/pages/scripts/components-date-time-pickers.js') !!}
-
-{{-- DROPZONE --}}
-{!! HTML::script('https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.js') !!}
-{!! HTML::script('https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone-amd-module.min.js') !!}
 
 {{-- GUARDAR TAREA --}}
 <script>
