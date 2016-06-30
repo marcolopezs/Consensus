@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Consensus\Http\Controllers\Controller;
 
+use Consensus\Entities\FlujoCaja;
+
 use Consensus\Repositories\FlujoCajaRepo;
 use Consensus\Repositories\MoneyRepo;
 use Consensus\Repositories\TareaAccionRepo;
@@ -40,19 +42,10 @@ class TareasAccionGastosController extends Controller {
     public function index($accion)
     {
         $rows = $this->tareaAccionRepo->findOrFail($accion);
+        $caja = $this->flujoCajaRepo->where('tarea_accion_id', $accion)->get();
         $money = $this->moneyRepo->estadoListArray();
 
-        return view('system.tareas-asignadas.acciones.gastos.list', compact('rows','money'));
-    }
-
-    /**
-     * @param $accion
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @internal param $tarea
-     */
-    public function create($accion)
-    {
-        return view('system.tareas-asignadas.acciones.create', compact('row','money'));
+        return view('system.tareas-asignadas.acciones.gastos.list', compact('rows','caja','money'));
     }
 
     /**
@@ -65,7 +58,17 @@ class TareasAccionGastosController extends Controller {
         $this->validate($request, $this->rulesGastos);
 
         $row = $this->tareaAccionRepo->findOrFail($accion);
-        $save = $this->tareaAccionRepo->saveFlujoCaja($row, $request, 'egreso');
+
+        $caja = new FlujoCaja($request->all());
+        $caja->tarea_accion_id = $accion;
+        $caja->expediente_id = $row->tarea->expedientes->id;
+        $caja->user_id = auth()->user()->id;
+        $caja->fecha = $row->fecha;
+        $caja->referencia = $request->input('referencia');
+        $caja->money_id = $request->input('moneda');
+        $caja->monto = $request->input('monto');
+        $caja->tipo = 'egreso';
+        $save = $this->flujoCajaRepo->create($caja, $request->all());
 
         //GUARDAR HISTORIAL
         $this->tareaAccionRepo->saveHistory($row, $request, 'create');
