@@ -49,11 +49,7 @@ class FlujoCajaController extends Controller {
     {
         $row = $this->expedienteRepo->findOrFail($expedientes);
 
-        if($request->ajax())
-        {
-            return $row->flujoCaja->toJson();
-        }
-
+        return $row->flujo_caja->toJson();
     }
 
     /**
@@ -73,7 +69,7 @@ class FlujoCajaController extends Controller {
      *
      * @param $expedientes
      * @param  \Illuminate\Http\Request $request
-     * @return Response
+     * @return array
      */
     public function store($expedientes, Request $request)
     {
@@ -87,6 +83,7 @@ class FlujoCajaController extends Controller {
         //GUARDAR DATOS
         $row = new FlujoCaja($request->all());
         $row->expediente_id = $expedientes;
+        $row->user_id = auth()->user()->id;
         $row->fecha = $fecha;
         $row->money_id = $moneda;
         $save = $this->flujoCajaRepo->create($row, $request->all());
@@ -98,17 +95,15 @@ class FlujoCajaController extends Controller {
         $this->flujoCajaRepo->saveDocumento($row, $request, 'create');
 
         //AJAX
-        if($request->ajax())
-        {
-            return response()->json([
-                'id' => $save->id,
-                'fecha_caja' => $save->fecha_caja,
-                'referencia' => $save->referencia,
-                'moneda' => $save->moneda,
-                'monto' => $save->monto,
-                'url_editar' => $save->url_editar
-            ]);
-        }
+        return [
+            'id' => $save->id,
+            'fecha_caja' => $save->fecha_caja,
+            'referencia' => $save->referencia,
+            'moneda' => $save->moneda,
+            'monto' => $save->monto,
+            'tipo' => $save->tipo,
+            'url_editar' => $save->url_editar
+        ];
 
     }
 
@@ -130,10 +125,10 @@ class FlujoCajaController extends Controller {
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $expedientes
+     * @param $id
+     * @param Request $request
+     * @return array
      */
     public function update($expedientes, $id, Request $request)
     {
@@ -162,17 +157,15 @@ class FlujoCajaController extends Controller {
         }
 
         //AJAX
-        if($request->ajax())
-        {
-            return response()->json([
-                'id' => $save->id,
-                'fecha_caja' => $save->fecha_caja,
-                'referencia' => $save->referencia,
-                'moneda' => $save->moneda,
-                'monto' => $save->monto,
-                'url_editar' => $save->url_editar
-            ]);
-        }
+        return [
+            'id' => $save->id,
+            'fecha_caja' => $save->fecha_caja,
+            'referencia' => $save->referencia,
+            'moneda' => $save->moneda,
+            'monto' => $save->monto,
+            'tipo' => $save->tipo,
+            'url_editar' => $save->url_editar
+        ];
     }
 
 }
