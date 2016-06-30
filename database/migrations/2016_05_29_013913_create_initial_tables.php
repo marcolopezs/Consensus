@@ -124,8 +124,8 @@ class CreateInitialTables extends Migration
         {
             $table->increments('id');
 
-            $table->integer('flujo_cajatable_id')->unsigned();
-            $table->string('flujo_cajatable_type');
+            $table->integer('expediente_id')->nullable()->unsigned();
+            $table->integer('tarea_accion_id')->nullable()->unsigned();
 
             $table->integer('user_id')->nullable()->default(NULL);
 
