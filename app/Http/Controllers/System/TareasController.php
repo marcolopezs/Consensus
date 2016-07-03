@@ -47,17 +47,13 @@ class TareasController extends Controller {
      * Display a listing of the resource.
      *
      * @param $expedientes
-     * @param Request $request
-     * @return Response
+     * @return
      */
-    public function index($expedientes, Request $request)
+    public function index($expedientes)
     {
         $row = $this->expedienteRepo->findOrFail($expedientes);
 
-        if($request->ajax())
-        {
-            return $row->tarea->toJson();
-        }
+        return $row->tarea->toJson();
     }
 
     /**
@@ -77,8 +73,8 @@ class TareasController extends Controller {
      * Store a newly created resource in storage.
      *
      * @param $expedientes
-     * @param  \Illuminate\Http\Request $request
-     * @return Response
+     * @param Request $request
+     * @return array
      */
     public function store($expedientes, Request $request)
     {
@@ -100,18 +96,15 @@ class TareasController extends Controller {
         //GUARDAR HISTORIAL
         $this->tareaRepo->saveHistory($row, $request, 'create');
 
-        //AJAX
-        if($request->ajax())
-        {
-            return response()->json([
-                'id' => $save->id,
-                'titulo_tarea' => $save->titulo_tarea,
-                'fecha_solicitada' => $save->fecha_solicitada,
-                'fecha_vencimiento' => $save->fecha_vencimiento,
-                'asignado' => $save->asignado,
-                'url_editar' => $save->url_editar
-            ]);
-        }
+        //ARRAY
+        return [
+            'id' => $save->id,
+            'titulo_tarea' => $save->titulo_tarea,
+            'fecha_solicitada' => $save->fecha_solicitada,
+            'fecha_vencimiento' => $save->fecha_vencimiento,
+            'asignado' => $save->asignado,
+            'url_editar' => $save->url_editar
+        ];
 
     }
 
