@@ -3,7 +3,7 @@
 
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-    <h4 class="modal-title">Nuevo acción</h4>
+    <h4 class="modal-title">Editar acción</h4>
 </div>
 <div class="modal-body">
     <div class="row">
@@ -25,7 +25,7 @@
                     <div class="form-content"></div>
                 </div>
 
-                {!! Form::open(['route' => ['tareas.acciones.store', $row->id], 'method' => 'POST', 'id' => 'formCreate', 'class' => 'horizontal-form', 'autocomplete' => 'off']) !!}
+                {!! Form::model($prin, ['route' => ['tareas.acciones.update', $row->id, $prin->id], 'method' => 'PUT', 'id' => 'formCreate', 'class' => 'horizontal-form', 'autocomplete' => 'off']) !!}
 
                     <div class="form-body">
 
@@ -33,7 +33,7 @@
                             <div class="form-group">
                                 {!! Form::label('fecha', 'Fecha', ['class' => 'control-label']) !!}
                                 <div class="input-group input-medium date date-picker" data-date-format="dd/mm/yyyy" data-date-viewmode="years">
-                                    {!! Form::text('fecha', dateActual(), ['class' => 'form-control']) !!}
+                                    {!! Form::text('fecha', $prin->fecha_accion, ['class' => 'form-control']) !!}
                                     <span class="input-group-btn"><button class="btn default" type="button"><i class="fa fa-calendar"></i></button></span>
                                 </div>
                             </div>
@@ -43,7 +43,7 @@
                             <div class="form-group">
                                 {!! Form::label('desde', 'Desde', ['class' => 'control-label']) !!}
                                 <div class="input-group">
-                                    {!! Form::text('desde', 0, ['class' => 'form-control timepicker timepicker-24']) !!}
+                                    {!! Form::text('desde', null, ['class' => 'form-control timepicker timepicker-24']) !!}
                                     <span class="input-group-btn"><button class="btn default" type="button"><i class="fa fa-clock-o"></i></button></span>
                                 </div>
                             </div>
@@ -53,7 +53,7 @@
                             <div class="form-group">
                                 {!! Form::label('hasta', 'Hasta', ['class' => 'control-label']) !!}
                                 <div class="input-group">
-                                    {!! Form::text('hasta', 0, ['class' => 'form-control timepicker timepicker-24']) !!}
+                                    {!! Form::text('hasta', null, ['class' => 'form-control timepicker timepicker-24']) !!}
                                     <span class="input-group-btn"><button class="btn default" type="button"><i class="fa fa-clock-o"></i></button></span>
                                 </div>
                             </div>
@@ -105,10 +105,11 @@
             type: 'POST',
             data: data,
             success: function (result) {
-                var successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>El registro se agregó satisfactoriamente.</div>';
+                console.log(result);
+                var successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>El registro se actualizó satisfactoriamente.</div>';
                 $(".form-content").html(successHtml);
-                $(".select2").val(null).trigger('change');
-                form[0].reset();
+
+                $("#accion-select-"+ result.id).remove();
 
                 var html = '<tr id="accion-select-'+ result.id +'">' +
                                 '<td>'+ result.fecha_accion +'</td>' +

@@ -9,6 +9,7 @@ use Consensus\Entities\TareaAccion;
 
 use Consensus\Repositories\TareaRepo;
 use Consensus\Repositories\TareaAccionRepo;
+use Illuminate\Support\Facades\Gate;
 
 class TareasAsignadasController extends Controller {
 
@@ -38,9 +39,17 @@ class TareasAsignadasController extends Controller {
      */
     public function tareas()
     {
-        $rows = $this->tareaRepo->filterPaginate();
+        if(Gate::allows('admin'))
+        {
+            $rows = $this->tareaRepo->filterPaginateAdmin();
+            return view('system.tareas-asignadas.admin.list', compact('rows'));
+        }
+        elseif(Gate::allows('abogado'))
+        {
+            $rows = $this->tareaRepo->filterPaginate();
+            return view('system.tareas-asignadas.list', compact('rows'));
+        }
 
-        return view('system.tareas-asignadas.list', compact('rows'));
     }
 
     /**
@@ -102,7 +111,8 @@ class TareasAsignadasController extends Controller {
             'hasta' => $save->hasta,
             'horas' => $save->horas,
             'descripcion' => $save->descripcion,
-            'url_editar' => $save->id,
+            'url_editar' => $save->url_editar,
+            'url_eliminar' => $save->url_eliminar,
             'url_lista_gastos' => $save->url_lista_gastos
         ];
 
@@ -113,14 +123,78 @@ class TareasAsignadasController extends Controller {
 
     }
 
-    public function edit($id)
+    /**
+     * @param $tarea
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function edit($tarea, $id)
     {
+        $row = $this->tareaRepo->findOrFail($tarea);
+        $prin = $this->tareaAccionRepo->findOrFail($id);
 
+        return view('system.tareas-asignadas.acciones.edit', compact('row','prin'));
     }
 
-    public function update($id)
+    /**
+     * @param Request $request
+     * @param $tarea
+     * @param $id
+     * @return array
+     */
+    public function update(Request $request, $tarea, $id)
     {
+        $this->validate($request, $this->rules);
 
+        $row = $this->tareaAccionRepo->findOrFail($id);
+
+        //VARAIBLES
+        $fecha = formatoFecha($request->input('fecha'));
+        $hora_desde = $request->input('desde');
+        $hora_hasta = $request->input('hasta');
+
+        $horas = restarHoras($fecha, $hora_desde, $hora_hasta);
+
+        $row->fecha = $fecha;
+        $row->horas = $horas;
+        $save = $this->tareaAccionRepo->update($row, $request->all());
+
+        //GUARDAR HISTORIAL
+        $this->tareaAccionRepo->saveHistory($row, $request, 'update');
+
+        //AJAX
+        return [
+            'id' => $save->id,
+            'fecha_accion' => $save->fecha_accion,
+            'desde' => $save->desde,
+            'hasta' => $save->hasta,
+            'horas' => $save->horas,
+            'descripcion' => $save->descripcion,
+            'url_editar' => $save->url_editar,
+            'url_eliminar' => $save->url_eliminar,
+            'url_lista_gastos' => $save->url_lista_gastos
+        ];
+    }
+
+    /**
+     * @param Request $request
+     * @param $tarea
+     * @param $id
+     * @return array
+     */
+    public function destroy(Request $request, $tarea, $id)
+    {
+        $row = $this->tareaAccionRepo->findOrFail($id);
+        $row->delete();
+
+        //GUARDAR HISTORIAL
+        $this->tareaAccionRepo->saveHistory($row, $request, 'delete');
+
+        $message = 'El registro se eliminó satisfactoriamente.';
+
+        return [
+            'message' => $message
+        ];
     }
 
 }
