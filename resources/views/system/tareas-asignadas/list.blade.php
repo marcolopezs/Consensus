@@ -23,7 +23,7 @@
 
         @include('flash::message')
 
-        <div id="mensajeAjax" class="alert alert-dismissable"></div>
+        @include('partials.message')
 
         <div class="col-md-12 col-sm-12">
 
@@ -113,9 +113,7 @@
     <script>
 
         $(document).on("ready", function () {
-
             var placeholder = "Seleccionar";
-
             $('.select2').select2({
                 placeholder: placeholder
             });
@@ -124,14 +122,11 @@
 
             $("#ajax").on("loaded.bs.modal", function() {
                 $('#mensajeAjax').hide();
-
                 var placeholder = "Seleccionar";
-
                 $('.select2').select2({
                     placeholder: placeholder
                 });
             });
-
         });
 
     </script>
@@ -145,10 +140,8 @@
 
     {{-- FUNCIONES --}}
     {!! HTML::script('js/js-tarea.js') !!}
-    <script>
-        $(document).on("ready", function () {
-            $("#progressbar").hide();
-        });
-    </script>
+
+    {{-- BootBox --}}
+    {!! HTML::script('assets/global/plugins/bootbox/bootbox.min.js') !!}
 
 @stop
