@@ -255,8 +255,6 @@
 
                             </div>
 
-                            <h3 class="form-section">Kardex</h3>
-
                             <div class="row">
 
                                 <div class="col-md-3">

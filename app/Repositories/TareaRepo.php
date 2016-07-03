@@ -19,6 +19,15 @@ class TareaRepo extends BaseRepo {
                     ->paginate();
     }
 
+    //FILTRAR TAREAS COMO ADMINISTRADOR
+    public function filterPaginateAdmin()
+    {
+        return $this->getModel()
+                    ->orderBy('fecha_solicitada', 'desc')
+                    ->with('expedientes','titular','concepto','abogado')
+                    ->paginate();
+    }
+
     //FILTRAR TAREAS PARA HOME
     public function filterHome($estado)
     {
