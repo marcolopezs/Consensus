@@ -7,6 +7,7 @@ use Consensus\Http\Controllers\Controller;
 
 use Consensus\Entities\TareaAccion;
 
+use Consensus\Repositories\FlujoCajaRepo;
 use Consensus\Repositories\TareaRepo;
 use Consensus\Repositories\TareaAccionRepo;
 use Illuminate\Support\Facades\Gate;
@@ -20,16 +21,20 @@ class TareasAsignadasController extends Controller {
         'descripcion' => 'required'
     ];
 
+    protected $flujoCajaRepo;
     protected $tareaRepo;
     protected $tareaAccionRepo;
 
     /**
+     * @param FlujoCajaRepo $flujoCajaRepo
      * @param TareaRepo $tareaRepo
      * @param TareaAccionRepo $tareaAccionRepo
      */
-    public function __construct(TareaRepo $tareaRepo,
+    public function __construct(FlujoCajaRepo $flujoCajaRepo,
+                                TareaRepo $tareaRepo,
                                 TareaAccionRepo $tareaAccionRepo)
     {
+        $this->flujoCajaRepo = $flujoCajaRepo;
         $this->tareaRepo = $tareaRepo;
         $this->tareaAccionRepo = $tareaAccionRepo;
     }
@@ -184,8 +189,15 @@ class TareasAsignadasController extends Controller {
      */
     public function destroy(Request $request, $tarea, $id)
     {
+        //BORRAR ACCION
         $row = $this->tareaAccionRepo->findOrFail($id);
         $row->delete();
+
+        //BORRAR GASTOS DE ACCION
+        foreach($row->flujo_caja as $item){
+            $item->delete();
+            $this->flujoCajaRepo->saveHistory($item, $request, 'delete');
+        }
 
         //GUARDAR HISTORIAL
         $this->tareaAccionRepo->saveHistory($row, $request, 'delete');
