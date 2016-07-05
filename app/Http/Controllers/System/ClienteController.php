@@ -1,12 +1,12 @@
 <?php namespace Consensus\Http\Controllers\System;
 
-use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Consensus\Http\Controllers\Controller;
 
 use Consensus\Http\Requests\ClienteRequest;
+use Consensus\Repositories\DistritoRepo;
 
 use Consensus\Entities\Cliente;
 use Consensus\Repositories\ClienteRepo;
@@ -27,6 +27,7 @@ class ClienteController extends Controller {
     ];
 
     protected $clienteRepo;
+    protected $distritoRepo;
     protected $paisRepo;
     protected $userRepo;
     protected $userProfileRepo;
@@ -35,16 +36,19 @@ class ClienteController extends Controller {
     /**
      * ClienteController constructor.
      * @param ClienteRepo $clienteRepo
+     * @param DistritoRepo $distritoRepo
      * @param PaisRepo $paisRepo
      * @param UserRepo $userRepo
      * @param UserProfileRepo $userProfileRepo
      */
     public function __construct(ClienteRepo $clienteRepo,
+                                DistritoRepo $distritoRepo,
                                 PaisRepo $paisRepo,
                                 UserRepo $userRepo,
                                 UserProfileRepo $userProfileRepo)
     {
         $this->clienteRepo = $clienteRepo;
+        $this->distritoRepo = $distritoRepo;
         $this->paisRepo = $paisRepo;
         $this->userRepo = $userRepo;
         $this->userProfileRepo = $userProfileRepo;
@@ -66,8 +70,9 @@ class ClienteController extends Controller {
     public function create()
     {
         $pais = $this->paisRepo->estadoListArray();
+        $distrito = $this->distritoRepo->estadoListArray();
 
-        return view('system.cliente.create', compact('pais'));
+        return view('system.cliente.create', compact('pais','distrito'));
     }
 
     /**
@@ -80,10 +85,12 @@ class ClienteController extends Controller {
     {
         //VARIABLES
         $pais = $request->input('pais');
+        $distrito = $request->input('distrito');
 
         //GUARDAR DATOS
         $row = new Cliente($request->all());
         $row->pais_id = $pais;
+        $row->distrito_id = $distrito;
         $this->clienteRepo->create($row, $request->all());
 
         //GUARDAR HISTORIAL
@@ -112,8 +119,9 @@ class ClienteController extends Controller {
     {
         $row = $this->clienteRepo->findOrFail($id);
         $pais = $this->paisRepo->estadoListArray();
+        $distrito = $this->distritoRepo->estadoListArray();
 
-        return view('system.cliente.edit', compact('row','pais'));
+        return view('system.cliente.edit', compact('row','pais','distrito'));
     }
 
     /**
@@ -130,9 +138,11 @@ class ClienteController extends Controller {
 
         //VARIABLES
         $pais = $request->input('pais');
+        $distrito = $request->input('distrito');
 
         //GUARDAR DATOS
         $row->pais_id = $pais;
+        $row->distrito_id = $distrito;
         $this->clienteRepo->update($row, $request->all());
 
         //GUARDAR HISTORIAL

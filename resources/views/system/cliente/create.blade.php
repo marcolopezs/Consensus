@@ -1,5 +1,4 @@
 <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
     <h4 class="modal-title">Crear nuevo registro</h4>
 </div>
 <div class="modal-body">
@@ -67,24 +66,38 @@
 
                     <div class="row">
 
-                        <div class="col-md-12">
+                        <div class="col-md-8">
                             <div class="form-group">
                                 {!! Form::label('email', 'Email', ['class' => 'control-label']) !!}
                                 {!! Form::text('email', null, ['class' => 'form-control']) !!}
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 {!! Form::label('telefono', 'Teléfono', ['class' => 'control-label']) !!}
                                 {!! Form::text('telefono', null, ['class' => 'form-control']) !!}
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 {!! Form::label('fax', 'Fax', ['class' => 'control-label']) !!}
                                 {!! Form::text('fax', null, ['class' => 'form-control']) !!}
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {!! Form::label('pais', 'País', ['class' => 'control-label']) !!}
+                                {!! Form::select('pais', ['' => ''] + $pais, 171, ['class' => 'form-control select2']) !!}
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {!! Form::label('distrito', 'Distrito', ['class' => 'control-label']) !!}
+                                {!! Form::select('distrito', ['' => ''] + $distrito, null, ['class' => 'form-control select2']) !!}
                             </div>
                         </div>
 
@@ -92,17 +105,10 @@
 
                     <div class="row">
 
-                        <div class="col-md-8">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 {!! Form::label('direccion', 'Dirección', ['class' => 'control-label']) !!}
                                 {!! Form::text('direccion', null, ['class' => 'form-control']) !!}
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                {!! Form::label('pais', 'País', ['class' => 'control-label']) !!}
-                                {!! Form::select('pais', ['' => ''] + $pais, null, ['class' => 'form-control select2']) !!}
                             </div>
                         </div>
 

@@ -164,6 +164,7 @@ class CreateInitialTables extends Migration
 
             $table->text('direccion')->nullable();
             $table->integer('pais_id')->unsigned()->nullable();
+            $table->integer('distrito_id')->unsigned()->nullable();
 
             $table->string('imagen');
             $table->string('imagen_carpeta');

@@ -54,7 +54,8 @@ class ClienteRequest extends Request
                     'telefono' => 'string',
                     'fax' => 'string',
                     'direccion' => 'required|unique:clientes,direccion',
-                    'pais' => 'required|exists:paises,id'
+                    'pais' => 'required|exists:paises,id',
+                    'distrito' => 'required|exists:distritos,id'
                 ];
             }
             case 'PUT':
@@ -72,7 +73,8 @@ class ClienteRequest extends Request
                     'telefono' => 'string',
                     'fax' => 'string',
                     'direccion' => 'required|unique:clientes,direccion,'.$this->route->getParameter('cliente'),
-                    'pais' => 'required|exists:paises,id'
+                    'pais' => 'required|exists:paises,id',
+                    'distrito' => 'required|exists:distritos,id'
                 ];
             }
             default:break;
