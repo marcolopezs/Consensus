@@ -104,7 +104,7 @@ abstract class BaseRepo {
     //LISTAR TITULO Y ID DE REGISTROS EN DONDE ESTADO ES ACTIVO Y PASARLO A ARRAY
     public function estadoListArray()
     {
-        return $this->getModel()->where('estado', '1')->lists('titulo', 'id')->toArray();
+        return $this->getModel()->where('estado', '1')->orderBy('titulo','asc')->lists('titulo', 'id')->toArray();
     }
 
 

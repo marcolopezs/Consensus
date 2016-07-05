@@ -194,7 +194,8 @@ class CreateInitialTables extends Migration
             $table->string('fax', 25);
 
             $table->text('direccion');
-            $table->integer('pais_id')->unsigned();
+            $table->integer('pais_id')->unsigned()->nullable();
+            $table->integer('distrito_id')->unsigned()->nullable();
 
             $table->boolean('estado');
             

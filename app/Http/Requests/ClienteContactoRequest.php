@@ -46,7 +46,8 @@ class ClienteContactoRequest extends Request
                     'telefono' => 'string',
                     'fax' => 'string',
                     'direccion' => 'required',
-                    'pais' => 'required|exists:paises,id'
+                    'pais' => 'required|exists:paises,id',
+                    'distrito' => 'required|exists:distritos,id'
                 ];
             }
             default:break;

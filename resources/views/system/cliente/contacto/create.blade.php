@@ -23,87 +23,94 @@
 
                         <div class="row">
 
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     {!! Form::label('contacto', 'Contacto', ['class' => 'control-label']) !!}
                                     {!! Form::text('contacto', null, ['class' => 'form-control']) !!}
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     {!! Form::label('dni', 'DNI', ['class' => 'control-label']) !!}
                                     {!! Form::text('dni', null, ['class' => 'form-control']) !!}
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     {!! Form::label('ruc', 'RUC', ['class' => 'control-label']) !!}
                                     {!! Form::text('ruc', null, ['class' => 'form-control']) !!}
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     {!! Form::label('carnet_extranjeria', 'Carnet de Extranjería', ['class' => 'control-label']) !!}
                                     {!! Form::text('carnet_extranjeria', null, ['class' => 'form-control']) !!}
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     {!! Form::label('pasaporte', 'Pasaporte', ['class' => 'control-label']) !!}
                                     {!! Form::text('pasaporte', null, ['class' => 'form-control']) !!}
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     {!! Form::label('partida_nacimiento', 'Partida Nacimiento', ['class' => 'control-label']) !!}
                                     {!! Form::text('partida_nacimiento', null, ['class' => 'form-control']) !!}
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     {!! Form::label('otros', 'Otros', ['class' => 'control-label']) !!}
                                     {!! Form::text('otros', null, ['class' => 'form-control']) !!}
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <div class="form-group">
                                     {!! Form::label('email', 'Email', ['class' => 'control-label']) !!}
                                     {!! Form::text('email', null, ['class' => 'form-control']) !!}
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     {!! Form::label('telefono', 'Teléfono', ['class' => 'control-label']) !!}
                                     {!! Form::text('telefono', null, ['class' => 'form-control']) !!}
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     {!! Form::label('fax', 'Fax', ['class' => 'control-label']) !!}
                                     {!! Form::text('fax', null, ['class' => 'form-control']) !!}
                                 </div>
                             </div>
 
-                            <div class="col-md-8">
+                            <div class="col-md-4">
                                 <div class="form-group">
-                                    {!! Form::label('direccion', 'Dirección', ['class' => 'control-label']) !!}
-                                    {!! Form::text('direccion', null, ['class' => 'form-control']) !!}
+                                    {!! Form::label('pais', 'País', ['class' => 'control-label']) !!}
+                                    {!! Form::select('pais', ['' => ''] + $pais, 171, ['class' => 'form-control select2']) !!}
                                 </div>
                             </div>
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    {!! Form::label('pais', 'País', ['class' => 'control-label']) !!}
-                                    {!! Form::select('pais', ['' => ''] + $pais, null, ['class' => 'form-control select2']) !!}
+                                    {!! Form::label('distrito', 'Distrito', ['class' => 'control-label']) !!}
+                                    {!! Form::select('distrito', ['' => ''] + $distrito, null, ['class' => 'form-control select2']) !!}
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    {!! Form::label('direccion', 'Dirección', ['class' => 'control-label']) !!}
+                                    {!! Form::text('direccion', null, ['class' => 'form-control']) !!}
                                 </div>
                             </div>
 
