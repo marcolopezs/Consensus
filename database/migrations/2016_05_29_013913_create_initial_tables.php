@@ -561,6 +561,17 @@ class CreateInitialTables extends Migration
             $table->softDeletes();
         });
 
+        Schema::create('distritos', function(Blueprint $table)
+        {
+            $table->increments('id');
+
+            $table->string('titulo')->nullable();
+            $table->boolean('estado');
+
+            $table->nullableTimestamps();
+            $table->softDeletes();
+        });
+
         Schema::create('bienes', function(Blueprint $table)
         {
             $table->increments('id');
@@ -654,6 +665,7 @@ class CreateInitialTables extends Migration
         Schema::drop('interveners');
         Schema::drop('expense_types');
         Schema::drop('paises');
+        Schema::drop('distritos');
 
         Schema::drop('bienes');
         Schema::drop('situacion_especial');
