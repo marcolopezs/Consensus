@@ -2,7 +2,6 @@
 {!! HTML::style('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') !!}
 
 <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
     <h4 class="modal-title">Nuevo acción</h4>
 </div>
 <div class="modal-body">
