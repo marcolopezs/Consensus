@@ -74,7 +74,6 @@
                                             <li><a href="#" class="cliente-contacto" data-id="{{ $row_id }}" data-list="{{ route('cliente.contactos.index', $row_id) }}" data-create="{{ route('cliente.contactos.create', $row_id) }}">Contacto</a></li>
                                             <li><a href="#" class="cliente-documento" data-id="{{ $row_id }}" data-list="{{ route('cliente.documentos.index', $row_id) }}" data-create="{{ route('cliente.documentos.create', $row_id) }}">Documentos</a></li>
                                             <li><a href="{{ route('cliente.user.get', $row_id) }}">Crear usuario</a></li>
-                                            <li><a href="javascript:;">Historial</a></li>
                                         </ul>
                                     </div>
                                 </td>
