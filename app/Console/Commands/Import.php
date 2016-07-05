@@ -104,7 +104,8 @@ class Import extends Command
                     'fax' => $item->fax,
                     'dni' => $item->dni,
                     'direccion' => $item->direccion,
-                    'pais_id' => $item->pais_id
+                    'pais_id' => $item->pais_id,
+                    'estado' => $item->estado
                 ]);
             }
 
