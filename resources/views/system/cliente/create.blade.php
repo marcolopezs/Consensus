@@ -202,5 +202,5 @@
             $('#ajax').modal('hide');
         }
 
-    })
+    });
 </script>
