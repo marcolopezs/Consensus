@@ -350,6 +350,19 @@ abstract class BaseRepo {
         ]);
     }
 
+    //GUARDAR HISTORIAL
+    public function saveHistoryEstado($entity, $estado, $type)
+    {
+        $contenido = '{"estado":"'.$estado.'"}';
+
+        $entity->histories()->create([
+            'user_id' => auth()->user()->id,
+            'type' => $type,
+            'opcion' => 'text',
+            'descripcion' => $contenido
+        ]);
+    }
+
     public function saveHistoryFile($entity, $archivo, $type)
     {
         $contenido = json_encode($archivo);
