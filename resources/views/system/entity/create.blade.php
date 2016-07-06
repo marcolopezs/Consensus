@@ -41,9 +41,7 @@
 
                 </div>
 
-                <div class="progress progress-striped active">
-                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
-                </div>
+                @include('partials.progressbar')
 
             {!! Form::close() !!}
 
@@ -51,56 +49,64 @@
     </div>
 </div>
 <div class="modal-footer">
-    <a class="btn default" id="formCreateClose" data-dismiss="modal">Cerrar</a>
+    <a class="btn default" id="formCreateClose">Cerrar</a>
     <a class="btn blue" id="formCreateSubmit" href="javascript:;">Guardar</a>
 </div>
 
 <script>
-
-    $('.progress').hide();
-
     $("#formCreateSubmit").on("click", function(e){
-
         e.preventDefault();
 
         var form = $("#formCreate");
         var url = form.attr('action');
         var data = form.serialize();
 
-        $('.progress').show();
-
-        $.post(url, data, function(result){
-            $('.progress').hide();
-            successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>'+result.message+'</div>';
-            $(".form-content").html(successHtml);
-            form[0].reset();
-        }).fail(function(result){
-            $('.progress').hide();
-            console.log(result);
-
-            if(result.status === 422){
-
-                var errors = result.responseJSON;
-
-                errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';
-                $.each( errors, function( key, value ) {
-                    errorsHtml += '<li>' + value[0] + '</li>';
-                });
-                errorsHtml += '</ul></di>';
-
-                $('.form-content').html(errorsHtml);
-
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: data,
+            beforeSend: function() { $('.progress').show(); },
+            complete: function() { $('.progress').hide(); },
+            success: function(result) {
+                var successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>'+result.message+'</div>';
+                $(".form-content").html(successHtml);
+                form[0].reset();
+            },
+            error: function(result) {
+                if(result.status === 422){
+                    var errors = result.responseJSON;
+                    var errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';
+                    $.each( errors, function( key, value ) {
+                        errorsHtml += '<li>' + value[0] + '</li>';
+                    });
+                    errorsHtml += '</ul></di>';
+                    $('.form-content').html(errorsHtml);
+                }else{
+                    errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';
+                    errorsHtml += '<li>Se ha producido un error. Intentelo de nuevo.</li>';
+                    errorsHtml += '</ul></div>';
+                    $('.form-content').html(errorsHtml);
+                }
             }
-
         });
-
     });
 
     $("#formCreateClose").on("click", function (e) {
         e.preventDefault();
 
-        $("#ajax-modal").modal('hide');
-        location.reload();
+        var titulo = $("#titulo").val(), area = $("#area").val(), funcionario = $("#funcionario").val(), otro = $("#otro").val();
+
+        if(titulo != "" || area != "" || funcionario != "" || otro != ""){
+            bootbox.dialog({
+                title: 'Alerta',
+                message: 'El fomulario tiene datos que ha ingresado. ¿Desea cerrar sin guardar?',
+                closeButton: false,
+                buttons: {
+                    cancel: { label: 'No', className: 'default' },
+                    success: { label: 'Si', className: 'blue', callback: function() { $('#ajax').modal('hide'); } }
+                }
+            });
+        }else{ $('#ajax').modal('hide'); }
 
     });
 
