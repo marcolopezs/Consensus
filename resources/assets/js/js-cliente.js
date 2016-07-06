@@ -50,7 +50,7 @@ $(".cliente-contacto").on("click", function(e) {
             $(".contacto-cerrar").on("click", function (e) {
                 e.preventDefault();
                 var id = $(this).data('id');
-                $("#contacto-" + id).fadeOut();
+                $("#contacto-" + id).remove();
             });
         },
         beforeSend: function () { $('.progress').show(); },
@@ -115,7 +115,7 @@ $(".cliente-documento").on("click", function(e) {
             $(".documento-cerrar").on("click", function (e) {
                 e.preventDefault();
                 var id = $(this).data('id');
-                $("#documento-" + id).fadeOut();
+                $("#documento-" + id).remove();
             });
         },
         beforeSend: function () { $('.progress').show(); },
