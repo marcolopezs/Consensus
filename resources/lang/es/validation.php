@@ -200,7 +200,8 @@ return [
         'exito'                 => 'Éxito',
         'referencia'            => 'Referencia',
         'monto'                 => 'Monto',
-        'money_id'              => 'Moneda'
+        'money_id'              => 'Moneda',
+        'distrito'              => 'Distrito'
     ],
 
 ];
