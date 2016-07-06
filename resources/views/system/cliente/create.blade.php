@@ -124,10 +124,12 @@
     </div>
 </div>
 <div class="modal-footer">
-    <a class="btn default" id="formCreateClose" data-dismiss="modal">Cerrar</a>
+    <a class="btn default" id="formCreateClose">Cerrar</a>
     <a class="btn blue" id="formCreateSubmit" href="javascript:;">Guardar</a>
 </div>
 
+{{-- BootBox --}}
+{!! HTML::script('assets/global/plugins/bootbox/bootbox.min.js') !!}
 <script>
     $("#formCreateSubmit").on("click", function(e){
         e.preventDefault();
@@ -168,5 +170,37 @@
         });
 
     });
-</script>
 
+    $("#formCreateClose").on("click", function (e) {
+        e.preventDefault();
+
+        var cliente = $("#cliente").val(), dni = $("#dni").val(), ruc = $("#ruc").val(), carnet = $("#carnet_extranjeria").val(),
+                pasaporte = $("#pasaporte").val(), partida = $("#partida_nacimiento").val(), otros = $("#otros").val(), email = $("#email").val(),
+                telefono = $("#telefono").val(), fax = $("#fax").val(), pais = $("#pais").val(), distrito = $("#distrito").val(), direccion = $("#direccion").val();
+
+        if(cliente != "" || dni != "" || ruc != "" || carnet != "" || pasaporte != "" || partida != "" || otros != "" || email != "" || telefono != "" || fax != "" || pais != 171 || distrito != "" || direccion != "")
+        {
+            bootbox.dialog({
+                title: 'Alerta',
+                message: 'El fomulario tiene datos que ha ingresado. ¿Desea cerrar sin guardar?',
+                closeButton: false,
+                buttons: {
+                    cancel: {
+                        label: 'No',
+                        className: 'default'
+                    },
+                    success: {
+                        label: 'Si',
+                        className: 'blue',
+                        callback: function() {
+                            $('#ajax').modal('hide');
+                        }
+                    }
+                }
+            });
+        }else{
+            $('#ajax').modal('hide');
+        }
+
+    })
+</script>
