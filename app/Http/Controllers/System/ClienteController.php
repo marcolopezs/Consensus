@@ -79,7 +79,7 @@ class ClienteController extends Controller {
      * Store a newly created resource in storage.
      *
      * @param ClienteRequest $request
-     * @return Response
+     * @return array
      */
     public function store(ClienteRequest $request)
     {
@@ -96,6 +96,9 @@ class ClienteController extends Controller {
 
         //GUARDAR HISTORIAL
         $this->clienteRepo->saveHistory($row, $request, 'create');
+
+        //MENSAJE
+        $mensaje = 'El registro se agregó satisfactoriamente.';
 
         //AJAX
         return [
