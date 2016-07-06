@@ -91,22 +91,16 @@ class ClienteController extends Controller {
         $row = new Cliente($request->all());
         $row->pais_id = $pais;
         $row->distrito_id = $distrito;
+        $row->estado = 1;
         $this->clienteRepo->create($row, $request->all());
 
         //GUARDAR HISTORIAL
         $this->clienteRepo->saveHistory($row, $request, 'create');
 
-        //MENSAJE
-        $mensaje = 'El registro se agregó satisfactoriamente.';
-
         //AJAX
-        if($request->ajax())
-        {
-            return response()->json([
-                'message' => $mensaje
-            ]);
-        }
-
+        return [
+            'message' => $mensaje
+        ];
     }
 
     /**
@@ -152,12 +146,9 @@ class ClienteController extends Controller {
         $mensaje = 'El registro se actualizó satisfactoriamente.';
 
         //AJAX
-        if($request->ajax())
-        {
-            return response()->json([
-                'message' => $mensaje
-            ]);
-        }
+        return [
+            'message' => $mensaje
+        ];
     }
 
 
@@ -288,7 +279,7 @@ class ClienteController extends Controller {
         $row->estado = $estado;
         $this->clienteRepo->update($row, $request->all());
 
-        $this->clienteRepo->saveHistory($row, $request, 'update');
+        $this->clienteRepo->saveHistoryEstado($row, $estado, 'update');
 
         $message = 'El registro se modificó satisfactoriamente.';
 
