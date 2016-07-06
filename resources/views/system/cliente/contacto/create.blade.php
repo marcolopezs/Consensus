@@ -151,6 +151,7 @@
                 $(".form-content").html(successHtml);
                 $(".select2").val(null).trigger('change');
                 form[0].reset();
+                $("#pais.select2").val(171).trigger('change');
 
                 var html = '<tr id="contacto-select-'+ result.id +'">' +
                                 '<td>'+ result.contacto +'</td>' +
