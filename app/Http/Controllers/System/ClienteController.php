@@ -269,4 +269,32 @@ class ClienteController extends Controller {
         }
     }
 
+
+    /*
+     * Cambiar Estado
+     */
+    /**
+     * @param $id
+     * @param Request $request
+     * @return array
+     */
+    public function estado($id, Request $request)
+    {
+        //BUSCAR ID
+        $row = $this->clienteRepo->findOrFail($id);
+
+        if($row->estado == 0){ $estado = 1; }else{ $estado = 0; }
+
+        $row->estado = $estado;
+        $this->clienteRepo->update($row, $request->all());
+
+        $this->clienteRepo->saveHistory($row, $request, 'update');
+
+        $message = 'El registro se modificó satisfactoriamente.';
+
+        return [
+            'message' => $message,
+            'estado'  => $estado
+        ];
+    }
 }

@@ -16,7 +16,7 @@
 
         @include('flash::message')
 
-        <div id="mensajeAjax" class="alert alert-dismissable"></div>
+        @include('partials.message')
 
         <div class="col-md-12 col-sm-12">
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
@@ -60,7 +60,7 @@
                                 <td>{{ $row_ruc }}</td>
                                 <td>{{ $row_email }}</td>
                                 <td class="text-center">
-                                    <a id="estado-{{ $row_id }}" href="#" data-method="put" class="btn-oferta">
+                                    <a id="estado-{{ $row_id }}" href="#" class="btn-estado" data-id="{{ $row_id }}" data-title="{{ $row_cliente }}" data-url="{{ route('cliente.estado', $row_id) }}">
                                         {!! $row_estado ? '<span class="label label-success">'.trans('system.estado.'.$row_estado).'</span>' : '<span class="label label-default">'.trans('system.estado.'.$row_estado).'</span>' !!}
                                     </a>
                                 </td>
@@ -108,10 +108,15 @@
 @stop
 
 @section('contenido_footer')
-
 {{-- Select2 --}}
 {!! HTML::script('assets/global/plugins/select2/js/select2.full.min.js') !!}
 {!! HTML::script('assets/global/plugins/select2/js/i18n/es.js') !!}
+
+{{-- BootBox --}}
+{!! HTML::script('assets/global/plugins/bootbox/bootbox.min.js') !!}
+
+{{-- Cambiar Estado --}}
+{!! HTML::script('js/js-cambiar-estado.js') !!}
 
 {{-- Script Cliente --}}
 {!! HTML::script('js/js-cliente.js') !!}

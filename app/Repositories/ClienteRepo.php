@@ -20,4 +20,17 @@ class ClienteRepo extends BaseRepo {
                     ->get();
     }
 
+    //BUSQUEDA DE REGISTROS POR TITULO Y ESTADO y ORDENARLO POR SELECCION DEL USUARIO
+    public function findOrder(Request $request)
+    {
+        return $this->getModel()
+                    ->cliente($request->get('cliente'))
+                    ->dni($request->get('dni'))
+                    ->ruc($request->get('ruc'))
+                    ->email($request->get('email'))
+                    ->estado($request->get('estado'))
+                    ->order($request->get('order'))
+                    ->paginate();
+    }
+
 }
