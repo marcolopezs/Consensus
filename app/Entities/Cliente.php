@@ -9,6 +9,7 @@ class Cliente extends BaseEntity {
     protected $dates = ['deleted_at'];
 
     protected $fillable = ['id','cliente','dni','ruc','carnet_extranjeria','pasaporte','partidad_nacimiento','otros','email','telefono','fax','direccion','pais_id','estado'];
+    protected $appends = ['url_estado','url_editar','url_contactos_list','url_contactos_create','url_documentos_list','url_documentos_create','url_user_create'];
 
     public function expedientes()
     {
@@ -29,6 +30,46 @@ class Cliente extends BaseEntity {
     {
         return $this->cliente;
     }
+
+    /*
+     * APPENDS
+     */
+    public function getUrlEstadoAttribute()
+    {
+        return route('cliente.estado', $this->id);
+    }
+
+    public function getUrlEditarAttribute()
+    {
+        return route('cliente.edit', $this->id);
+    }
+
+    public function getUrlContactosListAttribute()
+    {
+        return route('cliente.contactos.index', $this->id);
+    }
+
+    public function getUrlContactosCreateAttribute()
+    {
+        return route('cliente.contactos.create', $this->id);
+    }
+
+    public function getUrlDocumentosListAttribute()
+    {
+        return route('cliente.documentos.index', $this->id);
+    }
+
+    public function getUrlDocumentosCreateAttribute()
+    {
+        return route('cliente.documentos.create', $this->id);
+    }
+
+    public function getUrlUserCreateAttribute()
+    {
+        return route('cliente.user.get', $this->id);
+    }
+
+
 
     /*
      * SCOPES
