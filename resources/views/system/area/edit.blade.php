@@ -27,9 +27,7 @@
 
                 </div>
 
-                <div class="progress progress-striped active">
-                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
-                </div>
+                @include('partials.progressbar')
 
             {!! Form::close() !!}
 
@@ -42,51 +40,40 @@
 </div>
 
 <script>
-
-    $('.progress').hide();
-
     $("#formEditSubmit").on("click", function(e){
-
         e.preventDefault();
 
         var form = $("#formEdit");
         var url = form.attr('action');
         var data = form.serialize();
 
-        $('.progress').show();
-
-        $.post(url, data, function(result){
-            $('.progress').hide();
-            successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>'+result.message+'</div>';
-            $(".form-content").html(successHtml);
-        }).fail(function(result){
-            $('.progress').hide();
-            console.log(result);
-
-            if(result.status === 422){
-
-                var errors = result.responseJSON;
-
-                errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';
-                $.each( errors, function( key, value ) {
-                    errorsHtml += '<li>' + value[0] + '</li>';
-                });
-                errorsHtml += '</ul></di>';
-
-                $('.form-content').html(errorsHtml);
-
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: data,
+            beforeSend: function() { $('.progress').show(); },
+            complete: function() { $('.progress').hide(); },
+            success: function(result) {
+                var successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>'+result.message+'</div>';
+                $(".form-content").html(successHtml);
+            },
+            error: function(result) {
+                if(result.status === 422){
+                    var errors = result.responseJSON;
+                    var errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';
+                    $.each( errors, function( key, value ) {
+                        errorsHtml += '<li>' + value[0] + '</li>';
+                    });
+                    errorsHtml += '</ul></di>';
+                    $('.form-content').html(errorsHtml);
+                }else{
+                    errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';
+                    errorsHtml += '<li>Se ha producido un error. Intentelo de nuevo.</li>';
+                    errorsHtml += '</ul></div>';
+                    $('.form-content').html(errorsHtml);
+                }
             }
-
         });
 
     });
-
-    $("#formCreateClose").on("click", function (e) {
-        e.preventDefault();
-
-        $("#ajax-modal").modal('hide');
-        location.reload();
-
-    });
-
 </script>

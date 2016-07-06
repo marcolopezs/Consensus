@@ -33,20 +33,16 @@
         </div>
     </div>
 
-    <div class="progress progress-striped active" style="display: none;">
-        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
-    </div>
+    @include('partials.progressbar')
 
 </div>
 <div class="modal-footer">
-    <a class="btn default" id="formCreateClose" data-dismiss="modal">Cerrar</a>
+    <a class="btn default" id="formCreateClose">Cerrar</a>
     <a class="btn blue" id="formCreateSubmit" href="javascript:;">Guardar</a>
 </div>
 
 <script>
-
     $("#formCreateSubmit").on("click", function(e){
-
         e.preventDefault();
 
         var form = $("#formCreate");
@@ -60,22 +56,14 @@
             beforeSend: function() { $('.progress').show(); },
             complete: function() { $('.progress').hide(); },
             success: function(result) {
-                successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>El registro se agregó satisfactoriamente.</div>';
+                var successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>El registro se agregó satisfactoriamente.</div>';
                 $(".form-content").html(successHtml);
-                $(".select2-selection__rendered").empty();
                 form[0].reset();
-
-                var html = '<tr class="odd gradeX" data-id="'+result.id+'" data-title="'+result.titulo+'">'+
-                                '<td>'+result.titulo+'</td>'+
-                                '<td>'+result.email+'</td>'+
-                                '<td class="text-center"></td>';
-
-                $('.table tbody tr:first').before(html);
             },
             error: function(result) {
                 if(result.status === 422){
                     var errors = result.responseJSON;
-                    errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';
+                    var errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';
                     $.each( errors, function( key, value ) {
                         errorsHtml += '<li>' + value[0] + '</li>';
                     });
@@ -92,4 +80,22 @@
 
     });
 
+    $("#formCreateClose").on("click", function (e) {
+        e.preventDefault();
+
+        var titulo = $("#titulo").val(), email = $("#email").val();
+
+        if(titulo != "" || email != ""){
+            bootbox.dialog({
+                title: 'Alerta',
+                message: 'El fomulario tiene datos que ha ingresado. ¿Desea cerrar sin guardar?',
+                closeButton: false,
+                buttons: {
+                    cancel: { label: 'No', className: 'default' },
+                    success: { label: 'Si', className: 'blue', callback: function() { $('#ajax').modal('hide'); } }
+                }
+            });
+        }else{ $('#ajax').modal('hide'); }
+
+    });
 </script>
