@@ -121,9 +121,7 @@
 {{-- Script Cliente --}}
 {!! HTML::script('js/js-cliente.js') !!}
 <script>
-
     $(document).on("ready", function () {
-
         $("#ajax").on("loaded.bs.modal", function() {
             var placeholder = "Seleccionar";
 
@@ -131,11 +129,7 @@
                 placeholder: placeholder
             });
         });
-
-        $('#mensajeAjax').hide();
-
     });
-
 </script>
 
 @stop
