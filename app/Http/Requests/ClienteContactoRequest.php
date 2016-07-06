@@ -36,8 +36,8 @@ class ClienteContactoRequest extends Request
             {
                 return [
                     'contacto' => 'required',
-                    'dni' => 'required_without_all:ruc,carnet_extranjeria,pasaporte,partida_nacimiento,otros|numeric',
-                    'ruc' => 'required_without_all:dni,carnet_extranjeria,pasaporte,partida_nacimiento,otros|numeric',
+                    'dni' => 'required_without_all:ruc,carnet_extranjeria,pasaporte,partida_nacimiento,otros|numeric|digits:8',
+                    'ruc' => 'required_without_all:dni,carnet_extranjeria,pasaporte,partida_nacimiento,otros|numeric|digits:8',
                     'carnet_extranjeria' => 'required_without_all:dni,ruc,pasaporte,partida_nacimiento,otros',
                     'pasaporte' => 'required_without_all:dni,ruc,carnet_extranjeria,partida_nacimiento,otros',
                     'partida_nacimiento' => 'required_without_all:dni,ruc,carnet_extranjeria,pasaporte,otros',
