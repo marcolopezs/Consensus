@@ -116,9 +116,7 @@
 
                 </div>
 
-                <div class="progress progress-striped active">
-                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
-                </div>
+                @include('partials.progressbar')
 
             {!! Form::close() !!}
 
@@ -131,11 +129,7 @@
 </div>
 
 <script>
-
-    $('.progress').hide();
-
     $("#formCreateSubmit").on("click", function(e){
-
         e.preventDefault();
 
         var form = $("#formCreate");
@@ -147,17 +141,18 @@
             type: 'POST',
             data: data,
             success: function (result) {
-                successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>'+result.message+'</div>';
+                var successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>El registro se agregó satisfactoriamente.</div>';
                 $(".form-content").html(successHtml);
-                $(".select2-selection__rendered").empty();
+                $(".select2").val(null).trigger('change');
                 form[0].reset();
+                $("#pais.select2").val(171).trigger('change');
             },
             beforeSend: function () { $('.progress').show(); },
             complete: function () { $('.progress').hide(); },
             error: function (result){
                 if(result.status === 422){
                     var errors = result.responseJSON;
-                    errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';
+                    var errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';
                     $.each( errors, function( key, value ) {
                         errorsHtml += '<li>' + value[0] + '</li>';
                     });
@@ -173,6 +168,5 @@
         });
 
     });
-
 </script>
 
