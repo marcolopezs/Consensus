@@ -41,30 +41,6 @@ class BaseEntity extends Model{
         }
     }
 
-    public function scopeCliente($query, $field)
-    {
-        if(trim($field) != "")
-        {
-            $query->where('cliente', 'LIKE', "%$field%");
-        }
-    }
-
-    public function scopeDni($query, $field)
-    {
-        if(trim($field) != "")
-        {
-            $query->where('dni', 'LIKE', "%$field%");
-        }
-    }
-
-    public function scopeRuc($query, $field)
-    {
-        if(trim($field) != "")
-        {
-            $query->where('ruc', 'LIKE', "%$field%");
-        }
-    }
-
     public function scopeEmail($query, $field)
     {
         if(trim($field) != "")
