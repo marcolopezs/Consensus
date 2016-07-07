@@ -1,6 +1,7 @@
 <?php namespace Consensus\Http\Controllers\System;
 
 use Auth;
+use Consensus\Http\Requests\TariffRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
@@ -10,12 +11,6 @@ use Consensus\Entities\Tariff;
 use Consensus\Repositories\TariffRepo;
 
 class TariffController extends Controller {
-
-    protected  $rules = [
-        'titulo' => 'required',
-        'abrev' => 'string',
-        'estado' => 'required|in:0,1'
-    ];
 
     protected $tariffRepo;
 
@@ -52,13 +47,11 @@ class TariffController extends Controller {
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param TariffRequest|Request $request
+     * @return Response
      */
-    public function store(Request $request)
+    public function store(TariffRequest $request)
     {
-        $this->validate($request, $this->rules);
-
         //GUARDAR DATOS
         $row = new Tariff($request->all());
         $row->estado = 1;
@@ -93,17 +86,14 @@ class TariffController extends Controller {
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param TariffRequest|Request $request
+     * @param  int $id
+     * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(TariffRequest $request, $id)
     {
         //BUSCAR ID
         $row = $this->tariffRepo->findOrFail($id);
-
-        //VALIDACION DE DATOS
-        $this->validate($request, $this->rules);
 
         //GUARDAR DATOS
         $this->tariffRepo->update($row, $request->all());
