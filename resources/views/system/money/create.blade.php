@@ -42,9 +42,20 @@
     </div>
 </div>
 <div class="modal-footer">
-    <a class="btn default" id="formCreateClose" data-dismiss="modal">Cerrar</a>
+    <a class="btn default" id="formCreateClose">Cerrar</a>
     <a class="btn blue" id="formCreateSubmit" href="javascript:;">Guardar</a>
 </div>
 
+{{-- BootBox --}}
+{!! HTML::script('assets/global/plugins/bootbox/bootbox.min.js') !!}
+{!! HTML::script('js/js-form-close.js') !!}
+
 {{-- JS Create --}}
 {!! HTML::script('js/js-create-edit.js') !!}
+<script>
+    $("#formCreateClose").on("click", function (e) {
+        e.preventDefault();
+        var titulo = $("#titulo").val(), valor = $("#valor").val(), simbolo = $("#simbolo").val();
+        formClose([titulo, valor, simbolo]);
+    });
+</script>

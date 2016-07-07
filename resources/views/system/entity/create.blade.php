@@ -53,26 +53,16 @@
     <a class="btn blue" id="formCreateSubmit" href="javascript:;">Guardar</a>
 </div>
 
+{{-- BootBox --}}
+{!! HTML::script('assets/global/plugins/bootbox/bootbox.min.js') !!}
+{!! HTML::script('js/js-form-close.js') !!}
+
 {{-- JS Create --}}
 {!! HTML::script('js/js-create-edit.js') !!}
 <script>
     $("#formCreateClose").on("click", function (e) {
         e.preventDefault();
-
         var titulo = $("#titulo").val(), area = $("#area").val(), funcionario = $("#funcionario").val(), otro = $("#otro").val();
-
-        if(titulo != "" || area != "" || funcionario != "" || otro != ""){
-            bootbox.dialog({
-                title: 'Alerta',
-                message: 'El fomulario tiene datos que ha ingresado. ¿Desea cerrar sin guardar?',
-                closeButton: false,
-                buttons: {
-                    cancel: { label: 'No', className: 'default' },
-                    success: { label: 'Si', className: 'blue', callback: function() { $('#ajax').modal('hide'); } }
-                }
-            });
-        }else{ $('#ajax').modal('hide'); }
-
+        formClose([titulo, area, funcionario, otro]);
     });
-
 </script>

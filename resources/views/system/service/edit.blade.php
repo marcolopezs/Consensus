@@ -11,27 +11,17 @@
 
                 <div class="form-body">
 
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="form-group">
                             {!! Form::label('titulo', 'Titulo') !!}
                             {!! Form::text('titulo', null, ['class' => 'form-control']) !!}
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="form-group">
                             {!! Form::label('dias_ejecucion', 'Dias Ejecución') !!}
                             {!! Form::text('dias_ejecucion', null, ['class' => 'form-control']) !!}
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            {!! Form::label('estado', 'Estado') !!}
-                            <div class="radio-list">
-                                <label class="radio-inline">{!! Form::radio('estado', '1', null,  ['id' => 'estado']) !!}Activo</label>
-                                <label class="radio-inline">{!! Form::radio('estado', '0', null,  ['id' => 'estado']) !!}No activo</label>
-                            </div>
                         </div>
                     </div>
 

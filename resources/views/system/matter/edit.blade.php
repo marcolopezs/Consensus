@@ -18,16 +18,6 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            {!! Form::label('estado', 'Estado') !!}
-                            <div class="radio-list">
-                                <label class="radio-inline">{!! Form::radio('estado', '1', null,  ['id' => 'estado']) !!}Activo</label>
-                                <label class="radio-inline">{!! Form::radio('estado', '0', null,  ['id' => 'estado']) !!}No activo</label>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
 
                 @include('partials.progressbar')

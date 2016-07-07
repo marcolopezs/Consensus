@@ -22,4 +22,5 @@ elixir(function(mix) {
     mix.scripts(['js-cambiar-estado.js'], 'public/js/js-cambiar-estado.js');
     mix.scripts(['js-tarea.js'], 'public/js/js-tarea.js');
     mix.scripts(['js-create-edit.js'], 'public/js/js-create-edit.js');
+    mix.scripts(['js-form-close.js'], 'public/js/js-form-close.js');
 });

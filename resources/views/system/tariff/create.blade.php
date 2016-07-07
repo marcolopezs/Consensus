@@ -11,27 +11,17 @@
 
                 <div class="form-body">
 
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="form-group">
                             {!! Form::label('titulo', 'Titulo') !!}
                             {!! Form::text('titulo', null, ['class' => 'form-control']) !!}
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="form-group">
                             {!! Form::label('abrev', 'Abreviatura') !!}
                             {!! Form::text('abrev', null, ['class' => 'form-control']) !!}
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            {!! Form::label('estado', 'Estado') !!}
-                            <div class="radio-list">
-                                <label class="radio-inline">{!! Form::radio('estado', '1', null,  ['id' => 'estado']) !!}Activo</label>
-                                <label class="radio-inline">{!! Form::radio('estado', '0', null,  ['id' => 'estado']) !!}No activo</label>
-                            </div>
                         </div>
                     </div>
 
@@ -45,9 +35,20 @@
     </div>
 </div>
 <div class="modal-footer">
-    <a class="btn default" id="formCreateClose" data-dismiss="modal">Cerrar</a>
+    <a class="btn default" id="formCreateClose">Cerrar</a>
     <a class="btn blue" id="formCreateSubmit" href="javascript:;">Guardar</a>
 </div>
 
+{{-- BootBox --}}
+{!! HTML::script('assets/global/plugins/bootbox/bootbox.min.js') !!}
+{!! HTML::script('js/js-form-close.js') !!}
+
 {{-- JS Create --}}
 {!! HTML::script('js/js-create-edit.js') !!}
+<script>
+    $("#formCreateClose").on("click", function (e) {
+        e.preventDefault();
+        var titulo = $("#titulo").val(), abrev = $("#abrev").val();
+        formClose([titulo, abrev]);
+    });
+</script>

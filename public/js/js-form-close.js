@@ -1,0 +1,1 @@
+function formClose(a){var e="";a.forEach(function(a){""!=a&&(e+=a)}),""!=e?bootbox.dialog({title:"Alerta",message:"El fomulario tiene datos que ha ingresado. ¿Desea cerrar sin guardar?",closeButton:!1,buttons:{cancel:{label:"No",className:"default"},success:{label:"Si",className:"blue",callback:function(){$("#ajax").modal("hide")}}}}):$("#ajax").modal("hide")}

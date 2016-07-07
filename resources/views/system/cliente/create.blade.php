@@ -130,6 +130,7 @@
 
 {{-- BootBox --}}
 {!! HTML::script('assets/global/plugins/bootbox/bootbox.min.js') !!}
+{!! HTML::script('js/js-form-close.js') !!}
 <script>
     $("#formCreateSubmit").on("click", function(e){
         e.preventDefault();
@@ -178,29 +179,6 @@
                 pasaporte = $("#pasaporte").val(), partida = $("#partida_nacimiento").val(), otros = $("#otros").val(), email = $("#email").val(),
                 telefono = $("#telefono").val(), fax = $("#fax").val(), pais = $("#pais").val(), distrito = $("#distrito").val(), direccion = $("#direccion").val();
 
-        if(cliente != "" || dni != "" || ruc != "" || carnet != "" || pasaporte != "" || partida != "" || otros != "" || email != "" || telefono != "" || fax != "" || pais != 171 || distrito != "" || direccion != "")
-        {
-            bootbox.dialog({
-                title: 'Alerta',
-                message: 'El fomulario tiene datos que ha ingresado. ¿Desea cerrar sin guardar?',
-                closeButton: false,
-                buttons: {
-                    cancel: {
-                        label: 'No',
-                        className: 'default'
-                    },
-                    success: {
-                        label: 'Si',
-                        className: 'blue',
-                        callback: function() {
-                            $('#ajax').modal('hide');
-                        }
-                    }
-                }
-            });
-        }else{
-            $('#ajax').modal('hide');
-        }
-
+        formClose([cliente, dni, ruc, carnet, pasaporte, partida, otros, email, telefono, fax, distrito, direccion]);
     });
 </script>
