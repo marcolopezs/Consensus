@@ -143,6 +143,8 @@ class AreaController extends Controller {
         $row->estado = $estado;
         $this->areaRepo->update($row, $request->all());
 
+        $this->areaRepo->saveHistoryEstado($row, $estado, 'update');
+
         $message = 'El registro se modificó satisfactoriamente.';
 
         if($request->ajax())

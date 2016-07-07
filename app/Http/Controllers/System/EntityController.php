@@ -144,6 +144,8 @@ class EntityController extends Controller {
         $row->estado = $estado;
         $this->entityRepo->update($row, $request->all());
 
+        $this->entityRepo->saveHistoryEstado($row, $estado, 'update');
+
         $message = 'El registro se modificó satisfactoriamente.';
 
         if($request->ajax())

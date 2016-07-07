@@ -144,6 +144,8 @@ class TariffController extends Controller {
         $row->estado = $estado;
         $this->tariffRepo->update($row, $request->all());
 
+        $this->tariffRepo->saveHistoryEstado($row, $estado, 'update');
+
         $message = 'El registro se modificó satisfactoriamente.';
 
         if($request->ajax())

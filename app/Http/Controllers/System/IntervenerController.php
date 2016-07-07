@@ -140,6 +140,8 @@ class IntervenerController extends Controller {
         $row->estado = $estado;
         $this->intervenerRepo->update($row, $request->all());
 
+        $this->intervenerRepo->saveHistoryEstado($row, $estado, 'update');
+
         $message = 'El registro se modificó satisfactoriamente.';
 
         if($request->ajax())

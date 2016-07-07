@@ -140,6 +140,8 @@ class InstanceController extends Controller {
         $row->estado = $estado;
         $this->instanceRepo->update($row, $request->all());
 
+        $this->instanceRepo->saveHistoryEstado($row, $estado, 'update');
+
         $message = 'El registro se modificó satisfactoriamente.';
 
         if($request->ajax())

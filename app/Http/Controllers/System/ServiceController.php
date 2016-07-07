@@ -189,6 +189,8 @@ class ServiceController extends Controller {
         $row->estado = $estado;
         $this->serviceRepo->update($row, $request->all());
 
+        $this->serviceRepo->saveHistoryEstado($row, $estado, 'update');
+
         $message = 'El registro se modificó satisfactoriamente.';
 
         if($request->ajax())

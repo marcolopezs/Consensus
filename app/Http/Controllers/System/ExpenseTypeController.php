@@ -140,6 +140,8 @@ class ExpenseTypeController extends Controller {
         $row->estado = $estado;
         $this->expenseTypeRepo->update($row, $request->all());
 
+        $this->expenseTypeRepo->saveHistoryEstado($row, $estado, 'update');
+
         $message = 'El registro se modificó satisfactoriamente.';
 
         if($request->ajax())

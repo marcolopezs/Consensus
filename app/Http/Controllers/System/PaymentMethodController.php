@@ -143,6 +143,8 @@ class PaymentMethodController extends Controller {
         $row->estado = $estado;
         $this->paymentMethodRepo->update($row, $request->all());
 
+        $this->paymentMethodRepo->saveHistoryEstado($row, $estado, 'update');
+
         $message = 'El registro se modificó satisfactoriamente.';
 
         if($request->ajax())

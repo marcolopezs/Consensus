@@ -136,12 +136,14 @@ class MatterController extends Controller {
     public function estado($id, Request $request)
     {
         //BUSCAR ID
-        $row = $this->areaRepo->findOrFail($id);
+        $row = $this->matterRepo->findOrFail($id);
 
         if($row->estado == 0){ $estado = 1; }else{ $estado = 0; }
 
         $row->estado = $estado;
-        $this->areaRepo->update($row, $request->all());
+        $this->matterRepo->update($row, $request->all());
+
+        $this->matterRepo->saveHistoryEstado($row, $estado, 'update');
 
         $message = 'El registro se modificó satisfactoriamente.';
 

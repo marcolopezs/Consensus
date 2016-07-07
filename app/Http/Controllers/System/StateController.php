@@ -143,6 +143,8 @@ class StateController extends Controller {
         $row->estado = $estado;
         $this->stateRepo->update($row, $request->all());
 
+        $this->stateRepo->saveHistoryEstado($row, $estado, 'update');
+
         $message = 'El registro se modificó satisfactoriamente.';
 
         if($request->ajax())

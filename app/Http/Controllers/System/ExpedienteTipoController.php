@@ -141,6 +141,8 @@ class ExpedienteTipoController extends Controller {
         $row->estado = $estado;
         $this->expedienteTipoRepo->update($row, $request->all());
 
+        $this->expedienteTipoRepo->saveHistoryEstado($row, $estado, 'update');
+
         $message = 'El registro se modificó satisfactoriamente.';
 
         if($request->ajax())

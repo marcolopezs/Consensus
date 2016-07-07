@@ -143,6 +143,8 @@ class UbicacionController extends Controller {
         $row->estado = $estado;
         $this->ubicacionRepo->update($row, $request->all());
 
+        $this->ubicacionRepo->saveHistoryEstado($row, $estado, 'update');
+
         $message = 'El registro se modificó satisfactoriamente.';
 
         if($request->ajax())
