@@ -115,7 +115,7 @@ class BaseEntity extends Model{
     {
         switch ($order){
             case '':
-                $query->orderBy('created_at', 'desc');
+                $query->orderBy('titulo', 'asc');
                 break;
 
             case 'tituloAsc':
@@ -124,62 +124,6 @@ class BaseEntity extends Model{
 
             case 'tituloDesc':
                 $query->orderBy('titulo', 'desc');
-                break;
-
-            case 'clienteAsc':
-                $query->orderBy('cliente', 'asc');
-                break;
-
-            case 'clienteDesc':
-                $query->orderBy('cliente', 'desc');
-                break;
-
-            case 'dniAsc':
-                $query->orderBy('dni', 'asc');
-                break;
-
-            case 'dniDesc':
-                $query->orderBy('dni', 'desc');
-                break;
-
-            case 'rucAsc':
-                $query->orderBy('ruc', 'asc');
-                break;
-
-            case 'rucDesc':
-                $query->orderBy('ruc', 'desc');
-                break;
-
-            case 'emailAsc':
-                $query->orderBy('email', 'asc');
-                break;
-
-            case 'emailDesc':
-                $query->orderBy('email', 'desc');
-                break;
-
-            case 'areaAsc':
-                $query->orderBy('area', 'asc');
-                break;
-
-            case 'areaDesc':
-                $query->orderBy('area', 'desc');
-                break;
-
-            case 'funcionarioAsc':
-                $query->orderBy('funcionario', 'asc');
-                break;
-
-            case 'funcionarioDesc':
-                $query->orderBy('funcionario', 'desc');
-                break;
-
-            case 'otroAsc':
-                $query->orderBy('otro', 'asc');
-                break;
-
-            case 'otroDesc':
-                $query->orderBy('otro', 'desc');
                 break;
         }
     }
