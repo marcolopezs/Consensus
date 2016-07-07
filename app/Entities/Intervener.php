@@ -15,4 +15,22 @@ class Intervener extends BaseEntity {
         return $this->hasMany(ExpedienteInterviniente::class);
     }
 
+    // ORDERNAR
+    public function scopeOrder($query, $order)
+    {
+        switch ($order){
+            case '':
+                $query->orderBy('titulo', 'asc');
+                break;
+
+            case 'tituloAsc':
+                $query->orderBy('titulo', 'asc');
+                break;
+
+            case 'tituloDesc':
+                $query->orderBy('titulo', 'desc');
+                break;
+        }
+    }
+
 }

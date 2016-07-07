@@ -1,6 +1,7 @@
 <?php namespace Consensus\Http\Controllers\System;
 
 use Auth;
+use Consensus\Http\Requests\IntervenerRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
@@ -10,11 +11,6 @@ use Consensus\Entities\Intervener;
 use Consensus\Repositories\IntervenerRepo;
 
 class IntervenerController extends Controller {
-
-    protected  $rules = [
-        'titulo' => 'required',
-        'estado' => 'required|in:0,1'
-    ];
 
     protected $intervenerRepo;
 
@@ -48,13 +44,11 @@ class IntervenerController extends Controller {
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param IntervenerRequest|Request $request
+     * @return Response
      */
-    public function store(Request $request)
+    public function store(IntervenerRequest $request)
     {
-        $this->validate($request, $this->rules);
-
         //GUARDAR DATOS
         $row = new Intervener($request->all());
         $row->estado = 1;
@@ -89,17 +83,14 @@ class IntervenerController extends Controller {
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param IntervenerRequest|Request $request
+     * @param  int $id
+     * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(IntervenerRequest $request, $id)
     {
         //BUSCAR ID
         $row = $this->intervenerRepo->findOrFail($id);
-
-        //VALIDACION DE DATOS
-        $this->validate($request, $this->rules);
 
         //GUARDAR DATOS
         $this->intervenerRepo->update($row, $request->all());
