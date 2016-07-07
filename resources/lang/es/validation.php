@@ -190,7 +190,7 @@ return [
         'pasaporte'             => 'Pasaporte',
         'partida_nacimiento'    => 'Partida Nacimiento',
         'otros'                 => 'Otros',
-        'abrev'                 => 'Letra',
+        'abrev'                 => 'Abreviatura o Letra',
         'direccion'             => 'Dirección',
         'contacto'              => 'Contacto',
         'nombre'                => 'Nombre',
