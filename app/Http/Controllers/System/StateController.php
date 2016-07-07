@@ -1,20 +1,15 @@
 <?php namespace Consensus\Http\Controllers\System;
 
-use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Consensus\Http\Controllers\Controller;
 
+use Consensus\Http\Requests\StateRequest;
 use Consensus\Entities\State;
 use Consensus\Repositories\StateRepo;
 
 class StateController extends Controller {
-
-    protected  $rules = [
-        'titulo' => 'required',
-        'estado' => 'required|in:0,1'
-    ];
 
     protected $stateRepo;
 
@@ -51,13 +46,11 @@ class StateController extends Controller {
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param StateRequest|Request $request
+     * @return Response
      */
-    public function store(Request $request)
+    public function store(StateRequest $request)
     {
-        $this->validate($request, $this->rules);
-
         //GUARDAR DATOS
         $row = new State($request->all());
         $row->estado = 1;
@@ -70,12 +63,9 @@ class StateController extends Controller {
         $mensaje = 'El registro se agregó satisfactoriamente.';
 
         //AJAX
-        if($request->ajax())
-        {
-            return response()->json([
-                'message' => $mensaje
-            ]);
-        }
+        return [
+            'message' => $mensaje
+        ];
     }
 
     /**
@@ -95,17 +85,14 @@ class StateController extends Controller {
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param StateRequest|Request $request
+     * @param  int $id
+     * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(StateRequest $request, $id)
     {
         //BUSCAR ID
         $row = $this->stateRepo->findOrFail($id);
-
-        //VALIDACION DE DATOS
-        $this->validate($request, $this->rules);
 
         //GUARDAR DATOS
         $this->stateRepo->update($row, $request->all());
@@ -117,12 +104,9 @@ class StateController extends Controller {
         $mensaje = 'El registro se actualizó satisfactoriamente.';
 
         //AJAX
-        if($request->ajax())
-        {
-            return response()->json([
-                'message' => $mensaje
-            ]);
-        }
+        return [
+            'message' => $mensaje
+        ];
     }
 
 
@@ -148,12 +132,9 @@ class StateController extends Controller {
 
         $message = 'El registro se modificó satisfactoriamente.';
 
-        if($request->ajax())
-        {
-            return response()->json([
-                'message' => $message,
-                'estado'  => $estado
-            ]);
-        }
+        return [
+            'message' => $message,
+            'estado'  => $estado
+        ];
     }
 }
