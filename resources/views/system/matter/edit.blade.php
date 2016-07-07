@@ -11,7 +11,7 @@
 
                 <div class="form-body">
 
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="form-group">
                             {!! Form::label('titulo', 'Titulo') !!}
                             {!! Form::text('titulo', null, ['class' => 'form-control']) !!}

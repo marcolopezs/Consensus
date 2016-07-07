@@ -1,6 +1,7 @@
 <?php namespace Consensus\Http\Controllers\System;
 
 use Auth;
+use Consensus\Http\Requests\MatterRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
@@ -10,11 +11,6 @@ use Consensus\Entities\Matter;
 use Consensus\Repositories\MatterRepo;
 
 class MatterController extends Controller {
-
-    protected  $rules = [
-        'titulo' => 'required',
-        'estado' => 'required|in:0,1'
-    ];
 
     protected $matterRepo;
 
@@ -51,13 +47,11 @@ class MatterController extends Controller {
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param MatterRequest|Request $request
+     * @return Response
      */
-    public function store(Request $request)
+    public function store(MatterRequest $request)
     {
-        $this->validate($request, $this->rules);
-
         //GUARDAR DATOS
         $row = new Matter($request->all());
         $row->estado = 1;
@@ -92,17 +86,14 @@ class MatterController extends Controller {
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param MatterRequest|Request $request
+     * @param  int $id
+     * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(MatterRequest $request, $id)
     {
         //BUSCAR ID
         $row = $this->matterRepo->findOrFail($id);
-
-        //VALIDACION DE DATOS
-        $this->validate($request, $this->rules);
 
         //GUARDAR DATOS
         $this->matterRepo->update($row, $request->all());
