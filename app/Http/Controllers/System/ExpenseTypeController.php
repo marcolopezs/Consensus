@@ -1,6 +1,7 @@
 <?php namespace Consensus\Http\Controllers\System;
 
 use Auth;
+use Consensus\Http\Requests\ExpenseTypeRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
@@ -10,11 +11,6 @@ use Consensus\Entities\ExpenseType;
 use Consensus\Repositories\ExpenseTypeRepo;
 
 class ExpenseTypeController extends Controller {
-
-    protected  $rules = [
-        'titulo' => 'required',
-        'estado' => 'required|in:0,1'
-    ];
 
     protected $expenseTypeRepo;
 
@@ -48,13 +44,11 @@ class ExpenseTypeController extends Controller {
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param ExpenseTypeRequest|Request $request
+     * @return Response
      */
-    public function store(Request $request)
+    public function store(ExpenseTypeRequest $request)
     {
-        $this->validate($request, $this->rules);
-
         //GUARDAR DATOS
         $row = new ExpenseType($request->all());
         $row->estado = 1;
@@ -89,17 +83,14 @@ class ExpenseTypeController extends Controller {
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param ExpenseTypeRequest|Request $request
+     * @param  int $id
+     * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(ExpenseTypeRequest $request, $id)
     {
         //BUSCAR ID
         $row = $this->expenseTypeRepo->findOrFail($id);
-
-        //VALIDACION DE DATOS
-        $this->validate($request, $this->rules);
 
         //GUARDAR DATOS
         $this->expenseTypeRepo->update($row, $request->all());
