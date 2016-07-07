@@ -58,6 +58,7 @@ class ExpedienteTipoController extends Controller {
 
         //GUARDAR DATOS
         $row = new ExpedienteTipo($request->all());
+        $row->estado = 1;
         $this->expedienteTipoRepo->create($row, $request->all());
 
         //GUARDAR HISTORIAL

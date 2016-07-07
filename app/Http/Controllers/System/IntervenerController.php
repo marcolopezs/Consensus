@@ -57,6 +57,7 @@ class IntervenerController extends Controller {
 
         //GUARDAR DATOS
         $row = new Intervener($request->all());
+        $row->estado = 1;
         $this->intervenerRepo->create($row, $request->all());
 
         //GUARDAR HISTORIAL

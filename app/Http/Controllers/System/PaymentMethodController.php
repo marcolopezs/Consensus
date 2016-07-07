@@ -60,6 +60,7 @@ class PaymentMethodController extends Controller {
 
         //GUARDAR DATOS
         $row = new PaymentMethod($request->all());
+        $row->estado = 1;
         $this->paymentMethodRepo->create($row, $request->all());
 
         //GUARDAR HISTORIAL

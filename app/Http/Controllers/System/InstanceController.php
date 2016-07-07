@@ -57,6 +57,7 @@ class InstanceController extends Controller {
 
         //GUARDAR DATOS
         $row = new Instance($request->all());
+        $row->estado = 1;
         $this->instanceRepo->create($row, $request->all());
 
         //GUARDAR HISTORIAL

@@ -60,6 +60,7 @@ class StateController extends Controller {
 
         //GUARDAR DATOS
         $row = new State($request->all());
+        $row->estado = 1;
         $this->stateRepo->create($row, $request->all());
 
         //GUARDAR HISTORIAL

@@ -60,6 +60,7 @@ class UbicacionController extends Controller {
 
         //GUARDAR DATOS
         $row = new Ubicacion($request->all());
+        $row->estado = 1;
         $this->ubicacionRepo->create($row, $request->all());
 
         //GUARDAR HISTORIAL

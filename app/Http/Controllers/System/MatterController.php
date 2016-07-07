@@ -60,6 +60,7 @@ class MatterController extends Controller {
 
         //GUARDAR DATOS
         $row = new Matter($request->all());
+        $row->estado = 1;
         $this->matterRepo->create($row, $request->all());
 
         //GUARDAR HISTORIAL

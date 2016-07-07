@@ -61,6 +61,7 @@ class ServiceController extends Controller {
         $this->validate($request, $this->rules);
         //GUARDAR DATOS
         $row = new Service($request->all());
+        $row->estado = 1;
         $this->serviceRepo->create($row, $request->all());
 
         //GUARDAR HISTORIAL

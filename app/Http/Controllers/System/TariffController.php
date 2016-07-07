@@ -61,6 +61,7 @@ class TariffController extends Controller {
 
         //GUARDAR DATOS
         $row = new Tariff($request->all());
+        $row->estado = 1;
         $this->tariffRepo->create($row, $request->all());
 
         //GUARDAR HISTORIAL

@@ -58,6 +58,7 @@ class MoneyController extends Controller {
 
         //GUARDAR DATOS
         $row = new Money($request->all());
+        $row->estado = 1;
         $this->moneyRepo->create($row, $request->all());
 
         //GUARDAR HISTORIAL

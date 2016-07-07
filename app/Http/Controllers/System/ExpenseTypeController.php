@@ -57,6 +57,7 @@ class ExpenseTypeController extends Controller {
 
         //GUARDAR DATOS
         $row = new ExpenseType($request->all());
+        $row->estado = 1;
         $this->expenseTypeRepo->create($row, $request->all());
 
         //GUARDAR HISTORIAL
