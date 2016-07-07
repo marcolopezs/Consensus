@@ -1,6 +1,7 @@
 <?php namespace Consensus\Http\Controllers\System;
 
 use Auth;
+use Consensus\Http\Requests\PaymentMethodRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
@@ -10,11 +11,6 @@ use Consensus\Entities\PaymentMethod;
 use Consensus\Repositories\PaymentMethodRepo;
 
 class PaymentMethodController extends Controller {
-
-    protected  $rules = [
-        'titulo' => 'required',
-        'estado' => 'required|in:0,1'
-    ];
 
     protected $paymentMethodRepo;
 
@@ -51,13 +47,11 @@ class PaymentMethodController extends Controller {
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param PaymentMethodRequest|Request $request
+     * @return Response
      */
-    public function store(Request $request)
+    public function store(PaymentMethodRequest $request)
     {
-        $this->validate($request, $this->rules);
-
         //GUARDAR DATOS
         $row = new PaymentMethod($request->all());
         $row->estado = 1;
@@ -92,17 +86,14 @@ class PaymentMethodController extends Controller {
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param PaymentMethodRequest|Request $request
+     * @param  int $id
+     * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(PaymentMethodRequest $request, $id)
     {
         //BUSCAR ID
         $row = $this->paymentMethodRepo->findOrFail($id);
-
-        //VALIDACION DE DATOS
-        $this->validate($request, $this->rules);
 
         //GUARDAR DATOS
         $this->paymentMethodRepo->update($row, $request->all());
