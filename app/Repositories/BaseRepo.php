@@ -294,14 +294,7 @@ abstract class BaseRepo {
     {
         return $this->getModel()
                     ->titulo($request->get('titulo'))
-                    ->cliente($request->get('cliente'))
-                    ->dni($request->get('dni'))
-                    ->ruc($request->get('ruc'))
-                    ->email($request->get('email'))
                     ->estado($request->get('estado'))
-                    ->area($request->get('area'))
-                    ->funcionario($request->get('funcionario'))
-                    ->otro($request->get('otro'))
                     ->order($request->get('order'))
                     ->paginate();
     }

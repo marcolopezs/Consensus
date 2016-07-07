@@ -10,13 +10,4 @@ class StateRepo extends BaseRepo {
         return new State();
     }
 
-    //BUSQUEDA DE REGISTROS POR TITULO Y ESTADO y ORDENARLO POR SELECCION DEL USUARIO
-    public function findOrder(Request $request)
-    {
-        return $this->getModel()
-                    ->titulo($request->get('titulo'))
-                    ->estado($request->get('estado'))
-                    ->order($request->get('order'))
-                    ->paginate();
-    }
 }
