@@ -1,6 +1,7 @@
 <?php namespace Consensus\Http\Controllers\System;
 
 use Auth;
+use Consensus\Http\Requests\InstanceRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
@@ -10,11 +11,6 @@ use Consensus\Entities\Instance;
 use Consensus\Repositories\InstanceRepo;
 
 class InstanceController extends Controller {
-
-    protected  $rules = [
-        'titulo' => 'required',
-        'estado' => 'required|in:0,1'
-    ];
 
     protected $instanceRepo;
 
@@ -48,13 +44,11 @@ class InstanceController extends Controller {
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param InstanceRequest|Request $request
+     * @return Response
      */
-    public function store(Request $request)
+    public function store(InstanceRequest $request)
     {
-        $this->validate($request, $this->rules);
-
         //GUARDAR DATOS
         $row = new Instance($request->all());
         $row->estado = 1;
@@ -89,17 +83,14 @@ class InstanceController extends Controller {
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param InstanceRequest|Request $request
+     * @param  int $id
+     * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(InstanceRequest $request, $id)
     {
         //BUSCAR ID
         $row = $this->instanceRepo->findOrFail($id);
-
-        //VALIDACION DE DATOS
-        $this->validate($request, $this->rules);
 
         //GUARDAR DATOS
         $this->instanceRepo->update($row, $request->all());
