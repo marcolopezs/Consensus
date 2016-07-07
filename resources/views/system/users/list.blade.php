@@ -60,7 +60,6 @@
                                         <ul class="dropdown-menu" role="menu">
                                             <li><a href="{{ route('users.show', $row_id) }}" data-target="#ajax" data-toggle="modal">Ver registro</a></li>
                                             <li><a href="{{ route('users.edit', $row_id) }}">Editar</a></li>
-                                            <li><a href="javascript:;">Historial</a></li>
                                         </ul>
                                     </div>
                                 </td>

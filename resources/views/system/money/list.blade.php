@@ -60,7 +60,6 @@
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
                                             <li><a href="{{ route('money.edit', $row_id) }}" data-target="#ajax" data-toggle="modal">Editar</a></li>
-                                            <li><a href="javascript:;">Historial</a></li>
                                         </ul>
                                     </div>
                                 </td>
