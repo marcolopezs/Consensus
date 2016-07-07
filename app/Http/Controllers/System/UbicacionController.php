@@ -1,6 +1,7 @@
 <?php namespace Consensus\Http\Controllers\System;
 
 use Auth;
+use Consensus\Http\Requests\UbicacionRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
@@ -10,11 +11,6 @@ use Consensus\Entities\Ubicacion;
 use Consensus\Repositories\UbicacionRepo;
 
 class UbicacionController extends Controller {
-
-    protected  $rules = [
-        'titulo' => 'required',
-        'estado' => 'required|in:0,1'
-    ];
 
     protected $ubicacionRepo;
 
@@ -51,13 +47,11 @@ class UbicacionController extends Controller {
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param UbicacionRequest|Request $request
+     * @return Response
      */
-    public function store(Request $request)
+    public function store(UbicacionRequest $request)
     {
-        $this->validate($request, $this->rules);
-
         //GUARDAR DATOS
         $row = new Ubicacion($request->all());
         $row->estado = 1;
@@ -92,17 +86,14 @@ class UbicacionController extends Controller {
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param UbicacionRequest|Request $request
+     * @param  int $id
+     * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(UbicacionRequest $request, $id)
     {
         //BUSCAR ID
         $row = $this->ubicacionRepo->findOrFail($id);
-
-        //VALIDACION DE DATOS
-        $this->validate($request, $this->rules);
 
         //GUARDAR DATOS
         $this->ubicacionRepo->update($row, $request->all());
