@@ -15,7 +15,7 @@ class Entity extends BaseEntity {
     {
         switch ($order){
             case '':
-                $query->orderBy('titulo', 'desc');
+                $query->orderBy('titulo', 'asc');
                 break;
 
             case 'tituloAsc':

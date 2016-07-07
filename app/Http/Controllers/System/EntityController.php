@@ -1,6 +1,7 @@
 <?php namespace Consensus\Http\Controllers\System;
 
 use Auth;
+use Consensus\Http\Requests\EntityRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
@@ -10,13 +11,6 @@ use Consensus\Entities\Entity;
 use Consensus\Repositories\EntityRepo;
 
 class EntityController extends Controller {
-
-    protected  $rules = [
-        'titulo' => 'required',
-        'area' => 'required',
-        'funcionario' => 'required',
-        'otro' => 'string'
-    ];
 
     protected $entityRepo;
 
@@ -53,15 +47,14 @@ class EntityController extends Controller {
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param EntityRequest|Request $request
+     * @return array
      */
-    public function store(Request $request)
+    public function store(EntityRequest $request)
     {
-        $this->validate($request, $this->rules);
-
         //GUARDAR DATOS
         $row = new Entity($request->all());
+        $row->estado = 1;
         $this->entityRepo->create($row, $request->all());
 
         //GUARDAR HISTORIAL
@@ -71,12 +64,9 @@ class EntityController extends Controller {
         $mensaje = 'El registro se agregó satisfactoriamente.';
 
         //AJAX
-        if($request->ajax())
-        {
-            return response()->json([
-                'message' => $mensaje
-            ]);
-        }
+        return [
+            'message' => $mensaje
+        ];
     }
 
     /**
@@ -96,17 +86,14 @@ class EntityController extends Controller {
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param EntityRequest|Request $request
+     * @param  int $id
+     * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(EntityRequest $request, $id)
     {
         //BUSCAR ID
         $row = $this->entityRepo->findOrFail($id);
-
-        //VALIDACION DE DATOS
-        $this->validate($request, $this->rules);
 
         //GUARDAR DATOS
         $this->entityRepo->update($row, $request->all());
@@ -118,12 +105,9 @@ class EntityController extends Controller {
         $mensaje = 'El registro se actualizó satisfactoriamente.';
 
         //AJAX
-        if($request->ajax())
-        {
-            return response()->json([
-                'message' => $mensaje
-            ]);
-        }
+        return [
+            'message' => $mensaje
+        ];
     }
 
     /*
@@ -148,13 +132,10 @@ class EntityController extends Controller {
 
         $message = 'El registro se modificó satisfactoriamente.';
 
-        if($request->ajax())
-        {
-            return response()->json([
-                'message' => $message,
-                'estado'  => $estado
-            ]);
-        }
+        return [
+            'message' => $message,
+            'estado'  => $estado
+        ];
     }
 
 }
