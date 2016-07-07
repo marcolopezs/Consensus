@@ -2,6 +2,7 @@
 
 use Auth;
 use Carbon\Carbon;
+use Consensus\Http\Requests\ServiceRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
@@ -11,12 +12,6 @@ use Consensus\Entities\Service;
 use Consensus\Repositories\ServiceRepo;
 
 class ServiceController extends Controller {
-
-    protected  $rules = [
-        'titulo' => 'required',
-        'dias_ejecucion' => 'integer',
-        'estado' => 'required|in:0,1'
-    ];
 
     protected $serviceRepo;
 
@@ -53,12 +48,11 @@ class ServiceController extends Controller {
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param ServiceRequest|Request $request
+     * @return Response
      */
-    public function store(Request $request)
+    public function store(ServiceRequest $request)
     {
-        $this->validate($request, $this->rules);
         //GUARDAR DATOS
         $row = new Service($request->all());
         $row->estado = 1;
@@ -93,17 +87,14 @@ class ServiceController extends Controller {
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param ServiceRequest|Request $request
+     * @param  int $id
+     * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(ServiceRequest $request, $id)
     {
         //BUSCAR ID
         $row = $this->serviceRepo->findOrFail($id);
-
-        //VALIDACION DE DATOS
-        $this->validate($request, $this->rules);
 
         //GUARDAR DATOS
         $this->serviceRepo->update($row, $request->all());
