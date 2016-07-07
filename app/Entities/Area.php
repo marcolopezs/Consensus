@@ -10,6 +10,17 @@ class Area extends BaseEntity {
 
     protected $fillable = ['titulo','email','estado'];
 
+    /*
+     * SETTER
+     */
+    public function setEmailAttribute($value)
+    {
+        $this->attributes['email'] = strtolower($value);
+    }
+
+    /*
+     * SCOPES
+     */
     public function scopeOrder($query, $order)
     {
         switch ($order){

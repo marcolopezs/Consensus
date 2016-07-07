@@ -1,20 +1,15 @@
 <?php namespace Consensus\Http\Controllers\System;
 
-use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Consensus\Http\Controllers\Controller;
 
+use Consensus\Http\Requests\AreaRequest;
 use Consensus\Entities\Area;
 use Consensus\Repositories\AreaRepo;
 
 class AreaController extends Controller {
-
-    protected  $rules = [
-        'titulo' => 'required',
-        'email' => 'email'
-    ];
 
     protected $areaRepo;
 
@@ -50,27 +45,23 @@ class AreaController extends Controller {
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param AreaRequest|Request $request
+     * @return
      */
-    public function store(Request $request)
+    public function store(AreaRequest $request)
     {
         $this->authorize('create');
 
-        $this->validate($request, $this->rules);
-
         //GUARDAR DATOS
         $row = new Area($request->all());
+        $row->estado = 1;
         $save = $this->areaRepo->create($row, $request->all());
 
         //GUARDAR HISTORIAL
         $this->areaRepo->saveHistory($row, $request, 'create');
 
         //AJAX
-        if($request->ajax())
-        {
-            return $save;
-        }
+        return $save;
     }
 
     /**
@@ -92,19 +83,16 @@ class AreaController extends Controller {
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param AreaRequest|Request $request
+     * @param  int $id
+     * @return array
      */
-    public function update(Request $request, $id)
+    public function update(AreaRequest $request, $id)
     {
         $this->authorize('update');
 
         //BUSCAR ID
         $row = $this->areaRepo->findOrFail($id);
-
-        //VALIDACION DE DATOS
-        $this->validate($request, $this->rules);
 
         //GUARDAR DATOS
         $this->areaRepo->update($row, $request->all());
@@ -116,12 +104,9 @@ class AreaController extends Controller {
         $mensaje = 'El registro se actualizó satisfactoriamente.';
 
         //AJAX
-        if($request->ajax())
-        {
-            return response()->json([
-                'message' => $mensaje
-            ]);
-        }
+        return [
+            'message' => $mensaje
+        ];
     }
 
 
@@ -131,7 +116,7 @@ class AreaController extends Controller {
     /**
      * @param $id
      * @param Request $request
-     * @return mixed
+     * @return array
      */
     public function estado($id, Request $request)
     {
@@ -147,12 +132,9 @@ class AreaController extends Controller {
 
         $message = 'El registro se modificó satisfactoriamente.';
 
-        if($request->ajax())
-        {
-            return response()->json([
-                'message' => $message,
-                'estado'  => $estado
-            ]);
-        }
+        return [
+            'message' => $message,
+            'estado'  => $estado
+        ];
     }
 }
