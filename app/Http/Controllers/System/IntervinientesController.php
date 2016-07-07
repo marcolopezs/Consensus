@@ -50,11 +50,7 @@ class IntervinientesController extends Controller {
     {
         $row = $this->expedienteRepo->findOrFail($expedientes);
 
-        if($request->ajax())
-        {
-            return $row->expInterviniente->toJson();
-        }
-
+        return $row->expInterviniente->toJson();
     }
 
     /**
@@ -94,19 +90,16 @@ class IntervinientesController extends Controller {
         $this->expedienteIntervinienteRepo->saveHistory($row, $request, 'create');
 
         //AJAX
-        if($request->ajax())
-        {
-            return response()->json([
-                'id' => $save->id,
-                'nombre' => $save->nombre,
-                'tipo' => $save->tipo,
-                'dni' => $save->dni,
-                'telefono' => $save->telefono,
-                'celular' => $save->celular,
-                'email' => $save->email,
-                'url_editar' => $save->url_editar
-            ]);
-        }
+        return [
+            'id' => $save->id,
+            'nombre' => $save->nombre,
+            'tipo' => $save->tipo,
+            'dni' => $save->dni,
+            'telefono' => $save->telefono,
+            'celular' => $save->celular,
+            'email' => $save->email,
+            'url_editar' => $save->url_editar
+        ];
 
     }
 
@@ -153,19 +146,16 @@ class IntervinientesController extends Controller {
         $this->expedienteIntervinienteRepo->saveHistory($row, $request, 'update');
 
         //AJAX
-        if($request->ajax())
-        {
-            return response()->json([
-                'id' => $save->id,
-                'nombre' => $save->nombre,
-                'tipo' => $save->tipo,
-                'dni' => $save->dni,
-                'telefono' => $save->telefono,
-                'celular' => $save->celular,
-                'email' => $save->email,
-                'url_editar' => $save->url_editar
-            ]);
-        }
+        return [
+            'id' => $save->id,
+            'nombre' => $save->nombre,
+            'tipo' => $save->tipo,
+            'dni' => $save->dni,
+            'telefono' => $save->telefono,
+            'celular' => $save->celular,
+            'email' => $save->email,
+            'url_editar' => $save->url_editar
+        ];
     }
 
 }

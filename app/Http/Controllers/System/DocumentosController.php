@@ -45,11 +45,7 @@ class DocumentosController extends Controller {
     {
         $archivo = $this->documentoRepo->UploadFile('documento', $request->file('file'));
 
-        if($request->ajax())
-        {
-            return $archivo;
-        }
+        return $archivo;
     }
-
 
 }

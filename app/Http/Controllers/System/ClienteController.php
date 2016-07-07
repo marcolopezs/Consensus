@@ -255,12 +255,9 @@ class ClienteController extends Controller {
     {
         $usuario = $this->clienteRepo->NombreAleatorio();
 
-        if($request->ajax())
-        {
-            return response()->json([
-                'usuario' => $usuario
-            ]);
-        }
+        return [
+            'usuario' => $usuario
+        ];
     }
 
 

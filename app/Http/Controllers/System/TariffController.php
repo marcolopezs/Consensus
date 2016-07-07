@@ -71,12 +71,9 @@ class TariffController extends Controller {
         $mensaje = 'El registro se agregó satisfactoriamente.';
 
         //AJAX
-        if($request->ajax())
-        {
-            return response()->json([
-                'message' => $mensaje
-            ]);
-        }
+        return [
+            'message' => $mensaje
+        ];
     }
 
     /**
@@ -118,12 +115,9 @@ class TariffController extends Controller {
         $mensaje = 'El registro se actualizó satisfactoriamente.';
 
         //AJAX
-        if($request->ajax())
-        {
-            return response()->json([
-                'message' => $mensaje
-            ]);
-        }
+        return [
+            'message' => $mensaje
+        ];
     }
 
 
@@ -149,12 +143,9 @@ class TariffController extends Controller {
 
         $message = 'El registro se modificó satisfactoriamente.';
 
-        if($request->ajax())
-        {
-            return response()->json([
-                'message' => $message,
-                'estado'  => $estado
-            ]);
-        }
+        return [
+            'message' => $message,
+            'estado'  => $estado
+        ];
     }
 }

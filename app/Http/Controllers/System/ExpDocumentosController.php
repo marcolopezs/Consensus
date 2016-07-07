@@ -44,10 +44,7 @@ class ExpDocumentosController extends Controller {
     {
         $row = $this->expedienteRepo->findOrFail($expedientes);
 
-        if($request->ajax())
-        {
-            return $row->expDocumento->toJson();
-        }
+        return $row->expDocumento->toJson();
     }
 
     /**
@@ -87,16 +84,13 @@ class ExpDocumentosController extends Controller {
         $this->expedienteDocumentoRepo->saveDocumento($row, $request, 'create');
 
         //AJAX
-        if($request->ajax())
-        {
-            return response()->json([
-                'id' => $save->id,
-                'titulo' => $save->titulo,
-                'descripcion' => $save->descripcion,
-                'descargar' => $save->descargar,
-                'url_editar' => $save->url_editar
-            ]);
-        }
+        return [
+            'id' => $save->id,
+            'titulo' => $save->titulo,
+            'descripcion' => $save->descripcion,
+            'descargar' => $save->descargar,
+            'url_editar' => $save->url_editar
+        ];
     }
 
     /**
@@ -143,16 +137,13 @@ class ExpDocumentosController extends Controller {
         }
 
         //AJAX
-        if($request->ajax())
-        {
-            return response()->json([
-                'id' => $save->id,
-                'titulo' => $save->titulo,
-                'descripcion' => $save->descripcion,
-                'descargar' => $save->descargar,
-                'url_editar' => $save->url_editar
-            ]);
-        }
+        return [
+            'id' => $save->id,
+            'titulo' => $save->titulo,
+            'descripcion' => $save->descripcion,
+            'descargar' => $save->descargar,
+            'url_editar' => $save->url_editar
+        ];
     }
 
 }

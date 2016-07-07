@@ -44,10 +44,7 @@ class ClienteDocumentosController extends Controller {
     {
         $row = $this->clienteRepo->findOrFail($cliente);
 
-        if($request->ajax())
-        {
-            return $row->cliDocumento->toJson();
-        }
+        return $row->cliDocumento->toJson();
     }
 
     /**
@@ -85,17 +82,14 @@ class ClienteDocumentosController extends Controller {
         $this->clienteDocumentoRepo->saveDocumento($row, $request, 'create');
 
         //AJAX
-        if($request->ajax())
-        {
-            return response()->json([
-                'id' => $save->id,
-                'titulo' => $save->titulo,
-                'descripcion' => $save->descripcion,
-                'fecha_subida' => $save->fecha_subida,
-                'descargar' => $save->descargar,
-                'url_editar' => $save->url_editar
-            ]);
-        }
+        return [
+            'id' => $save->id,
+            'titulo' => $save->titulo,
+            'descripcion' => $save->descripcion,
+            'fecha_subida' => $save->fecha_subida,
+            'descargar' => $save->descargar,
+            'url_editar' => $save->url_editar
+        ];
     }
 
     /**
@@ -142,17 +136,14 @@ class ClienteDocumentosController extends Controller {
         }
 
         //AJAX
-        if($request->ajax())
-        {
-            return response()->json([
-                'id' => $save->id,
-                'titulo' => $save->titulo,
-                'descripcion' => $save->descripcion,
-                'fecha_subida' => $save->fecha_subida,
-                'descargar' => $save->descargar,
-                'url_editar' => $save->url_editar
-            ]);
-        }
+        return [
+            'id' => $save->id,
+            'titulo' => $save->titulo,
+            'descripcion' => $save->descripcion,
+            'fecha_subida' => $save->fecha_subida,
+            'descargar' => $save->descargar,
+            'url_editar' => $save->url_editar
+        ];
     }
 
 }

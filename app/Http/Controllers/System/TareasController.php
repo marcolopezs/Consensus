@@ -154,17 +154,14 @@ class TareasController extends Controller {
         $this->tareaRepo->saveHistory($row, $request, 'update');
 
         //AJAX
-        if($request->ajax())
-        {
-            return response()->json([
-                'id' => $save->id,
-                'titulo_tarea' => $save->titulo_tarea,
-                'fecha_solicitada' => $row->fecha_solicitada,
-                'fecha_vencimiento' => $row->fecha_vencimiento,
-                'asignado' => $save->asignado,
-                'url_editar' => $save->url_editar
-            ]);
-        }
+        return [
+            'id' => $save->id,
+            'titulo_tarea' => $save->titulo_tarea,
+            'fecha_solicitada' => $row->fecha_solicitada,
+            'fecha_vencimiento' => $row->fecha_vencimiento,
+            'asignado' => $save->asignado,
+            'url_editar' => $save->url_editar
+        ];
     }
 
 }

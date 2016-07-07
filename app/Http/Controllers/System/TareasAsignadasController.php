@@ -66,10 +66,7 @@ class TareasAsignadasController extends Controller {
     {
         $row = $this->tareaRepo->findOrFail($tarea);
 
-        if($request->ajax())
-        {
-            return $row->acciones->toJson();
-        }
+        return $row->acciones->toJson();
     }
 
     /**

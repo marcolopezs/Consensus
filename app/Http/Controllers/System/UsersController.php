@@ -97,12 +97,9 @@ class UsersController extends Controller
         $mensaje = 'El registro se agregó satisfactoriamente.';
 
         //AJAX
-        if($request->ajax())
-        {
-            return response()->json([
-                'message' => $mensaje
-            ]);
-        }
+        return [
+            'message' => $mensaje
+        ];
     }
 
     /**

@@ -71,12 +71,9 @@ class ServiceController extends Controller {
         $mensaje = 'El registro se agregó satisfactoriamente.';
 
         //AJAX
-        if($request->ajax())
-        {
-            return response()->json([
-                'message' => $mensaje
-            ]);
-        }
+        return [
+            'message' => $mensaje
+        ];
     }
 
     /**
@@ -118,12 +115,9 @@ class ServiceController extends Controller {
         $mensaje = 'El registro se actualizó satisfactoriamente.';
 
         //AJAX
-        if($request->ajax())
-        {
-            return response()->json([
-                'message' => $mensaje
-            ]);
-        }
+        return [
+            'message' => $mensaje
+        ];
     }
 
 
@@ -142,13 +136,10 @@ class ServiceController extends Controller {
         $format = $suma_dias->format('d/m/Y');
 
         //AJAX
-        if($request->ajax())
-        {
-            return response()->json([
-                'dias' => $row->dias_ejecucion,
-                'fecha' => $format
-            ]);
-        }
+        return [
+            'dias' => $row->dias_ejecucion,
+            'fecha' => $format
+        ];
     }
 
 
@@ -163,12 +154,9 @@ class ServiceController extends Controller {
         $format = $suma_dias->format('d/m/Y');
 
         //AJAX
-        if($request->ajax())
-        {
-            return response()->json([
-                'fecha' => $format
-            ]);
-        }
+        return [
+            'fecha' => $format
+        ];
     }
 
 
@@ -194,12 +182,9 @@ class ServiceController extends Controller {
 
         $message = 'El registro se modificó satisfactoriamente.';
 
-        if($request->ajax())
-        {
-            return response()->json([
-                'message' => $message,
-                'estado'  => $estado
-            ]);
-        }
+        return [
+            'message' => $message,
+            'estado'  => $estado
+        ];
     }
 }
