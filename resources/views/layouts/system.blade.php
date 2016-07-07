@@ -240,6 +240,13 @@
     {!! HTML::script('assets/global/scripts/app.js') !!}
     <!-- END THEME GLOBAL SCRIPTS -->
 
+    <script>
+        function anular(e) {
+           var  tecla = (document.all) ? e.keyCode : e.which;
+            return (tecla != 13);
+        }
+    </script>
+
     @yield('contenido_footer')
 
     <!-- BEGIN THEME LAYOUT SCRIPTS -->

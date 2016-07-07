@@ -7,24 +7,14 @@
 
             <div class="form-content"></div>
 
-            {!! Form::model($row, ['route' => ['state.update', $row->id], 'method' => 'PUT', 'id' => 'formEdit']) !!}
+            {!! Form::model($row, ['route' => ['state.update', $row->id], 'method' => 'PUT', 'id' => 'formEdit', 'onkeypress' => 'return anular(event)']) !!}
 
                 <div class="form-body">
 
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="form-group">
                             {!! Form::label('titulo', 'Titulo') !!}
                             {!! Form::text('titulo', null, ['class' => 'form-control']) !!}
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            {!! Form::label('estado', 'Estado') !!}
-                            <div class="radio-list">
-                                <label class="radio-inline">{!! Form::radio('estado', '1', null,  ['id' => 'estado']) !!}Activo</label>
-                                <label class="radio-inline">{!! Form::radio('estado', '0', null,  ['id' => 'estado']) !!}No activo</label>
-                            </div>
                         </div>
                     </div>
 

@@ -8,7 +8,7 @@
 
             <div class="form-content"></div>
 
-            {!! Form::open(['route' => 'area.store', 'method' => 'POST', 'id' => 'formCreate']) !!}
+            {!! Form::open(['route' => 'area.store', 'method' => 'POST', 'id' => 'formCreate', 'onkeypress' => 'return anular(event)']) !!}
 
                 <div class="form-body">
 

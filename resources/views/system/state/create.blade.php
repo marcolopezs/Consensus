@@ -7,7 +7,7 @@
 
             <div class="form-content"></div>
 
-            {!! Form::open(['route' => 'state.store', 'method' => 'POST', 'id' => 'formCreate']) !!}
+            {!! Form::open(['route' => 'state.store', 'method' => 'POST', 'id' => 'formCreate', 'onkeypress' => 'return anular(event)']) !!}
 
                 <div class="form-body">
 
@@ -20,12 +20,13 @@
 
                 </div>
 
-                @include('partials.progressbar')
-
             {!! Form::close() !!}
 
         </div>
     </div>
+
+    @include('partials.progressbar')
+
 </div>
 <div class="modal-footer">
     <a class="btn default" id="formCreateClose">Cerrar</a>

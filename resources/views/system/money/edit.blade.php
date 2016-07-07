@@ -7,7 +7,7 @@
 
             <div class="form-content"></div>
 
-            {!! Form::model($row, ['route' => ['money.update', $row->id], 'method' => 'PUT', 'id' => 'formEdit']) !!}
+            {!! Form::model($row, ['route' => ['money.update', $row->id], 'method' => 'PUT', 'id' => 'formEdit', 'onkeypress' => 'return anular(event)']) !!}
 
                 <div class="form-body">
 
