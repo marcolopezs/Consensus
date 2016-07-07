@@ -34,12 +34,13 @@
 
                 </div>
 
-                @include('partials.progressbar')
-
             {!! Form::close() !!}
 
         </div>
     </div>
+
+    @include('partials.progressbar')
+
 </div>
 <div class="modal-footer">
     <a class="btn default" id="formCreateClose" data-dismiss="modal">Cerrar</a>

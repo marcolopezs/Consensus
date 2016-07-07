@@ -1,6 +1,7 @@
 <?php namespace Consensus\Http\Controllers\System;
 
 use Auth;
+use Consensus\Http\Requests\MoneyRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
@@ -10,12 +11,6 @@ use Consensus\Entities\Money;
 use Consensus\Repositories\MoneyRepo;
 
 class MoneyController extends Controller {
-
-    protected  $rules = [
-        'titulo' => 'required',
-        'valor'  => 'required',
-        'simbolo' => 'required'
-    ];
 
     protected $moneyRepo;
 
@@ -49,13 +44,11 @@ class MoneyController extends Controller {
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param MoneyRequest|Request $request
+     * @return Response
      */
-    public function store(Request $request)
+    public function store(MoneyRequest $request)
     {
-        $this->validate($request, $this->rules);
-
         //GUARDAR DATOS
         $row = new Money($request->all());
         $row->estado = 1;
@@ -90,17 +83,14 @@ class MoneyController extends Controller {
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param MoneyRequest|Request $request
+     * @param  int $id
+     * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(MoneyRequest $request, $id)
     {
         //BUSCAR ID
         $row = $this->moneyRepo->findOrFail($id);
-
-        //VALIDACION DE DATOS
-        $this->validate($request, $this->rules);
 
         //GUARDAR DATOS
         $this->moneyRepo->update($row, $request->all());
