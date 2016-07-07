@@ -1,6 +1,7 @@
 <?php namespace Consensus\Http\Controllers\System;
 
 use Auth;
+use Consensus\Http\Requests\ExpedienteTipoRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
@@ -10,12 +11,6 @@ use Consensus\Entities\ExpedienteTipo;
 use Consensus\Repositories\ExpedienteTipoRepo;
 
 class ExpedienteTipoController extends Controller {
-
-    protected  $rules = [
-        'titulo' => 'required',
-        'abrev' => 'required|max:1',
-        'estado' => 'required|in:0,1'
-    ];
 
     protected $expedienteTipoRepo;
 
@@ -49,13 +44,11 @@ class ExpedienteTipoController extends Controller {
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param ExpedienteTipoRequest|Request $request
+     * @return Response
      */
-    public function store(Request $request)
+    public function store(ExpedienteTipoRequest $request)
     {
-        $this->validate($request, $this->rules);
-
         //GUARDAR DATOS
         $row = new ExpedienteTipo($request->all());
         $row->estado = 1;
@@ -68,12 +61,9 @@ class ExpedienteTipoController extends Controller {
         $mensaje = 'El registro se agregó satisfactoriamente.';
 
         //AJAX
-        if($request->ajax())
-        {
-            return response()->json([
-                'message' => $mensaje
-            ]);
-        }
+        return [
+            'message' => $mensaje
+        ];
     }
 
     /**
@@ -93,17 +83,14 @@ class ExpedienteTipoController extends Controller {
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param ExpedienteTipoRequest|Request $request
+     * @param  int $id
+     * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(ExpedienteTipoRequest $request, $id)
     {
         //BUSCAR ID
         $row = $this->expedienteTipoRepo->findOrFail($id);
-
-        //VALIDACION DE DATOS
-        $this->validate($request, $this->rules);
 
         //GUARDAR DATOS
         $this->expedienteTipoRepo->update($row, $request->all());
@@ -115,12 +102,9 @@ class ExpedienteTipoController extends Controller {
         $mensaje = 'El registro se actualizó satisfactoriamente.';
 
         //AJAX
-        if($request->ajax())
-        {
-            return response()->json([
-                'message' => $mensaje
-            ]);
-        }
+        return [
+            'message' => $mensaje
+        ];
     }
 
 
@@ -146,13 +130,10 @@ class ExpedienteTipoController extends Controller {
 
         $message = 'El registro se modificó satisfactoriamente.';
 
-        if($request->ajax())
-        {
-            return response()->json([
-                'message' => $message,
-                'estado'  => $estado
-            ]);
-        }
+        return [
+            'message' => $message,
+            'estado'  => $estado
+        ];
     }
 
 }
