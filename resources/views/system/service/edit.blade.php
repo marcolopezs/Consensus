@@ -49,39 +49,5 @@
     <a class="btn blue" id="formEditSubmit" href="javascript:;">Actualizar</a>
 </div>
 
-<script>
-    $("#formEditSubmit").on("click", function(e){
-        e.preventDefault();
-
-        var form = $("#formEdit");
-        var url = form.attr('action');
-        var data = form.serialize();
-
-        $('.progress').show();
-
-        $.post(url, data, function(result){
-            $('.progress').hide();
-            successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>'+result.message+'</div>';
-            $(".form-content").html(successHtml);
-        }).fail(function(result){
-            $('.progress').hide();
-            console.log(result);
-
-            if(result.status === 422){
-
-                var errors = result.responseJSON;
-
-                errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';
-                $.each( errors, function( key, value ) {
-                    errorsHtml += '<li>' + value[0] + '</li>';
-                });
-                errorsHtml += '</ul></di>';
-
-                $('.form-content').html(errorsHtml);
-
-            }
-
-        });
-
-    });
-</script>
+{{-- JS Create --}}
+{!! HTML::script('js/js-create-edit.js') !!}

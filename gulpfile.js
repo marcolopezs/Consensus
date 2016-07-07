@@ -21,4 +21,5 @@ elixir(function(mix) {
     mix.scripts(['js-cliente.js'], 'public/js/js-cliente.js');
     mix.scripts(['js-cambiar-estado.js'], 'public/js/js-cambiar-estado.js');
     mix.scripts(['js-tarea.js'], 'public/js/js-tarea.js');
+    mix.scripts(['js-create-edit.js'], 'public/js/js-create-edit.js');
 });
