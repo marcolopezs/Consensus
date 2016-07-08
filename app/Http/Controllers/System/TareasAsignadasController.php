@@ -1,5 +1,6 @@
 <?php namespace Consensus\Http\Controllers\System;
 
+use Consensus\Repositories\TareaConceptoRepo;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
@@ -7,6 +8,7 @@ use Consensus\Http\Controllers\Controller;
 
 use Consensus\Entities\TareaAccion;
 
+use Consensus\Repositories\AbogadoRepo;
 use Consensus\Repositories\FlujoCajaRepo;
 use Consensus\Repositories\TareaRepo;
 use Consensus\Repositories\TareaAccionRepo;
@@ -21,33 +23,45 @@ class TareasAsignadasController extends Controller {
         'descripcion' => 'required'
     ];
 
+    protected $abogadoRepo;
     protected $flujoCajaRepo;
     protected $tareaRepo;
     protected $tareaAccionRepo;
+    protected $tareaConceptoRepo;
 
     /**
+     * @param AbogadoRepo $abogadoRepo
      * @param FlujoCajaRepo $flujoCajaRepo
      * @param TareaRepo $tareaRepo
      * @param TareaAccionRepo $tareaAccionRepo
+     * @param TareaConceptoRepo $tareaConceptoRepo
      */
-    public function __construct(FlujoCajaRepo $flujoCajaRepo,
+    public function __construct(AbogadoRepo $abogadoRepo,
+                                FlujoCajaRepo $flujoCajaRepo,
                                 TareaRepo $tareaRepo,
-                                TareaAccionRepo $tareaAccionRepo)
+                                TareaAccionRepo $tareaAccionRepo,
+                                TareaConceptoRepo $tareaConceptoRepo)
     {
+        $this->abogadoRepo = $abogadoRepo;
         $this->flujoCajaRepo = $flujoCajaRepo;
         $this->tareaRepo = $tareaRepo;
         $this->tareaAccionRepo = $tareaAccionRepo;
+        $this->tareaConceptoRepo = $tareaConceptoRepo;
     }
 
     /**
+     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function tareas()
+    public function tareas(Request $request)
     {
         if(Gate::allows('admin'))
         {
-            $rows = $this->tareaRepo->filterPaginateAdmin();
-            return view('system.tareas-asignadas.admin.list', compact('rows'));
+            $rows = $this->tareaRepo->filterPaginateAdmin($request);
+            $abogado = $this->abogadoRepo->orderBy('nombre', 'asc')->lists('nombre', 'id')->toArray();
+            $tarea = $this->tareaConceptoRepo->estadoListArray();
+
+            return view('system.tareas-asignadas.admin.list', compact('rows','abogado','tarea'));
         }
         elseif(Gate::allows('abogado'))
         {

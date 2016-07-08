@@ -77,4 +77,60 @@ class Tarea extends BaseEntity {
         return route('expedientes.tareas.edit', [$this->expediente_id, $this->id]);
     }
 
+
+    /*
+     * SCOPES
+     */
+
+    public function scopeAbogadoId($query, $value)
+    {
+        if($value != "")
+        {
+            $query->where('abogado_id', $value);
+        }
+    }
+
+    public function scopeConcepto($query, $value)
+    {
+        if($value != "")
+        {
+            $query->where('tarea_concepto_id', $value);
+        }
+    }
+
+    public function scopeDescripcion($query, $value)
+    {
+        if(trim($value) != "")
+        {
+            $query->where('descripcion', 'LIKE', "%$value%");
+        }
+    }
+
+    public function scopeFechaSolicitada($query, $from, $to)
+    {
+        if($from != "" and $to != "")
+        {
+            $from = formatoFecha($from);
+            $to = formatoFecha($to);
+            $query->where('fecha_solicitada', '>', $from)->where('fecha_solicitada', '<', $to);
+        }
+    }
+
+    public function scopeFechaVencimiento($query, $from, $to)
+    {
+        if($from != "" and $to != "")
+        {
+            $from = formatoFecha($from);
+            $to = formatoFecha($to);
+            $query->where('fecha_vencimiento', '>', $from)->where('fecha_vencimiento', '<', $to);
+        }
+    }
+
+    public function scopeEstadoId($query, $value)
+    {
+        if($value != "")
+        {
+            $query->where('estado', $value);
+        }
+    }
 }

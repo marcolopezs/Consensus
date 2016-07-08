@@ -1,5 +1,6 @@
 <?php namespace Consensus\Repositories;
 
+use Illuminate\Http\Request;
 use Consensus\Entities\Tarea;
 
 class TareaRepo extends BaseRepo {
@@ -20,9 +21,15 @@ class TareaRepo extends BaseRepo {
     }
 
     //FILTRAR TAREAS COMO ADMINISTRADOR
-    public function filterPaginateAdmin()
+    public function filterPaginateAdmin(Request $request)
     {
         return $this->getModel()
+                    ->abogadoId($request->get('abogado'))
+                    ->concepto($request->get('tarea'))
+                    ->descripcion($request->get('descripcion'))
+                    ->fechaSolicitada($request->get('fecha_solicitada_from'), $request->get('fecha_solicitada_to'))
+                    ->fechaVencimiento($request->get('fecha_vencimiento_from'), $request->get('fecha_vencimiento_to'))
+                    ->estadoId($request->get('estado'))
                     ->orderBy('fecha_solicitada', 'desc')
                     ->with('expedientes','titular','concepto','abogado')
                     ->paginate();
