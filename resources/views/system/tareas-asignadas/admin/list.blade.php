@@ -34,7 +34,7 @@
                 @include('partials.progressbar')
 
                 <div class="portlet-title">
-                    <div class="actions">
+                    <div class="actions pull-left">
                         <div class="btn-group btn-group-devided" data-toggle="buttons">
                             <div class="btn-group">
                                 <a id="filtrar-tarea" class="btn blue-steel btn-outline btn-circle" href="javascript:;">
