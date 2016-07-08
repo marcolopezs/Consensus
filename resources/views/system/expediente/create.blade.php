@@ -129,7 +129,7 @@
                                         <div class="input-group">
                                             <span class="input-group-addon">{!! Form::checkbox('check_abogado', '1', null) !!}</span>
                                             <div class="input-group input-medium">
-                                                {!! Form::select('abogado_id', [''=>''] + $abogado, null, ['class' => 'form-control select2']) !!}
+                                                {!! Form::select('abogado_id', [''=>''] + $abogado, null, ['class' => 'form-control select2', 'id' => 'abogado']) !!}
                                             </div>
                                         </div>
                                     </div>
@@ -141,7 +141,7 @@
                                         <div class="input-group">
                                             <span class="input-group-addon">{!! Form::checkbox('check_asistente', '1', null) !!}</span>
                                             <div class="input-group input-medium">
-                                                {!! Form::select('asistente_id', [''=>''] + $abogado, null, ['class' => 'form-control select2']) !!}
+                                                {!! Form::select('asistente_id', [''=>''] + $abogado, null, ['class' => 'form-control select2', 'id' => 'asistente']) !!}
                                             </div>
                                         </div>
                                     </div>
@@ -381,7 +381,7 @@
                         </div>
 
                         <div class="form-actions left">
-                            <a href="{{ route('expedientes.index') }}" class="btn default">Cancelar</a>
+                            <a id="formCloseExpediente" href="#" data-url="{{ route('expedientes.index') }}" class="btn default">Cancelar</a>
                             <button type="submit" class="btn blue"><i class='fa fa-check'></i> Guardar</button>
                         </div>
 
@@ -428,7 +428,7 @@
 
         //SELECCIONAR TARIFA
         $("#tarifa").on("change", function() {
-            opcion = $(this).val();
+            var opcion = $(this).val();
             if(opcion == "1"){
                 $("#honorario_fijo").prop('disabled', false);
                 $("#honorario_hora, #tope_monto, #retainer_fm, #numero_horas, #hora_adicional").prop('disabled', true);
@@ -509,12 +509,10 @@
 {!! HTML::script('assets/global/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js') !!}
 <script>
     $(document).on("ready", function() {
-
         $("#expediente_mask").inputmask({
             "mask": "A-9999999999",
             placeholder: "A-0000000000"
         });
-
     });
 </script>
 
@@ -523,12 +521,28 @@
 {!! HTML::script('assets/global/plugins/select2/js/i18n/es.js') !!}
 <script>
     $(document).on("ready", function(){
-
         var placeholder = "Seleccionar";
-
         $('.select2').select2({
             placeholder: placeholder
         });
+    });
+</script>
+
+{{-- BootBox y FormClose --}}
+{!! HTML::script('assets/global/plugins/bootbox/bootbox.min.js') !!}
+{!! HTML::script('js/js-form-close.js') !!}
+<script>
+    $("#formCloseExpediente").on("click", function (e) {
+        e.preventDefault();
+
+        var exp_tipo = $("#expediente_tipo").val(), expediente = $("#expediente_mask").val(), cliente = $("#cliente").val(),
+                moneda = $("#moneda").val(), tarifa = $("#tarifa").val(), abogado = $("#abogado").val(), asistente = $("#asistente").val(),
+                servicio = $("#servicio").val(), descripcion = $("#descripcion").val(), concepto = $("#concepto").val(), materia = $("#materia").val(),
+                entidad = $("#entidad").val(), area = $("#area").val(), instancia = $("#instancia").val(), encargado = $("#encargado").val(), jefe_area = $("#jefe_area").val(),
+                bienes = $("#bienes").val(), especial = $("#especial").val(), estado = $("#estado").val(), exito = $("#exito").val(), observacion = $("#observacion").val();
+
+        formCloseExpediente(this, [exp_tipo, expediente, cliente, moneda, tarifa, abogado, asistente, servicio, descripcion, concepto, materia, entidad, area, instancia,
+            encargado, jefe_area, bienes, especial, estado, exito, observacion]);
     });
 </script>
 @stop
