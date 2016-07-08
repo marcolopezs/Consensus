@@ -245,10 +245,4 @@
     {{-- FUNCIONES --}}
     {!! HTML::script('js/js-funciones.js') !!}
     {!! HTML::script('js/js-expediente.js') !!}
-    <script>
-        $(document).on("ready", function () {
-            $("#progressbar").hide();
-        });
-    </script>
-
 @stop
