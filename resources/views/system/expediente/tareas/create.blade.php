@@ -103,7 +103,7 @@
     </div>
 </div>
 <div class="modal-footer">
-    <a class="btn default" id="formCreateClose" data-dismiss="modal">Cerrar</a>
+    <a class="btn default" id="formCreateClose">Cerrar</a>
     <a id="formCreateSubmit" class="btn blue"><i class='fa fa-check'></i> Guardar</a>
 </div>
 
@@ -117,11 +117,7 @@
 
 {{-- GUARDAR TAREA --}}
 <script>
-
-    $('.progress').hide();
-
     $("#formCreateSubmit").on("click", function(e){
-
         e.preventDefault();
 
         var form = $("#formCreate");
@@ -133,7 +129,7 @@
             type: 'POST',
             data: data,
             success: function (result) {
-                successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>El registro se agregó satisfactoriamente.</div>';
+                var successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>El registro se agregó satisfactoriamente.</div>';
                 $(".form-content").html(successHtml);
                 $(".select2").val(null).trigger('change');
                 form[0].reset();
@@ -154,7 +150,7 @@
             error: function (result){
                 if(result.status === 422){
                     var errors = result.responseJSON;
-                    errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';
+                    var errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';
                     $.each( errors, function( key, value ) {
                         errorsHtml += '<li>' + value[0] + '</li>';
                     });
@@ -169,5 +165,19 @@
             }
         });
 
+    });
+</script>
+
+{{-- BootBox --}}
+{!! HTML::script('assets/global/plugins/bootbox/bootbox.min.js') !!}
+{!! HTML::script('js/js-form-close.js') !!}
+<script>
+    $("#formCreateClose").on("click", function (e) {
+        e.preventDefault();
+
+        var tarea = $("#tarea").val(), vencimiento = $("#fecha_vencimiento").val(),
+                asignado = $("#asignado").val(), descripcion = $("#descripcion").val();
+
+        formClose([tarea, vencimiento, asignado, descripcion]);
     });
 </script>
