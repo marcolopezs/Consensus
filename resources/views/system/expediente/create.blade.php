@@ -149,7 +149,7 @@
 
                             </div>
 
-                            <div class="row">
+                            <div class="row" style="display:none;">
 
                                 <div class="col-md-2">
                                     <div class="form-group">
@@ -411,7 +411,6 @@
     $(document).on("ready", function() {
 
         //DESACTIVAR INPUT
-        $("#progressbar").hide();
         $("#honorario_hora, #tope_monto, #retainer_fm, " +
                 "#numero_horas, #honorario_fijo, #hora_adicional").prop('disabled', true);
 

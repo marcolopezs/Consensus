@@ -102,6 +102,12 @@
                                 </div>
                             </div>
 
+
+
+                        </div>
+
+                        <div class="row" style="display: none;">
+
                             <div class="col-md-3">
                                 <div class="form-group">
                                     {!! Form::label('honorario_hora', 'Honorario por Hora', ['class' => 'control-label']) !!}
@@ -115,10 +121,6 @@
                                     {!! Form::text('tope_monto', null, ['class' => 'form-control']) !!}
                                 </div>
                             </div>
-
-                        </div>
-
-                        <div class="row">
 
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -366,13 +368,12 @@
         $(document).on("ready", function() {
 
             //DESACTIVAR INPUT
-            $("#progressbar").hide();
             $("#honorario_hora, #tope_monto, #retainer_fm, " +
                     "#numero_horas, #honorario_fijo, #hora_adicional").prop('disabled', true);
 
             //SELECCIONAR TARIFA
             $("#tarifa").on("change", function() {
-                opcion = $(this).val();
+                var opcion = $(this).val();
                 if(opcion == "1"){
                     $("#honorario_fijo").prop('disabled', false);
                     $("#honorario_hora, #tope_monto, #retainer_fm, #numero_horas, #hora_adicional").prop('disabled', true);
@@ -429,9 +430,7 @@
     {!! HTML::script('assets/global/plugins/select2/js/i18n/es.js') !!}
     <script>
         $(document).on("ready", function(){
-
             var placeholder = "Seleccionar";
-
             $('.select2').select2({
                 placeholder: placeholder
             });
