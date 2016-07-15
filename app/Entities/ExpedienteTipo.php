@@ -1,6 +1,7 @@
 <?php namespace Consensus\Entities;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Mockery\Test\Generator\StringManipulation\Pass\CallTypeHintPassTest;
 
 class ExpedienteTipo extends BaseEntity {
 
@@ -8,7 +9,51 @@ class ExpedienteTipo extends BaseEntity {
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['titulo','abrev','num','estado'];
+    protected $fillable = ['titulo','abrev','num'];
+
+    /*
+     * RELACIONES
+     */
+
+    public function expedientes()
+    {
+        return $this->hasMany(Expediente::class);
+    }
+
+    public function tareas()
+    {
+        return $this->hasMany(Tarea::class);
+    }
+
+    public function acciones()
+    {
+        return $this->hasMany(TareaAccion::class);
+    }
+
+    /*
+     * GETTERS
+     */
+
+    public function getCantidadExpedientesAttribute()
+    {
+        return $this->expedientes()->count();
+    }
+
+
+
+    public function getTiempoTotalAttribute()
+    {
+        $total = 0;
+        foreach($this->acciones as $accion){
+            $horas = HorasAMinutos($accion->horas);
+            $total = $horas + $total;
+        }
+        return $total;
+    }
+
+    /*
+     * SCOPES
+     */
 
     // ORDERNAR
     public function scopeOrder($query, $order)
