@@ -81,6 +81,9 @@ class TareasController extends Controller {
         //VALIDACION
         $this->validate($request, $this->rules);
 
+        //EXTRAER EXPEDIENTE
+        $exp = $this->expedienteRepo->findOrFail($expedientes);
+
         //VARIABLES
         $asignado = $request->input('asignado');
         $concepto = $request->input('tarea');
@@ -88,6 +91,7 @@ class TareasController extends Controller {
         //GUARDAR DATOS
         $row = new Tarea($request->all());
         $row->expediente_id = $expedientes;
+        $row->expediente_tipo_id = $exp->expediente_tipo_id;
         $row->tarea_concepto_id = $concepto;
         $row->titular_id = auth()->user()->id;
         $row->abogado_id = $asignado;
