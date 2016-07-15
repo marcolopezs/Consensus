@@ -378,6 +378,7 @@ class CreateInitialTables extends Migration
             $table->increments('id');
 
             $table->integer('expediente_id')->unsigned();
+            $table->integer('expediente_tipo_id')->unsigned();
 
             $table->integer('tarea_concepto_id');
             $table->text('descripcion');
@@ -396,6 +397,9 @@ class CreateInitialTables extends Migration
         Schema::create('tarea_acciones', function(Blueprint $table)
         {
             $table->increments('id');
+
+            $table->integer('expediente_id')->unsigned();
+            $table->integer('expediente_tipo_id')->unsigned();
 
             $table->integer('tarea_id')->unsigned();
             $table->date('fecha');
