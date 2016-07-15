@@ -2,6 +2,25 @@
 
 use Carbon\Carbon;
 
+//CONVERTIR HORAS A MINUTOS
+function HorasAMinutos($hours)
+{
+    $minutes = 0;
+    if (strpos($hours, ':') !== false)
+    {
+        list($hours, $minutes) = explode(':', $hours);
+    }
+    return $hours * 60 + $minutes;
+}
+
+//CONVERTIR MINUTOS A HORAS
+function MinutosAHoras($minutes)
+{
+    $hours = (int)($minutes / 60);
+    $minutes -= $hours * 60;
+    return sprintf("%d:%02.0f", $hours, $minutes);
+}
+
 //RESTAR HORAS
 function restarHoras($fecha, $desde, $hasta)
 {
