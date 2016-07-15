@@ -103,6 +103,9 @@ class TareasAsignadasController extends Controller {
     {
         $this->validate($request, $this->rules);
 
+        //EXTRAER EXPEDIENTE
+        $expTarea = $this->tareaRepo->findOrFail($tarea);
+
         //VARAIBLES
         $fecha = formatoFecha($request->input('fecha'));
         $hora_desde = $request->input('desde');
@@ -111,6 +114,8 @@ class TareasAsignadasController extends Controller {
         $horas = restarHoras($fecha, $hora_desde, $hora_hasta);
 
         $row = new TareaAccion($request->all());
+        $row->expediente_id = $expTarea->expediente_id;
+        $row->expediente_tipo_id = $expTarea->expediente_tipo_id;
         $row->tarea_id = $tarea;
         $row->fecha = $fecha;
         $row->horas = $horas;
