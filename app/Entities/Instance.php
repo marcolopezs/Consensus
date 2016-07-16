@@ -10,4 +10,33 @@ class Instance extends BaseEntity {
 
     protected $fillable = ['titulo','estado'];
 
+    /*
+     * RELACIONES
+     */
+    public function expedientes()
+    {
+        return $this->hasMany(Expediente::class);
+    }
+
+    /*
+     * GETTERS
+     */
+    public function getCantidadExpedientesAttribute()
+    {
+        return $this->expedientes()->count();
+    }
+
+    public function getTiempoTotalAttribute()
+    {
+        $total = 0;
+        foreach($this->expedientes as $expediente){
+            foreach($expediente->tarea as $tarea){
+                foreach($tarea->acciones as $accion){
+                    $horas = HorasAMinutos($accion->horas);
+                    $total = $horas + $total;
+                }
+            }
+        }
+        return $total;
+    }
 }

@@ -73,6 +73,30 @@
         </div>
         {{-- Fin Resumen --}}
     </div>
+
+    <div class="row">
+        {{-- Tipo de Materia --}}
+        <div class="col-md-12 col-sm-12">
+            <div class="portlet light ">
+                <div class="portlet-body">
+                    <div id="container-materia" style="min-width: 310px; max-width: 100%; height: 400px; margin: 0 auto"></div>
+                </div>
+            </div>
+        </div>
+        {{-- Fin Tipo de Materia --}}
+    </div>
+
+    <div class="row">
+        {{-- Instancia --}}
+        <div class="col-md-12 col-sm-12">
+            <div class="portlet light ">
+                <div class="portlet-body">
+                    <div id="container-instancia" style="min-width: 310px; max-width: 100%; height: 400px; margin: 0 auto"></div>
+                </div>
+            </div>
+        </div>
+        {{-- Instancia --}}
+    </div>
 @stop
 
 @section('contenido_footer')
@@ -148,6 +172,158 @@
                         data: [
                             @foreach($expedientes_tipo as $item)
                                 {{ $item->tiempo_total }},
+                            @endforeach
+                        ],
+                        tooltip: {
+                            valueSuffix: ' min'
+                        }
+                    }
+                ]
+            });
+
+            $('#container-materia').highcharts({
+                chart: {
+                    zoomType: 'xy'
+                },
+                title: {
+                    text: 'Tipo de Materia'
+                },
+                xAxis: [{
+                    categories: [
+                        @foreach($materia_tipo as $item)
+                            '{{ $item->titulo }}',
+                        @endforeach
+                    ],
+                    crosshair: true
+                }],
+                yAxis: [
+                    {
+                        title: {
+                            text: 'Promedio tiempo de atención',
+                            style: {
+                                color: Highcharts.getOptions().colors[1]
+                            }
+                        },
+                        labels: {
+                            format: '{value} min',
+                            style: {
+                                color: Highcharts.getOptions().colors[1]
+                            }
+                        },
+                        opposite: true
+                    },
+                    {
+                        gridLineWidth: 0,
+                        title: {
+                            text: 'Número de Expedientes',
+                            style: {
+                                color: Highcharts.getOptions().colors[0]
+                            }
+                        },
+                        labels: {
+                            format: '{value}',
+                            style: {
+                                color: Highcharts.getOptions().colors[0]
+                            }
+                        }
+                    }
+                ],
+                tooltip: {
+                    shared: true
+                },
+                series: [
+                    {
+                        name: 'Número de Expedientes',
+                        type: 'column',
+                        yAxis: 1,
+                        data: [
+                            @foreach($materia_tipo as $item)
+                                {{ $item->cantidad_expedientes }},
+                            @endforeach
+                        ]
+                    },
+                    {
+                        name: 'Promedio tiempo de atención',
+                        type: 'spline',
+                        data: [
+                            @foreach($materia_tipo as $item)
+                                {{ $item->tiempo_total }},
+                            @endforeach
+                        ],
+                        tooltip: {
+                            valueSuffix: ' min'
+                        }
+                    }
+                ]
+            });
+
+            $('#container-instancia').highcharts({
+                chart: {
+                    zoomType: 'xy'
+                },
+                title: {
+                    text: 'Instancia'
+                },
+                xAxis: [{
+                    categories: [
+                        @foreach($instancia as $item)
+                                '{{ $item->titulo }}',
+                        @endforeach
+                    ],
+                    crosshair: true
+                }],
+                yAxis: [
+                    {
+                        title: {
+                            text: 'Promedio tiempo de atención',
+                            style: {
+                                color: Highcharts.getOptions().colors[1]
+                            }
+                        },
+                        labels: {
+                            format: '{value} min',
+                            style: {
+                                color: Highcharts.getOptions().colors[1]
+                            }
+                        },
+                        opposite: true
+                    },
+                    {
+                        gridLineWidth: 0,
+                        title: {
+                            text: 'Número de Expedientes',
+                            style: {
+                                color: Highcharts.getOptions().colors[0]
+                            }
+                        },
+                        labels: {
+                            format: '{value}',
+                            style: {
+                                color: Highcharts.getOptions().colors[0]
+                            }
+                        }
+                    }
+                ],
+                tooltip: {
+                    shared: true
+                },
+                series: [
+                    {
+                        name: 'Número de Expedientes',
+                        type: 'column',
+                        yAxis: 1,
+                        data: [
+                            @foreach($instancia as $item)
+                            {{ $item->cantidad_expedientes }},
+                            @endforeach
+                        ]
+                    },
+                    {
+                        name: 'Promedio tiempo de atención',
+                        type: 'spline',
+                        data: [
+                            @foreach($instancia as $item)
+                            {{ $item->tiempo_total }},
                             @endforeach
                         ],
                         tooltip: {

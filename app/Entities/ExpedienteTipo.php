@@ -39,8 +39,6 @@ class ExpedienteTipo extends BaseEntity {
         return $this->expedientes()->count();
     }
 
-
-
     public function getTiempoTotalAttribute()
     {
         $total = 0;
