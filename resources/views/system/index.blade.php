@@ -72,6 +72,97 @@
             </div>
         </div>
         {{-- Fin Resumen --}}
+
+        {{-- Tareas Asignadas --}}
+        <div class="col-md-6 col-sm-6">
+            <div class="portlet light ">
+                <div class="portlet-title tabbable-line">
+                    <div class="caption">
+                        <i class="icon-bubbles font-dark hide"></i>
+                        <span class="caption-subject font-dark bold uppercase">Últimas tareas</span>
+                    </div>
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#portlet_comments_1" data-toggle="tab"> Pendientes </a>
+                        </li>
+                        <li>
+                            <a href="#portlet_comments_2" data-toggle="tab"> Terminadas </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="portlet-body">
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="portlet_comments_1">
+
+                            <div class="mt-comments">
+                                @foreach($tareasPendientes as $tarea)
+                                    @php
+                                    $row_expediente = $tarea->expedientes->expediente;
+                                    $row_tarea = $tarea->titulo_tarea;
+                                    $row_descripcion = $tarea->descripcion;
+                                    $row_titular = $tarea->asignado;
+                                    $row_solicitada = $tarea->fecha_solicitada;
+                                    $row_vencimiento = $tarea->fecha_vencimiento;
+                                    @endphp
+                                    <div class="mt-comment">
+                                        <div class="mt-comment-body">
+                                            <div class="mt-comment-info">
+                                                <span class="mt-comment-author">Asigando a: <strong>{{ $row_titular }}</strong></span>
+                                            </div>
+                                            <div class="mt-comment-text">
+                                                <strong>{{ $row_tarea }}</strong> {{ $row_descripcion }}
+                                            </div>
+                                            <div class="mt-comment-info">
+                                                <span class="mt-comment-date solicitada">Solicitado: <strong>{{ $row_solicitada }}</strong></span>
+                                                <span class="mt-comment-date vencimiento">Vencimiento: <strong>{{ $row_vencimiento }}</strong></span>
+                                            </div>
+
+                                            {{--<div class="mt-comment-details">--}}
+                                                {{--<ul class="mt-comment-actions">--}}
+                                                    {{--<li><a href="#">Ver Tarea</a></li>--}}
+                                                {{--</ul>--}}
+                                            {{--</div>--}}
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+
+                        </div>
+                        <div class="tab-pane" id="portlet_comments_2">
+
+                            <div class="mt-comments">
+                                @foreach($tareasTerminadas as $tarea)
+                                    @php
+                                    $row_expediente = $tarea->expedientes->expediente;
+                                    $row_tarea = $tarea->titulo_tarea;
+                                    $row_descripcion = $tarea->descripcion;
+                                    $row_titular = $tarea->asignado_por;
+                                    $row_solicitada = $tarea->fecha_solicitada;
+                                    $row_vencimiento = $tarea->fecha_vencimiento;
+                                    @endphp
+                                    <div class="mt-comment">
+                                        <div class="mt-comment-body">
+                                            <div class="mt-comment-info">
+                                                <span class="mt-comment-author">Asigando por: <strong>{{ $row_titular }}</strong></span>
+                                            </div>
+                                            <div class="mt-comment-info">
+                                                <span class="mt-comment-date solicitada">Solicitado: <strong>{{ $row_solicitada }}</strong></span>
+                                                <span class="mt-comment-date vencimiento">Vencimiento: <strong>{{ $row_vencimiento }}</strong></span>
+                                            </div>
+                                            <div class="mt-comment-text">
+                                                <strong>{{ $row_tarea }}</strong> {{ $row_descripcion }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- Fin Tareas Asignadas --}}
     </div>
 
     <div class="row">

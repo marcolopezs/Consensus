@@ -59,8 +59,8 @@ class HomeController extends Controller {
 
             return view('system.index', compact('expedientes'));
         }else{
-            $tareasPendientes = $this->tareaRepo->filterHome(0);
-            $tareasTerminadas = $this->tareaRepo->filterHome(1);
+            $tareasPendientes = $this->tareaRepo->filterHomeAdmin(0);
+            $tareasTerminadas = $this->tareaRepo->filterHomeAdmin(1);
 
             $expedientes_tipo = $this->expedienteTipoRepo->where('estado','1')->get();
             $instancia = $this->instanceRepo->homeInstancia();
