@@ -53,6 +53,7 @@ class Import extends Command
             {
                 Expediente::create([
                     'id' => $item->id,
+                    'expediente_tipo_id' => $item->expediente_tipo_id,
                     'expediente' => $item->expediente,
                     'cliente_id' => $item->cliente_id,
                     'tariff_id' => $item->tariff_id,

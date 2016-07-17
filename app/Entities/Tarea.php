@@ -17,6 +17,11 @@ class Tarea extends BaseEntity {
         return $this->belongsTo(Expediente::class, 'expediente_id');
     }
 
+    public function expedienteTipo()
+    {
+        return $this->belongsTo(ExpedienteTipo::class, 'expediente_tipo_id');
+    }
+
     public function abogado()
     {
         return $this->belongsTo(Abogado::class);
@@ -37,6 +42,9 @@ class Tarea extends BaseEntity {
         return $this->hasMany(TareaAccion::class);
     }
 
+    /*
+     * SETTERS
+     */
     public function setFechaSolicitadaAttribute($value)
     {
         $this->attributes['fecha_solicitada'] = formatoFecha($value);
@@ -47,6 +55,14 @@ class Tarea extends BaseEntity {
         $this->attributes['fecha_vencimiento'] = formatoFecha($value);
     }
 
+    /*
+     * GETTERS
+     */
+
+    public function getCantidadAccionesAttribute()
+    {
+        return $this->acciones()->count();
+    }
     public function getFechaSolicitadaAttribute($value)
     {
         return soloFecha($value);

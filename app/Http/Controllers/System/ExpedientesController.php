@@ -117,6 +117,7 @@ class ExpedientesController extends Controller {
         $row = new Expediente($request->all());
         $row->expediente = $expediente;
         $row->expediente_opcion = $expediente_opcion;
+        $row->expediente_tipo_id = $expediente_tipo;
         $row->cliente_id = $cliente;
         $row->money_id = $moneda;
         $row->tariff_id = $tarifa;

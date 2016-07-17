@@ -9,5 +9,13 @@ class InstanceRepo extends BaseRepo {
     {
         return new Instance();
     }
-    
+
+    //INSTANCIA EN HOME
+    public function homeInstancia()
+    {
+        return $this->getModel()
+                    ->where('estado','1')
+                    ->with('expedientes','expedientes.tarea','expedientes.tarea.acciones')
+                    ->get();
+    }
 }

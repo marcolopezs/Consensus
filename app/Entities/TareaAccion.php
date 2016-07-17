@@ -14,6 +14,9 @@ class TareaAccion extends BaseEntity {
 
     protected $table = 'tarea_acciones';
 
+    /*
+     * RELACIONES
+     */
     public function tarea()
     {
         return $this->belongsTo(Tarea::class, 'tarea_id');
@@ -24,6 +27,14 @@ class TareaAccion extends BaseEntity {
         return $this->hasMany(FlujoCaja::class);
     }
 
+    public function expedienteTipo()
+    {
+        return $this->belongsTo(TareaAccion::class, 'tarea_accion_id');
+    }
+
+    /*
+     * GETTERS
+     */
     public function getFechaAccionAttribute()
     {
         return soloFecha($this->fecha);
