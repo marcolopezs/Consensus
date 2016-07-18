@@ -131,7 +131,7 @@
                                 $row_jefe_area = $item->jefe_area;
                                 $row_bienes = $item->exp_bienes;
                                 $row_situacion_especial = $item->exp_situacion_especial;
-                                $row_estado = $item->exp_state;
+                                $row_estado = $item->exp_estado;
                                 $row_exito = $item->exp_exito;
                             @endphp
                             <tr id="exp-{{ $row_id }}" data-id="{{ $row_id }}" data-title="{{ $row_expediente }}">
