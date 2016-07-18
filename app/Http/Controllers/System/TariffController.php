@@ -1,6 +1,8 @@
 <?php namespace Consensus\Http\Controllers\System;
 
 use Auth;
+use Consensus\Entities\Abogado;
+use Consensus\Entities\TarifaAbogado;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
@@ -60,10 +62,23 @@ class TariffController extends Controller {
         //GUARDAR DATOS
         $row = new Tariff($request->all());
         $row->estado = 1;
-        $this->tariffRepo->create($row, $request->all());
+        $save = $this->tariffRepo->create($row, $request->all());
 
         //GUARDAR HISTORIAL
         $this->tariffRepo->saveHistory($row, $request, 'create');
+
+        //OBTENER ABOGADOS
+        $abogados = Abogado::all();
+
+        //CREAR TARIFAS DE ABOGADO
+        foreach($abogados as $abogado)
+        {
+            $tarAbo = new TarifaAbogado();
+            $tarAbo->tariff_id = $save->id;
+            $tarAbo->abogado_id = $abogado->id;
+            $tarAbo->estado = 1;
+            $tarAbo->save();
+        }
 
         //MENSAJE
         $mensaje = 'El registro se agregó satisfactoriamente.';
