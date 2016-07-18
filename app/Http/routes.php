@@ -122,6 +122,8 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
     //USUARIO
     Route::resource('users', 'UsersController', ['except' => 'destroy']);
 
+    Route::put('users/{id}/abogado/tarifa', ['as' => 'abogado.tarifas.update', 'uses' => 'UsersController@abogadoTarifaUpdate']);
+
     //USUARIO - MI PERFIL
     Route::get('user/perfil', ['as' => 'users.perfil', 'uses' => 'UsersController@perfil']);
 
