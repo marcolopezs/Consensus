@@ -32,23 +32,20 @@
                                 <div class="col-md-2">
                                     <p class="form-control-static">{{ $row->valor }}</p>
                                 </div>
-
-                                {!! Form::label('tarifa', 'Tárifa', ['class' => 'control-label col-md-2']) !!}
-                                <div class="col-md-2">
-                                    <p class="form-control-static">{{ $row->exp_tarifa }}</p>
-                                </div>
                             </div>
 
                             <div class="form-group">
                                 {!! Form::label('abogado', 'Abogado', ['class' => 'control-label col-md-2']) !!}
                                 <div class="col-md-3">
-                                    <p class="form-control-static">{{ $row->abogado->nombre }}</p>
+                                    <p class="form-control-static">{{ $row->exp_abogado }}</p>
                                 </div>
 
-                                {!! Form::label('asistente', 'Asistente', ['class' => 'control-label col-md-3']) !!}
+                                {!! Form::label('tarifa', 'Tárifa', ['class' => 'control-label col-md-2']) !!}
                                 <div class="col-md-3">
-                                    <p class="form-control-static">{{ $row->exp_asistente }}</p>
+                                    <p class="form-control-static">{{ $row->exp_tarifa }}</p>
                                 </div>
+
+
                             </div>
 
                             <div class="form-group">
@@ -57,31 +54,26 @@
                                     <p class="form-control-static">{{ $row->honorario_hora }}</p>
                                 </div>
 
-                                {!! Form::label('tope_monto', 'Tope Monto', ['class' => 'control-label col-md-2']) !!}
-                                <div class="col-md-2">
-                                    <p class="form-control-static">{{ $row->tope_monto }}</p>
-                                </div>
-
-                                {!! Form::label('retainer_fm', 'Retainer FM', ['class' => 'control-label col-md-2']) !!}
-                                <div class="col-md-2">
-                                    <p class="form-control-static">{{ $row->retainer_fm }}</p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
                                 {!! Form::label('numero_horas', 'Número de Horas', ['class' => 'control-label col-md-2']) !!}
                                 <div class="col-md-2">
                                     <p class="form-control-static">{{ $row->numero_horas }}</p>
                                 </div>
 
-                                {!! Form::label('honorario_fijo', 'Honorario Fijo', ['class' => 'control-label col-md-2']) !!}
+                                {!! Form::label('importe', 'Importe', ['class' => 'control-label col-md-2']) !!}
                                 <div class="col-md-2">
-                                    <p class="form-control-static">{{ $row->honorario_fijo }}</p>
+                                    <p class="form-control-static">{{ $row->importe }}</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                {!! Form::label('tope_monto', 'Tope Monto', ['class' => 'control-label col-md-2']) !!}
+                                <div class="col-md-2">
+                                    <p class="form-control-static">{{ $row->tope_monto }}</p>
                                 </div>
 
-                                {!! Form::label('hora_adicional', 'Hora Adicional', ['class' => 'control-label col-md-2']) !!}
-                                <div class="col-md-2">
-                                    <p class="form-control-static">{{ $row->hora_adicional }}</p>
+                                {!! Form::label('asistente', 'Asistente', ['class' => 'control-label col-md-3']) !!}
+                                <div class="col-md-3">
+                                    <p class="form-control-static">{{ $row->exp_asistente }}</p>
                                 </div>
                             </div>
 
@@ -122,8 +114,6 @@
                                     <p class="form-control-static">{{ $row->concepto }}</p>
                                 </div>
                             </div>
-
-                            <h3>Kardex</h3>
 
                             <div class="form-group">
                                 {!! Form::label('materia', 'Materia', ['class' => 'control-label col-md-2']) !!}
