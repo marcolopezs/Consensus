@@ -283,17 +283,14 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-4 input-group date-picker input-daterange" data-date-format="dd/mm/yyyy">
+                                <div class="col-md-6 input-group date-picker input-daterange" data-date-format="dd/mm/yyyy">
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             {!! Form::label('poder', 'Fecha Inicio de Poder', ['class' => 'control-label']) !!}
                                             <div class="input-group">
                                                 <span class="input-group-addon">{!! Form::checkbox('check_poder', '1', null) !!}</span>
-                                                <div class="input-group input-medium date date-picker" data-date-format="dd/mm/yyyy" data-date-viewmode="years">
-                                                    {!! Form::text('fecha_poder', null, ['class' => 'form-control']) !!}
-                                                    <span class="input-group-btn"><button class="btn default" type="button"><i class="fa fa-calendar"></i></button></span>
-                                                </div>
+                                                {!! Form::text('fecha_poder', null, ['class' => 'form-control date-picker']) !!}
                                             </div>
                                         </div>
                                     </div>
@@ -303,10 +300,7 @@
                                             {!! Form::label('vencimiento', 'Fecha Vencimiento de Poder', ['class' => 'control-label']) !!}
                                             <div class="input-group">
                                                 <span class="input-group-addon">{!! Form::checkbox('check_vencimiento', '1', null) !!}</span>
-                                                <div class="input-group input-medium date date-picker" data-date-format="dd/mm/yyyy" data-date-viewmode="years">
-                                                    {!! Form::text('fecha_vencimiento', null, ['class' => 'form-control']) !!}
-                                                    <span class="input-group-btn"><button class="btn default" type="button"><i class="fa fa-calendar"></i></button></span>
-                                                </div>
+                                                {!! Form::text('fecha_vencimiento', null, ['class' => 'form-control date-picker']) !!}
                                             </div>
                                         </div>
                                     </div>
