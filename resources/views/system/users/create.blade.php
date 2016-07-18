@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h4 class="modal-title">Crear nuevo registro</h4>
+    <h4 class="modal-title">Crear nuevo usuario</h4>
 </div>
 <div class="modal-body">
     <div class="row">
@@ -65,17 +65,46 @@
 
                 </div>
 
-                <h3>Opciones</h3>
+                <h3>Roles</h3>
 
                 <div class="row">
 
-                    <div class="col-md-6">
+                    <div class="col-md-12 margin-bottom-15">
                         <div class="form-group">
-                            <div class="mt-checkbox-inline">
-                                <label class="mt-checkbox">
-                                	{!! Form::checkbox('abogado', '1', null,  []) !!}
-                                	Este usuario es Abogado
-                                </label>
+                            {!! Form::label('roles', 'Tipo de Usuario', ['class' => 'col-md-2 control-label']) !!}
+                            <div class="col-md-10">
+                                <div class="mt-checkbox-inline">
+                                    <label class="mt-checkbox" style="margin-right: 20px;">
+                                        {!! Form::checkbox('administrador', '1', null,  []) !!}
+                                        Administrador
+                                    </label>
+                                    <label class="mt-checkbox">
+                                        {!! Form::checkbox('abogado', '1', null,  []) !!}
+                                        Abogado
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            {!! Form::label('roles', 'Permisos', ['class' => 'col-md-2 control-label']) !!}
+                            <div class="col-md-10">
+                                <div class="mt-checkbox-inline">
+                                    <label class="mt-checkbox" style="margin-right: 20px;">
+                                        {!! Form::checkbox('usuario_crear', '1', null,  []) !!}
+                                        Crear
+                                    </label>
+                                    <label class="mt-checkbox" style="margin-right: 20px;">
+                                        {!! Form::checkbox('usuario_editar', '1', null,  []) !!}
+                                        Editar
+                                    </label>
+                                    <label class="mt-checkbox" style="margin-right: 20px;">
+                                        {!! Form::checkbox('usuario_eliminar', '1', null,  []) !!}
+                                        Eliminar
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
