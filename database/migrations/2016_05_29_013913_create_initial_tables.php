@@ -269,6 +269,7 @@ class CreateInitialTables extends Migration
             $table->integer('tariff_id');
             $table->integer('abogado_id');
             $table->integer('valor');
+            $table->boolean('estado');
 
             $table->nullableTimestamps();
             $table->softDeletes();
