@@ -7,6 +7,8 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Consensus\Http\Controllers\Controller;
 
+use Consensus\Repositories\AbogadoRepo;
+use Consensus\Repositories\TarifaAbogadoRepo;
 use Consensus\Entities\Expediente;
 use Consensus\Repositories\ExpedienteRepo;
 use Consensus\Http\Requests\ExpedienteRequest;
@@ -17,20 +19,27 @@ use Illuminate\Support\Facades\Gate;
 
 class ExpedientesController extends Controller {
 
+    protected $abogadoRepo;
     protected $expedienteRepo;
     protected $expedienteTipoRepo;
+    protected $tarifaAbogadoRepo;
     protected $ajusteRepo;
 
     /**
      * ExpedientesController constructor.
+     * @param AbogadoRepo $abogadoRepo
      * @param ExpedienteRepo $expedienteRepo
      * @param ExpedienteTipoRepo $expedienteTipoRepo
+     * @param TarifaAbogadoRepo $tarifaAbogadoRepo
      * @param AjusteRepo $ajusteRepo
      */
-    public function __construct(ExpedienteRepo $expedienteRepo, ExpedienteTipoRepo $expedienteTipoRepo, AjusteRepo $ajusteRepo)
+    public function __construct(AbogadoRepo $abogadoRepo, ExpedienteRepo $expedienteRepo,
+                                ExpedienteTipoRepo $expedienteTipoRepo, TarifaAbogadoRepo $tarifaAbogadoRepo, AjusteRepo $ajusteRepo)
     {
+        $this->abogadoRepo = $abogadoRepo;
         $this->expedienteRepo = $expedienteRepo;
         $this->expedienteTipoRepo = $expedienteTipoRepo;
+        $this->tarifaAbogadoRepo = $tarifaAbogadoRepo;
         $this->ajusteRepo = $ajusteRepo;
     }
 
@@ -213,5 +222,20 @@ class ExpedientesController extends Controller {
         $this->ajusteRepo->saveAjustes($ajuste, $request);
 
         return redirect()->route('expedientes.index');
+    }
+
+    
+    /**
+     * @param $abogado
+     * @param $tarifa
+     * @return array
+     */
+    public function abogadoTarifa($abogado, $tarifa)
+    {
+        $tar = $this->tarifaAbogadoRepo->where('abogado_id', $abogado)->where('tariff_id', $tarifa)->first();
+
+        return [
+            'valor' => $tar->valor
+        ];
     }
 }

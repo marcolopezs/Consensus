@@ -30,6 +30,7 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
     Route::get('expedientes/cliente/{id}', ['as' => 'expedientes.cliente', 'uses' => 'ExpedientesController@cliente']);
     Route::post('expedientes/ajustes', ['as' => 'expedientes.ajustes', 'uses' => 'ExpedientesController@ajustes']);
     Route::get('expedientes/filtrar', ['as' => 'expedientes.filtrar', 'uses' => 'ExpedientesController@filtrar']);
+    Route::post('expedientes/abogado/{abogado}/tarifa/{tarifa}', ['as' => 'expedientes.abogado.tarifa', 'uses' => 'ExpedientesController@abogadoTarifa']);
 
     //EXPEDIENTES - DOCUMENTOS
     Route::resource('expedientes.documentos', 'ExpDocumentosController', ['except' => 'destroy']);
