@@ -1,25 +1,30 @@
 <?php namespace Consensus\Http\Controllers\System;
 
 use Auth;
-use Consensus\Http\Requests\TariffRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Consensus\Http\Controllers\Controller;
 
+use Consensus\Http\Requests\TariffRequest;
+use Consensus\Repositories\TarifaAbogadoRepo;
 use Consensus\Entities\Tariff;
 use Consensus\Repositories\TariffRepo;
 
 class TariffController extends Controller {
 
     protected $tariffRepo;
+    protected $tarifaAbogadoRepo;
 
     /**
      * TariffController constructor.
+     * @param TarifaAbogadoRepo $tarifaAbogadoRepo
      * @param TariffRepo $tariffRepo
      */
-    public function __construct(TariffRepo $tariffRepo)
+    public function __construct(TarifaAbogadoRepo $tarifaAbogadoRepo,
+                                TariffRepo $tariffRepo)
     {
+        $this->tarifaAbogadoRepo = $tarifaAbogadoRepo;
         $this->tariffRepo = $tariffRepo;
     }
 
@@ -128,6 +133,13 @@ class TariffController extends Controller {
 
         $row->estado = $estado;
         $this->tariffRepo->update($row, $request->all());
+
+        $tarifas = $this->tarifaAbogadoRepo->where('tariff_id', $id)->get();
+        foreach($tarifas as $tarifa) {
+            $tar = $this->tarifaAbogadoRepo->findOrFail($tarifa->id);
+            $tar->estado = $estado;
+            $this->tarifaAbogadoRepo->update($tar, $request->all());
+        }
 
         $this->tariffRepo->saveHistoryEstado($row, $estado, 'update');
 
