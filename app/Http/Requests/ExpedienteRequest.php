@@ -51,11 +51,9 @@ class ExpedienteRequest extends Request
                     'check_asistente' => 'required_with:asistente_id',
                     'asistente_id' => 'required_if:check_asistente,1|exists:abogados,id',
                     'honorario_hora' => 'numeric',
-                    'tope_monto' => 'numeric',
-                    'retainer_fm' => 'numeric',
                     'numero_horas' => 'numeric',
-                    'honorario_fijo' => 'numeric',
-                    'hora_adicional' => 'numeric',
+                    'importe' => 'numeric',
+                    'tope_monto' => 'numeric',
                     'servicio' => 'required|exists:services,id',
                     'numero_dias' => 'numeric',
                     'fecha_inicio' => 'required|date_format:d/m/Y',
@@ -83,7 +81,38 @@ class ExpedienteRequest extends Request
             case 'PATCH':
             {
                 return [
-
+                    'moneda' => 'required|exists:money,id',
+                    'valor' => 'numeric',
+                    'tarifa' => 'required|exists:tariffs,id',
+                    'check_abogado' => 'required',
+                    'abogado_id' => 'required_if:check_abogado,1|exists:abogados,id',
+                    'check_asistente' => 'required_with:asistente_id',
+                    'asistente_id' => 'required_if:check_asistente,1|exists:abogados,id',
+                    'honorario_hora' => 'numeric',
+                    'numero_horas' => 'numeric',
+                    'importe' => 'numeric',
+                    'tope_monto' => 'numeric',
+                    'servicio' => 'required|exists:services,id',
+                    'numero_dias' => 'numeric',
+                    'fecha_inicio' => 'required|date_format:d/m/Y',
+                    'fecha_termino' => 'required|date_format:d/m/Y',
+                    'descripcion' => 'string',
+                    'concepto' => 'string',
+                    'materia' => 'required|exists:matters,id',
+                    'entidad' => 'required|exists:entities,id',
+                    'instancia' => 'required|exists:instances,id',
+                    'encargado' => 'string',
+                    'check_poder' => 'required_with:fecha_poder',
+                    'fecha_poder' => 'required_if:check_poder,1',
+                    'check_vencimiento' => 'required_with:fecha_vencimiento',
+                    'fecha_vencimiento' => 'required_if:check_vencimiento,1',
+                    'area' => 'required|exists:areas,id',
+                    'jefe_area' => 'string',
+                    'bienes' => 'required|exists:bienes,id',
+                    'especial' => 'required|exists:situacion_especial,id',
+                    'estado' => 'required|exists:states,id',
+                    'exito' => 'required|exists:exito,id',
+                    'observacion' => 'string'
                 ];
             }
             default:break;

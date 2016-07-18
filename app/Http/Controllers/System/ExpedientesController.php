@@ -92,13 +92,9 @@ class ExpedientesController extends Controller {
         $moneda = $request->input('moneda');
         $tarifa = $request->input('tarifa');
         $servicio = $request->input('servicio');
-        $fecha_inicio = formatoFecha($request->input('fecha_inicio'));
-        $fecha_termino = formatoFecha($request->input('fecha_termino'));
         $materia = $request->input('materia');
         $entidad = $request->input('entidad');
         $instancia = $request->input('instancia');
-        $fecha_poder = formatoFecha($request->input('fecha_poder'));
-        $fecha_vencimiento = formatoFecha($request->input('fecha_vencimiento'));
         $area = $request->input('area');
         $bienes = $request->input('bienes');
         $especial = $request->input('especial');
@@ -131,13 +127,9 @@ class ExpedientesController extends Controller {
         $row->money_id = $moneda;
         $row->tariff_id = $tarifa;
         $row->service_id = $servicio;
-        $row->fecha_inicio = $fecha_inicio;
-        $row->fecha_termino = $fecha_termino;
         $row->matter_id = $materia;
         $row->entity_id = $entidad;
         $row->instance_id = $instancia;
-        $row->fecha_poder = $fecha_poder;
-        $row->fecha_vencimiento = $fecha_vencimiento;
         $row->area_id = $area;
         $row->bienes_id = $bienes;
         $row->situacion_especial_id = $especial;
@@ -185,13 +177,53 @@ class ExpedientesController extends Controller {
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param ExpedienteRequest|Request $request
+     * @param  int $id
+     * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(ExpedienteRequest $request, $id)
     {
+        //PERMISO PARA ACTUALIZAR
         $this->authorize('update');
+
+        //BUSCAR ID
+        $row = $this->expedienteRepo->findOrFail($id);
+
+        //VARIABLES
+        $moneda = $request->input('moneda');
+        $tarifa = $request->input('tarifa');
+        $servicio = $request->input('servicio');
+        $materia = $request->input('materia');
+        $entidad = $request->input('entidad');
+        $instancia = $request->input('instancia');
+        $area = $request->input('area');
+        $bienes = $request->input('bienes');
+        $especial = $request->input('especial');
+        $estado = $request->input('estado');
+        $exito = $request->input('exito');
+
+        //GUARDAR DATOS
+        $row->money_id = $moneda;
+        $row->tariff_id = $tarifa;
+        $row->service_id = $servicio;
+        $row->matter_id = $materia;
+        $row->entity_id = $entidad;
+        $row->instance_id = $instancia;
+        $row->area_id = $area;
+        $row->bienes_id = $bienes;
+        $row->situacion_especial_id = $especial;
+        $row->state_id = $estado;
+        $row->exito_id = $exito;
+        $save = $this->expedienteRepo->update($row, $request->all());
+
+        //GUARDAR HISTORIAL
+        $this->expedienteRepo->saveHistory($row, $request, 'update');
+
+        //MENSAJE
+        flash()->success('El registro se actualizó satisfactoriamente.');
+
+        //REDIRECCIONAR A PAGINA PARA VER DATOS
+        return redirect()->route('expedientes.index');
     }
 
 
