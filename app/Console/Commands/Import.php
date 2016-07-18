@@ -5,6 +5,8 @@ namespace Consensus\Console\Commands;
 use Consensus\Entities\Abogado;
 use Consensus\Entities\Cliente;
 use Consensus\Entities\Expediente;
+use Consensus\Entities\TarifaAbogado;
+use Consensus\Entities\Tariff;
 use Consensus\Entities\User;
 use Consensus\Entities\UserProfile;
 use Consensus\Entities\UserRole;
@@ -192,5 +194,26 @@ class Import extends Command
         });
 
         $this->line('<info>Se importó</info> Roles de Usuario');
+
+        $this->line('----------------------------------------');
+        $this->line('----------------------------------------');
+
+        /*
+         * TARIFAS DE ABOGADOS
+         */
+        $abogados = Abogado::all();
+        $tarifas = Tariff::all();
+
+        foreach($abogados as $abogado){
+            foreach($tarifas as $tarifa){
+                $tarAbogado = new TarifaAbogado();
+                $tarAbogado->tariff_id = $tarifa->id;
+                $tarAbogado->abogado_id = $abogado->id;
+                $tarAbogado->estado = $tarifa->estado;
+                $tarAbogado->save();
+            }
+        }
+
+        $this->line('<info>Creación</info> Tarifas de Abogados');
     }
 }
