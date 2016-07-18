@@ -82,11 +82,11 @@
                         <thead>
                             <tr>
                                 <th class="col-expediente" scope="col" style="width: 140px !important;"> Expediente </th>
-                                @cannot('cliente')<th class="col-cliente" scope="col"> Cliente </th>@endcan
+                                <th class="col-cliente" scope="col"> Cliente </th>
                                 <th class="col-moneda" scope="col"> Moneda </th>
                                 <th class="col-valor" scope="col"> Valor </th>
                                 <th class="col-tarifa" scope="col"> Tarifa </th>
-                                @cannot('abogado')<th class="col-abogado" scope="col"> Abogado </th>@endcan
+                                <th class="col-abogado" scope="col"> Abogado </th>
                                 <th class="col-asistente" scope="col"> Asistente </th>
                                 <th class="col-servicio" scope="col"> Servicio </th>
                                 <th class="col-fecha-inicio" scope="col"> Fecha Inicio </th>
@@ -136,11 +136,11 @@
                             @endphp
                             <tr id="exp-{{ $row_id }}" data-id="{{ $row_id }}" data-title="{{ $row_expediente }}">
                                 <td class="col-expediente">{{ $row_expediente }}</td>
-                                @cannot('cliente')<td class="col-cliente">{{ $row_cliente }}</td>@endcan
+                                <td class="col-cliente">{{ $row_cliente }}</td>
                                 <td class="col-moneda">{{ $row_moneda }}</td>
                                 <td class="col-valor">{{ $row_valor }}</td>
                                 <td class="col-tarifa">{{ $row_tarifa }}</td>
-                                @cannot('abogado')<td class="col-abogado">{{ $row_abogado }}</td>@endcan
+                                <td class="col-abogado">{{ $row_abogado }}</td>
                                 <td class="col-asistente">{{ $row_asistente }}</td>
                                 <td class="col-servicio">{{ $row_servicio }}</td>
                                 <td class="col-fecha-inicio">{{ $row_fecha_inicio }}</td>
