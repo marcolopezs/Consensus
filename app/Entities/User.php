@@ -37,7 +37,7 @@ class User extends BaseEntity implements AuthenticatableContract, CanResetPasswo
     protected $hidden = ['password', 'remember_token'];
 
     /*
-     * Relacion con Profile de Usuario
+     * RELACIONES
      */
     public function profile()
     {
@@ -49,6 +49,14 @@ class User extends BaseEntity implements AuthenticatableContract, CanResetPasswo
         return $this->hasOne(UserRole::class, 'user_id', 'id');
     }
 
+    public function abogado()
+    {
+        return $this->belongsTo(Abogado::class);
+    }
+
+    /*
+     * CONDICIONES
+     */
     public function isAdmin()
     {
         if($this->admin === 1 OR $this->admin === 1 AND $this->isAbogado())
@@ -118,6 +126,22 @@ class User extends BaseEntity implements AuthenticatableContract, CanResetPasswo
     public function getNombreCompletoAttribute()
     {
         return $this->profile->nombre." ".$this->profile->apellidos;
+    }
+
+    /*
+     *
+     */
+    public function getRolAttribute()
+    {
+        if($this->admin === 1 AND $this->abogado_id > 0 ){
+            $rol = "Administrador y Abogado";
+        }elseif($this->admin === 1){
+            $rol = "Administrador";
+        }elseif($this->abogado_id > 0){
+            $rol = "Abogado";
+        }
+
+        return $rol;
     }
 
     /**
