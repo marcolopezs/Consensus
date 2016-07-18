@@ -8,6 +8,15 @@ class Abogado extends BaseEntity {
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['id','nombre','dni','ruc','carnet_extranjeria','pasaporte','partidad_nacimiento','otros','email','telefono','fax','direccion','pais_id'];
+    protected $fillable = ['id','nombre','dni','ruc','carnet_extranjeria','pasaporte','partida_nacimiento','otros','email','telefono','fax','direccion','pais_id'];
+
+    /*
+     * RELACIONES
+     */
+
+    public function user()
+    {
+        return $this->hasMany(User::class);
+    }
 
 }
