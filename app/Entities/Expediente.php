@@ -9,11 +9,11 @@ class Expediente extends BaseEntity {
     protected $dates = ['deleted_at'];
 
     protected $fillable = ['id','expediente_opcion','expediente_tipo_id','expediente','cliente_id','money_id','valor','tariff_id','check_abogado','abogado_id',
-        'check_asistente','asistente_id','honorario_hora','tope_monto','retainer_fm','numero_horas','honorario_fijo','hora_adicional',
+        'check_asistente','asistente_id','honorario_hora','numero_horas','importe','tope_monto','retainer_fm','honorario_fijo','hora_adicional',
         'service_id','numero_dias','fecha_inicio','fecha_termino','descripcion','concepto','matter_id','entity_id','instance_id','encargado',
         'poder','fecha_poder','vencimiento','fecha_vencimiento','area_id','jefe_area','bienes_id','situacion_especial_id','state_id','exito_id','observacion'];
 
-    protected $appends = ['exp_asistente','exp_fecha_inicio','exp_fecha_termino','exp_fecha_poder','exp_fecha_vencimiento'];
+    protected $appends = ['exp_moneda','exp_asistente','exp_fecha_inicio','exp_fecha_termino','exp_fecha_poder','exp_fecha_vencimiento'];
 
     protected $table = 'expedientes';
 
@@ -115,6 +115,12 @@ class Expediente extends BaseEntity {
      * APPENDS
      */
 
+    public function getExpAbogadoAttribute()
+    {
+        if($this->abogado_id > 0){ return $this->abogado->nombre; }
+        else{ return ""; }
+    }
+
     public function getExpAsistenteAttribute()
     {
         if($this->asistente_id > 0){ return $this->asistente->nombre; }
@@ -153,13 +159,13 @@ class Expediente extends BaseEntity {
 
     public function getExpMonedaAttribute()
     {
-        if($this->money_id <> 0){ return $this->money->nombre; }
+        if($this->money_id <> 0){ return $this->money->titulo; }
         else{ return ""; }
     }
 
     public function getExpTarifaAttribute()
     {
-        if($this->tariff_id <> 0){ return $this->tariff->nombre; }
+        if($this->tariff_id <> 0){ return $this->tariff->titulo; }
         else{ return ""; }
     }
 

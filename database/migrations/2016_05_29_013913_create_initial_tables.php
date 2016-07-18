@@ -306,7 +306,7 @@ class CreateInitialTables extends Migration
 
             $table->integer('cliente_id')->unsigned()->nullable();
             $table->integer('money_id')->unsigned();
-            $table->double('valor', 15, 2)->nullable();
+            $table->double('valor', 20, 2)->nullable();
 
             $table->integer('tariff_id')->unsigned();
             $table->boolean('check_abogado')->nullable();
@@ -314,10 +314,12 @@ class CreateInitialTables extends Migration
             $table->boolean('check_asistente')->nullable();
             $table->integer('asistente_id')->unsigned()->nullable();
 
-            $table->double('honorario_hora', 10, 2)->nullable()->default('0');
-            $table->double('tope_monto', 10, 2)->nullable()->default('0');
-            $table->double('retainer_fm', 10, 2)->nullable()->default('0');
+            $table->double('honorario_hora', 15, 2)->nullable()->default('0');
             $table->integer('numero_horas')->nullable()->default('0');
+            $table->double('importe', 15, 2)->nullable()->default('0');
+            $table->double('tope_monto', 15, 2)->nullable()->default('0');
+
+            $table->double('retainer_fm', 10, 2)->nullable()->default('0');
             $table->integer('honorario_fijo')->nullable()->default('0');
             $table->integer('hora_adicional')->nullable()->default('0');
 
