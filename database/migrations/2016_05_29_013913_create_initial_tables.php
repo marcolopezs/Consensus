@@ -57,11 +57,11 @@ class CreateInitialTables extends Migration
 
             $table->integer('user_id')->unsigned();
 
-            $table->boolean('create');
-            $table->boolean('update');
-            $table->boolean('delete');
-            $table->boolean('exporta');
-            $table->boolean('printer');
+            $table->boolean('create')->nullable();
+            $table->boolean('update')->nullable();
+            $table->boolean('delete')->nullable();
+            $table->boolean('exporta')->nullable();
+            $table->boolean('printer')->nullable();
 
             $table->nullableTimestamps();
             $table->softDeletes();
@@ -216,6 +216,10 @@ class CreateInitialTables extends Migration
             $table->softDeletes();
         });
 
+        /*==============================
+        =      ABOGADOS Y TARIFAS      =
+        ==============================*/
+
         Schema::create('abogados', function(Blueprint $table)
         {
             $table->increments('id');
@@ -241,6 +245,30 @@ class CreateInitialTables extends Migration
             $table->string('imagen_carpeta');
 
             $table->boolean('estado');
+
+            $table->nullableTimestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('tariffs', function(Blueprint $table)
+        {
+            $table->increments('id');
+
+            $table->string('titulo')->nullable();
+            $table->string('abrev', 5)->nullable();
+            $table->boolean('estado');
+
+            $table->nullableTimestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('tarifa_abogados', function(Blueprint $table)
+        {
+            $table->increments('id');
+
+            $table->integer('tariff_id');
+            $table->integer('abogado_id');
+            $table->integer('valor');
 
             $table->nullableTimestamps();
             $table->softDeletes();
@@ -428,18 +456,6 @@ class CreateInitialTables extends Migration
         /*==============================
         =                              =
         ==============================*/
-
-        Schema::create('tariffs', function(Blueprint $table)
-        {
-            $table->increments('id');
-
-            $table->string('titulo')->nullable();
-            $table->string('abrev', 5)->nullable();
-            $table->boolean('estado');
-
-            $table->nullableTimestamps();
-            $table->softDeletes();
-        });
 
         Schema::create('payment_methods', function(Blueprint $table)
         {
@@ -658,8 +674,10 @@ class CreateInitialTables extends Migration
         Schema::drop('clientes');
 
         Schema::drop('abogados');
-        Schema::drop('money');
         Schema::drop('tariffs');
+        Schema::drop('tarifa_abogados');
+
+        Schema::drop('money');
         Schema::drop('payment_methods');
         Schema::drop('services');
         Schema::drop('instances');
