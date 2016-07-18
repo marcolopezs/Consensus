@@ -10,4 +10,13 @@ class TarifaAbogado extends BaseEntity {
 
     protected $fillable = ['abogado_id','tariff_id','valor'];
 
+    /*
+     * RELACIONES
+     */
+
+    public function tariff()
+    {
+        return $this->belongsTo(Tariff::class);
+    }
+
 }
