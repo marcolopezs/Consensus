@@ -134,14 +134,12 @@ class User extends BaseEntity implements AuthenticatableContract, CanResetPasswo
     public function getRolAttribute()
     {
         if($this->admin === 1 AND $this->abogado_id > 0 ){
-            $rol = "Administrador y Abogado";
+            return "Administrador y Abogado";
         }elseif($this->admin === 1){
-            $rol = "Administrador";
+            return "Administrador";
         }elseif($this->abogado_id > 0){
-            $rol = "Abogado";
+            return "Abogado";
         }
-
-        return $rol;
     }
 
     /**
