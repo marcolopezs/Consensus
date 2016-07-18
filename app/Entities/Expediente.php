@@ -11,7 +11,7 @@ class Expediente extends BaseEntity {
     protected $fillable = ['id','expediente_opcion','expediente_tipo_id','expediente','cliente_id','money_id','valor','tariff_id','check_abogado','abogado_id',
         'check_asistente','asistente_id','honorario_hora','numero_horas','importe','tope_monto','retainer_fm','honorario_fijo','hora_adicional',
         'service_id','numero_dias','fecha_inicio','fecha_termino','descripcion','concepto','matter_id','entity_id','instance_id','encargado',
-        'poder','fecha_poder','vencimiento','fecha_vencimiento','area_id','jefe_area','bienes_id','situacion_especial_id','state_id','exito_id','observacion'];
+        'check_poder','fecha_poder','check_vencimiento','fecha_vencimiento','area_id','jefe_area','bienes_id','situacion_especial_id','state_id','exito_id','observacion'];
 
     protected $appends = ['exp_moneda','exp_asistente','exp_fecha_inicio','exp_fecha_termino','exp_fecha_poder','exp_fecha_vencimiento'];
 
@@ -112,7 +112,7 @@ class Expediente extends BaseEntity {
     }
 
     /*
-     * APPENDS
+     * GETTERS
      */
 
     public function getExpAbogadoAttribute()
@@ -221,6 +221,30 @@ class Expediente extends BaseEntity {
     {
         if($this->exito_id <> 0){ return $this->exito->titulo; }
         else{ return ""; }
+    }
+
+    /*
+     * SETTERS
+     */
+
+    public function setFechaInicioAttribute($value)
+    {
+        $this->attributes['fecha_inicio'] = formatoFecha($value);
+    }
+
+    public function setFechaTerminoAttribute($value)
+    {
+        $this->attributes['fecha_termino'] = formatoFecha($value);
+    }
+
+    public function setFechaPoderAttribute($value)
+    {
+        $this->attributes['fecha_poder'] = formatoFecha($value);
+    }
+
+    public function setFechaVencimientoAttribute($value)
+    {
+        $this->attributes['fecha_vencimiento'] = formatoFecha($value);
     }
 
 
