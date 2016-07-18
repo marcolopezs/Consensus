@@ -114,15 +114,6 @@
 
                             <div class="row">
 
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        {!! Form::label('tarifa', 'Tárifa', ['class' => 'control-label']) !!}
-                                        {!! Form::select('tarifa', [''=>''] + $tarifa, null, ['class' => 'form-control select2']) !!}
-                                    </div>
-                                </div>
-
-                                <div class="col-md-2"></div>
-
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         {!! Form::label('abogado', 'Abogado', ['class' => 'control-label']) !!}
@@ -137,6 +128,41 @@
 
                                 <div class="col-md-3">
                                     <div class="form-group">
+                                        {!! Form::label('tarifa', 'Tárifa', ['class' => 'control-label']) !!}
+                                        {!! Form::select('tarifa', [''=>''] + $tarifa, null, ['class' => 'form-control select2', 'data-url' => route('expedientes.abogado.tarifa', [':ABOGADO', ':TARIFA'])]) !!}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        {!! Form::label('honorario_hora', 'Honorario por Hora', ['class' => 'control-label']) !!}
+                                        {!! Form::text('honorario_hora', 0, ['class' => 'form-control', 'readonly']) !!}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        {!! Form::label('numero_horas', 'Número Horas', ['class' => 'control-label']) !!}
+                                        {!! Form::text('numero_horas', 0, ['class' => 'form-control']) !!}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        {!! Form::label('importe', 'Importe', ['class' => 'control-label']) !!}
+                                        {!! Form::text('importe', 0, ['class' => 'form-control', 'readonly']) !!}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        {!! Form::label('tope_monto', 'Tope Monto', ['class' => 'control-label']) !!}
+                                        {!! Form::text('tope_monto', 0, ['class' => 'form-control']) !!}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
                                         {!! Form::label('asistente', 'Asistente', ['class' => 'control-label']) !!}
                                         <div class="input-group">
                                             <span class="input-group-addon">{!! Form::checkbox('check_asistente', '1', null) !!}</span>
@@ -144,52 +170,6 @@
                                                 {!! Form::select('asistente_id', [''=>''] + $abogado, null, ['class' => 'form-control select2', 'id' => 'asistente']) !!}
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="row" style="display:none;">
-
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        {!! Form::label('honorario_hora', 'Honorario por Hora', ['class' => 'control-label']) !!}
-                                        {!! Form::text('honorario_hora', 0, ['class' => 'form-control']) !!}
-                                    </div>
-                                </div>
-
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        {!! Form::label('tope_monto', 'Tope Monto', ['class' => 'control-label']) !!}
-                                        {!! Form::text('tope_monto', 0, ['class' => 'form-control']) !!}
-                                    </div>
-                                </div>
-
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        {!! Form::label('retainer_fm', 'Retainer FM', ['class' => 'control-label']) !!}
-                                        {!! Form::text('retainer_fm', 0, ['class' => 'form-control']) !!}
-                                    </div>
-                                </div>
-
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        {!! Form::label('numero_horas', 'Número de Horas', ['class' => 'control-label']) !!}
-                                        {!! Form::text('numero_horas', 0, ['class' => 'form-control']) !!}
-                                    </div>
-                                </div>
-
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        {!! Form::label('honorario_fijo', 'Honorario Fijo', ['class' => 'control-label']) !!}
-                                        {!! Form::text('honorario_fijo', 0, ['class' => 'form-control']) !!}
-                                    </div>
-                                </div>
-
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        {!! Form::label('hora_adicional', 'Hora Adicional', ['class' => 'control-label']) !!}
-                                        {!! Form::text('hora_adicional', 0, ['class' => 'form-control']) !!}
                                     </div>
                                 </div>
 
@@ -410,10 +390,6 @@
 <script>
     $(document).on("ready", function() {
 
-        //DESACTIVAR INPUT
-        $("#honorario_hora, #tope_monto, #retainer_fm, " +
-                "#numero_horas, #honorario_fijo, #hora_adicional").prop('disabled', true);
-
         //EXPEDIENTE MANUAL O AUTOMATICO
         $("#expediente_manual").on("click", function () {
             $("#expediente_tipo").prop("disabled", true);
@@ -425,30 +401,44 @@
             $("#expediente_mask").prop('disabled', true);
         });
 
-        //SELECCIONAR TARIFA
-        $("#tarifa").on("change", function() {
-            var opcion = $(this).val();
-            if(opcion == "1"){
-                $("#honorario_fijo").prop('disabled', false);
-                $("#honorario_hora, #tope_monto, #retainer_fm, #numero_horas, #hora_adicional").prop('disabled', true);
-            }else if(opcion == "2"){
-                $("#honorario_fijo").prop('disabled', false);
-                $("#honorario_hora, #tope_monto, #retainer_fm, #numero_horas, #hora_adicional").prop('disabled', true);
-            }else if(opcion == "3"){
-                $("#honorario_hora").prop('disabled', false);
-                $("#honorario_fijo, #tope_monto, #retainer_fm, #numero_horas, #hora_adicional").prop('disabled', true);
-            }else if(opcion == "4"){
-                $("#honorario_hora, #honorario_fijo, #tope_monto, #retainer_fm, #numero_horas, #hora_adicional").prop('disabled', true);
-            }else if(opcion == "5"){
-                $("#retainer_fm").prop('disabled', false);
-                $("#honorario_hora, #honorario_fijo, #tope_monto, #numero_horas, #hora_adicional").prop('disabled', true);
-            }else if(opcion == "6"){
-                $("#numero_horas, #honorario_fijo, #hora_adicional").prop('disabled', false);
-                $("#honorario_hora, #tope_monto, #retainer_fm").prop('disabled', true);
-            }else if(opcion == "7"){
-                $("#tope_monto").prop('disabled', false);
-                $("#numero_horas, #honorario_fijo, #hora_adicional, #honorario_hora, #retainer_fm").prop('disabled', true);
-            }
+        //LIMPIAR CAMPOS AL SELECCIONAR ABOGADO
+        $("#abogado").on("change", function () {
+            $("#honorario_hora").val(0);
+            $("#numero_horas").val(0);
+            $("#importe").val(0);
+        });
+
+        //SELECCIONAR TARIFA DE ABOGADO
+        $("#tarifa").on("change", function () {
+            var abogado = $("#abogado").val();
+            var tarifa = $(this).val();
+            var url = $(this).data("url").replace(':ABOGADO', abogado).replace(':TARIFA', tarifa);
+
+            $.ajax({
+                method: 'POST',
+                url: url,
+                headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                beforeSend: function () { $("#progressbar").show(); },
+                complete: function () { $("#progressbar").hide(); },
+                success: function (result) {
+                    $("#honorario_hora").val(result.valor);
+                    $("#numero_horas").val(0);
+                    $("#importe").val(0);
+                },
+                error: function (result) {
+                    $("#message-error").show();
+                    $("#message-error p").text("Se produjo un error. Intente de nuevo más tarde.");
+                    console.log(result);
+                }
+            });
+        });
+
+        //GENERAR IMPORTE EN BASE A HONORARIO Y NUMERO DE HORAS
+        $("#numero_horas").on("change", function () {
+            var horas = $(this).val();
+            var honorario = $("#honorario_hora").val();
+            var importe = horas * honorario;
+            $("#importe").val(importe);
         });
 
         //SELECCIONAR SERVICIO
