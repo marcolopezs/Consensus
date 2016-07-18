@@ -44,7 +44,7 @@
                             $row_id = $item->id;
                             $row_nombre = $item->nombre_completo;
                             $row_usuario = $item->username;
-                            $row_tipo = tipo_usuario($item);
+                            $row_tipo = $item->rol;
                             $row_estado = $item->active;
                             /*--}}
                             <tr class="odd gradeX" data-id="{{ $row_id }}" data-title="{{ $row_nombre }}">
