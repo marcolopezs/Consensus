@@ -5,6 +5,7 @@ namespace Consensus\Console\Commands;
 use Consensus\Entities\Abogado;
 use Consensus\Entities\Cliente;
 use Consensus\Entities\Expediente;
+use Consensus\Entities\Tarea;
 use Consensus\Entities\TarifaAbogado;
 use Consensus\Entities\Tariff;
 use Consensus\Entities\User;
@@ -134,6 +135,9 @@ class Import extends Command
 
         $this->line('<info>Se importó</info> Abogados');
 
+        $this->line('----------------------------------------');
+        $this->line('----------------------------------------');
+
         /*
          * IMPORTAR USUARIOS
          */
@@ -194,6 +198,37 @@ class Import extends Command
         });
 
         $this->line('<info>Se importó</info> Roles de Usuario');
+
+        $this->line('----------------------------------------');
+        $this->line('----------------------------------------');
+
+        /*
+         * IMPORTAR TAREAS
+         */
+        Excel::load('public/tareas.csv', function($reader){
+
+            foreach($reader->get() as $item)
+            {
+                $expediente = Expediente::where('expediente', $item->expediente)->first();
+
+                Tarea::create([
+                    'id' => $item->id,
+                    'expediente_id' => $expediente->id,
+                    'expediente_tipo_id' => $expediente->expediente_tipo_id,
+                    'fecha_solicitada' => $item->fecha_solicitada,
+                    'fecha_vencimiento' => $item->fecha_vencimiento,
+                    'tarea_concepto_id' => $item->tarea_concepto_id,
+                    'titular_id' => $item->titular_id,
+                    'abogado_id' => $item->abogado_id,
+                    'descripcion' => $item->descripcion,
+                    'estado' => $item->estado
+                ]);
+            }
+
+        });
+
+        $this->line('<info>Se importó</info> Tareas de Expedientes');
+
 
         $this->line('----------------------------------------');
         $this->line('----------------------------------------');

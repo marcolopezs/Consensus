@@ -642,20 +642,21 @@ class DataTableSeeder extends Seeder
         ]);
         
         DB::table('tarea_conceptos')->insert([
-            ['titulo' => 'BOLETA INFORMATIVA', 'estado' => '1'],
-            ['titulo' => 'CANCELACION DE PAPELETA', 'estado' => '1'],
-            ['titulo' => 'ENVIAR PAGARE A NOTARIA', 'estado' => '1'],
-            ['titulo' => 'ESCANEAR DOCUMENTOS', 'estado' => '1'],
-            ['titulo' => 'ESTADO DE CUENTA', 'estado' => '1'],
-            ['titulo' => 'GRAVAMEN', 'estado' => '1'],
-            ['titulo' => 'TRAMITE EN NOTARIA', 'estado' => '1'],
-            ['titulo' => 'LEVANTAMIENTO DE GARANTIA MOBILIARIA', 'estado' => '1'],
-            ['titulo' => 'PRESENTE ESCRITO AL PODER JUDICIAL', 'estado' => '1'],
-            ['titulo' => 'RECOGER PAGARE DEL BANCO', 'estado' => '1'],
-            ['titulo' => 'SACAR COPIA', 'estado' => '1'],
-            ['titulo' => 'SEGUIMIENTO', 'estado' => '1'],
-            ['titulo' => 'SOLICITAR DOCUMENTOS', 'estado' => '1'],
-            ['titulo' => 'VISITA', 'estado' => '1']
+            ['id' => '1', 'titulo' => 'BOLETA INFORMATIVA', 'estado' => '1'],
+            ['id' => '2', 'titulo' => 'CANCELACION DE PAPELETA', 'estado' => '1'],
+            ['id' => '3', 'titulo' => 'ENVIAR PAGARE A NOTARIA', 'estado' => '1'],
+            ['id' => '4', 'titulo' => 'ESCANEAR DOCUMENTOS', 'estado' => '1'],
+            ['id' => '5', 'titulo' => 'ESTADO DE CUENTA', 'estado' => '1'],
+            ['id' => '6', 'titulo' => 'GRAVAMEN', 'estado' => '1'],
+            ['id' => '7', 'titulo' => 'TRAMITE EN NOTARIA', 'estado' => '1'],
+            ['id' => '8', 'titulo' => 'LEVANTAMIENTO DE GARANTIA MOBILIARIA', 'estado' => '1'],
+            ['id' => '9', 'titulo' => 'PRESENTE ESCRITO AL PODER JUDICIAL', 'estado' => '1'],
+            ['id' => '10', 'titulo' => 'RECOGER PAGARE DEL BANCO', 'estado' => '1'],
+            ['id' => '11', 'titulo' => 'SACAR COPIA', 'estado' => '1'],
+            ['id' => '12', 'titulo' => 'SEGUIMIENTO', 'estado' => '1'],
+            ['id' => '13', 'titulo' => 'SOLICITAR DOCUMENTOS', 'estado' => '1'],
+            ['id' => '14', 'titulo' => 'VISITA', 'estado' => '1'],
+            ['id' => '15', 'titulo' => 'OTROS', 'estado' => '1']
         ]);
     }
 }

@@ -8,7 +8,7 @@ class Tarea extends BaseEntity {
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['expediente_id','tarea_concepto_id','descripcion','fecha_solicitada','fecha_vencimiento','titular_id','abogado_id','estado'];
+    protected $fillable = ['expediente_id','expediente_tipo_id','tarea_concepto_id','descripcion','fecha_solicitada','fecha_vencimiento','titular_id','abogado_id','estado'];
     protected $hidden = ['created_at','updated_at','deleted_at'];
     protected $appends = ['titulo_tarea','asignado','url_editar'];
 
