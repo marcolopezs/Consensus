@@ -41,11 +41,14 @@ class ExpedienteTipo extends BaseEntity {
 
     public function getTiempoTotalAttribute()
     {
-        $total = 0;
+        $suma = 0;
         foreach($this->acciones as $accion){
             $horas = HorasAMinutos($accion->horas);
-            $total = $horas + $total;
+            $suma = $horas + $suma;
         }
+
+        $total = number_format($suma / $this->cantidad_expedientes, 0, '.', '');
+
         return $total;
     }
 
