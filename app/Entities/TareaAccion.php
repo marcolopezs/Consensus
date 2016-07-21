@@ -9,7 +9,7 @@ class TareaAccion extends BaseEntity {
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['tarea_id','desde','hasta','horas','descripcion'];
+    protected $fillable = ['id','expediente_id','expediente_tipo_id','tarea_id','fecha','desde','hasta','horas','descripcion'];
     protected $appends = ['url_editar','url_eliminar','url_lista_gastos','fecha_accion'];
 
     protected $table = 'tarea_acciones';
