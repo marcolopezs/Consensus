@@ -6,12 +6,14 @@ use Consensus\Entities\Abogado;
 use Consensus\Entities\Cliente;
 use Consensus\Entities\Expediente;
 use Consensus\Entities\Tarea;
+use Consensus\Entities\TareaAccion;
 use Consensus\Entities\TarifaAbogado;
 use Consensus\Entities\Tariff;
 use Consensus\Entities\User;
 use Consensus\Entities\UserProfile;
 use Consensus\Entities\UserRole;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class Import extends Command
@@ -229,6 +231,121 @@ class Import extends Command
 
         $this->line('<info>Se importó</info> Tareas de Expedientes');
 
+        /*
+         * IMPORTAR ACCIONES
+         */
+        Excel::load('public/tareas-acciones.csv', function($reader){
+
+            foreach($reader->get() as $item)
+            {
+                $expediente = Expediente::find($item->expediente_id);
+
+                TareaAccion::create([
+                    'id' => $item->id,
+                    'expediente_id' => $item->expediente_id,
+                    'expediente_tipo_id' => $expediente->expediente_tipo_id,
+                    'tarea_id' => $item->tarea_id,
+                    'fecha' => formatoFecha($item->fecha),
+                    'desde' => $item->desde,
+                    'hasta' => $item->hasta,
+                    'horas' => $item->horas,
+                    'descripcion' => $item->descripcion
+                ]);
+
+                //DB::raw('SELECT idordetiem AS expedientes, COUNT( * ) cantidad FROM  scct_tiempos WHERE  idtaretiem =0 GROUP BY expedientes HAVING COUNT( * ) ORDER BY  expedientes LIMIT 0 , 30');
+                /*
+                if($item->tarea_id == 0)
+                {
+                    $row = Tarea::create([
+                        'expediente_id' => $item->expediente_id,
+                        'expediente_tipo_id' => $expediente->expediente_tipo_id,
+                        'fecha_solicitada' => $item->fecha,
+                        'fecha_vencimiento' => $item->fecha,
+                        'tarea_concepto_id' => 15,
+                        'titular_id' => 1,
+                        'abogado_id' => $item->abogado_id,
+                        'estado' => 1
+                    ]);
+
+                    TareaAccion::create([
+                        'id' => $item->id,
+                        'expediente_id' => $item->expediente_id,
+                        'expediente_tipo_id' => $expediente->expediente_tipo_id,
+                        'tarea_id' => $row->id,
+                        'fecha' => formatoFecha($item->fecha),
+                        'desde' => $item->desde,
+                        'hasta' => $item->hasta,
+                        'horas' => $item->horas,
+                        'descripcion' => $item->descripcion
+                    ]);
+                }else{
+
+                }*/
+            }
+        });
+
+        $this->line('<info>Se importó</info> Acciones de Tareas de Expedientes');
+
+        /*
+         * CANTIDAD DE TAREAS POR CADA EXPEDIENTE
+         */
+        $tareas = DB::table('tarea_acciones')
+                            ->select(DB::raw('expediente_id, COUNT(*) cantidad, fecha'))
+                            ->where('tarea_id', 0)
+                            ->groupBy('expediente_id')
+                            ->orderBY('cantidad', 'asc')
+                            ->get();
+
+        foreach($tareas as $tarea){
+            $expediente = Expediente::find($tarea->expediente_id);
+            Tarea::create([
+                'expediente_id' => $tarea->expediente_id,
+                'expediente_tipo_id' => $expediente->expediente_tipo_id,
+                'fecha_solicitada' => soloFecha($tarea->fecha),
+                'fecha_vencimiento' => soloFecha($tarea->fecha),
+                'tarea_concepto_id' => 15,
+                'titular_id' => 1,
+                'abogado_id' => Abogado::all()->random()->id,
+                'descripcion' => 'Tarea general',
+                'estado' => 1
+            ]);
+        }
+
+        $this->line('<info>Se crearón</info> Tareas a partir de Acciones importadas');
+
+        /*
+         * BORRAR REGISTROS DE TABLA ACCIONES
+         */
+        DB::table('tarea_acciones')->truncate();
+
+        $this->line('<info>Se borró</info> Registros de tabla Acciones');
+
+        /*
+         * IMPOTAR ACCIONES AGREGAR EL ID DE LA TAREA CREADA
+         */
+
+        Excel::load('public/tareas-acciones.csv', function($reader){
+
+            foreach($reader->get() as $item)
+            {
+                $expediente = Expediente::find($item->expediente_id);
+                $tarea = Tarea::where('expediente_id', $item->expediente_id)->orderBy('created_at','desc')->first();
+
+                TareaAccion::create([
+                    'id' => $item->id,
+                    'expediente_id' => $item->expediente_id,
+                    'expediente_tipo_id' => $expediente->expediente_tipo_id,
+                    'tarea_id' => $tarea->id,
+                    'fecha' => formatoFecha($item->fecha),
+                    'desde' => $item->desde,
+                    'hasta' => $item->hasta,
+                    'horas' => $item->horas,
+                    'descripcion' => $item->descripcion
+                ]);
+            }
+        });
+
+        $this->line('<info>Se importó</info> Acciones de Tareas de Expedientes');
 
         $this->line('----------------------------------------');
         $this->line('----------------------------------------');
