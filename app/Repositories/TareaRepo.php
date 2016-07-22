@@ -56,6 +56,6 @@ class TareaRepo extends BaseRepo {
                     ->where('estado', $estado)
                     ->orderBy('fecha_solicitada', 'desc')
                     ->with('expedientes','titular','concepto','abogado')
-                    ->paginate(4);
+                    ->paginate(3);
     }
 }
