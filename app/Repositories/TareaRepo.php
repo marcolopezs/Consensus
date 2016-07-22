@@ -24,6 +24,9 @@ class TareaRepo extends BaseRepo {
     public function filterPaginateAdmin(Request $request)
     {
         return $this->getModel()
+                    ->join('expedientes', 'expedientes.id', '=', 'tareas.expediente_id')
+                    ->select('expedientes.expediente', 'tareas.*')
+                    ->expediente($request->get('expediente'))
                     ->abogadoId($request->get('abogado'))
                     ->concepto($request->get('tarea'))
                     ->descripcion($request->get('descripcion'))

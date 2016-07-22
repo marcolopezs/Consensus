@@ -98,11 +98,19 @@ class Tarea extends BaseEntity {
      * SCOPES
      */
 
+    public function scopeExpediente($query, $value)
+    {
+        if(trim($value) != "")
+        {
+            $query->where('expediente', 'LIKE', "%$value%");
+        }
+    }
+
     public function scopeAbogadoId($query, $value)
     {
         if($value != "")
         {
-            $query->where('abogado_id', $value);
+            $query->where(Tarea::getTable().'.abogado_id', $value);
         }
     }
 
@@ -118,7 +126,7 @@ class Tarea extends BaseEntity {
     {
         if(trim($value) != "")
         {
-            $query->where('descripcion', 'LIKE', "%$value%");
+            $query->where(Tarea::getTable().'.descripcion', 'LIKE', "%$value%");
         }
     }
 
@@ -138,7 +146,7 @@ class Tarea extends BaseEntity {
         {
             $from = formatoFecha($from);
             $to = formatoFecha($to);
-            $query->where('fecha_vencimiento', '>', $from)->where('fecha_vencimiento', '<', $to);
+            $query->where(Tarea::getTable().'.fecha_vencimiento', '>', $from)->where(Tarea::getTable().'.fecha_vencimiento', '<', $to);
         }
     }
 
@@ -146,7 +154,7 @@ class Tarea extends BaseEntity {
     {
         if($value != "")
         {
-            $query->where('estado', $value);
+            $query->where(Tarea::getTable().'.estado', $value);
         }
     }
 }

@@ -10,6 +10,18 @@
 
                 <div class="row">
 
+                    <div class="col-expediente col-md-2">
+                        <div class="form-group">
+                            {!! Form::label('expediente', 'Expediente', ['class' => 'control-label']) !!}
+                            <div class="input-group">
+                                {!! Form::text('expediente', null, ['class' => 'form-control']) !!}
+                                <span class="input-group-btn">
+                                    <a data-id="col-expediente" class="btn red text-clear"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="col-abogado col-md-3">
                         <div class="form-group">
                             {!! Form::label('abogado', 'Abogado', ['class' => 'control-label']) !!}
