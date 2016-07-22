@@ -137,6 +137,9 @@ class ExpedientesController extends Controller {
         $row->exito_id = $exito;
         $this->expedienteRepo->create($row, $request->all());
 
+        //GUARDAR HISTORIAL
+        $this->expedienteRepo->saveHistory($row, $request, 'create');
+
         //MENSAJE
         flash()->success('El registro se agregó satisfactoriamente.');
 
