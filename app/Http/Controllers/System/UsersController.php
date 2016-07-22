@@ -194,12 +194,23 @@ class UsersController extends Controller
 
             $abogado = $this->abogadoRepo->findOrFail($row->abogado_id);
             $this->abogadoRepo->update($abogado, $request->all());
+
+            //GUARDAR HISTORIAL
+            $this->userProfileRepo->saveHistory($profile, $request, 'update');
+            $this->abogadoRepo->saveHistory($abogado, $request, 'update');
+
         }elseif($row->admin === 1){
             $profile = $this->userProfileRepo->where('user_id', $id)->first();
             $this->userProfileRepo->update($profile, $request->all());
+
+            //GUARDAR HISTORIAL
+            $this->userProfileRepo->saveHistory($profile, $request, 'update');
         }elseif($row->abogado_id > 0){
             $abogado = $this->abogadoRepo->findOrFail($row->abogado_id);
             $this->abogadoRepo->update($abogado, $request->all());
+
+            //GUARDAR HISTORIAL
+            $this->abogadoRepo->saveHistory($abogado, $request, 'update');
         }
 
         $mensaje = "El registro se actualizo satisfactoriamente.";
@@ -211,6 +222,9 @@ class UsersController extends Controller
 
     /*
      * UPDATE DE TARIFAS DE ABOGADO
+     * @param Request $request
+     * @param $id
+     * @return array
      */
     public function abogadoTarifaUpdate(Request $request, $id)
     {
@@ -225,12 +239,53 @@ class UsersController extends Controller
             $tarAbog = $this->tarifaAbogadoRepo->findOrFail($tarifa->id);
             $tarAbog->valor = $input;
             $this->tarifaAbogadoRepo->update($tarAbog, $request->all());
+
+            $this->tarifaAbogadoRepo->saveHistory($tarAbog, $request, 'update');
         }
 
         $mensaje = "El registro se actualizo satisfactoriamente.";
 
         return [
             'message' => $mensaje,
+        ];
+    }
+
+    /*
+     * UPLOAD DE FOTO DE ABOGADO
+     * @param Request $request
+     * @param $id
+     * @return mixed
+     */
+    public function abogadoFotoUpload(Request $request, $id)
+    {
+        //SUBIR IMAGEN
+        $archivo = $this->userRepo->UploadFile('imagenes', $request->file('file'));
+
+        //BUSCAR USUARIO EN PROFILE
+        $usuario = $this->userProfileRepo->where('user_id',$id)->first();
+
+        //GUARDAR
+        $usuario->imagen = $archivo['archivo'];
+        $usuario->imagen_carpeta = $archivo['carpeta'];
+        $this->userProfileRepo->update($usuario, $request->all());
+
+        return $archivo;
+    }
+
+    /*
+     * ELIMINAR FOTO DE ABOGADO
+     */
+    public function abogadoFotoDelete(Request $request, $id)
+    {
+        //BUSCAR USUARIO EN PROFILE
+        $usuario = $this->userProfileRepo->where('user_id',$id)->first();
+
+        $usuario->imagen = "";
+        $usuario->imagen_carpeta = "";
+        $this->userProfileRepo->update($usuario, $request->all());
+
+        return [
+            'estado' => true
         ];
     }
 

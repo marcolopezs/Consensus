@@ -3,6 +3,8 @@
 @php
     $user_nombre = $row->nombre_completo;
     $user_rol = $row->rol;
+    $user_foto = '/imagenes/'.$row->profile->imagen_carpeta.$row->profile->imagen;
+    $user_foto_t = "/imagenes/".$row->profile->imagen_carpeta."250x250/".$row->profile->imagen;
     $user_admin = $row->isAdmin();
     $user_abogado = $row->isAbogado();
 @endphp
@@ -24,7 +26,12 @@
             <div class="portlet light profile-sidebar-portlet ">
                 <!-- SIDEBAR USERPIC -->
                 <div class="profile-userpic">
-                    <img src="/imagenes/user.png" class="img-responsive" alt=""> </div>
+                    @if(file_exists(public_path($user_foto)) AND $row->profile->imagen <> "")
+                        <img id="fotoUsuario" src="{{ $user_foto_t }}" alt="Foto de Usuario" class="img-responsive" />
+                    @else
+                        <img id="fotoUsuario" src="/imagenes/user.png" alt="Foto de Usuario" class="img-responsive" />
+                    @endif
+                </div>
                 <!-- END SIDEBAR USERPIC -->
                 <!-- SIDEBAR USER TITLE -->
                 <div class="profile-usertitle">
@@ -53,9 +60,9 @@
                             <ul class="nav nav-tabs">
                                 <li class="active"><a href="#info-personal" data-toggle="tab">Información Personal</a></li>
                                 @if($user_abogado)<li><a href="#tarifas" data-toggle="tab">Tarifas</a></li>@endif
-                                {{--<li><a href="#foto" data-toggle="tab">Cambiar foto</a></li>--}}
-                                {{--<li><a href="#clave" data-toggle="tab">Cambiar contraseña</a></li>--}}
-                                {{--<li><a href="#permisos" data-toggle="tab">Permisos</a></li>--}}
+                                <li><a href="#foto" data-toggle="tab">Cambiar foto</a></li>
+                                <li><a href="#clave" data-toggle="tab">Cambiar contraseña</a></li>
+                                <li><a href="#permisos" data-toggle="tab">Permisos</a></li>
                             </ul>
                         </div>
                         <div class="portlet-body">
@@ -264,32 +271,14 @@
 
                                 {{-- CAMBIAR FOTO --}}
                                 <div class="tab-pane" id="foto">
-                                    <p> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt
-                                        laborum eiusmod. </p>
-                                    <form action="#" role="form">
-                                        <div class="form-group">
-                                            <div class="fileinput fileinput-new" data-provides="fileinput">
-                                                <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-                                                    <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" /> </div>
-                                                <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
-                                                <div>
-                                                    <span class="btn default btn-file">
-                                                        <span class="fileinput-new"> Select image </span>
-                                                        <span class="fileinput-exists"> Change </span>
-                                                        <input type="file" name="..."> </span>
-                                                    <a href="javascript:;" class="btn default fileinput-exists" data-dismiss="fileinput"> Remove </a>
-                                                </div>
-                                            </div>
-                                            <div class="clearfix margin-top-10">
-                                                <span class="label label-danger">NOTE! </span>
-                                                <span>Attached image thumbnail is supported in Latest Firefox, Chrome, Opera, Safari and Internet Explorer 10 only </span>
-                                            </div>
-                                        </div>
-                                        <div class="margin-top-10">
-                                            <a href="javascript:;" class="btn green"> Submit </a>
-                                            <a href="javascript:;" class="btn default"> Cancel </a>
-                                        </div>
-                                    </form>
+                                    <p>Puedes cambiar la foto del Abogado</p>
+                                    <div class="dropzone"></div>
+
+                                    <div class="margin-top-15">
+                                        <a href="#" id="btnFotoEliminarActual" class="btn default" data-dz-remove>Eliminar foto actual del Abogado</a>
+                                        <a href="#" id="btnFotoCambiar" class="btn blue pull-right">Subir Foto</a>
+                                        <a href="#" id="btnFotoEliminar" class="btn default pull-right margin-right-10" data-dz-remove>Eliminar foto a subir</a>
+                                    </div>
                                 </div>
                                 {{-- FIN CAMBIAR FOTO --}}
 
@@ -471,6 +460,65 @@
             }
         });
 
+    });
+
+    var myDropzone = new Dropzone(".dropzone", {
+        dictDefaultMessage: 'Da clic para seleccionar el archivo',
+        dictMaxFilesExceeded: 'No se puede cargar más archivos',
+        url: "{{ route('abogado.foto.upload', $row->id) }}",
+        method: 'POST',
+        headers: {'X-CSRF-Token': '{!! csrf_token() !!}'},
+        maxFiles: 1,
+        autoProcessQueue: false,
+        success: function (file, result) {
+            var imagen = "/imagenes/" + result.carpeta + "250x250/" + result.archivo;
+            $("#fotoUsuario").attr("src", imagen);
+        }
+    });
+
+    $("#btnFotoCambiar").on("click", function(){
+        myDropzone.processQueue();
+    });
+
+    $("#btnFotoEliminar").on("click", function(){
+        myDropzone.removeAllFiles();
+    });
+
+    $("#btnFotoEliminarActual").on("click", function(e) {
+        e.preventDefault();
+
+        var url = '{{ route('abogado.foto.delete', $row->id) }}';
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            headers: {'X-CSRF-Token': '{!! csrf_token() !!}'},
+            beforeSend: function () { $('.progress').show(); },
+            complete: function () { $('.progress').hide(); },
+            success: function (result) {
+                var imagen = "/imagenes/user.png";
+                $("#fotoUsuario").attr("src", imagen);
+
+                var successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>El registro se actualizó satisfactoriamente.</div>';
+                $(".form-content").html(successHtml);
+            },
+            error: function (result) {
+                if(result.status === 422){
+                    var errors = result.responseJSON;
+                    var errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';
+                    $.each( errors, function( key, value ) {
+                        errorsHtml += '<li>' + value[0] + '</li>';
+                    });
+                    errorsHtml += '</ul></div>';
+                    $('.form-content').html(errorsHtml);
+                }else{
+                    errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';
+                    errorsHtml += '<li>Se ha producido un error. Intentelo de nuevo.</li>';
+                    errorsHtml += '</ul></div>';
+                    $('.form-content').html(errorsHtml);
+                }
+            }
+        });
     });
 </script>
 @stop

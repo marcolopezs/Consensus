@@ -12,6 +12,8 @@ $prefixedResourceNames = function($prefix) {
     ];
 };
 
+Route::get('/imagenes/{folder}/{width}x{height}/{image}', ['as' => 'image.adaptiveResize', 'uses' => 'ImageController@adaptiveResize']);
+
 Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use ($prefixedResourceNames) {
 
     Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
@@ -124,6 +126,8 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
     Route::resource('users', 'UsersController', ['except' => 'destroy']);
 
     Route::put('users/{id}/abogado/tarifa', ['as' => 'abogado.tarifas.update', 'uses' => 'UsersController@abogadoTarifaUpdate']);
+    Route::post('users/{id}/abogado/foto', ['as' => 'abogado.foto.upload', 'uses' => 'UsersController@abogadoFotoUpload']);
+    Route::post('users/{id}/abogado/foto/delete', ['as' => 'abogado.foto.delete', 'uses' => 'UsersController@abogadoFotoDelete']);
 
     //USUARIO - MI PERFIL
     Route::get('user/perfil', ['as' => 'users.perfil', 'uses' => 'UsersController@perfil']);

@@ -63,7 +63,15 @@
                         <!-- BEGIN USER LOGIN DROPDOWN -->
                         <li class="dropdown dropdown-user dropdown-dark">
                             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                <img alt="" class="img-circle" src="/imagenes/user.png">
+                                @php
+                                    $user_foto_sup = '/imagenes/'.Auth::user()->profile->imagen_carpeta.Auth::user()->profile->imagen;
+                                    $user_foto_sup_t = '/imagenes/'.Auth::user()->profile->imagen_carpeta."50x50/".Auth::user()->profile->imagen;
+                                @endphp
+                                @if(file_exists(public_path($user_foto_sup)) AND Auth::user()->profile->imagen <> "")
+                                    <img src="{{ $user_foto_sup_t }}" alt="Foto de Usuario" class="img-circle" />
+                                @else
+                                    <img src="/imagenes/user.png" alt="Foto de Usuario" class="img-circle" />
+                                @endif
                                 <span class="username username-hide-mobile">{{ Auth::user()->nombre_completo }}</span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-default">
