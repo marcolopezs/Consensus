@@ -392,21 +392,20 @@
                             <tbody>
                             <tr>
                                 <td class="column_cell font_default" align="center" valign="top" style="padding: 16px;font-family: Helvetica, Arial, sans-serif;font-size: 15px;text-align: center;vertical-align: top;color: #888888;">
-                                    <table class="icon_holder icon_secondary" width="80" border="0" align="center" cellpadding="0" cellspacing="0" style="border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;width: 48px;margin-left: auto;margin-right: auto;clear: both;">
+                                    <table class="icon_holder icon_primary" width="80" border="0" align="center" cellpadding="0" cellspacing="0" style="border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;width: 48px;margin-left: auto;margin-right: auto;clear: both;">
                                         <tbody>
                                         <tr>
                                             <td class="hspace" style="padding: 0;font-size: 0;height: 8px;overflow: hidden;">&nbsp;</td>
                                         </tr>
                                         <tr>
-                                            <td class="icon_cell" style="padding: 8px;font-size: 0;line-height: 1;-webkit-border-radius: 80px;border-radius: 80px;height: 48px;background-color: #dbdbdb;border-color: #f2f2f2;"><img src="{{ url('images/user_icon.png') }}" width="48" height="48" alt="" style="line-height: 1;outline: none;border: 0;text-decoration: none;-ms-interpolation-mode: bicubic;mso-line-height-rule: exactly;"></td>
+                                            <td class="icon_cell" style="padding: 8px;font-size: 0;line-height: 1;-webkit-border-radius: 80px;border-radius: 80px;height: 48px;background-color: #f06161;"><img src="{{ url('images/ic_vpn_key_white_48dp_2x.png') }}" width="48" height="48" alt="" style="line-height: 1;outline: none;border: 0;text-decoration: none;-ms-interpolation-mode: bicubic;mso-line-height-rule: exactly;"></td>
                                         </tr>
                                         <tr>
                                             <td class="hspace" style="padding: 0;font-size: 0;height: 8px;overflow: hidden;">&nbsp;</td>
                                         </tr>
                                         </tbody>
-                                    </table><!-- /.icon_holder:icon_secondary -->
-                                    <h4 style="font-family: Helvetica, Arial, sans-serif;margin-left: 0;margin-right: 0;margin-top: 16px;margin-bottom: 8px;padding: 0;font-size: 22px;line-height: 30px;font-weight: bold;color: #666666;">Bienvenido a Consensus</h4>
-                                    <p class="lead" style="font-family: Helvetica, Arial, sans-serif;font-size: 19px;line-height: 27px;margin-top: 16px;margin-bottom: 16px;">{{ $nombres }}</p>
+                                    </table><!-- /.icon_holder:icon_primary -->
+                                    <h3 style="font-family: Helvetica, Arial, sans-serif;margin-left: 0;margin-right: 0;margin-top: 16px;margin-bottom: 8px;padding: 0;font-size: 22px;line-height: 30px;font-weight: bold;color: #f06161;">Cambio de contraseña</h3>
                                 </td><!-- /.column_cell -->
                             </tr>
                             </tbody>
@@ -451,19 +450,13 @@
                             <tbody>
                             <tr>
                                 <td class="column_cell font_default" align="center" valign="top" style="padding: 16px;font-family: Helvetica, Arial, sans-serif;font-size: 15px;text-align: center;vertical-align: top;color: #888888;">
-                                    <p style="font-family: Helvetica, Arial, sans-serif;font-size: 15px;line-height: 23px;margin-top: 16px;margin-bottom: 24px;">Este seran tus accesos para ingresar al sistema:</p>
-                                    <p style="font-family: Helvetica, Arial, sans-serif;font-size: 15px;line-height: 23px;margin-top: 16px;margin-bottom: 24px;"><strong>Usuario</strong><br>
-                                        {{ $usuario }}</p>
-                                    <p style="font-family: Helvetica, Arial, sans-serif;font-size: 15px;line-height: 23px;margin-top: 16px;margin-bottom: 24px;"><strong>Contraseña</strong><br>
-                                        {{ $clave }}</p>
 
-                                    <p style="font-family: Helvetica, Arial, sans-serif;font-size: 15px;line-height: 23px;margin-top: 16px;margin-bottom: 24px;">Pero para ello da clic en el botón de abajo para...</p>
+                                    <p style="font-family: Helvetica, Arial, sans-serif;font-size: 15px;line-height: 23px;margin-top: 16px;margin-bottom: 24px;">El Administrador del Sistema ha realizado el cambio de tu contraseña, el cual es el siguiente:</p>
+                                    <h2 style="font-family: Helvetica, Arial, sans-serif;margin-left: 0;margin-right: 0;margin-top: 16px;margin-bottom: 8px;padding: 0;font-size: 26px;line-height: 36px;font-weight: bold;color: #666666;">{{ $clave }}</h2>
                                     <table class="secondary_btn" align="center" border="0" cellspacing="0" cellpadding="0" style="border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;clear: both;margin: 0 auto;">
                                         <tbody>
                                         <tr>
-                                            <td class="font_default" style="padding: 12px 24px;font-family: Helvetica, Arial, sans-serif;font-size: 16px;mso-line-height-rule: exactly;text-align: center;vertical-align: middle;-webkit-border-radius: 4px;border-radius: 4px;background-color: #f06161;">
-                                                <a href="{{ url('active/'.$codigo) }}" style="display: block;text-decoration: none;font-family: Helvetica, Arial, sans-serif;color: #ffffff;font-weight: bold;text-align: center;"><span style="text-decoration: none;color: #ffffff;text-align: center;display: block;">Activar cuenta</span></a>
-                                            </td>
+                                            <td class="font_default" style="padding: 12px 24px;font-family: Helvetica, Arial, sans-serif;font-size: 16px;mso-line-height-rule: exactly;text-align: center;vertical-align: middle;-webkit-border-radius: 4px;border-radius: 4px;background-color: #f06161;"><a href="{{ route('home') }}" style="display: block;text-decoration: none;font-family: Helvetica, Arial, sans-serif;color: #ffffff;font-weight: bold;text-align: center;"><span style="text-decoration: none;color: #ffffff;text-align: center;display: block;">Iniciar sesión</span></a></td>
                                         </tr>
                                         </tbody>
                                     </table><!-- end .secondary_btn -->

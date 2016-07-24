@@ -128,6 +128,7 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
     Route::put('users/{id}/abogado/tarifa', ['as' => 'abogado.tarifas.update', 'uses' => 'UsersController@abogadoTarifaUpdate']);
     Route::post('users/{id}/abogado/foto', ['as' => 'abogado.foto.upload', 'uses' => 'UsersController@abogadoFotoUpload']);
     Route::post('users/{id}/abogado/foto/delete', ['as' => 'abogado.foto.delete', 'uses' => 'UsersController@abogadoFotoDelete']);
+    Route::post('users/{id}/abogado/password', ['as' => 'abogado.password', 'uses' => 'UsersController@abogadoPassword']);
 
     //USUARIO - MI PERFIL
     Route::get('user/perfil', ['as' => 'users.perfil', 'uses' => 'UsersController@perfil']);

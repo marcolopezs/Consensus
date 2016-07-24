@@ -27,6 +27,10 @@ use Consensus\Repositories\UserRoleRepo;
 
 class UsersController extends Controller
 {
+    protected $rulesPassword = [
+        'password' => 'required|confirmed',
+        'password_confirmation' => 'required'
+    ];
 
     protected $abogadoRepo;
     protected $tarifaAbogadoRepo;
@@ -269,11 +273,17 @@ class UsersController extends Controller
         $usuario->imagen_carpeta = $archivo['carpeta'];
         $this->userProfileRepo->update($usuario, $request->all());
 
+        //GUARDAR HISTORIAL
+        $this->userProfileRepo->saveHistory($usuario, $request, 'update');
+
         return $archivo;
     }
 
     /*
      * ELIMINAR FOTO DE ABOGADO
+     * @param Request $request
+     * @param $id
+     * @return array
      */
     public function abogadoFotoDelete(Request $request, $id)
     {
@@ -284,8 +294,63 @@ class UsersController extends Controller
         $usuario->imagen_carpeta = "";
         $this->userProfileRepo->update($usuario, $request->all());
 
+        //GUARDAR HISTORIAL
+        $this->userProfileRepo->saveHistory($usuario, $request, 'update');
+
         return [
             'estado' => true
+        ];
+    }
+
+    /*
+     * UPDATE DE PASSWORD
+     */
+    public function abogadoPassword(Request $request, $id)
+    {
+        //BUSCAR USUARIO EN PROFILE
+        $usuario = $this->userRepo->findOrFail($id);
+
+        //VALIDACION
+        $this->validate($request, $this->rulesPassword);
+
+        //GUARDAR
+        $save = $this->userRepo->update($usuario, $request->all());
+
+        //ENVIAR POR CORREO
+        if($request->input('correo') == 1){
+
+            //DATOS PARA EMAIL
+            $data = [
+                'nombres' => $usuario->profile->nombre,
+                'fecha' => $this->userRepo->fechaTexto($save->updated_at),
+                'clave' => $request->input('password')
+            ];
+
+            //ENVIAR DESDE
+            $fromEmail = 'noreply@consensus.com';
+            $fromNombre = 'Consensus';
+
+            //ENVIAR A
+            $toEmail = $usuario->profile->email;
+            $toNombre = $usuario->profile->nombre;
+
+            \Mail::send('emails.clave', $data, function($message) use ($fromNombre, $fromEmail, $toNombre, $toEmail){
+                $message->to($toEmail, $toNombre);
+                $message->from($fromEmail, $fromNombre);
+                $message->subject('Consensus - Cambio de contraseña');
+            });
+
+            $correo = true;
+        }else{
+            $correo = false;
+        };
+
+        //GUARDAR HISTORIAL
+        $this->userRepo->saveHistory($usuario, $request, 'update');
+
+        return [
+            'estado' => true,
+            'correo' => $correo
         ];
     }
 

@@ -77,7 +77,7 @@
                                             $admin_email = $row->profile->email;
                                         @endphp
                                         <div class="tab-pane active" id="info-personal">
-                                            {!! Form::open(['route' => ['users.update', $row->id], 'method' => 'PUT', 'id' => 'formUserUpdate']) !!}
+                                            {!! Form::open(['route' => ['users.update', $row->id], 'method' => 'PUT', 'id' => 'formUserUpdate', 'autocomplete' => 'off']) !!}
 
                                                 <div class="form-content"></div>
 
@@ -131,7 +131,7 @@
                                         $abogado_direccion = $row->abogado->direccion;
                                     @endphp
                                     <div class="tab-pane active" id="info-personal">
-                                        {!! Form::open(['route' => ['users.update', $row->id], 'method' => 'PUT', 'id' => 'formUserUpdate']) !!}
+                                        {!! Form::open(['route' => ['users.update', $row->id], 'method' => 'PUT', 'id' => 'formUserUpdate', 'autocomplete' => 'off']) !!}
 
                                             <div class="form-content"></div>
 
@@ -243,7 +243,7 @@
                                 @if($user_abogado)
                                 {{-- TARIFAS DE ABOGADO --}}
                                 <div class="tab-pane" id="tarifas">
-                                    {!! Form::open(['route' => ['abogado.tarifas.update', $row->id],'method' => 'PUT', 'id' => 'formTarifaUpdate']) !!}
+                                    {!! Form::open(['route' => ['abogado.tarifas.update', $row->id],'method' => 'PUT', 'id' => 'formTarifaUpdate', 'autocomplete' => 'off']) !!}
 
                                     <div class="form-content"></div>
 
@@ -272,10 +272,10 @@
                                 {{-- CAMBIAR FOTO --}}
                                 <div class="tab-pane" id="foto">
                                     <p>Puedes cambiar la foto del Abogado</p>
-                                    <div class="dropzone"></div>
-
+                                    {!! Form::open(['route' => ['abogado.foto.upload', $row->id], 'method' => 'POST', 'class' => 'dropzone']) !!}
+                                    {!! Form::close() !!}
                                     <div class="margin-top-15">
-                                        <a href="#" id="btnFotoEliminarActual" class="btn default" data-dz-remove>Eliminar foto actual del Abogado</a>
+                                        <a href="#" id="btnFotoEliminarActual" data-url="{{ route('abogado.foto.delete', $row->id) }}" class="btn default" data-dz-remove>Eliminar foto actual del Abogado</a>
                                         <a href="#" id="btnFotoCambiar" class="btn blue pull-right">Subir Foto</a>
                                         <a href="#" id="btnFotoEliminar" class="btn default pull-right margin-right-10" data-dz-remove>Eliminar foto a subir</a>
                                     </div>
@@ -284,21 +284,34 @@
 
                                 {{-- CAMBIAR CONTRASEÑA --}}
                                 <div class="tab-pane" id="clave">
-                                    <form action="#">
-                                        <div class="form-group">
-                                            <label class="control-label">Current Password</label>
-                                            <input type="password" class="form-control" /> </div>
-                                        <div class="form-group">
-                                            <label class="control-label">New Password</label>
-                                            <input type="password" class="form-control" /> </div>
-                                        <div class="form-group">
-                                            <label class="control-label">Re-type New Password</label>
-                                            <input type="password" class="form-control" /> </div>
-                                        <div class="margin-top-10">
-                                            <a href="javascript:;" class="btn green"> Change Password </a>
-                                            <a href="javascript:;" class="btn default"> Cancel </a>
+                                    {!! Form::open(['route' => ['abogado.password', $row->id], 'method' => 'POST', 'id' => 'formPasswordUpdate', 'autocomplete' => 'off']) !!}
+
+                                        <div class="form-content"></div>
+
+                                    	<div class="form-group">
+                                            {!! Form::label('password', 'Nueva Contraseña', ['class' => 'control-label']) !!}
+                                            {!! Form::password('password', ['class' => 'form-control']) !!}
                                         </div>
-                                    </form>
+
+                                        <div class="form-group">
+                                            {!! Form::label('password_confirmation', 'Repetir nueva Contraseña', ['class' => 'control-label']) !!}
+                                            {!! Form::password('password_confirmation', ['class' => 'form-control']) !!}
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="mt-checkbox-inline">
+                                                <label class="mt-checkbox" style="margin-right: 20px;">
+                                                    {!! Form::checkbox('correo', '1', null, []) !!}
+                                                    Enviar contraseña por correo a <strong>{{ $user_nombre }}</strong>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="margin-top-10">
+                                            <a id="btnPasswordUpdate" href="javascript:;" class="btn blue"> Cambiar contraseña </a>
+                                            {!! Form::reset('Cancelar', ['class' => 'btn default']) !!}
+                                        </div>
+                                    {!! Form::close() !!}
                                 </div>
                                 {{-- FIN CAMBIAR CONTRASEÑA --}}
 
@@ -388,137 +401,6 @@
 @stop
 
 @section('contenido_footer')
-<script>
-    $("#btnUserUpdate").on("click", function(e) {
-        e.preventDefault();
-
-        var form = $("#formUserUpdate");
-        var url = form.attr('action');
-        var data = form.serialize();
-
-        $.ajax({
-            url: url,
-            type: 'POST',
-            data: data,
-            beforeSend: function () { $('.progress').show(); },
-            complete: function () { $('.progress').hide(); },
-            success: function (result) {
-                var successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>El registro se actualizó satisfactoriamente.</div>';
-                $(".form-content").html(successHtml);
-            },
-            error: function (result) {
-                if(result.status === 422){
-                    var errors = result.responseJSON;
-                    var errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';
-                    $.each( errors, function( key, value ) {
-                        errorsHtml += '<li>' + value[0] + '</li>';
-                    });
-                    errorsHtml += '</ul></div>';
-                    $('.form-content').html(errorsHtml);
-                }else{
-                    errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';
-                    errorsHtml += '<li>Se ha producido un error. Intentelo de nuevo.</li>';
-                    errorsHtml += '</ul></div>';
-                    $('.form-content').html(errorsHtml);
-                }
-            }
-        });
-    });
-
-    $("#btnTarifaUpdate").on("click", function(e) {
-        e.preventDefault();
-
-        var form = $("#formTarifaUpdate");
-        var url = form.attr('action');
-        var data = form.serialize();
-
-        $.ajax({
-            url: url,
-            type: 'POST',
-            data: data,
-            beforeSend: function () { $('.progress').show(); },
-            complete: function () { $('.progress').hide(); },
-            success: function (result) {
-                var successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>El registro se actualizó satisfactoriamente.</div>';
-                $(".form-content").html(successHtml);
-            },
-            error: function (result) {
-                if(result.status === 422){
-                    var errors = result.responseJSON;
-                    var errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';
-                    $.each( errors, function( key, value ) {
-                        errorsHtml += '<li>' + value[0] + '</li>';
-                    });
-                    errorsHtml += '</ul></div>';
-                    $('.form-content').html(errorsHtml);
-                }else{
-                    errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';
-                    errorsHtml += '<li>Se ha producido un error. Intentelo de nuevo.</li>';
-                    errorsHtml += '</ul></div>';
-                    $('.form-content').html(errorsHtml);
-                }
-            }
-        });
-
-    });
-
-    var myDropzone = new Dropzone(".dropzone", {
-        dictDefaultMessage: 'Da clic para seleccionar el archivo',
-        dictMaxFilesExceeded: 'No se puede cargar más archivos',
-        url: "{{ route('abogado.foto.upload', $row->id) }}",
-        method: 'POST',
-        headers: {'X-CSRF-Token': '{!! csrf_token() !!}'},
-        maxFiles: 1,
-        autoProcessQueue: false,
-        success: function (file, result) {
-            var imagen = "/imagenes/" + result.carpeta + "250x250/" + result.archivo;
-            $("#fotoUsuario").attr("src", imagen);
-        }
-    });
-
-    $("#btnFotoCambiar").on("click", function(){
-        myDropzone.processQueue();
-    });
-
-    $("#btnFotoEliminar").on("click", function(){
-        myDropzone.removeAllFiles();
-    });
-
-    $("#btnFotoEliminarActual").on("click", function(e) {
-        e.preventDefault();
-
-        var url = '{{ route('abogado.foto.delete', $row->id) }}';
-
-        $.ajax({
-            url: url,
-            type: 'POST',
-            headers: {'X-CSRF-Token': '{!! csrf_token() !!}'},
-            beforeSend: function () { $('.progress').show(); },
-            complete: function () { $('.progress').hide(); },
-            success: function (result) {
-                var imagen = "/imagenes/user.png";
-                $("#fotoUsuario").attr("src", imagen);
-
-                var successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>El registro se actualizó satisfactoriamente.</div>';
-                $(".form-content").html(successHtml);
-            },
-            error: function (result) {
-                if(result.status === 422){
-                    var errors = result.responseJSON;
-                    var errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';
-                    $.each( errors, function( key, value ) {
-                        errorsHtml += '<li>' + value[0] + '</li>';
-                    });
-                    errorsHtml += '</ul></div>';
-                    $('.form-content').html(errorsHtml);
-                }else{
-                    errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';
-                    errorsHtml += '<li>Se ha producido un error. Intentelo de nuevo.</li>';
-                    errorsHtml += '</ul></div>';
-                    $('.form-content').html(errorsHtml);
-                }
-            }
-        });
-    });
-</script>
+{{-- Script de Usuario --}}
+{!! HTML::script('js/js-usuario-update.js') !!}
 @stop
