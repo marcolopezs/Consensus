@@ -62,7 +62,7 @@
                                 @if($user_abogado)<li><a href="#tarifas" data-toggle="tab">Tarifas</a></li>@endif
                                 <li><a href="#foto" data-toggle="tab">Cambiar foto</a></li>
                                 <li><a href="#clave" data-toggle="tab">Cambiar contraseña</a></li>
-                                <li><a href="#permisos" data-toggle="tab">Permisos</a></li>
+                                {{--<li><a href="#permisos" data-toggle="tab">Permisos</a></li>--}}
                             </ul>
                         </div>
                         <div class="portlet-body">
@@ -79,7 +79,7 @@
                                         <div class="tab-pane active" id="info-personal">
                                             {!! Form::open(['route' => ['users.update', $row->id], 'method' => 'PUT', 'id' => 'formUserUpdate', 'autocomplete' => 'off']) !!}
 
-                                                <div class="form-content"></div>
+                                                <div class="form-content info-personal"></div>
 
                                                 <div class="row">
 
@@ -133,7 +133,7 @@
                                     <div class="tab-pane active" id="info-personal">
                                         {!! Form::open(['route' => ['users.update', $row->id], 'method' => 'PUT', 'id' => 'formUserUpdate', 'autocomplete' => 'off']) !!}
 
-                                            <div class="form-content"></div>
+                                            <div class="form-content info-personal"></div>
 
                                             <div class="row">
 
@@ -245,7 +245,7 @@
                                 <div class="tab-pane" id="tarifas">
                                     {!! Form::open(['route' => ['abogado.tarifas.update', $row->id],'method' => 'PUT', 'id' => 'formTarifaUpdate', 'autocomplete' => 'off']) !!}
 
-                                    <div class="form-content"></div>
+                                    <div class="form-content tarifas"></div>
 
                                     <div class="row">
 
@@ -272,6 +272,7 @@
                                 {{-- CAMBIAR FOTO --}}
                                 <div class="tab-pane" id="foto">
                                     <p>Puedes cambiar la foto del Abogado</p>
+                                    <div class="form-content cambiar-foto"></div>
                                     {!! Form::open(['route' => ['abogado.foto.upload', $row->id], 'method' => 'POST', 'class' => 'dropzone']) !!}
                                     {!! Form::close() !!}
                                     <div class="margin-top-15">
@@ -286,7 +287,7 @@
                                 <div class="tab-pane" id="clave">
                                     {!! Form::open(['route' => ['abogado.password', $row->id], 'method' => 'POST', 'id' => 'formPasswordUpdate', 'autocomplete' => 'off']) !!}
 
-                                        <div class="form-content"></div>
+                                        <div class="form-content cambiar-clave"></div>
 
                                     	<div class="form-group">
                                             {!! Form::label('password', 'Nueva Contraseña', ['class' => 'control-label']) !!}

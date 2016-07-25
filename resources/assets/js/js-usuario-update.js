@@ -5,6 +5,7 @@ $("#btnUserUpdate").on("click", function(e) {
     var form = $("#formUserUpdate");
     var url = form.attr('action');
     var data = form.serialize();
+    var formMessage = $(".form-content.info-personal");
 
     $.ajax({
         url: url,
@@ -14,7 +15,7 @@ $("#btnUserUpdate").on("click", function(e) {
         complete: function () { $('.progress').hide(); },
         success: function (result) {
             var successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>El registro se actualizó satisfactoriamente.</div>';
-            $(".form-content").html(successHtml);
+            formMessage.html(successHtml);
         },
         error: function (result) {
             if(result.status === 422){
@@ -24,12 +25,12 @@ $("#btnUserUpdate").on("click", function(e) {
                     errorsHtml += '<li>' + value[0] + '</li>';
                 });
                 errorsHtml += '</ul></div>';
-                $('.form-content').html(errorsHtml);
+                formMessage.html(errorsHtml);
             }else{
                 errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';
                 errorsHtml += '<li>Se ha producido un error. Intentelo de nuevo.</li>';
                 errorsHtml += '</ul></div>';
-                $('.form-content').html(errorsHtml);
+                formMessage.html(errorsHtml);
             }
         }
     });
@@ -42,6 +43,7 @@ $("#btnTarifaUpdate").on("click", function(e) {
     var form = $("#formTarifaUpdate");
     var url = form.attr('action');
     var data = form.serialize();
+    var formMessage = $(".form-content.tarifas");
 
     $.ajax({
         url: url,
@@ -51,7 +53,7 @@ $("#btnTarifaUpdate").on("click", function(e) {
         complete: function () { $('.progress').hide(); },
         success: function (result) {
             var successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>El registro se actualizó satisfactoriamente.</div>';
-            $(".form-content").html(successHtml);
+            formMessage.html(successHtml);
         },
         error: function (result) {
             if(result.status === 422){
@@ -61,12 +63,12 @@ $("#btnTarifaUpdate").on("click", function(e) {
                     errorsHtml += '<li>' + value[0] + '</li>';
                 });
                 errorsHtml += '</ul></div>';
-                $('.form-content').html(errorsHtml);
+                formMessage.html(errorsHtml);
             }else{
                 errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';
                 errorsHtml += '<li>Se ha producido un error. Intentelo de nuevo.</li>';
                 errorsHtml += '</ul></div>';
-                $('.form-content').html(errorsHtml);
+                formMessage.html(errorsHtml);
             }
         }
     });
@@ -104,6 +106,7 @@ $("#btnFotoEliminarActual").on("click", function(e) {
     e.preventDefault();
 
     var url = $(this).data('url');
+    var formMessage = $(".form-content.cambiar-foto");
 
     $.ajax({
         url: url,
@@ -116,7 +119,7 @@ $("#btnFotoEliminarActual").on("click", function(e) {
             $("#fotoUsuario").attr("src", imagen);
 
             var successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>El registro se actualizó satisfactoriamente.</div>';
-            $(".form-content").html(successHtml);
+            formMessage.html(successHtml);
         },
         error: function (result) {
             if(result.status === 422){
@@ -126,12 +129,12 @@ $("#btnFotoEliminarActual").on("click", function(e) {
                     errorsHtml += '<li>' + value[0] + '</li>';
                 });
                 errorsHtml += '</ul></div>';
-                $('.form-content').html(errorsHtml);
+                formMessage.html(errorsHtml);
             }else{
                 errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';
                 errorsHtml += '<li>Se ha producido un error. Intentelo de nuevo.</li>';
                 errorsHtml += '</ul></div>';
-                $('.form-content').html(errorsHtml);
+                formMessage.html(errorsHtml);
             }
         }
     });
@@ -144,6 +147,7 @@ $("#btnPasswordUpdate").on("click", function (e) {
     var form = $("#formPasswordUpdate");
     var url = form.attr('action');
     var data = form.serialize();
+    var formMessage = $(".form-content.cambiar-clave");
 
     $.ajax({
         url: url,
@@ -153,13 +157,10 @@ $("#btnPasswordUpdate").on("click", function (e) {
         complete: function () { $('.progress').hide(); },
         success: function (result) {
             var mensaje;
-            if(result.correo == true){
-                mensaje = 'La contraseña se envío por correo al usuario.'
-            }else{
-                mensaje = '';
-            }
+            if(result.correo == true){ mensaje = 'La contraseña se envío por correo al usuario.' }
+            else{ mensaje = ''; }
             var successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>El registro se actualizó satisfactoriamente. '+ mensaje +'</div>';
-            $(".form-content").html(successHtml);
+            formMessage.html(successHtml);
             form[0].reset();
             $(".checker span").removeClass('checked');
         },
@@ -171,12 +172,12 @@ $("#btnPasswordUpdate").on("click", function (e) {
                     errorsHtml += '<li>' + value[0] + '</li>';
                 });
                 errorsHtml += '</ul></div>';
-                $('.form-content').html(errorsHtml);
+                formMessage.html(errorsHtml);
             }else{
                 errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';
                 errorsHtml += '<li>Se ha producido un error. Intentelo de nuevo.</li>';
                 errorsHtml += '</ul></div>';
-                $('.form-content').html(errorsHtml);
+                formMessage.html(errorsHtml);
             }
         }
     });
