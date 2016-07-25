@@ -335,6 +335,8 @@ class Import extends Command
                     'id' => $item->id,
                     'expediente_id' => $item->expediente_id,
                     'expediente_tipo_id' => $expediente->expediente_tipo_id,
+                    'abogado_id' => $item->abogado_id,
+                    'cliente_id' => $expediente->cliente_id,
                     'tarea_id' => $tarea->id,
                     'fecha' => formatoFecha($item->fecha),
                     'desde' => $item->desde,

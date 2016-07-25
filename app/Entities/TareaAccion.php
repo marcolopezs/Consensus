@@ -9,7 +9,7 @@ class TareaAccion extends BaseEntity {
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['id','expediente_id','expediente_tipo_id','tarea_id','fecha','desde','hasta','horas','descripcion'];
+    protected $fillable = ['id','expediente_id','expediente_tipo_id','abogado_id','cliente_id','tarea_id','fecha','desde','hasta','horas','descripcion'];
     protected $appends = ['url_editar','url_eliminar','url_lista_gastos','fecha_accion'];
 
     protected $table = 'tarea_acciones';
@@ -27,10 +27,26 @@ class TareaAccion extends BaseEntity {
         return $this->hasMany(FlujoCaja::class);
     }
 
+    public function expediente()
+    {
+        return $this->belongsTo(Expediente::class, 'expediente_id');
+    }
+
     public function expedienteTipo()
     {
-        return $this->belongsTo(TareaAccion::class, 'tarea_accion_id');
+        return $this->belongsTo(ExpedienteTipo::class, 'expediente_tipo_id');
     }
+
+    public function abogado()
+    {
+        return $this->belongsTo(Abogado::class, 'abogado_id');
+    }
+
+    public function cliente()
+    {
+        return $this->belongsTo(Cliente::class, 'cliente_id');
+    }
+
 
     /*
      * GETTERS

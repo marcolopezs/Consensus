@@ -432,6 +432,9 @@ class CreateInitialTables extends Migration
             $table->integer('expediente_id')->unsigned();
             $table->integer('expediente_tipo_id')->unsigned();
 
+            $table->integer('abogado_id')->unsigned();
+            $table->integer('cliente_id')->unsigned();
+
             $table->integer('tarea_id')->unsigned();
             $table->date('fecha');
             $table->time('desde');
