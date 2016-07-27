@@ -100,8 +100,6 @@
                             @endcan
 
                             <li {!! (Request::is('tareas-*') ? 'class="active"' : '') !!}><a href="{{ route('tareas.asignadas') }}">Tiempos</a></li>
-
-                            @cannot('abogado')
                             <li class="menu-dropdown mega-menu-dropdown {!! (Request::is('options*') ? 'active' : '') !!}">
                                 <a href="javascript:;">Opciones</a><span class="arrow"></span>
                                 <ul class="dropdown-menu" style="min-width: 500px;">
@@ -135,7 +133,6 @@
                                     </li>
                                 </ul>
                             </li>
-                            @endcan
 
                             @can('admin')
                             <li {!! (Request::is('users*') ? 'class="active"' : '') !!}><a href="{{ route('users.index') }}">Usuarios</a></li>
