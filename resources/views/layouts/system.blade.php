@@ -95,46 +95,51 @@
                     <ul class="nav navbar-nav">
                         <li {!! (Request::is('/') ? 'class="active"' : '') !!}><a href="/">Dashboard</a></li>
                         @can('mostrar-menu')
-                        @can('admin')
-                        <li {!! (Request::is('expediente*') ? 'class="active"' : '') !!}><a href="{{ route('expedientes.index') }}">Expedientes</a></li>
-                        @endcan
-                        <li {!! (Request::is('tareas-*') ? 'class="active"' : '') !!}><a href="{{ route('tareas.asignadas') }}">Tiempos</a></li>
-                        <li class="menu-dropdown mega-menu-dropdown {!! (Request::is('options*') ? 'active' : '') !!}">
-                            <a href="javascript:;">Opciones</a><span class="arrow"></span>
-                            <ul class="dropdown-menu" style="min-width: 500px;">
-                                <li>
-                                    <div class="mega-menu-content">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <ul class="mega-menu-submenu">
-                                                    <li {!! (Request::is('options/area*') ? 'class="active"' : '') !!}><a href="{{ route('area.index') }}">Áreas</a></li>
-                                                    <li {!! (Request::is('cliente*') ? 'class="active"' : '') !!}><a href="{{ route('cliente.index') }}">Clientes</a></li>
-                                                    <li {!! (Request::is('options/entity*') ? 'class="active"' : '') !!}><a href="{{ route('entity.index') }}">Entidades</a></li>
-                                                    <li {!! (Request::is('options/state*') ? 'class="active"' : '') !!}><a href="{{ route('state.index') }}">Estado</a></li>
-                                                    <li {!! (Request::is('options/payment*') ? 'class="active"' : '') !!}><a href="{{ route('payment-method.index') }}">Formas de Pago</a></li>
-                                                    <li {!! (Request::is('options/instance*') ? 'class="active"' : '') !!}><a href="{{ route('instance.index') }}">Instancias</a></li>
-                                                    <li {!! (Request::is('options/intervener*') ? 'class="active"' : '') !!}><a href="{{ route('intervener.index') }}">Intervinientes</a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <ul class="mega-menu-submenu">
-                                                    <li {!! (Request::is('options/matter*') ? 'class="active"' : '') !!}><a href="{{ route('matter.index') }}">Materias</a></li>
-                                                    <li {!! (Request::is('options/service*') ? 'class="active"' : '') !!}><a href="{{ route('service.index') }}">Servicios</a></li>
-                                                    <li {!! (Request::is('options/tariff*') ? 'class="active"' : '') !!}><a href="{{ route('tariff.index') }}">Tarifas</a></li>
-                                                    <li {!! (Request::is('options/money*') ? 'class="active"' : '') !!}><a href="{{ route('money.index') }}">Tipo de Cambio</a></li>
-                                                    <li {!! (Request::is('options/expense-type*') ? 'class="active"' : '') !!}><a href="{{ route('expense-type.index') }}">Tipos de Gasto</a></li>
-                                                    <li {!! (Request::is('options/expediente-tipo*') ? 'class="active"' : '') !!}><a href="{{ route('expediente-tipo.index') }}">Tipos de Expediente</a></li>
-                                                    <li {!! (Request::is('options/ubicacion*') ? 'class="active"' : '') !!}><a href="{{ route('ubicacion.index') }}">Ubicación</a></li>
-                                                </ul>
+                            @cannot('cliente')
+                            <li {!! (Request::is('expediente*') ? 'class="active"' : '') !!}><a href="{{ route('expedientes.index') }}">Expedientes</a></li>
+                            @endcan
+
+                            <li {!! (Request::is('tareas-*') ? 'class="active"' : '') !!}><a href="{{ route('tareas.asignadas') }}">Tiempos</a></li>
+
+                            @cannot('abogado')
+                            <li class="menu-dropdown mega-menu-dropdown {!! (Request::is('options*') ? 'active' : '') !!}">
+                                <a href="javascript:;">Opciones</a><span class="arrow"></span>
+                                <ul class="dropdown-menu" style="min-width: 500px;">
+                                    <li>
+                                        <div class="mega-menu-content">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <ul class="mega-menu-submenu">
+                                                        <li {!! (Request::is('options/area*') ? 'class="active"' : '') !!}><a href="{{ route('area.index') }}">Áreas</a></li>
+                                                        <li {!! (Request::is('cliente*') ? 'class="active"' : '') !!}><a href="{{ route('cliente.index') }}">Clientes</a></li>
+                                                        <li {!! (Request::is('options/entity*') ? 'class="active"' : '') !!}><a href="{{ route('entity.index') }}">Entidades</a></li>
+                                                        <li {!! (Request::is('options/state*') ? 'class="active"' : '') !!}><a href="{{ route('state.index') }}">Estado</a></li>
+                                                        <li {!! (Request::is('options/payment*') ? 'class="active"' : '') !!}><a href="{{ route('payment-method.index') }}">Formas de Pago</a></li>
+                                                        <li {!! (Request::is('options/instance*') ? 'class="active"' : '') !!}><a href="{{ route('instance.index') }}">Instancias</a></li>
+                                                        <li {!! (Request::is('options/intervener*') ? 'class="active"' : '') !!}><a href="{{ route('intervener.index') }}">Intervinientes</a></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <ul class="mega-menu-submenu">
+                                                        <li {!! (Request::is('options/matter*') ? 'class="active"' : '') !!}><a href="{{ route('matter.index') }}">Materias</a></li>
+                                                        <li {!! (Request::is('options/service*') ? 'class="active"' : '') !!}><a href="{{ route('service.index') }}">Servicios</a></li>
+                                                        <li {!! (Request::is('options/tariff*') ? 'class="active"' : '') !!}><a href="{{ route('tariff.index') }}">Tarifas</a></li>
+                                                        <li {!! (Request::is('options/money*') ? 'class="active"' : '') !!}><a href="{{ route('money.index') }}">Tipo de Cambio</a></li>
+                                                        <li {!! (Request::is('options/expense-type*') ? 'class="active"' : '') !!}><a href="{{ route('expense-type.index') }}">Tipos de Gasto</a></li>
+                                                        <li {!! (Request::is('options/expediente-tipo*') ? 'class="active"' : '') !!}><a href="{{ route('expediente-tipo.index') }}">Tipos de Expediente</a></li>
+                                                        <li {!! (Request::is('options/ubicacion*') ? 'class="active"' : '') !!}><a href="{{ route('ubicacion.index') }}">Ubicación</a></li>
+                                                    </ul>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>
-                        @can('admin')
-                        <li {!! (Request::is('users*') ? 'class="active"' : '') !!}><a href="{{ route('users.index') }}">Usuarios</a></li>
-                        @endcan
+                                    </li>
+                                </ul>
+                            </li>
+                            @endcan
+
+                            @can('admin')
+                            <li {!! (Request::is('users*') ? 'class="active"' : '') !!}><a href="{{ route('users.index') }}">Usuarios</a></li>
+                            @endcan
                         @endcan
                     </ul>
                 </div>
