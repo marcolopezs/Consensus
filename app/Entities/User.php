@@ -139,6 +139,8 @@ class User extends BaseEntity implements AuthenticatableContract, CanResetPasswo
             return "Administrador";
         }elseif($this->abogado_id > 0){
             return "Abogado";
+        }elseif($this->cliente_id > 0){
+            return "Cliente";
         }
     }
 
