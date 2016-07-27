@@ -6,7 +6,7 @@
 
 @section('contenido_body')
 
-    @can('cliente-expedientes-home')
+    @can('cliente')
 
         <div class="row widget-row">
 
@@ -62,6 +62,7 @@
 
     @endcan
 
+    @can('admin')
     <div class="row">
         {{-- Resumen --}}
         <div class="col-md-6 col-sm-12">
@@ -188,9 +189,11 @@
         </div>
         {{-- Instancia --}}
     </div>
+    @endcan
 @stop
 
 @section('contenido_footer')
+    @can('admin')
     {{-- Highcharts --}}
     {!! HTML::script('https://code.highcharts.com/highcharts.js') !!}
     {!! HTML::script('https://code.highcharts.com/modules/exporting.js') !!}
@@ -425,4 +428,5 @@
             });
         });
     </script>
+    @endcan
 @stop
