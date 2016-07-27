@@ -251,7 +251,11 @@ class Expediente extends BaseEntity {
 
     public function getSaldoAttribute()
     {
-        $valor = $this->valor * $this->money->valor;
+        if($this->valor > 0){
+            $valor = $this->valor * $this->money->valor;
+        }else{
+            $valor = 0;
+        }
         $total = $valor + ($this->ingresos - $this->egresos);
 
         return number_format($total, 2, '.', ',');
