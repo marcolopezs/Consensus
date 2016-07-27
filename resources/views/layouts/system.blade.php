@@ -75,7 +75,7 @@
                                 <span class="username username-hide-mobile">{{ Auth::user()->nombre_completo }}</span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-default">
-                                <li><a href="{{ route('users.perfil') }}"><i class="icon-user"></i> Mi perfil</a></li>
+                                {{--<li><a href="{{ route('users.perfil') }}"><i class="icon-user"></i> Mi perfil</a></li>--}}
                                 <li class="divider"> </li>
                                 <li><a href="{{ route('logout') }}"><i class="icon-key"></i>Cerrar sesión</a></li>
                             </ul>
@@ -94,9 +94,9 @@
                 <div class="hor-menu  ">
                     <ul class="nav navbar-nav">
                         <li {!! (Request::is('/') ? 'class="active"' : '') !!}><a href="/">Dashboard</a></li>
+                        @can('mostrar-menu')
                         <li {!! (Request::is('expediente*') ? 'class="active"' : '') !!}><a href="{{ route('expedientes.index') }}">Expedientes</a></li>
                         <li {!! (Request::is('tareas-*') ? 'class="active"' : '') !!}><a href="{{ route('tareas.asignadas') }}">Tiempos</a></li>
-                        @can('mostrar-menu')
                         <li class="menu-dropdown mega-menu-dropdown {!! (Request::is('options*') ? 'active' : '') !!}">
                             <a href="javascript:;">Opciones</a><span class="arrow"></span>
                             <ul class="dropdown-menu" style="min-width: 500px;">
