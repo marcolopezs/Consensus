@@ -70,8 +70,10 @@ class TareasAsignadasController extends Controller {
         }
         elseif(Gate::allows('abogado'))
         {
-            $rows = $this->tareaRepo->filterPaginate();
-            return view('system.tareas-asignadas.list', compact('rows'));
+            $rows = $this->tareaRepo->filterPaginateAbogado($request);
+            $tarea = $this->tareaConceptoRepo->estadoListArray();
+
+            return view('system.tareas-asignadas.list', compact('rows','tarea'));
         }
 
     }

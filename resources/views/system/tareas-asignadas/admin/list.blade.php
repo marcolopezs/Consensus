@@ -23,7 +23,7 @@
 
         @include('flash::message')
 
-        <div id="mensajeAjax" class="alert alert-dismissable"></div>
+        @include('partials.message')
 
         @include('partials.tareas-asignadas-filtrar')
 

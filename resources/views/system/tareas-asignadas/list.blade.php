@@ -25,11 +25,26 @@
 
         @include('partials.message')
 
+        @include('partials.tareas-asignadas-filtrar-abogado')
+
         <div class="col-md-12 col-sm-12">
 
             <div class="portlet light">
 
                 @include('partials.progressbar')
+
+                <div class="portlet-title">
+                    <div class="actions pull-left">
+                        <div class="btn-group btn-group-devided" data-toggle="buttons">
+                            <div class="btn-group">
+                                <a id="filtrar-tarea" class="btn blue-steel btn-outline btn-circle" href="javascript:;">
+                                    <i class="fa fa-search"></i>
+                                    <span class="hidden-xs"> Buscar </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="portlet-body">
 
@@ -138,10 +153,31 @@
     {!! HTML::script('assets/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js') !!}
     {!! HTML::script('assets/pages/scripts/components-date-time-pickers.js') !!}
 
-    {{-- FUNCIONES --}}
-    {!! HTML::script('js/js-tarea.js') !!}
-
     {{-- BootBox --}}
     {!! HTML::script('assets/global/plugins/bootbox/bootbox.min.js') !!}
 
+    {{-- FUNCIONES --}}
+    {!! HTML::script('js/js-tarea.js') !!}
+    <script>
+        $(document).on("ready", function() {
+            /* FILTRAR */
+            $("#filtrar-tarea").on("click", function() {
+                $("#filtrar-tarea-panel").slideToggle();
+            });
+
+            $("#filtrar-tarea-cancelar").on("click", function() {
+                $("#filtrar-tarea-panel").slideUp();
+            });
+
+            $(".select2-clear").on("click", function(){
+                var id = $(this).data('id');
+                $("." + id + " .select2").val(null).trigger('change');
+            });
+
+            $(".text-clear").on("click", function(){
+                var id = $(this).data('id');
+                $("." + id + " .form-control").val(null);
+            });
+        });
+    </script>
 @stop
