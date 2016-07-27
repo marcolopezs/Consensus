@@ -86,4 +86,13 @@ class TareaAccion extends BaseEntity {
         return route('accion.gastos.index', [$this->id]);
     }
 
+    /*
+     * SETTER
+     */
+
+    public function setFechaAttribute($value)
+    {
+        $this->attributes['fecha'] = formatoFecha($value);
+    }
+
 }

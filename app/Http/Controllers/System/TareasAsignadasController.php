@@ -129,7 +129,6 @@ class TareasAsignadasController extends Controller {
         $row->abogado_id = auth()->user()->abogado->id;
         $row->cliente_id = $expediente->cliente_id;
         $row->tarea_id = $tarea;
-        $row->fecha = $fecha;
         $row->horas = $horas;
         $save = $this->tareaAccionRepo->create($row, $request->all());
 
@@ -188,7 +187,6 @@ class TareasAsignadasController extends Controller {
 
         $horas = restarHoras($fecha, $hora_desde, $hora_hasta);
 
-        $row->fecha = $fecha;
         $row->horas = $horas;
         $save = $this->tareaAccionRepo->update($row, $request->all());
 
