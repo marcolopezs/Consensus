@@ -130,7 +130,9 @@
                                 </li>
                             </ul>
                         </li>
+                        @can('admin')
                         <li {!! (Request::is('users*') ? 'class="active"' : '') !!}><a href="{{ route('users.index') }}">Usuarios</a></li>
+                        @endcan
                         @endcan
                     </ul>
                 </div>
