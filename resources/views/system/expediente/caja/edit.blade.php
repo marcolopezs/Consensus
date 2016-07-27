@@ -173,6 +173,7 @@
                                 '<td>'+ result.referencia +'</td>' +
                                 '<td>'+ result.monto +'</td>' +
                                 '<td>'+ result.moneda +'</td>' +
+                                '<td>'+ result.tipo +'</td>' +
                                 '<td><a href="'+ result.url_editar +'" data-target="#ajax" data-toggle="modal">Editar</a></td>' +
                            '</tr>';
 
