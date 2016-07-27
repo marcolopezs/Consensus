@@ -51,7 +51,11 @@
                                 <td>{{ $row_nombre }}</td>
                                 <td>{{ $row_usuario }}</td>
                                 <td>{{ $row_tipo }}</td>
-                                <td class="text-center">{{ trans('system.estado.'.$row_estado) }}</td>
+                                <td class="text-center">
+                                    <a id="estado-{{ $row_id }}" href="#" class="btn-estado" data-id="{{ $row_id }}" data-title="{{ $row_nombre }}" data-url="{{ route('users.estado', $row_id) }}">
+                                        {!! $row_estado ? '<span class="label label-success">'.trans('system.estado.'.$row_estado).'</span>' : '<span class="label label-default">'.trans('system.estado.'.$row_estado).'</span>' !!}
+                                    </a>
+                                </td>
                                 <td class="text-center">
                                     <div class="btn-group">
                                         <button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Acciones
@@ -94,4 +98,9 @@
 @stop
 
 @section('contenido_footer')
+    {{-- BootBox --}}
+    {!! HTML::script('assets/global/plugins/bootbox/bootbox.min.js') !!}
+
+    {{-- Cambiar Estado --}}
+    {!! HTML::script('js/js-cambiar-estado.js') !!}
 @stop

@@ -374,4 +374,32 @@ class UsersController extends Controller
             return view('system.users.perfil', compact('user'));
         }
     }
+
+    /*
+     * Cambiar Estado
+     */
+    /**
+     * @param $id
+     * @param Request $request
+     * @return array
+     */
+    public function estado($id, Request $request)
+    {
+        //BUSCAR ID
+        $row = $this->userRepo->findOrFail($id);
+
+        if($row->active == 0){ $estado = 1; }else{ $estado = 0; }
+
+        $row->active = $estado;
+        $this->userRepo->update($row, $request->all());
+
+        $this->userRepo->saveHistoryEstado($row, $estado, 'update');
+
+        $message = 'El registro se modificó satisfactoriamente.';
+
+        return [
+            'message' => $message,
+            'estado'  => $estado
+        ];
+    }
 }

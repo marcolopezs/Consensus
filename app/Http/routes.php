@@ -124,6 +124,7 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
 
     //USUARIO
     Route::resource('users', 'UsersController', ['except' => 'destroy']);
+    Route::post('users/{id}/estado', ['as' => 'users.estado', 'uses' => 'UsersController@estado']);
 
     Route::put('users/{id}/abogado/tarifa', ['as' => 'abogado.tarifas.update', 'uses' => 'UsersController@abogadoTarifaUpdate']);
     Route::post('users/{id}/abogado/foto', ['as' => 'abogado.foto.upload', 'uses' => 'UsersController@abogadoFotoUpload']);
