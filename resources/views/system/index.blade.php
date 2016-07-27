@@ -45,7 +45,7 @@
                                         <td>{{ $row_fecha }}</td>
                                         <td>{{ $row_estado }}</td>
                                         <td>
-                                            <a href="@{{ route('customer.expedientes.show', $row_id) }}" class="btn btn-xs btn-default" data-target="#ajax" data-toggle="modal">
+                                            <a href="{{ route('expedientes.show', $row_id) }}" class="btn btn-xs btn-default" data-target="#ajax" data-toggle="modal">
                                                 <i class="fa fa-search"></i> Ver </a>
                                         </td>
                                     </tr>
