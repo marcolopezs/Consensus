@@ -113,6 +113,7 @@
                                 $row_id = $item->id;
                                 $row_expediente = $item->expediente;
                                 $row_cliente = $item->exp_cliente;
+                                $row_saldo = $item->saldo;
                                 $row_moneda = $item->exp_moneda;
                                 $row_valor = $item->valor;
                                 $row_tarifa = $item->exp_tarifa;
@@ -168,7 +169,7 @@
                                             <li><a href="{{ route('expedientes.edit', $row_id) }}">Editar</a></li>
                                             @endcan
                                             <li><a href="#" class="expediente-tareas" data-id="{{ $row_id }}" data-list="{{ route('expedientes.tareas.index', $row_id) }}" data-create="{{ route('expedientes.tareas.create', $row_id) }}">Tareas</a></li>
-                                            <li><a href="#" class="expediente-caja" data-id="{{ $row_id }}" data-list="{{ route('expedientes.flujo-caja.index', $row_id) }}" data-create="{{ route('expedientes.flujo-caja.create', $row_id) }}">Flujo de Caja</a></li>
+                                            <li><a href="#" class="expediente-caja" data-saldo="{{ $row_saldo }}" data-id="{{ $row_id }}" data-list="{{ route('expedientes.flujo-caja.index', $row_id) }}" data-create="{{ route('expedientes.flujo-caja.create', $row_id) }}">Flujo de Caja</a></li>
                                             <li><a href="#" class="expediente-interviniente" data-id="{{ $row_id }}" data-list="{{ route('expedientes.intervinientes.index', $row_id) }}" data-create="{{ route('expedientes.intervinientes.create', $row_id) }}">Intervinientes</a></li>
                                             <li><a href="#" class="expediente-documento" data-id="{{ $row_id }}" data-list="{{ route('expedientes.documentos.index', $row_id) }}" data-create="{{ route('expedientes.documentos.create', $row_id) }}">Documentos</a></li>
                                         </ul>

@@ -13,7 +13,7 @@ class Expediente extends BaseEntity {
         'service_id','numero_dias','fecha_inicio','fecha_termino','descripcion','concepto','matter_id','entity_id','instance_id','encargado',
         'check_poder','fecha_poder','check_vencimiento','fecha_vencimiento','area_id','jefe_area','bienes_id','situacion_especial_id','state_id','exito_id','observacion'];
 
-    protected $appends = ['exp_moneda','exp_asistente','exp_fecha_inicio','exp_fecha_termino','exp_fecha_poder','exp_fecha_vencimiento'];
+    protected $appends = ['exp_moneda','exp_asistente','exp_fecha_inicio','exp_fecha_termino','exp_fecha_poder','exp_fecha_vencimiento','saldo'];
 
     protected $table = 'expedientes';
 
@@ -221,6 +221,40 @@ class Expediente extends BaseEntity {
     {
         if($this->exito_id <> 0){ return $this->exito->titulo; }
         else{ return ""; }
+    }
+
+    public function getIngresosAttribute()
+    {
+        $suma = 0;
+        foreach ($this->flujo_caja as $caja){
+            if($caja->tipo === 'Ingreso'){
+                $monto = $caja->monto * $caja->money->valor;
+                $suma = $monto;
+            }
+        }
+
+        return $suma;
+    }
+
+    public function getEgresosAttribute()
+    {
+        $suma = 0;
+        foreach ($this->flujo_caja as $caja){
+            if($caja->tipo === 'Egreso'){
+                $monto = $caja->monto * $caja->money->valor;
+                $suma = $monto;
+            }
+        }
+
+        return $suma;
+    }
+
+    public function getSaldoAttribute()
+    {
+        $valor = $this->valor * $this->money->valor;
+        $total = $valor + ($this->ingresos - $this->egresos);
+
+        return number_format($total, 2, '.', ',');
     }
 
     /*
