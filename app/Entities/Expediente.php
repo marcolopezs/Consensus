@@ -229,7 +229,7 @@ class Expediente extends BaseEntity {
         foreach ($this->flujo_caja as $caja){
             if($caja->tipo === 'Ingreso'){
                 $monto = $caja->monto * $caja->money->valor;
-                $suma = $monto;
+                $suma = $monto + $suma;
             }
         }
 
@@ -242,7 +242,7 @@ class Expediente extends BaseEntity {
         foreach ($this->flujo_caja as $caja){
             if($caja->tipo === 'Egreso'){
                 $monto = $caja->monto * $caja->money->valor;
-                $suma = $monto;
+                $suma = $monto + $suma;
             }
         }
 
