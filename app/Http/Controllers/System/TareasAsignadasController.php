@@ -1,5 +1,6 @@
 <?php namespace Consensus\Http\Controllers\System;
 
+use Consensus\Repositories\ExpedienteRepo;
 use Consensus\Repositories\TareaConceptoRepo;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -24,6 +25,7 @@ class TareasAsignadasController extends Controller {
     ];
 
     protected $abogadoRepo;
+    protected $expedienteRepo;
     protected $flujoCajaRepo;
     protected $tareaRepo;
     protected $tareaAccionRepo;
@@ -31,18 +33,21 @@ class TareasAsignadasController extends Controller {
 
     /**
      * @param AbogadoRepo $abogadoRepo
+     * @param ExpedienteRepo $expedienteRepo
      * @param FlujoCajaRepo $flujoCajaRepo
      * @param TareaRepo $tareaRepo
      * @param TareaAccionRepo $tareaAccionRepo
      * @param TareaConceptoRepo $tareaConceptoRepo
      */
     public function __construct(AbogadoRepo $abogadoRepo,
+                                ExpedienteRepo $expedienteRepo,
                                 FlujoCajaRepo $flujoCajaRepo,
                                 TareaRepo $tareaRepo,
                                 TareaAccionRepo $tareaAccionRepo,
                                 TareaConceptoRepo $tareaConceptoRepo)
     {
         $this->abogadoRepo = $abogadoRepo;
+        $this->expedienteRepo = $expedienteRepo;
         $this->flujoCajaRepo = $flujoCajaRepo;
         $this->tareaRepo = $tareaRepo;
         $this->tareaAccionRepo = $tareaAccionRepo;
@@ -106,6 +111,9 @@ class TareasAsignadasController extends Controller {
         //EXTRAER EXPEDIENTE
         $expTarea = $this->tareaRepo->findOrFail($tarea);
 
+        //EXTRAER DATOS DE EXPEDIENTE
+        $expediente = $this->expedienteRepo->findOrFail($expTarea->expediente_id);
+
         //VARAIBLES
         $fecha = formatoFecha($request->input('fecha'));
         $hora_desde = $request->input('desde');
@@ -116,6 +124,8 @@ class TareasAsignadasController extends Controller {
         $row = new TareaAccion($request->all());
         $row->expediente_id = $expTarea->expediente_id;
         $row->expediente_tipo_id = $expTarea->expediente_tipo_id;
+        $row->abogado_id = auth()->user()->abogado->id;
+        $row->cliente_id = $expediente->cliente_id;
         $row->tarea_id = $tarea;
         $row->fecha = $fecha;
         $row->horas = $horas;
