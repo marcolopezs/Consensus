@@ -22,6 +22,7 @@
                                 </div>
                             </div>
 
+                            @cannot('cliente')
                             <div class="form-group">
                                 {!! Form::label('moneda', 'Moneda', ['class' => 'control-label col-md-2']) !!}
                                 <div class="col-md-2">
@@ -33,6 +34,7 @@
                                     <p class="form-control-static">{{ $row->valor }}</p>
                                 </div>
                             </div>
+                            @endcan
 
                             <div class="form-group">
                                 {!! Form::label('abogado', 'Abogado', ['class' => 'control-label col-md-2']) !!}
@@ -40,14 +42,16 @@
                                     <p class="form-control-static">{{ $row->exp_abogado }}</p>
                                 </div>
 
+                                @cannot('cliente')
                                 {!! Form::label('tarifa', 'Tárifa', ['class' => 'control-label col-md-2']) !!}
                                 <div class="col-md-3">
                                     <p class="form-control-static">{{ $row->exp_tarifa }}</p>
                                 </div>
-
+                                @endcan
 
                             </div>
 
+                            @cannot('cliente')
                             <div class="form-group">
                                 {!! Form::label('honorario_hora', 'Honorario por Hora', ['class' => 'control-label col-md-2']) !!}
                                 <div class="col-md-2">
@@ -76,6 +80,7 @@
                                     <p class="form-control-static">{{ $row->exp_asistente }}</p>
                                 </div>
                             </div>
+                            @endcan
 
                             <div class="form-group">
                                 {!! Form::label('servicio', 'Servicio', ['class' => 'control-label col-md-2']) !!}
@@ -127,6 +132,7 @@
                                 </div>
                             </div>
 
+                            @cannot('cliente')
                             <div class="form-group">
                                 {!! Form::label('area', 'Área', ['class' => 'control-label col-md-2']) !!}
                                 <div class="col-md-4">
@@ -138,6 +144,7 @@
                                     <p class="form-control-static">{{ $row->jefe_area }}</p>
                                 </div>
                             </div>
+                            @endcan
 
                             <div class="form-group">
                                 {!! Form::label('instancia', 'Instancia', ['class' => 'control-label col-md-2']) !!}
@@ -145,10 +152,12 @@
                                     <p class="form-control-static">{{ $row->exp_instancia }}</p>
                                 </div>
 
+                                @cannot('cliente')
                                 {!! Form::label('encargado', 'Encargado', ['class' => 'control-label col-md-2']) !!}
                                 <div class="col-md-4">
                                     <p class="form-control-static">{{ $row->encargado }}</p>
                                 </div>
+                                @endcan
                             </div>
 
                             <div class="form-group">
