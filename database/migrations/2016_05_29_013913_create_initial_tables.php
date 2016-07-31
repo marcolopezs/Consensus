@@ -425,6 +425,18 @@ class CreateInitialTables extends Migration
             $table->softDeletes();
         });
 
+        Schema::create('tarea_notificaciones', function(Blueprint $table)
+        {
+            $table->increments('id');
+
+            $table->integer('tarea_id')->unsigned();
+            $table->integer('abogado_id')->unsigned();
+            $table->integer('dias');
+
+            $table->nullableTimestamps();
+            $table->softDeletes();
+        });
+
         Schema::create('tarea_acciones', function(Blueprint $table)
         {
             $table->increments('id');
@@ -670,6 +682,7 @@ class CreateInitialTables extends Migration
         Schema::drop('expediente_documentos');
 
         Schema::drop('tareas');
+        Schema::drop('tarea_notificaciones');
         Schema::drop('tarea_acciones');
         Schema::drop('tarea_conceptos');
 

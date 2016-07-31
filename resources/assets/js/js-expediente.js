@@ -90,7 +90,7 @@ $(".expediente-tareas").on("click", function(e) {
                 '<td>Vencimiento</td>' +
                 '<td>Tarea</td>' +
                 '<td>Asignado</td>' +
-                '<td>Acciones</td>' +
+                '<td></td>' +
                 '</tr>' +
                 '</thead>' +
                 '<tbody>' +
@@ -108,7 +108,17 @@ $(".expediente-tareas").on("click", function(e) {
                 tr.append('<td>'+ obj.fecha_vencimiento +'</td>');
                 tr.append('<td>'+ obj.titulo_tarea +'</td>');
                 tr.append('<td>'+ obj.asignado +'</td>');
-                tr.append('<td><a href="'+ obj.url_editar +'" data-target="#ajax" data-toggle="modal">Editar</a></td>');
+                tr.append('<td class="text-center">' +
+                    '<div class="btn-group">' +
+                    '<button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Movimientos' +
+                    '<i class="fa fa-angle-down"></i>' +
+                    '</button>' +
+                    '<ul class="dropdown-menu pull-right" role="menu">' +
+                    '<li><a href="'+ obj.url_editar +'" data-target="#ajax" data-toggle="modal">Editar</a></li>' +
+                    '<li><a href="'+ obj.url_notificacion +'" data-target="#ajax" data-toggle="modal">Notificaciones</a></li>' +
+                    '</ul>' +
+                    '</div>' +
+                    '</td></tr>');
                 $("#tarea-lista-"+id+" tbody").prepend(tr);
             });
 

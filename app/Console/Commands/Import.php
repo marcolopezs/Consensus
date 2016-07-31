@@ -245,42 +245,12 @@ class Import extends Command
                     'expediente_id' => $item->expediente_id,
                     'expediente_tipo_id' => $expediente->expediente_tipo_id,
                     'tarea_id' => $item->tarea_id,
-                    'fecha' => formatoFecha($item->fecha),
+                    'fecha' => $item->fecha,
                     'desde' => $item->desde,
                     'hasta' => $item->hasta,
                     'horas' => $item->horas,
                     'descripcion' => $item->descripcion
                 ]);
-
-                //DB::raw('SELECT idordetiem AS expedientes, COUNT( * ) cantidad FROM  scct_tiempos WHERE  idtaretiem =0 GROUP BY expedientes HAVING COUNT( * ) ORDER BY  expedientes LIMIT 0 , 30');
-                /*
-                if($item->tarea_id == 0)
-                {
-                    $row = Tarea::create([
-                        'expediente_id' => $item->expediente_id,
-                        'expediente_tipo_id' => $expediente->expediente_tipo_id,
-                        'fecha_solicitada' => $item->fecha,
-                        'fecha_vencimiento' => $item->fecha,
-                        'tarea_concepto_id' => 15,
-                        'titular_id' => 1,
-                        'abogado_id' => $item->abogado_id,
-                        'estado' => 1
-                    ]);
-
-                    TareaAccion::create([
-                        'id' => $item->id,
-                        'expediente_id' => $item->expediente_id,
-                        'expediente_tipo_id' => $expediente->expediente_tipo_id,
-                        'tarea_id' => $row->id,
-                        'fecha' => formatoFecha($item->fecha),
-                        'desde' => $item->desde,
-                        'hasta' => $item->hasta,
-                        'horas' => $item->horas,
-                        'descripcion' => $item->descripcion
-                    ]);
-                }else{
-
-                }*/
             }
         });
 
@@ -338,7 +308,7 @@ class Import extends Command
                     'abogado_id' => $item->abogado_id,
                     'cliente_id' => $expediente->cliente_id,
                     'tarea_id' => $tarea->id,
-                    'fecha' => formatoFecha($item->fecha),
+                    'fecha' => $item->fecha,
                     'desde' => $item->desde,
                     'hasta' => $item->hasta,
                     'horas' => $item->horas,
