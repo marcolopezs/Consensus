@@ -42,7 +42,7 @@
                                     <tr>
                                         <td class="column_cell font_default" align="center" valign="top" style="padding: 16px;font-family: Helvetica, Arial, sans-serif;font-size: 20px;text-align: center;vertical-align: top;color: #f06161;font-weight: bold;padding-bottom: 0;padding-top: 16px;">
                                             <a href="#" style="display: inline-block;text-decoration: none;font-family: Helvetica, Arial, sans-serif;color: #ffffff;">
-                                                <img src="{{ url('imagenes/logo.jpg') }}" width="250" height="100" alt="SimpleApp" style="line-height: 1;outline: none;border: 0;text-decoration: none;-ms-interpolation-mode: bicubic;mso-line-height-rule: exactly;max-width: 250px;height: auto;">
+                                                <img src="{{ url('imagenes/logo.jpg') }}" width="250" height="100" alt="Consensus" style="line-height: 1;outline: none;border: 0;text-decoration: none;-ms-interpolation-mode: bicubic;mso-line-height-rule: exactly;max-width: 250px;height: auto;">
                                             </a>
                                         </td><!-- /.column_cell -->
                                     </tr>
