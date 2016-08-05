@@ -55,6 +55,51 @@ class User extends BaseEntity implements AuthenticatableContract, CanResetPasswo
     }
 
     /*
+     * SCOPES
+     */
+
+    public function scopeNombre($query, $value)
+    {
+        if(trim($value) != "")
+        {
+            $query->where('nombre', 'LIKE', "%$value%")->orWhere('apellidos', 'LIKE', "%$value%");
+        }
+    }
+
+    public function scopeUsername($query, $value)
+    {
+        if(trim($value) != "")
+        {
+            $query->where('username', 'LIKE', "%$value%");
+        }
+    }
+
+    public function scopeTipo($query, $value)
+    {
+        switch ($value){
+            case '1':
+                $query->where('admin', '1');
+                break;
+
+            case '2':
+                $query->where('abogado_id', '>', '0');
+                break;
+
+            case '3':
+                $query->where('cliente_id', '>', '0');
+                break;
+        }
+    }
+
+    public function scopeActive($query, $estado)
+    {
+        if($estado != "")
+        {
+            $query->where('active', $estado);
+        }
+    }
+
+    /*
      * CONDICIONES
      */
     public function isAdmin()

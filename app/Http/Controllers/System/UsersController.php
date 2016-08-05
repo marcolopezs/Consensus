@@ -63,15 +63,16 @@ class UsersController extends Controller
         $this->userProfileRepo = $userProfileRepo;
         $this->userRoleRepo = $userRoleRepo;
     }
-    
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $rows = $this->userRepo->orderByPagination('id','asc',15);
+        $rows = $this->userRepo->filterUsers($request);
         
         return view('system.users.list', compact('rows'));
     }
