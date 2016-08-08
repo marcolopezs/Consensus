@@ -1,7 +1,7 @@
 <div class="col-md-12">
 
     <div id="filtrar-expediente-panel" class="panel panel-default" {!! (Request::except('page') ? '' : 'style="display: none;"') !!}>
-        <div class="panel-heading">Buscar</div>
+        <div class="panel-heading">Buscar y Ordenar</div>
         <div class="panel-body form">
 
             {!! Form::model(Request::all(), ['route' => 'expedientes.index', 'method' => 'GET', 'class' => 'horizontal-form']) !!}
@@ -283,11 +283,43 @@
 
                 </div>
 
+                <hr />
+
+                <div class="row">
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            {!! Form::label('ordenar', 'Ordenar Campo', ['class' => 'control-label']) !!}
+                            <div class="input-group">
+                                {!! Form::select('ordenar', [
+                                    '' => '',
+                                    '1' => 'Expediente',
+                                    '2' => 'Fecha de Creación',
+                                    '3' => 'Fecha de Inicio',
+                                    '4' => 'Fecha de Término',
+                                    '5' => 'Fecha de Poder',
+                                    '6' => 'Fecha de Vencimiento'
+                                ] , null , ['class' => 'form-control select2']) !!}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            {!! Form::label('ordenar-tipo', 'Tipo de orden', ['class' => 'control-label']) !!}
+                            <div class="input-group">
+                                {!! Form::select('ordenar-tipo', [''=>'','asc'=>'Ascendente','desc'=>'Descendente'] , null , ['class' => 'form-control select2']) !!}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
 
             <div class="form-actions">
-                <a id="filtrar-expediente-cancelar" href="{{ route('expedientes.index') }}" class="btn default">Cancelar busqueda</a>
-                <button type="submit" class="btn blue"><i class='fa fa-check'></i> Buscar</button>
+                <a id="filtrar-expediente-cancelar" href="{{ route('expedientes.index') }}" class="btn default">Cancelar</a>
+                <button type="submit" class="btn blue"><i class='fa fa-check'></i> Buscar | Ordenar</button>
             </div>
 
             {!! Form::close() !!}

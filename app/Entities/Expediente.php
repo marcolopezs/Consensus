@@ -458,4 +458,33 @@ class Expediente extends BaseEntity {
         }
     }
 
+    public function scopeOrdenar($query, $campo, $tipo)
+    {
+        switch ($campo){
+            case '1':
+                $query->orderBy('expediente', $tipo);
+                break;
+
+            case '2':
+                $query->orderBy('created_at', $tipo);
+                break;
+
+            case '3':
+                $query->orderBy('fecha_inicio', $tipo);
+                break;
+
+            case '4':
+                $query->orderBy('fecha_termino', $tipo);
+                break;
+
+            case '5':
+                $query->orderBy('fecha_poder', $tipo);
+                break;
+
+            case '6':
+                $query->orderBy('fecha_vencimiento', $tipo);
+                break;
+        }
+    }
+
 }

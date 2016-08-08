@@ -57,8 +57,8 @@
                         <div class="btn-group btn-group-devided" data-toggle="buttons">
                             <div class="btn-group">
                                 <a id="filtrar-expediente" class="btn blue-steel btn-outline btn-circle" href="javascript:;">
-                                    <i class="fa fa-search"></i>
-                                    <span class="hidden-xs"> Buscar </span>
+                                    <i class="fa fa-filter"></i>
+                                    <span class="hidden-xs"> Buscar | Ordenar</span>
                                 </a>
                             </div>
                         </div>

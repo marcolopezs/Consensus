@@ -36,7 +36,7 @@ class ExpedienteRepo extends BaseRepo {
                     ->situacionId($request->get('situacion'))
                     ->estadoId($request->get('estado'))
                     ->exitoId($request->get('exito'))
-                    ->orderBy('created_at','desc')
+                    ->ordenar($request->get('ordenar'),$request->get('ordenar-tipo'))
                     ->with('cliente','money','tariff','abogado','asistente','service','matter','entity',
                         'instance','area','bienes','situacionEspecial','state','exito')
                     ->paginate();
