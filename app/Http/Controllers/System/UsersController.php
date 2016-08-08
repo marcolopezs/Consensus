@@ -1,8 +1,10 @@
 <?php namespace Consensus\Http\Controllers\System;
 
 use Auth;
+use Consensus\Entities\Ajuste;
 use Consensus\Entities\TarifaAbogado;
 use Consensus\Entities\Tariff;
+use Consensus\Repositories\AjusteRepo;
 use Consensus\Repositories\TarifaAbogadoRepo;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -32,6 +34,7 @@ class UsersController extends Controller
         'password_confirmation' => 'required'
     ];
 
+    protected $ajusteRepo;
     protected $abogadoRepo;
     protected $tarifaAbogadoRepo;
     protected $tariffRepo;
@@ -41,6 +44,7 @@ class UsersController extends Controller
 
     /**
      * UsersController constructor.
+     * @param AjusteRepo $ajusteRepo
      * @param AbogadoRepo $abogadoRepo
      * @param TarifaAbogadoRepo $tarifaAbogadoRepo
      * @param TariffRepo $tariffRepo
@@ -49,13 +53,15 @@ class UsersController extends Controller
      * @param UserRoleRepo $userRoleRepo
      * @internal param TareaRepo $tareaRepo
      */
-    public function __construct(AbogadoRepo $abogadoRepo,
+    public function __construct(AjusteRepo $ajusteRepo,
+                                AbogadoRepo $abogadoRepo,
                                 TarifaAbogadoRepo $tarifaAbogadoRepo,
                                 TariffRepo $tariffRepo,
                                 UserRepo $userRepo,
                                 UserProfileRepo $userProfileRepo,
                                 UserRoleRepo $userRoleRepo)
     {
+        $this->ajusteRepo = $ajusteRepo;
         $this->abogadoRepo = $abogadoRepo;
         $this->tarifaAbogadoRepo = $tarifaAbogadoRepo;
         $this->tariffRepo = $tariffRepo;
@@ -141,6 +147,19 @@ class UsersController extends Controller
         $profile = new UserProfile($request->all());
         $profile->user_id = $save->id;
         $this->userProfileRepo->create($profile, $request->all());
+
+        //CREAR AJUSTES
+        $ajustes = new Ajuste();
+        $ajustes->model = \Consensus\Entities\Expediente::class;
+        $ajustes->user_id = $save->id;
+        $ajustes->contenido = '{"ch-expediente":"1","ch-cliente":"1","ch-abogado":"1","ch-servicio":"1","ch-estado":"1"}';
+        $this->ajusteRepo->create($ajustes, $request->all());
+
+        //GUARDAR HISTORIAL
+        $this->userRepo->saveHistory($user, $request, 'create');
+        $this->userRoleRepo->saveHistory($rol, $request, 'create');
+        $this->userProfileRepo->saveHistory($profile, $request, 'create');
+        $this->ajusteRepo->saveHistory($ajustes, $request, 'create');
 
         //MENSAJE
         $mensaje = 'El registro se agregó satisfactoriamente.';
