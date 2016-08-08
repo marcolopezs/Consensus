@@ -202,7 +202,9 @@ return [
         'monto'                 => 'Monto',
         'money_id'              => 'Moneda',
         'distrito'              => 'Distrito',
-        'titulo'                => 'Titulo'
+        'titulo'                => 'Titulo',
+        'administrador'         => 'Administrador',
+        'abogado'               => 'Abogado'
     ],
 
 ];

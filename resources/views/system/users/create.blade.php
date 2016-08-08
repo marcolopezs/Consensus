@@ -79,7 +79,7 @@
                                         Administrador
                                     </label>
                                     <label class="mt-checkbox">
-                                        {!! Form::checkbox('abogado', '1', null,  []) !!}
+                                        {!! Form::checkbox('abogado', '1', true,  []) !!}
                                         Abogado
                                     </label>
                                 </div>

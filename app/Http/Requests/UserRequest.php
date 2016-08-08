@@ -46,7 +46,9 @@ class UserRequest extends Request
                     'email' => 'required|email|unique:user_profiles,email',
                     'username' => 'required|unique:users,username',
                     'password' => 'required|confirmed',
-                    'password_confirmation' => 'required'
+                    'password_confirmation' => 'required',
+                    'administrador' => 'required_without:abogado',
+                    'abogado' => 'required_without:administrador'
                 ];
             }
             case 'PUT':
@@ -58,7 +60,9 @@ class UserRequest extends Request
                     'email' => 'required|email|unique:user_profiles,email,'.$this->route->getParameter('users'),
                     'username' => 'required|unique:users,username,'.$this->route->getParameter('users'),
                     'password' => 'required|confirmation',
-                    'password_confirmation' => 'required'
+                    'password_confirmation' => 'required',
+                    'administrador' => 'required_without:abogado',
+                    'abogado' => 'required_without:administrador'
                 ];
             }
             default:break;
