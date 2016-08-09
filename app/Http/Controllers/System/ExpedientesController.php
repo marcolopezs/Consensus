@@ -16,6 +16,7 @@ use Consensus\Http\Requests\ExpedienteRequest;
 use Consensus\Repositories\AjusteRepo;
 use Consensus\Repositories\ExpedienteTipoRepo;
 use Illuminate\Support\Facades\Gate;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ExpedientesController extends Controller {
 
@@ -272,5 +273,20 @@ class ExpedientesController extends Controller {
         return [
             'valor' => $tar->valor
         ];
+    }
+
+
+    /**
+     * @param Request $request
+     */
+    public function excel(Request $request)
+    {
+        $rows = $this->expedienteRepo->exportarExcel($request);
+
+        Excel::create('Consensus - Expedientes', function($excel) use($rows) {
+            $excel->sheet('Expedientes', function($sheet) use($rows) {
+                $sheet->loadView('system.expediente.excel', ['rows' => $rows]);
+            });
+        })->export('xlsx');
     }
 }

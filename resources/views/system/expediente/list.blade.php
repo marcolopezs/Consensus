@@ -57,8 +57,17 @@
                         <div class="btn-group btn-group-devided" data-toggle="buttons">
                             <div class="btn-group">
                                 <a id="filtrar-expediente" class="btn blue-steel btn-outline btn-circle" href="javascript:;">
-                                    <i class="fa fa-filter"></i>
+                                    <i class="fa fa-filter" aria-hidden="true"></i>
                                     <span class="hidden-xs"> Buscar | Ordenar</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="btn-group btn-group-devided">
+                            <div class="btn-group">
+                                <a id="excel-expediente" class="btn green-haze btn-outline btn-circle" href="{{ route('expedientes.excel', Request::all()) }}">
+                                    <i class="fa fa-file-excel-o" aria-hidden="true"></i>
+                                    <span class="hidden-xs"> Exportar a Excel </span>
                                 </a>
                             </div>
                         </div>
@@ -66,7 +75,7 @@
                         <div class="btn-group btn-group-devided" data-toggle="buttons">
                             <div class="btn-group">
                                 <a id="ajustes-expediente" class="btn red btn-outline btn-circle" href="javascript:;">
-                                    <i class="fa fa-cog"></i>
+                                    <i class="fa fa-cog" aria-hidden="true"></i>
                                     <span class="hidden-xs"> Ajustes </span>
                                 </a>
                             </div>
