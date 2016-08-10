@@ -156,6 +156,7 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -220,8 +221,8 @@ return [
         'Flash'     => Laracasts\Flash\Flash::class,
         'Form'      => Collective\Html\FormFacade::class,
         'HTML'      => Collective\Html\HtmlFacade::class,
-        'Image'     => Intervention\Image\Facades\Image::class
-
+        'Image'     => Intervention\Image\Facades\Image::class,
+        'PDF'       => Barryvdh\DomPDF\Facade::class
     ],
 
 ];
