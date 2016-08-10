@@ -9,6 +9,7 @@ use Consensus\Http\Controllers\Controller;
 
 use Consensus\Entities\ExpedienteTipo;
 use Consensus\Repositories\ExpedienteTipoRepo;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ExpedienteTipoController extends Controller {
 
@@ -136,4 +137,17 @@ class ExpedienteTipoController extends Controller {
         ];
     }
 
+    /**
+     * @param Request $request
+     */
+    public function excel(Request $request)
+    {
+        $rows = $this->expedienteTipoRepo->exportarExcel($request);
+
+        Excel::create('Consensus - Tipo de Expediente', function($excel) use($rows) {
+            $excel->sheet('Tipo de Expediente', function($sheet) use($rows) {
+                $sheet->loadView('excel.expediente-tipo', ['rows' => $rows]);
+            });
+        })->export('xlsx');
+    }
 }

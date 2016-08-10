@@ -9,6 +9,7 @@ use Consensus\Http\Controllers\Controller;
 
 use Consensus\Entities\Entity;
 use Consensus\Repositories\EntityRepo;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EntityController extends Controller {
 
@@ -138,4 +139,17 @@ class EntityController extends Controller {
         ];
     }
 
+    /**
+     * @param Request $request
+     */
+    public function excel(Request $request)
+    {
+        $rows = $this->entityRepo->exportarExcel($request);
+
+        Excel::create('Consensus - Entidades', function($excel) use($rows) {
+            $excel->sheet('Entidades', function($sheet) use($rows) {
+                $sheet->loadView('excel.entidades', ['rows' => $rows]);
+            });
+        })->export('xlsx');
+    }
 }

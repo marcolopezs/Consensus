@@ -20,4 +20,12 @@ class ExpedienteTipoRepo extends BaseRepo {
                     ->paginate();
     }
 
+    //EXPORTAR A EXCEL
+    public function exportarExcel(Request $request)
+    {
+        return $this->getModel()
+                    ->titulo($request->get('titulo'))
+                    ->order($request->get('order'))
+                    ->get();
+    }
 }

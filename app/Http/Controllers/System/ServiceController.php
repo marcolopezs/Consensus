@@ -10,6 +10,7 @@ use Consensus\Http\Controllers\Controller;
 
 use Consensus\Entities\Service;
 use Consensus\Repositories\ServiceRepo;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ServiceController extends Controller {
 
@@ -177,5 +178,19 @@ class ServiceController extends Controller {
             'message' => $message,
             'estado'  => $estado
         ];
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function excel(Request $request)
+    {
+        $rows = $this->serviceRepo->exportarExcel($request);
+
+        Excel::create('Consensus - Servicios', function($excel) use($rows) {
+            $excel->sheet('Servicios', function($sheet) use($rows) {
+                $sheet->loadView('excel.servicios', ['rows' => $rows]);
+            });
+        })->export('xlsx');
     }
 }

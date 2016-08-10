@@ -23,4 +23,16 @@ class EntityRepo extends BaseRepo {
                     ->paginate();
     }
 
+    //EXPORTAR A EXCEL
+    public function exportarExcel(Request $request)
+    {
+        return $this->getModel()
+                    ->titulo($request->get('titulo'))
+                    ->estado($request->get('estado'))
+                    ->area($request->get('area'))
+                    ->funcionario($request->get('funcionario'))
+                    ->otro($request->get('otro'))
+                    ->order($request->get('order'))
+                    ->get();
+    }
 }
