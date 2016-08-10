@@ -8,6 +8,7 @@ use Consensus\Http\Controllers\Controller;
 use Consensus\Http\Requests\AreaRequest;
 use Consensus\Entities\Area;
 use Consensus\Repositories\AreaRepo;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AreaController extends Controller {
 
@@ -136,5 +137,19 @@ class AreaController extends Controller {
             'message' => $message,
             'estado'  => $estado
         ];
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function excel(Request $request)
+    {
+        $rows = $this->areaRepo->exportarExcel($request);
+
+        Excel::create('Consensus - Area', function($excel) use($rows) {
+            $excel->sheet('Area', function($sheet) use($rows) {
+                $sheet->loadView('excel.areas', ['rows' => $rows]);
+            });
+        })->export('xlsx');
     }
 }

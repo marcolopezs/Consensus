@@ -9,6 +9,7 @@ use Consensus\Http\Controllers\Controller;
 
 use Consensus\Entities\PaymentMethod;
 use Consensus\Repositories\PaymentMethodRepo;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PaymentMethodController extends Controller {
 
@@ -137,6 +138,20 @@ class PaymentMethodController extends Controller {
             'message' => $message,
             'estado'  => $estado
         ];
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function excel(Request $request)
+    {
+        $rows = $this->paymentMethodRepo->exportarExcel($request);
+
+        Excel::create('Consensus - Metodos de Pago', function($excel) use($rows) {
+            $excel->sheet('Metodos de Pago', function($sheet) use($rows) {
+                $sheet->loadView('excel.default', ['rows' => $rows]);
+            });
+        })->export('xlsx');
     }
 
 }

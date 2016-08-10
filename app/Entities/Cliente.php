@@ -26,6 +26,16 @@ class Cliente extends BaseEntity {
         return $this->hasMany(ClienteDocumento::class);
     }
 
+    public function pais()
+    {
+        return $this->belongsTo(Pais::class);
+    }
+
+    public function distrito()
+    {
+        return $this->belongsTo(Distrito::class);
+    }
+
     public function getNombreAttribute()
     {
         return $this->cliente;
@@ -67,6 +77,18 @@ class Cliente extends BaseEntity {
     public function getUrlUserCreateAttribute()
     {
         return route('cliente.user.get', $this->id);
+    }
+
+    public function getCliPaisAttribute()
+    {
+        if($this->pais_id <> 0){ return $this->pais->titulo; }
+        else{ return ""; }
+    }
+
+    public function getCliDistritoAttribute()
+    {
+        if($this->distrito_id <> 0){ return $this->distrito->titulo; }
+        else{ return ""; }
     }
 
 

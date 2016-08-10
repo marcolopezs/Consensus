@@ -9,6 +9,7 @@ use Consensus\Http\Controllers\Controller;
 
 use Consensus\Entities\Instance;
 use Consensus\Repositories\InstanceRepo;
+use Maatwebsite\Excel\Facades\Excel;
 
 class InstanceController extends Controller {
 
@@ -134,5 +135,19 @@ class InstanceController extends Controller {
             'message' => $message,
             'estado'  => $estado
         ];
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function excel(Request $request)
+    {
+        $rows = $this->instanceRepo->exportarExcel($request);
+
+        Excel::create('Consensus - Instancias', function($excel) use($rows) {
+            $excel->sheet('Instancias', function($sheet) use($rows) {
+                $sheet->loadView('excel.default', ['rows' => $rows]);
+            });
+        })->export('xlsx');
     }
 }

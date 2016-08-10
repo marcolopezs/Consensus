@@ -10,4 +10,13 @@ class PaymentMethodRepo extends BaseRepo {
         return new PaymentMethod();
     }
 
+    //EXPORTAR A EXCEL
+    public function exportarExcel(Request $request)
+    {
+        return $this->getModel()
+                    ->titulo($request->get('titulo'))
+                    ->estado($request->get('estado'))
+                    ->order($request->get('order'))
+                    ->get();
+    }
 }

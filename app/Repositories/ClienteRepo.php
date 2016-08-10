@@ -33,4 +33,16 @@ class ClienteRepo extends BaseRepo {
                     ->paginate();
     }
 
+    //EXPORTAR A EXCEL
+    public function exportarExcel(Request $request)
+    {
+        return $this->getModel()
+                    ->cliente($request->get('cliente'))
+                    ->dni($request->get('dni'))
+                    ->ruc($request->get('ruc'))
+                    ->email($request->get('email'))
+                    ->estado($request->get('estado'))
+                    ->order($request->get('order'))
+                    ->get();
+    }
 }

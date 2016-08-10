@@ -18,6 +18,7 @@ use Consensus\Entities\UserProfile;
 use Consensus\Repositories\UserProfileRepo;
 
 use Consensus\Repositories\PaisRepo;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ClienteController extends Controller {
 
@@ -287,5 +288,19 @@ class ClienteController extends Controller {
             'message' => $message,
             'estado'  => $estado
         ];
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function excel(Request $request)
+    {
+        $rows = $this->clienteRepo->exportarExcel($request);
+
+        Excel::create('Consensus - Clientes', function($excel) use($rows) {
+            $excel->sheet('Clientes', function($sheet) use($rows) {
+                $sheet->loadView('excel.clientes', ['rows' => $rows]);
+            });
+        })->export('xlsx');
     }
 }

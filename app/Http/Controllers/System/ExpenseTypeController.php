@@ -9,6 +9,7 @@ use Consensus\Http\Controllers\Controller;
 
 use Consensus\Entities\ExpenseType;
 use Consensus\Repositories\ExpenseTypeRepo;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ExpenseTypeController extends Controller {
 
@@ -136,4 +137,17 @@ class ExpenseTypeController extends Controller {
         ];
     }
 
+    /**
+     * @param Request $request
+     */
+    public function excel(Request $request)
+    {
+        $rows = $this->expenseTypeRepo->exportarExcel($request);
+
+        Excel::create('Consensus - Tipos de Gasto', function($excel) use($rows) {
+            $excel->sheet('Tipos de Gasto', function($sheet) use($rows) {
+                $sheet->loadView('excel.default', ['rows' => $rows]);
+            });
+        })->export('xlsx');
+    }
 }

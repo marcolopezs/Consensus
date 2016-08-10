@@ -9,6 +9,7 @@ use Consensus\Http\Controllers\Controller;
 
 use Consensus\Entities\Matter;
 use Consensus\Repositories\MatterRepo;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MatterController extends Controller {
 
@@ -139,4 +140,17 @@ class MatterController extends Controller {
         ];
     }
 
+    /**
+     * @param Request $request
+     */
+    public function excel(Request $request)
+    {
+        $rows = $this->matterRepo->exportarExcel($request);
+
+        Excel::create('Consensus - Materias', function($excel) use($rows) {
+            $excel->sheet('Materias', function($sheet) use($rows) {
+                $sheet->loadView('excel.default', ['rows' => $rows]);
+            });
+        })->export('xlsx');
+    }
 }

@@ -9,6 +9,7 @@ use Consensus\Http\Controllers\Controller;
 
 use Consensus\Entities\Ubicacion;
 use Consensus\Repositories\UbicacionRepo;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UbicacionController extends Controller {
 
@@ -139,4 +140,17 @@ class UbicacionController extends Controller {
         ];
     }
 
+    /**
+     * @param Request $request
+     */
+    public function excel(Request $request)
+    {
+        $rows = $this->ubicacionRepo->exportarExcel($request);
+
+        Excel::create('Consensus - Ubicacion', function($excel) use($rows) {
+            $excel->sheet('Ubicacion', function($sheet) use($rows) {
+                $sheet->loadView('excel.default', ['rows' => $rows]);
+            });
+        })->export('xlsx');
+    }
 }

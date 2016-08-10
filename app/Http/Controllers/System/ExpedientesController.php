@@ -285,7 +285,7 @@ class ExpedientesController extends Controller {
 
         Excel::create('Consensus - Expedientes', function($excel) use($rows) {
             $excel->sheet('Expedientes', function($sheet) use($rows) {
-                $sheet->loadView('system.expediente.excel', ['rows' => $rows]);
+                $sheet->loadView('excel.expediente', ['rows' => $rows]);
             });
         })->export('xlsx');
     }

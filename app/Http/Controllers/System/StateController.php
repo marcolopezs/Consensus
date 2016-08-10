@@ -8,6 +8,7 @@ use Consensus\Http\Controllers\Controller;
 use Consensus\Http\Requests\StateRequest;
 use Consensus\Entities\State;
 use Consensus\Repositories\StateRepo;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StateController extends Controller {
 
@@ -136,5 +137,19 @@ class StateController extends Controller {
             'message' => $message,
             'estado'  => $estado
         ];
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function excel(Request $request)
+    {
+        $rows = $this->stateRepo->exportarExcel($request);
+
+        Excel::create('Consensus - Estados', function($excel) use($rows) {
+            $excel->sheet('Estados', function($sheet) use($rows) {
+                $sheet->loadView('excel.default', ['rows' => $rows]);
+            });
+        })->export('xlsx');
     }
 }

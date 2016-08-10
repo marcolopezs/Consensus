@@ -56,6 +56,7 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
     Route::get('cliente/{cliente}/user', ['as' => 'cliente.user.get', 'uses' => 'ClienteController@userGet']);
     Route::post('cliente/{cliente}/user', ['as' => 'cliente.user.post', 'uses' => 'ClienteController@userPost']);
     Route::post('cliente/{cliente}/user-name', ['as' => 'cliente.user.name', 'uses' => 'ClienteController@userName']);
+    Route::get('cliente/exportar/excel', ['as' => 'cliente.excel', 'uses' => 'ClienteController@excel']);
 
     //CLIENTE - CONTACTO
     Route::resource('cliente.contactos', 'ClienteContactosController', ['except' => 'destroy']);
@@ -73,56 +74,69 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
         //TIPO DE CAMBIO
         Route::resource('money', 'MoneyController', ['names' => $prefixedResourceNames('money'), 'except' => 'destroy']);
         Route::post('mony/{id}/estado', ['as' => 'money.estado', 'uses' => 'MoneyController@estado']);
+        Route::get('money/exportar/excel', ['as' => 'money.excel', 'uses' => 'MoneyController@excel']);
 
         //FORMAS DE PAGO
         Route::resource('payment-method', 'PaymentMethodController', ['names' => $prefixedResourceNames('payment-method'), 'except' => 'destroy']);
         Route::post('payment-method/{id}/estado', ['as' => 'payment-method.estado', 'uses' => 'PaymentMethodController@estado']);
+        Route::get('payment-method/exportar/excel', ['as' => 'payment-method.excel', 'uses' => 'PaymentMethodController@excel']);
 
         //TARIFAS
         Route::resource('tariff', 'TariffController', ['names' => $prefixedResourceNames('tariff'), 'except' => 'destroy']);
         Route::post('tariff/{id}/estado', ['as' => 'tariff.estado', 'uses' => 'TariffController@estado']);
+        Route::get('tariff/exportar/excel', ['as' => 'tariff.excel', 'uses' => 'TariffController@excel']);
 
         //SERVICIOS
         Route::resource('service', 'ServiceController', ['names' => $prefixedResourceNames('service'), 'except' => 'destroy']);
         Route::post('service/{id}/estado', ['as' => 'service.estado', 'uses' => 'ServiceController@estado']);
         Route::post('service-fecha/{service}', ['as' => 'service.fecha', 'uses' => 'ServiceController@serviceFecha']);
         Route::post('service-fecha-sumadias', ['as' => 'service.fecha.suma', 'uses' => 'ServiceController@serviceFechaSuma']);
+        Route::get('service/exportar/excel', ['as' => 'service.excel', 'uses' => 'ServiceController@excel']);
 
         //INSTANCIAS
         Route::resource('instance', 'InstanceController', ['names' => $prefixedResourceNames('instance'), 'except' => 'destroy']);
         Route::post('instance/{id}/estado', ['as' => 'instance.estado', 'uses' => 'InstanceController@estado']);
+        Route::get('instance/exportar/excel', ['as' => 'instance.excel', 'uses' => 'InstanceController@excel']);
 
         //MATERIAS
         Route::resource('matter', 'MatterController', ['names' => $prefixedResourceNames('matter'), 'except' => 'destroy']);
         Route::post('matter/{id}/estado', ['as' => 'matter.estado', 'uses' => 'MatterController@estado']);
+        Route::get('matter/exportar/excel', ['as' => 'matter.excel', 'uses' => 'MatterController@excel']);
 
         //ENTIDADES
         Route::resource('entity', 'EntityController', ['names' => $prefixedResourceNames('entity'), 'except' => 'destroy']);
         Route::post('entity/{id}/estado', ['as' => 'entity.estado', 'uses' => 'EntityController@estado']);
+        Route::get('entity/exportar/excel', ['as' => 'entity.excel', 'uses' => 'EntityController@excel']);
 
         //AREAS
         Route::resource('area', 'AreaController', ['names' => $prefixedResourceNames('area'), 'except' => 'destroy']);
         Route::post('area/{id}/estado', ['as' => 'area.estado', 'uses' => 'AreaController@estado']);
+        Route::get('area/exportar/excel', ['as' => 'area.excel', 'uses' => 'AreaController@excel']);
 
         //SITUACION
         Route::resource('ubicacion', 'UbicacionController', ['names' => $prefixedResourceNames('ubicacion'), 'except' => 'destroy']);
         Route::post('ubicacion/{id}/estado', ['as' => 'ubicacion.estado', 'uses' => 'UbicacionController@estado']);
+        Route::get('ubicacion/exportar/excel', ['as' => 'ubicacion.excel', 'uses' => 'UbicacionController@excel']);
 
         //ESTADOS
         Route::resource('state', 'StateController', ['names' => $prefixedResourceNames('state'), 'except' => 'destroy']);
         Route::post('state/{id}/estado', ['as' => 'state.estado', 'uses' => 'StateController@estado']);
+        Route::get('state/exportar/excel', ['as' => 'state.excel', 'uses' => 'StateController@excel']);
 
         //ESTADOS
         Route::resource('intervener', 'IntervenerController', ['names' => $prefixedResourceNames('intervener'), 'except' => 'destroy']);
         Route::post('intervener/{id}/estado', ['as' => 'intervener.estado', 'uses' => 'IntervenerController@estado']);
+        Route::get('intervener/exportar/excel', ['as' => 'intervener.excel', 'uses' => 'IntervenerController@excel']);
 
         //TIPOS DE GASTOS
         Route::resource('expense-type', 'ExpenseTypeController', ['names' => $prefixedResourceNames('expense-type'), 'except' => 'destroy']);
         Route::post('expense-type/{id}/estado', ['as' => 'expense-type.estado', 'uses' => 'ExpenseTypeController@estado']);
+        Route::get('expense-type/exportar/excel', ['as' => 'expense-type.excel', 'uses' => 'ExpenseTypeController@excel']);
 
         //TIPOS DE EXPEDIENTE
         Route::resource('expediente-tipo', 'ExpedienteTipoController', ['names' => $prefixedResourceNames('expediente-tipo'), 'except' => 'destroy']);
         Route::post('expediente-tipo/{id}/estado', ['as' => 'expediente-tipo.estado', 'uses' => 'ExpedienteTipoController@estado']);
+        Route::get('expediente-tipo/exportar/excel', ['as' => 'expediente-tipo.excel', 'uses' => 'ExpedienteTipoController@excel']);
 
     });
 

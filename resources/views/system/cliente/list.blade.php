@@ -24,9 +24,11 @@
 
                 @include('partials.progressbar')
 
-                <div class="portlet-body">
+                <div class="portlet-title">
 
-                    <div class="table-toolbar">
+                    <div class="caption">
+
+                        @can('create')
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="btn-group">
@@ -36,7 +38,24 @@
                                 </div>
                             </div>
                         </div>
+                        @endcan
+
                     </div>
+
+                    <div class="actions">
+                        <div class="btn-group btn-group-devided">
+                            <div class="btn-group">
+                                <a class="btn green-haze btn-outline btn-circle" href="{{ route('cliente.excel', Request::all()) }}">
+                                    <i class="fa fa-file-excel-o" aria-hidden="true"></i>
+                                    <span class="hidden-xs"> Exportar a Excel </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="portlet-body">
 
                     {!! Form::model(Request::all(), ['route' => 'cliente.index', 'method' => 'GET']) !!}
 

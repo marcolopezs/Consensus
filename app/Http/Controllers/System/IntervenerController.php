@@ -9,6 +9,7 @@ use Consensus\Http\Controllers\Controller;
 
 use Consensus\Entities\Intervener;
 use Consensus\Repositories\IntervenerRepo;
+use Maatwebsite\Excel\Facades\Excel;
 
 class IntervenerController extends Controller {
 
@@ -134,6 +135,20 @@ class IntervenerController extends Controller {
             'message' => $message,
             'estado'  => $estado
         ];
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function excel(Request $request)
+    {
+        $rows = $this->intervenerRepo->exportarExcel($request);
+
+        Excel::create('Consensus - Intervinientes', function($excel) use($rows) {
+            $excel->sheet('Intervinientes', function($sheet) use($rows) {
+                $sheet->loadView('excel.default', ['rows' => $rows]);
+            });
+        })->export('xlsx');
     }
 
 }
