@@ -12,6 +12,7 @@ use Consensus\Http\Requests\TariffRequest;
 use Consensus\Repositories\TarifaAbogadoRepo;
 use Consensus\Entities\Tariff;
 use Consensus\Repositories\TariffRepo;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TariffController extends Controller {
 
@@ -164,5 +165,19 @@ class TariffController extends Controller {
             'message' => $message,
             'estado'  => $estado
         ];
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function excel(Request $request)
+    {
+        $rows = $this->tariffRepo->exportarExcel($request);
+
+        Excel::create('Consensus - Tarifas', function($excel) use($rows) {
+            $excel->sheet('Tarifas', function($sheet) use($rows) {
+                $sheet->loadView('excel.tarifas', ['rows' => $rows]);
+            });
+        })->export('xlsx');
     }
 }

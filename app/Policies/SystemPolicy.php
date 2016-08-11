@@ -53,6 +53,8 @@ class SystemPolicy
         return $user->yesPrint();
     }
 
-
-
+    public function exportar($user)
+    {
+        return $user->yesExport();
+    }
 }

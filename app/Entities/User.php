@@ -158,6 +158,14 @@ class User extends BaseEntity implements AuthenticatableContract, CanResetPasswo
         }
     }
 
+    public function yesExport()
+    {
+        if($this->role->exporta == 1)
+        {
+            return true;
+        }
+    }
+
     public function setPasswordAttribute($value)
     {
         if (!empty ($value)) {

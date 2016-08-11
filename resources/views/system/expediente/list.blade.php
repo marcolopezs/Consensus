@@ -63,6 +63,7 @@
                             </div>
                         </div>
 
+                        @can('exportar')
                         <div class="btn-group btn-group-devided">
                             <div class="btn-group">
                                 <a id="excel-expediente" class="btn green-haze btn-outline btn-circle" href="{{ route('expedientes.excel', Request::all()) }}">
@@ -71,6 +72,7 @@
                                 </a>
                             </div>
                         </div>
+                        @endcan
 
                         <div class="btn-group btn-group-devided" data-toggle="buttons">
                             <div class="btn-group">

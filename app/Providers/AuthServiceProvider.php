@@ -42,5 +42,7 @@ class AuthServiceProvider extends ServiceProvider
         $gate->define('delete', 'Consensus\Policies\SystemPolicy@delete');
 
         $gate->define('printer', 'Consensus\Policies\SystemPolicy@printer');
+
+        $gate->define('exportar', 'Consensus\Policies\SystemPolicy@exportar');
     }
 }
