@@ -144,6 +144,9 @@ class StateController extends Controller {
      */
     public function excel(Request $request)
     {
+        //PERMISO PARA EXPORTAR
+        $this->authorize('exportar');
+
         $rows = $this->stateRepo->exportarExcel($request);
 
         Excel::create('Consensus - Estados', function($excel) use($rows) {

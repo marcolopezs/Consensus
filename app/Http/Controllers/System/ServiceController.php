@@ -185,6 +185,9 @@ class ServiceController extends Controller {
      */
     public function excel(Request $request)
     {
+        //PERMISO PARA EXPORTAR
+        $this->authorize('exportar');
+
         $rows = $this->serviceRepo->exportarExcel($request);
 
         Excel::create('Consensus - Servicios', function($excel) use($rows) {

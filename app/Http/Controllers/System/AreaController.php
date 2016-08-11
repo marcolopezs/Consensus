@@ -144,6 +144,9 @@ class AreaController extends Controller {
      */
     public function excel(Request $request)
     {
+        //PERMISO PARA EXPORTAR
+        $this->authorize('exportar');
+
         $rows = $this->areaRepo->exportarExcel($request);
 
         Excel::create('Consensus - Area', function($excel) use($rows) {

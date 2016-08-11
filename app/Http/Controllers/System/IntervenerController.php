@@ -142,6 +142,9 @@ class IntervenerController extends Controller {
      */
     public function excel(Request $request)
     {
+        //PERMISO PARA EXPORTAR
+        $this->authorize('exportar');
+
         $rows = $this->intervenerRepo->exportarExcel($request);
 
         Excel::create('Consensus - Intervinientes', function($excel) use($rows) {

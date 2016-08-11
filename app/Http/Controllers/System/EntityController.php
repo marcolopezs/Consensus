@@ -144,6 +144,9 @@ class EntityController extends Controller {
      */
     public function excel(Request $request)
     {
+        //PERMISO PARA EXPORTAR
+        $this->authorize('exportar');
+
         $rows = $this->entityRepo->exportarExcel($request);
 
         Excel::create('Consensus - Entidades', function($excel) use($rows) {

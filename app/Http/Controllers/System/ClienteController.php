@@ -295,6 +295,9 @@ class ClienteController extends Controller {
      */
     public function excel(Request $request)
     {
+        //PERMISO PARA EXPORTAR
+        $this->authorize('exportar');
+
         $rows = $this->clienteRepo->exportarExcel($request);
 
         Excel::create('Consensus - Clientes', function($excel) use($rows) {

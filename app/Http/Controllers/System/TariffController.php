@@ -172,6 +172,9 @@ class TariffController extends Controller {
      */
     public function excel(Request $request)
     {
+        //PERMISO PARA EXPORTAR
+        $this->authorize('exportar');
+
         $rows = $this->tariffRepo->exportarExcel($request);
 
         Excel::create('Consensus - Tarifas', function($excel) use($rows) {

@@ -281,6 +281,9 @@ class ExpedientesController extends Controller {
      */
     public function excel(Request $request)
     {
+        //PERMISO PARA EXPORTAR
+        $this->authorize('exportar');
+
         $rows = $this->expedienteRepo->exportarExcel($request);
 
         Excel::create('Consensus - Expedientes', function($excel) use($rows) {

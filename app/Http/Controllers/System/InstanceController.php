@@ -142,6 +142,9 @@ class InstanceController extends Controller {
      */
     public function excel(Request $request)
     {
+        //PERMISO PARA EXPORTAR
+        $this->authorize('exportar');
+
         $rows = $this->instanceRepo->exportarExcel($request);
 
         Excel::create('Consensus - Instancias', function($excel) use($rows) {

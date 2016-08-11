@@ -142,6 +142,9 @@ class ExpenseTypeController extends Controller {
      */
     public function excel(Request $request)
     {
+        //PERMISO PARA EXPORTAR
+        $this->authorize('exportar');
+
         $rows = $this->expenseTypeRepo->exportarExcel($request);
 
         Excel::create('Consensus - Tipos de Gasto', function($excel) use($rows) {

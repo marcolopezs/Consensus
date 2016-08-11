@@ -142,6 +142,9 @@ class ExpedienteTipoController extends Controller {
      */
     public function excel(Request $request)
     {
+        //PERMISO PARA EXPORTAR
+        $this->authorize('exportar');
+
         $rows = $this->expedienteTipoRepo->exportarExcel($request);
 
         Excel::create('Consensus - Tipo de Expediente', function($excel) use($rows) {

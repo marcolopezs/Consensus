@@ -145,6 +145,9 @@ class MatterController extends Controller {
      */
     public function excel(Request $request)
     {
+        //PERMISO PARA EXPORTAR
+        $this->authorize('exportar');
+
         $rows = $this->matterRepo->exportarExcel($request);
 
         Excel::create('Consensus - Materias', function($excel) use($rows) {
