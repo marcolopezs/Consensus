@@ -10,7 +10,7 @@
         <div class=" number font-red"> 403 </div>
         <div class=" details">
             <h3>No tienes acceso a esta sección</h3>
-            <p><a href="index.html" class="btn red btn-outline"> Regresar a Dashboard </a></p>
+            <p><a href="/" class="btn red btn-outline"> Regresar a Dashboard </a></p>
         </div>
     </div>
 </div>
