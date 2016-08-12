@@ -39,6 +39,8 @@ class InstanceController extends Controller {
 
     public function create()
     {
+        $this->authorize('create');
+
         return view('system.instance.create');
     }
 
@@ -50,6 +52,8 @@ class InstanceController extends Controller {
      */
     public function store(InstanceRequest $request)
     {
+        $this->authorize('create');
+
         //GUARDAR DATOS
         $row = new Instance($request->all());
         $row->estado = 1;

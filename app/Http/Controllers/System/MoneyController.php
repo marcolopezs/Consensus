@@ -38,6 +38,8 @@ class MoneyController extends Controller {
 
     public function create()
     {
+        $this->authorize('create');
+
         return view('system.money.create');
     }
 
@@ -49,6 +51,8 @@ class MoneyController extends Controller {
      */
     public function store(MoneyRequest $request)
     {
+        $this->authorize('create');
+
         //GUARDAR DATOS
         $row = new Money($request->all());
         $row->estado = 1;

@@ -104,6 +104,10 @@
                                         {!! Form::checkbox('usuario_eliminar', '1', null,  []) !!}
                                         Eliminar
                                     </label>
+                                    <label class="mt-checkbox" style="margin-right: 20px;">
+                                        {!! Form::checkbox('usuario_exportar', '1', null,  []) !!}
+                                        Exportar
+                                    </label>
                                 </div>
                             </div>
                         </div>

@@ -61,6 +61,8 @@ class TareasNotificacionController extends Controller
      */
     public function store(Request $request, $expedientes, $tareas)
     {
+        $this->authorize('create');
+
         //VALIDACION
         $this->validate($request, $this->rules);
 

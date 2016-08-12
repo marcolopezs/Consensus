@@ -42,6 +42,8 @@ class UbicacionController extends Controller {
      */
     public function create()
     {
+        $this->authorize('create');
+
         return view('system.ubicacion.create');
     }
 
@@ -53,6 +55,8 @@ class UbicacionController extends Controller {
      */
     public function store(UbicacionRequest $request)
     {
+        $this->authorize('create');
+
         //GUARDAR DATOS
         $row = new Ubicacion($request->all());
         $row->estado = 1;

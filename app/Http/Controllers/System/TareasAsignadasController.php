@@ -96,6 +96,8 @@ class TareasAsignadasController extends Controller {
      */
     public function create($tarea)
     {
+        $this->authorize('create');
+
         $row = $this->tareaRepo->findOrFail($tarea);
 
         return view('system.tareas-asignadas.acciones.create', compact('row'));
@@ -108,6 +110,8 @@ class TareasAsignadasController extends Controller {
      */
     public function store(Request $request, $tarea)
     {
+        $this->authorize('create');
+
         $this->validate($request, $this->rules);
 
         //EXTRAER EXPEDIENTE

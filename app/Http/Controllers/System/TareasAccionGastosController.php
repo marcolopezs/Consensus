@@ -55,6 +55,8 @@ class TareasAccionGastosController extends Controller {
      */
     public function store(Request $request, $accion)
     {
+        $this->authorize('create');
+
         $this->validate($request, $this->rulesGastos);
 
         $row = $this->tareaAccionRepo->findOrFail($accion);

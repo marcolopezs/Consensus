@@ -39,6 +39,8 @@ class ExpenseTypeController extends Controller {
 
     public function create()
     {
+        $this->authorize('create');
+
         return view('system.expense-type.create');
     }
 
@@ -50,6 +52,8 @@ class ExpenseTypeController extends Controller {
      */
     public function store(ExpenseTypeRequest $request)
     {
+        $this->authorize('create');
+
         //GUARDAR DATOS
         $row = new ExpenseType($request->all());
         $row->estado = 1;

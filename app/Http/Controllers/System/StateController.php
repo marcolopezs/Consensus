@@ -41,6 +41,8 @@ class StateController extends Controller {
      */
     public function create()
     {
+        $this->authorize('create');
+
         return view('system.state.create');
     }
 
@@ -52,6 +54,8 @@ class StateController extends Controller {
      */
     public function store(StateRequest $request)
     {
+        $this->authorize('create');
+
         //GUARDAR DATOS
         $row = new State($request->all());
         $row->estado = 1;

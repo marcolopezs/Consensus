@@ -39,6 +39,8 @@ class IntervenerController extends Controller {
 
     public function create()
     {
+        $this->authorize('create');
+
         return view('system.intervener.create');
     }
 
@@ -50,6 +52,8 @@ class IntervenerController extends Controller {
      */
     public function store(IntervenerRequest $request)
     {
+        $this->authorize('create');
+
         //GUARDAR DATOS
         $row = new Intervener($request->all());
         $row->estado = 1;

@@ -39,6 +39,8 @@ class ExpedienteTipoController extends Controller {
 
     public function create()
     {
+        $this->authorize('create');
+
         return view('system.expediente-tipo.create');
     }
 
@@ -50,6 +52,8 @@ class ExpedienteTipoController extends Controller {
      */
     public function store(ExpedienteTipoRequest $request)
     {
+        $this->authorize('create');
+
         //GUARDAR DATOS
         $row = new ExpedienteTipo($request->all());
         $row->estado = 1;

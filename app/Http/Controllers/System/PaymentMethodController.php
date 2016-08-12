@@ -42,6 +42,8 @@ class PaymentMethodController extends Controller {
      */
     public function create()
     {
+        $this->authorize('create');
+
         return view('system.payment-method.create');
     }
 
@@ -53,6 +55,8 @@ class PaymentMethodController extends Controller {
      */
     public function store(PaymentMethodRequest $request)
     {
+        $this->authorize('create');
+
         //GUARDAR DATOS
         $row = new PaymentMethod($request->all());
         $row->estado = 1;

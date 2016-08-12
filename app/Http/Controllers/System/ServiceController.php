@@ -43,6 +43,8 @@ class ServiceController extends Controller {
      */
     public function create()
     {
+        $this->authorize('create');
+
         return view('system.service.create');
     }
 
@@ -54,6 +56,8 @@ class ServiceController extends Controller {
      */
     public function store(ServiceRequest $request)
     {
+        $this->authorize('create');
+
         //GUARDAR DATOS
         $row = new Service($request->all());
         $row->estado = 1;

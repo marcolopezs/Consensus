@@ -55,6 +55,8 @@ class ExpDocumentosController extends Controller {
      */
     public function create($expedientes)
     {
+        $this->authorize('create');
+
         $row = $this->expedienteRepo->findOrFail($expedientes);
 
         return view('system.expediente.documento.create', compact('row'));
@@ -69,6 +71,8 @@ class ExpDocumentosController extends Controller {
      */
     public function store($expedientes, Request $request)
     {
+        $this->authorize('create');
+
         //VALIDACION
         $this->validate($request, $this->rules);
 

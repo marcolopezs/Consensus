@@ -21,6 +21,8 @@
                 <div class="portlet-body">
 
                     <div class="table-toolbar">
+
+                        @can('create')
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="btn-group">
@@ -30,6 +32,8 @@
                                 </div>
                             </div>
                         </div>
+                        @endcan
+
                     </div>
 
                     {!! Form::model(Request::all(), ['route' => 'users.index', 'method' => 'GET']) !!}

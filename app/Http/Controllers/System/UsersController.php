@@ -90,6 +90,8 @@ class UsersController extends Controller
      */
     public function create()
     {
+        $this->authorize('create');
+
         return view('system.users.create');
     }
 
@@ -101,6 +103,8 @@ class UsersController extends Controller
      */
     public function store(UserRequest $request)
     {
+        $this->authorize('create');
+
         //VARIABLES
         $nombre_completo = $request->input('nombre')." ".$request->input('apellidos');
         $inputAdmin = $request->input('administrador');
@@ -108,6 +112,7 @@ class UsersController extends Controller
         $inputCrear = $request->input('usuario_crear');
         $inputEditar = $request->input('usuario_editar');
         $inputEliminar = $request->input('usuario_eliminar');
+        $inputExportar = $request->input('usuario_exportar');
 
         if( $inputAbogado == 1 ){
             $abog = new Abogado($request->all());
@@ -141,6 +146,7 @@ class UsersController extends Controller
         $rol->create = $inputCrear;
         $rol->update = $inputEditar;
         $rol->delete = $inputEliminar;
+        $rol->exportar = $inputExportar;
         $this->userRoleRepo->create($rol, $request->all());
 
         //GUARDAR PERFIL

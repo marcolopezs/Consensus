@@ -49,6 +49,8 @@ class TariffController extends Controller {
      */
     public function create()
     {
+        $this->authorize('create');
+
         return view('system.tariff.create');
     }
 
@@ -60,6 +62,8 @@ class TariffController extends Controller {
      */
     public function store(TariffRequest $request)
     {
+        $this->authorize('create');
+
         //GUARDAR DATOS
         $row = new Tariff($request->all());
         $row->estado = 1;

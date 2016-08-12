@@ -42,6 +42,8 @@ class MatterController extends Controller {
      */
     public function create()
     {
+        $this->authorize('create');
+
         return view('system.matter.create');
     }
 
@@ -53,6 +55,8 @@ class MatterController extends Controller {
      */
     public function store(MatterRequest $request)
     {
+        $this->authorize('create');
+
         //GUARDAR DATOS
         $row = new Matter($request->all());
         $row->estado = 1;

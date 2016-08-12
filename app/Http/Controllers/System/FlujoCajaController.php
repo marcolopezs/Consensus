@@ -58,6 +58,8 @@ class FlujoCajaController extends Controller {
      */
     public function create($expedientes)
     {
+        $this->authorize('create');
+
         $row = $this->expedienteRepo->findOrFail($expedientes);
         $moneda = $this->moneyRepo->orderBy('titulo', 'asc')->lists('titulo', 'id')->toArray();
 
@@ -73,6 +75,8 @@ class FlujoCajaController extends Controller {
      */
     public function store($expedientes, Request $request)
     {
+        $this->authorize('create');
+
         //VALIDACION
         $this->validate($request, $this->rules);
 

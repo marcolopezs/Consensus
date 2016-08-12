@@ -59,6 +59,8 @@ class ClienteContactosController extends Controller {
      */
     public function create($cliente)
     {
+        $this->authorize('create');
+
         $row = $this->clienteRepo->findOrFail($cliente);
         $pais = $this->paisRepo->estadoListArray();
         $distrito = $this->distritoRepo->estadoListArray();
@@ -75,6 +77,8 @@ class ClienteContactosController extends Controller {
      */
     public function store($cliente, ClienteContactoRequest $request)
     {
+        $this->authorize('create');
+
         //VARIABLES
         $pais = $request->input('pais');
         $distrito = $request->input('distrito');

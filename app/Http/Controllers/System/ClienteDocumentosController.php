@@ -53,6 +53,8 @@ class ClienteDocumentosController extends Controller {
      */
     public function create($cliente)
     {
+        $this->authorize('create');
+
         $row = $this->clienteRepo->findOrFail($cliente);
 
         return view('system.cliente.documento.create', compact('row'));
@@ -67,6 +69,8 @@ class ClienteDocumentosController extends Controller {
      */
     public function store($cliente, Request $request)
     {
+        $this->authorize('create');
+
         //VALIDACION
         $this->validate($request, $this->rules);
 

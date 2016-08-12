@@ -42,6 +42,8 @@ class EntityController extends Controller {
      */
     public function create()
     {
+        $this->authorize('create');
+
         return view('system.entity.create');
     }
 
@@ -53,6 +55,8 @@ class EntityController extends Controller {
      */
     public function store(EntityRequest $request)
     {
+        $this->authorize('create');
+
         //GUARDAR DATOS
         $row = new Entity($request->all());
         $row->estado = 1;

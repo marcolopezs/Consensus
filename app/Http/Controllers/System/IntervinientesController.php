@@ -59,6 +59,8 @@ class IntervinientesController extends Controller {
      */
     public function create($expedientes)
     {
+        $this->authorize('create');
+
         $row = $this->expedienteRepo->findOrFail($expedientes);
         $intervinientes = $this->intervenerRepo->orderBy('titulo', 'asc')->lists('titulo', 'id')->toArray();
 
@@ -74,6 +76,8 @@ class IntervinientesController extends Controller {
      */
     public function store($expedientes, Request $request)
     {
+        $this->authorize('create');
+
         //VALIDACION
         $this->validate($request, $this->rules);
 
