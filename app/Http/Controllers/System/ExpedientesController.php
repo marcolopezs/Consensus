@@ -171,9 +171,9 @@ class ExpedientesController extends Controller {
      */
     public function edit($id)
     {
-        $row = $this->expedienteRepo->findOrFail($id);
-
         $this->authorize('update');
+
+        $row = $this->expedienteRepo->findOrFail($id);
 
         return view('system.expediente.edit', compact('row'));
     }

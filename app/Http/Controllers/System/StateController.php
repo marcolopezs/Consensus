@@ -82,6 +82,8 @@ class StateController extends Controller {
      */
     public function edit($id, Request $request)
     {
+        $this->authorize('update');
+
         $row = $this->stateRepo->findOrFail($id);
 
         return view('system.state.edit', compact('row'));
@@ -96,6 +98,8 @@ class StateController extends Controller {
      */
     public function update(StateRequest $request, $id)
     {
+        $this->authorize('update');
+
         //BUSCAR ID
         $row = $this->stateRepo->findOrFail($id);
 

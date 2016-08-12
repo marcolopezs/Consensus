@@ -84,6 +84,8 @@ class ServiceController extends Controller {
      */
     public function edit($id, Request $request)
     {
+        $this->authorize('update');
+
         $row = $this->serviceRepo->findOrFail($id);
 
         return view('system.service.edit', compact('row'));
@@ -98,6 +100,8 @@ class ServiceController extends Controller {
      */
     public function update(ServiceRequest $request, $id)
     {
+        $this->authorize('update');
+
         //BUSCAR ID
         $row = $this->serviceRepo->findOrFail($id);
 

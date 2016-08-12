@@ -61,7 +61,9 @@
                                             <i class="fa fa-angle-down"></i>
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
+                                            @can('update')
                                             <li><a href="{{ route('money.edit', $row_id) }}" data-target="#ajax" data-toggle="modal">Editar</a></li>
+                                            @endcan
                                         </ul>
                                     </div>
                                 </td>

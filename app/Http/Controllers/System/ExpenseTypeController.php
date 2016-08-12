@@ -80,6 +80,8 @@ class ExpenseTypeController extends Controller {
      */
     public function edit($id, Request $request)
     {
+        $this->authorize('update');
+
         $row = $this->expenseTypeRepo->findOrFail($id);
 
         return view('system.expense-type.edit', compact('row'));
@@ -94,6 +96,8 @@ class ExpenseTypeController extends Controller {
      */
     public function update(ExpenseTypeRequest $request, $id)
     {
+        $this->authorize('update');
+
         //BUSCAR ID
         $row = $this->expenseTypeRepo->findOrFail($id);
 

@@ -83,6 +83,8 @@ class EntityController extends Controller {
      */
     public function edit($id, Request $request)
     {
+        $this->authorize('update');
+
         $row = $this->entityRepo->findOrFail($id);
 
         return view('system.entity.edit', compact('row'));
@@ -97,6 +99,8 @@ class EntityController extends Controller {
      */
     public function update(EntityRequest $request, $id)
     {
+        $this->authorize('update');
+
         //BUSCAR ID
         $row = $this->entityRepo->findOrFail($id);
 

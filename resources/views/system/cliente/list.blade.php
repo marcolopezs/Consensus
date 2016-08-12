@@ -81,9 +81,13 @@
                                 <td>{{ $row_ruc }}</td>
                                 <td>{{ $row_email }}</td>
                                 <td class="text-center">
+                                    @can('update')
                                     <a id="estado-{{ $row_id }}" href="#" class="btn-estado" data-id="{{ $row_id }}" data-title="{{ $row_cliente }}" data-url="{{ route('cliente.estado', $row_id) }}">
                                         {!! $row_estado ? '<span class="label label-success">'.trans('system.estado.'.$row_estado).'</span>' : '<span class="label label-default">'.trans('system.estado.'.$row_estado).'</span>' !!}
                                     </a>
+                                    @else
+                                        {!! $row_estado ? '<span class="label label-success">'.trans('system.estado.'.$row_estado).'</span>' : '<span class="label label-default">'.trans('system.estado.'.$row_estado).'</span>' !!}
+                                    @endcan
                                 </td>
                                 <td class="text-center">
                                     <div class="btn-group">
@@ -91,7 +95,9 @@
                                             <i class="fa fa-angle-down"></i>
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
+                                            @can('update')
                                             <li><a href="{{ route('cliente.edit', $row_id) }}" data-target="#ajax" data-toggle="modal">Editar</a></li>
+                                            @endcan
                                             <li><a href="#" class="cliente-contacto" data-id="{{ $row_id }}" data-list="{{ route('cliente.contactos.index', $row_id) }}" data-create="{{ route('cliente.contactos.create', $row_id) }}">Contacto</a></li>
                                             <li><a href="#" class="cliente-documento" data-id="{{ $row_id }}" data-list="{{ route('cliente.documentos.index', $row_id) }}" data-create="{{ route('cliente.documentos.create', $row_id) }}">Documentos</a></li>
                                             <li><a href="{{ route('cliente.user.get', $row_id) }}">Crear usuario</a></li>

@@ -56,9 +56,13 @@
                                 <td>{{ $row_usuario }}</td>
                                 <td>{{ $row_tipo }}</td>
                                 <td class="text-center">
-                                    <a id="estado-{{ $row_id }}" href="#" class="btn-estado" data-id="{{ $row_id }}" data-title="{{ $row_nombre }}" data-url="{{ route('users.estado', $row_id) }}">
+                                    @can('update')
+                                        <a id="estado-{{ $row_id }}" href="#" class="btn-estado" data-id="{{ $row_id }}" data-title="{{ $row_nombre }}" data-url="{{ route('users.estado', $row_id) }}">
+                                            {!! $row_estado ? '<span class="label label-success">'.trans('system.estado.'.$row_estado).'</span>' : '<span class="label label-default">'.trans('system.estado.'.$row_estado).'</span>' !!}
+                                        </a>
+                                    @else
                                         {!! $row_estado ? '<span class="label label-success">'.trans('system.estado.'.$row_estado).'</span>' : '<span class="label label-default">'.trans('system.estado.'.$row_estado).'</span>' !!}
-                                    </a>
+                                    @endcan
                                 </td>
                                 <td class="text-center">
                                     <div class="btn-group">
@@ -67,7 +71,9 @@
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
                                             <li><a href="{{ route('users.show', $row_id) }}" data-target="#ajax" data-toggle="modal">Ver registro</a></li>
+                                            @can('update')
                                             <li><a href="{{ route('users.edit', $row_id) }}">Editar</a></li>
+                                            @endcan
                                         </ul>
                                     </div>
                                 </td>

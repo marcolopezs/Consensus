@@ -96,6 +96,8 @@ class TareasAccionGastosController extends Controller {
      */
     public function edit($accion, $id)
     {
+        $this->authorize('update');
+
         //BUSCAR ID
         $row = $this->flujoCajaRepo->findOrFail($id);
 
@@ -118,6 +120,8 @@ class TareasAccionGastosController extends Controller {
      */
     public function update($accion, $id, Request $request)
     {
+        $this->authorize('update');
+
         //VALIDACION
         $this->validate($request, $this->rulesGastos);
 

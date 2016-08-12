@@ -80,6 +80,8 @@ class ExpedienteTipoController extends Controller {
      */
     public function edit($id, Request $request)
     {
+        $this->authorize('update');
+
         $row = $this->expedienteTipoRepo->findOrFail($id);
 
         return view('system.expediente-tipo.edit', compact('row'));
@@ -94,6 +96,8 @@ class ExpedienteTipoController extends Controller {
      */
     public function update(ExpedienteTipoRequest $request, $id)
     {
+        $this->authorize('update');
+
         //BUSCAR ID
         $row = $this->expedienteTipoRepo->findOrFail($id);
 

@@ -113,6 +113,8 @@ class ClienteContactosController extends Controller {
      */
     public function edit($cliente, $id)
     {
+        $this->authorize('update');
+
         $row = $this->clienteRepo->findOrFail($cliente);
         $prin = $this->clienteContactoRepo->findOrFail($id);
         $pais = $this->paisRepo->estadoListArray();
@@ -131,6 +133,8 @@ class ClienteContactosController extends Controller {
      */
     public function update($cliente, $id, ClienteContactoRequest $request)
     {
+        $this->authorize('update');
+
         //BUSCAR ID
         $row = $this->clienteContactoRepo->findOrFail($id);
 

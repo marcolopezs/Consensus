@@ -105,6 +105,8 @@ class ClienteDocumentosController extends Controller {
      */
     public function edit($cliente, $id)
     {
+        $this->authorize('update');
+
         $row = $this->clienteRepo->findOrFail($cliente);
         $prin = $this->clienteDocumentoRepo->findOrFail($id);
 
@@ -121,6 +123,8 @@ class ClienteDocumentosController extends Controller {
      */
     public function update($cliente, $id, Request $request)
     {
+        $this->authorize('update');
+
         //BUSCAR ID
         $row = $this->clienteDocumentoRepo->findOrFail($id);
 

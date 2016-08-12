@@ -106,6 +106,8 @@ class ExpDocumentosController extends Controller {
      */
     public function edit($expedientes, $id)
     {
+        $this->authorize('update');
+
         $row = $this->expedienteRepo->findOrFail($expedientes);
         $prin = $this->expedienteDocumentoRepo->findOrFail($id);
 
@@ -122,6 +124,8 @@ class ExpDocumentosController extends Controller {
      */
     public function update($expedientes, $id, Request $request)
     {
+        $this->authorize('update');
+
         //BUSCAR ID
         $row = $this->expedienteDocumentoRepo->findOrFail($id);
 

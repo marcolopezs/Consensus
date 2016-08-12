@@ -83,6 +83,8 @@ class MatterController extends Controller {
      */
     public function edit($id, Request $request)
     {
+        $this->authorize('update');
+
         $row = $this->matterRepo->findOrFail($id);
 
         return view('system.matter.edit', compact('row'));
@@ -97,6 +99,8 @@ class MatterController extends Controller {
      */
     public function update(MatterRequest $request, $id)
     {
+        $this->authorize('update');
+
         //BUSCAR ID
         $row = $this->matterRepo->findOrFail($id);
 

@@ -120,6 +120,8 @@ class FlujoCajaController extends Controller {
      */
     public function edit($expedientes, $id)
     {
+        $this->authorize('update');
+
         $row = $this->expedienteRepo->findOrFail($expedientes);
         $prin = $this->flujoCajaRepo->findOrFail($id);
         $moneda = $this->moneyRepo->orderBy('titulo', 'asc')->lists('titulo', 'id')->toArray();
@@ -136,6 +138,8 @@ class FlujoCajaController extends Controller {
      */
     public function update($expedientes, $id, Request $request)
     {
+        $this->authorize('update');
+
         //BUSCAR ID
         $row = $this->flujoCajaRepo->findOrFail($id);
 

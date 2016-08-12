@@ -103,6 +103,8 @@ class TariffController extends Controller {
      */
     public function edit($id, Request $request)
     {
+        $this->authorize('update');
+
         $row = $this->tariffRepo->findOrFail($id);
 
         return view('system.tariff.edit', compact('row'));
@@ -117,6 +119,8 @@ class TariffController extends Controller {
      */
     public function update(TariffRequest $request, $id)
     {
+        $this->authorize('update');
+
         //BUSCAR ID
         $row = $this->tariffRepo->findOrFail($id);
 

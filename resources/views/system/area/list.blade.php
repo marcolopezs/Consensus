@@ -74,9 +74,13 @@
                                 <td>{{ $row_titulo }}</td>
                                 <td>{{ $row_email }}</td>
                                 <td class="text-center">
-                                    <a id="estado-{{ $row_id }}" href="#" class="btn-estado" data-id="{{ $row_id }}" data-title="{{ $row_titulo }}" data-url="{{ route('area.estado', $row_id) }}">
+                                    @can('update')
+                                        <a id="estado-{{ $row_id }}" href="#" class="btn-estado" data-id="{{ $row_id }}" data-title="{{ $row_titulo }}" data-url="{{ route('area.estado', $row_id) }}">
+                                            {!! $row_estado ? '<span class="label label-success">'.trans('system.estado.'.$row_estado).'</span>' : '<span class="label label-default">'.trans('system.estado.'.$row_estado).'</span>' !!}
+                                        </a>
+                                    @else
                                         {!! $row_estado ? '<span class="label label-success">'.trans('system.estado.'.$row_estado).'</span>' : '<span class="label label-default">'.trans('system.estado.'.$row_estado).'</span>' !!}
-                                    </a>
+                                    @endcan
                                 </td>
                                 <td class="text-center">
                                     <div class="btn-group">
@@ -84,7 +88,9 @@
                                             <i class="fa fa-angle-down"></i>
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
+                                            @can('update')
                                             <li><a href="{{ route('area.edit', $row_id) }}" data-target="#ajax" data-toggle="modal">Editar</a></li>
+                                            @endcan
                                         </ul>
                                     </div>
                                 </td>

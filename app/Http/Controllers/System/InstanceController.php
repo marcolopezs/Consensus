@@ -80,6 +80,8 @@ class InstanceController extends Controller {
      */
     public function edit($id, Request $request)
     {
+        $this->authorize('update');
+
         $row = $this->instanceRepo->findOrFail($id);
 
         return view('system.instance.edit', compact('row'));
@@ -94,6 +96,8 @@ class InstanceController extends Controller {
      */
     public function update(InstanceRequest $request, $id)
     {
+        $this->authorize('update');
+
         //BUSCAR ID
         $row = $this->instanceRepo->findOrFail($id);
 

@@ -95,6 +95,8 @@ class TareasNotificacionController extends Controller
      */
     public function edit($expedientes, $tareas, $id)
     {
+        $this->authorize('update');
+
         //BUSCAR ID
         $row = $this->tareaNotificacionRepo->findOrFail($id);
 
@@ -117,6 +119,8 @@ class TareasNotificacionController extends Controller
      */
     public function update(Request $request, $expedientes, $tareas, $id)
     {
+        $this->authorize('update');
+
         //VALIDACION
         $this->validate($request, $this->rules);
 

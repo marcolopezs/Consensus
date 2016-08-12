@@ -79,6 +79,8 @@ class MoneyController extends Controller {
      */
     public function edit($id, Request $request)
     {
+        $this->authorize('update');
+
         $row = $this->moneyRepo->findOrFail($id);
 
         return view('system.money.edit', compact('row'));
@@ -93,6 +95,8 @@ class MoneyController extends Controller {
      */
     public function update(MoneyRequest $request, $id)
     {
+        $this->authorize('update');
+        
         //BUSCAR ID
         $row = $this->moneyRepo->findOrFail($id);
 

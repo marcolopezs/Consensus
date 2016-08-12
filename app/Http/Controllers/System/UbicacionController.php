@@ -83,6 +83,8 @@ class UbicacionController extends Controller {
      */
     public function edit($id, Request $request)
     {
+        $this->authorize('update');
+
         $row = $this->ubicacionRepo->findOrFail($id);
 
         return view('system.ubicacion.edit', compact('row'));
@@ -97,6 +99,8 @@ class UbicacionController extends Controller {
      */
     public function update(UbicacionRequest $request, $id)
     {
+        $this->authorize('update');
+
         //BUSCAR ID
         $row = $this->ubicacionRepo->findOrFail($id);
 

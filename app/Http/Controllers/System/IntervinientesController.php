@@ -116,6 +116,8 @@ class IntervinientesController extends Controller {
      */
     public function edit($expedientes, $id)
     {
+        $this->authorize('update');
+
         $row = $this->expedienteRepo->findOrFail($expedientes);
         $prin = $this->expedienteIntervinienteRepo->findOrFail($id);
         $intervinientes = $this->intervenerRepo->orderBy('titulo', 'asc')->lists('titulo', 'id')->toArray();
@@ -133,6 +135,8 @@ class IntervinientesController extends Controller {
      */
     public function update($expedientes, $id, Request $request)
     {
+        $this->authorize('update');
+
         //BUSCAR ID
         $row = $this->expedienteIntervinienteRepo->findOrFail($id);
 

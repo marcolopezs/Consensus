@@ -166,6 +166,8 @@ class TareasAsignadasController extends Controller {
      */
     public function edit($tarea, $id)
     {
+        $this->authorize('update');
+
         $row = $this->tareaRepo->findOrFail($tarea);
         $prin = $this->tareaAccionRepo->findOrFail($id);
 
@@ -180,6 +182,8 @@ class TareasAsignadasController extends Controller {
      */
     public function update(Request $request, $tarea, $id)
     {
+        $this->authorize('update');
+
         $this->validate($request, $this->rules);
 
         $row = $this->tareaAccionRepo->findOrFail($id);

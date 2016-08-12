@@ -83,6 +83,8 @@ class PaymentMethodController extends Controller {
      */
     public function edit($id, Request $request)
     {
+        $this->authorize('update');
+
         $row = $this->paymentMethodRepo->findOrFail($id);
 
         return view('system.payment-method.edit', compact('row'));
@@ -97,6 +99,8 @@ class PaymentMethodController extends Controller {
      */
     public function update(PaymentMethodRequest $request, $id)
     {
+        $this->authorize('update');
+
         //BUSCAR ID
         $row = $this->paymentMethodRepo->findOrFail($id);
 

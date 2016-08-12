@@ -80,6 +80,8 @@ class IntervenerController extends Controller {
      */
     public function edit($id, Request $request)
     {
+        $this->authorize('update');
+
         $row = $this->intervenerRepo->findOrFail($id);
 
         return view('system.intervener.edit', compact('row'));
@@ -94,6 +96,8 @@ class IntervenerController extends Controller {
      */
     public function update(IntervenerRequest $request, $id)
     {
+        $this->authorize('update');
+
         //BUSCAR ID
         $row = $this->intervenerRepo->findOrFail($id);
 

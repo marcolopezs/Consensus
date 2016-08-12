@@ -195,6 +195,8 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('update');
+
         $row = $this->userRepo->findOrFail($id);
 
         if($row->abogado_id > 0){
@@ -215,6 +217,8 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('update');
+
         //BUSCAR ID
         $row = $this->userRepo->findOrFail($id);
 
