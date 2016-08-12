@@ -61,18 +61,27 @@ class ServiceController extends Controller {
         //GUARDAR DATOS
         $row = new Service($request->all());
         $row->estado = 1;
-        $this->serviceRepo->create($row, $request->all());
+        $save = $this->serviceRepo->create($row, $request->all());
 
         //GUARDAR HISTORIAL
         $this->serviceRepo->saveHistory($row, $request, 'create');
 
-        //MENSAJE
-        $mensaje = 'El registro se agregó satisfactoriamente.';
-
         //AJAX
         return [
-            'message' => $mensaje
+            'id' => $save->id,
+            'titulo' => $save->titulo,
+            'dias' => $save->dias_ejecucion,
+            'url_ver' => $save->url_ver,
+            'url_estado' => $save->url_estado,
+            'url_editar' => $save->url_editar
         ];
+    }
+
+    public function show($id)
+    {
+        $row = $this->serviceRepo->findOrFail($id);
+
+        return view('system.service.show', compact('row'));
     }
 
     /**
@@ -106,17 +115,19 @@ class ServiceController extends Controller {
         $row = $this->serviceRepo->findOrFail($id);
 
         //GUARDAR DATOS
-        $this->serviceRepo->update($row, $request->all());
+        $save = $this->serviceRepo->update($row, $request->all());
 
         //GUARDAR HISTORIAL
         $this->serviceRepo->saveHistory($row, $request, 'update');
 
-        //MENSAJE
-        $mensaje = 'El registro se actualizó satisfactoriamente.';
-
         //AJAX
         return [
-            'message' => $mensaje
+            'id' => $save->id,
+            'titulo' => $save->titulo,
+            'dias' => $save->dias_ejecucion,
+            'url_ver' => $save->url_ver,
+            'url_estado' => $save->url_estado,
+            'url_editar' => $save->url_editar
         ];
     }
 

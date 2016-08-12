@@ -65,7 +65,7 @@
                             <th class="text-center">Acciones</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="servicio-lista">
                         @foreach($rows as $item)
                             {{--*/
                             $row_id = $item->id;
@@ -73,7 +73,7 @@
                             $row_dias = $item->dias_ejecucion;
                             $row_estado = $item->estado;
                             /*--}}
-                            <tr class="odd gradeX" data-id="{{ $row_id }}" data-title="{{ $row_titulo }}">
+                            <tr id="servicio-select-{{ $row_id }}" class="odd gradeX" data-id="{{ $row_id }}" data-title="{{ $row_titulo }}">
                                 <td>{{ $row_titulo }}</td>
                                 <td class="text-center">{{ $row_dias }}</td>
                                 <td class="text-center">
@@ -87,12 +87,13 @@
                                 </td>
                                 <td class="text-center">
                                     <div class="btn-group">
-                                        <button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Acciones
+                                        <button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Movimientos
                                             <i class="fa fa-angle-down"></i>
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
+                                            <li><a class="menu-ver" href="{{ route('service.show', $row_id) }}" data-target="#ajax" data-toggle="modal">Ver</a></li>
                                             @can('update')
-                                            <li><a href="{{ route('service.edit', $row_id) }}" data-target="#ajax" data-toggle="modal">Editar</a></li>
+                                            <li><a class="menu-editar" href="{{ route('service.edit', $row_id) }}" data-target="#ajax" data-toggle="modal">Editar</a></li>
                                             @endcan
                                         </ul>
                                     </div>
