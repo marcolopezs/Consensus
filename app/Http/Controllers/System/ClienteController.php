@@ -112,6 +112,19 @@ class ClienteController extends Controller {
     }
 
     /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show($id)
+    {
+        $row = $this->clienteRepo->findOrFail($id);
+        $pais = $this->paisRepo->estadoListArray();
+        $distrito = $this->distritoRepo->estadoListArray();
+
+        return view('system.cliente.show', compact('row','pais','distrito'));
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id

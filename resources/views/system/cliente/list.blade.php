@@ -91,16 +91,17 @@
                                 </td>
                                 <td class="text-center">
                                     <div class="btn-group">
-                                        <button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Acciones
+                                        <button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Movimientos
                                             <i class="fa fa-angle-down"></i>
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
+                                            <li><a class="menu-ver" href="{{ route('cliente.show', $row_id) }}" data-target="#ajax" data-toggle="modal">Ver</a></li>
                                             @can('update')
-                                            <li><a href="{{ route('cliente.edit', $row_id) }}" data-target="#ajax" data-toggle="modal">Editar</a></li>
+                                            <li><a class="menu-editar" href="{{ route('cliente.edit', $row_id) }}" data-target="#ajax" data-toggle="modal">Editar</a></li>
                                             @endcan
-                                            <li><a href="#" class="cliente-contacto" data-id="{{ $row_id }}" data-list="{{ route('cliente.contactos.index', $row_id) }}" data-create="{{ route('cliente.contactos.create', $row_id) }}">Contacto</a></li>
-                                            <li><a href="#" class="cliente-documento" data-id="{{ $row_id }}" data-list="{{ route('cliente.documentos.index', $row_id) }}" data-create="{{ route('cliente.documentos.create', $row_id) }}">Documentos</a></li>
-                                            <li><a href="{{ route('cliente.user.get', $row_id) }}">Crear usuario</a></li>
+                                            <li><a href="#" class="menu-contacto cliente-contacto" data-id="{{ $row_id }}" data-list="{{ route('cliente.contactos.index', $row_id) }}" data-create="{{ route('cliente.contactos.create', $row_id) }}">Contacto</a></li>
+                                            <li><a href="#" class="menu-documentos cliente-documento" data-id="{{ $row_id }}" data-list="{{ route('cliente.documentos.index', $row_id) }}" data-create="{{ route('cliente.documentos.create', $row_id) }}">Documentos</a></li>
+                                            <li><a class="menu-usuario" href="{{ route('cliente.user.get', $row_id) }}">Crear usuario</a></li>
                                         </ul>
                                     </div>
                                 </td>
