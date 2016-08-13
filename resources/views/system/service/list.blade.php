@@ -56,15 +56,12 @@
 
                 <div class="portlet-body">
 
-                    <table class="table table-striped table-bordered table-hover order-column" id="sample_2">
-                        <thead>
-                        <tr>
-                            <th>Titulo</th>
-                            <th class="text-center">Dias Ejecución</th>
-                            <th class="text-center">Estado</th>
-                            <th class="text-center">Acciones</th>
-                        </tr>
-                        </thead>
+                    {!! Form::model(Request::all(), ['route' => 'service.index', 'method' => 'GET']) !!}
+
+                    <table class="table table-striped table-bordered table-hover order-column">
+
+                        @include('system.service.partials.search')
+
                         <tbody id="servicio-lista">
                         @foreach($rows as $item)
                             {{--*/
@@ -102,6 +99,8 @@
                         @endforeach
                         </tbody>
                     </table>
+
+                    {!! Form::close() !!}
 
                     <div class="row">
 

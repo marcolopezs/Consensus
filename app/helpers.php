@@ -94,6 +94,14 @@ function cssOrden($orden)
             return $order = 'tituloDesc';
             break;
 
+        case 'diasAsc':
+            return $order = 'diasAsc';
+            break;
+
+        case 'diasDesc':
+            return $order = 'diasDesc';
+            break;
+
         case 'clienteAsc':
             return $order = 'clienteAsc';
             break;
