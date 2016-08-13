@@ -25,6 +25,8 @@
 
                 </div>
 
+                @include('partials.progressbar')
+
             {!! Form::close() !!}
 
         </div>

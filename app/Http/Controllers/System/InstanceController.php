@@ -72,6 +72,17 @@ class InstanceController extends Controller {
     }
 
     /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show($id)
+    {
+        $row = $this->instanceRepo->findOrFail($id);
+
+        return view('system.instance.show', compact('row'));
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int $id

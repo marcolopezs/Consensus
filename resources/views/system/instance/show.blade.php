@@ -5,6 +5,8 @@
     <div class="row">
         <div class="col-md-12">
 
+            <div class="form-content"></div>
+
             {!! Form::model($row, ['id' => 'formEdit', 'onkeypress' => 'return anular(event)']) !!}
 
                 <div class="form-body">
@@ -24,6 +26,8 @@
                     </div>
 
                 </div>
+
+                @include('partials.progressbar')
 
             {!! Form::close() !!}
 

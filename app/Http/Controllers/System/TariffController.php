@@ -95,6 +95,17 @@ class TariffController extends Controller {
     }
 
     /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show($id)
+    {
+        $row = $this->tariffRepo->findOrFail($id);
+
+        return view('system.tariff.show', compact('row'));
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int $id

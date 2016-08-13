@@ -75,6 +75,17 @@ class PaymentMethodController extends Controller {
     }
 
     /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show($id)
+    {
+        $row = $this->paymentMethodRepo->findOrFail($id);
+
+        return view('system.payment-method.show', compact('row'));
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int $id

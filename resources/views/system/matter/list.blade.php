@@ -82,12 +82,13 @@
                                 </td>
                                 <td class="text-center">
                                     <div class="btn-group">
-                                        <button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Acciones
+                                        <button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Movimientos
                                             <i class="fa fa-angle-down"></i>
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
-                                            @can('udpate')
-                                            <li><a href="{{ route('matter.edit', $row_id) }}" data-target="#ajax" data-toggle="modal">Editar</a></li>
+                                            <li><a class="menu-ver" href="{{ route('matter.show', $row_id) }}" data-target="#ajax" data-toggle="modal">Ver</a></li>
+                                            @can('update')
+                                            <li><a class="menu-editar" href="{{ route('matter.edit', $row_id) }}" data-target="#ajax" data-toggle="modal">Editar</a></li>
                                             @endcan
                                         </ul>
                                     </div>

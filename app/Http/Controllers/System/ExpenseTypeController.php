@@ -72,6 +72,17 @@ class ExpenseTypeController extends Controller {
     }
 
     /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show($id)
+    {
+        $row = $this->expenseTypeRepo->findOrFail($id);
+
+        return view('system.expense-type.show', compact('row'));
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int $id
