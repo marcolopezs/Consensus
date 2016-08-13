@@ -75,6 +75,17 @@ class EntityController extends Controller {
     }
 
     /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show($id)
+    {
+        $row = $this->entityRepo->findOrFail($id);
+
+        return view('system.entity.show', compact('row'));
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int $id
