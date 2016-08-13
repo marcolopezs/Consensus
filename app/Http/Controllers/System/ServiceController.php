@@ -77,6 +77,10 @@ class ServiceController extends Controller {
         ];
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function show($id)
     {
         $row = $this->serviceRepo->findOrFail($id);
