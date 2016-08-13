@@ -86,8 +86,9 @@
                                             <i class="fa fa-angle-down"></i>
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
+                                            <li><a class="menu-ver" href="{{ route('state.show', $row_id) }}" data-target="#ajax" data-toggle="modal">Ver</a></li>
                                             @can('update')
-                                            <li><a href="{{ route('state.edit', $row_id) }}" data-target="#ajax" data-toggle="modal">Editar</a></li>
+                                            <li><a class="menu-editar" href="{{ route('state.edit', $row_id) }}" data-target="#ajax" data-toggle="modal">Editar</a></li>
                                             @endcan
                                         </ul>
                                     </div>
