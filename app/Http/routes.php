@@ -18,6 +18,10 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
 
     Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
 
+    //CONFIGURACIONES DEL SISTEMA
+    Route::get('configuracion', ['as' => 'system.conf', 'uses' => 'ConfController@confGet']);
+    Route::post('configuracion', ['as' => 'system.conf.post', 'uses' => 'ConfController@confPost']);
+
     //TAREAS ASIGNADAS A ABOGADO
     Route::get('tareas-asignadas', ['as' => 'tareas.asignadas', 'uses' => 'TareasAsignadasController@tareas']);
     Route::resource('tareas.acciones', 'TareasAsignadasController');

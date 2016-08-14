@@ -13,6 +13,21 @@ class CreateInitialTables extends Migration
     public function up()
     {
         /*===============================
+        = CONFIGURACION =
+        ===============================*/
+
+        Schema::create('configuraciones', function(Blueprint $table)
+        {
+            $table->increments('id');
+
+            $table->string('accion')->unique();
+            $table->string('valor');
+
+            $table->nullableTimestamps();
+            $table->softDeletes();
+        });
+
+        /*===============================
         = USUARIOS =
         ===============================*/
 

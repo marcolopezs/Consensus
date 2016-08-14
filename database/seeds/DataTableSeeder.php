@@ -11,6 +11,12 @@ class DataTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('configuraciones')->insert([
+            ['id' => '1', 'accion' => 'web_nombre', 'valor' => 'Consensus'],
+            ['id' => '2', 'accion' => 'web_logo', 'valor' => 'logo.jpg'],
+            ['id' => '3', 'accion' => 'notificacion_dias', 'valor' => '7']
+        ]);
+
         DB::table('money')->insert([
             ['id' => '1', 'titulo' => 'Dólar', 'valor' => '3.29330', 'simbolo' => 'US$', 'abrev' => 'USD', 'estado' => '1'],
             ['id' => '2', 'titulo' => 'Euro', 'valor' => '3.72860', 'simbolo' => '€', 'abrev' => 'EUR', 'estado' => '1'],
