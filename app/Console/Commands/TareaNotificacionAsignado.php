@@ -3,6 +3,7 @@
 use Carbon\Carbon;
 use Consensus\Entities\Tarea;
 use Illuminate\Console\Command;
+use Consensus\Repositories\ConfiguracionRepo;
 
 class TareaNotificacionAsignado extends Command
 {
@@ -20,13 +21,16 @@ class TareaNotificacionAsignado extends Command
      */
     protected $description = 'Enviar notificación a correo de Abogado asignado';
 
+    protected $configuracionRepo;
+
     /**
      * Create a new command instance.
-     *
+     * @param ConfiguracionRepo $configuracionRepo
      */
-    public function __construct()
+    public function __construct(ConfiguracionRepo $configuracionRepo)
     {
         parent::__construct();
+        $this->configuracionRepo = $configuracionRepo;
     }
 
     /**
@@ -43,14 +47,15 @@ class TareaNotificacionAsignado extends Command
             $fecha_fin = Carbon::createFromFormat('Y-m-d', formatoFecha($tarea->fecha_vencimiento));
             $fecha_hoy = Carbon::now();
             $dias = $fecha_fin->diffInDays($fecha_hoy);
+            $conf = $this->configuracionRepo->where('accion','notificacion_dias')->first();
 
-            if($fecha_hoy <= $fecha_fin){
+            if($dias <= $conf->valor){
 
                 //DATOS PARA EMAIL
                 $data = [
                     'abogado' => $tarea->abogado->nombre,
                     'email' => $tarea->abogado->email,
-                    'dias' => $dias,
+                    'dias' => $conf->valor,
                     'tarea' => $tarea->concepto->titulo,
                     'descripcion' => $tarea->descripcion
                 ];
