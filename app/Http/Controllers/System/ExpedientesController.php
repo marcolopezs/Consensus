@@ -2,19 +2,20 @@
 
 use Auth;
 use Carbon\Carbon;
+use Consensus\Entities\Notificacion;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Consensus\Http\Controllers\Controller;
 
-use Consensus\Repositories\AbogadoRepo;
-use Consensus\Repositories\TarifaAbogadoRepo;
 use Consensus\Entities\Expediente;
-use Consensus\Repositories\ExpedienteRepo;
 use Consensus\Http\Requests\ExpedienteRequest;
-
+use Consensus\Repositories\AbogadoRepo;
 use Consensus\Repositories\AjusteRepo;
+use Consensus\Repositories\ExpedienteRepo;
 use Consensus\Repositories\ExpedienteTipoRepo;
+use Consensus\Repositories\NotificacionRepo;
+use Consensus\Repositories\TarifaAbogadoRepo;
 use Illuminate\Support\Facades\Gate;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -23,6 +24,7 @@ class ExpedientesController extends Controller {
     protected $abogadoRepo;
     protected $expedienteRepo;
     protected $expedienteTipoRepo;
+    protected $notificacionRepo;
     protected $tarifaAbogadoRepo;
     protected $ajusteRepo;
 
@@ -31,15 +33,17 @@ class ExpedientesController extends Controller {
      * @param AbogadoRepo $abogadoRepo
      * @param ExpedienteRepo $expedienteRepo
      * @param ExpedienteTipoRepo $expedienteTipoRepo
+     * @param NotificacionRepo $notificacionRepo
      * @param TarifaAbogadoRepo $tarifaAbogadoRepo
      * @param AjusteRepo $ajusteRepo
      */
-    public function __construct(AbogadoRepo $abogadoRepo, ExpedienteRepo $expedienteRepo,
-                                ExpedienteTipoRepo $expedienteTipoRepo, TarifaAbogadoRepo $tarifaAbogadoRepo, AjusteRepo $ajusteRepo)
+    public function __construct(AbogadoRepo $abogadoRepo, ExpedienteRepo $expedienteRepo,ExpedienteTipoRepo $expedienteTipoRepo,
+                                NotificacionRepo $notificacionRepo, TarifaAbogadoRepo $tarifaAbogadoRepo, AjusteRepo $ajusteRepo)
     {
         $this->abogadoRepo = $abogadoRepo;
         $this->expedienteRepo = $expedienteRepo;
         $this->expedienteTipoRepo = $expedienteTipoRepo;
+        $this->notificacionRepo = $notificacionRepo;
         $this->tarifaAbogadoRepo = $tarifaAbogadoRepo;
         $this->ajusteRepo = $ajusteRepo;
     }
@@ -136,10 +140,20 @@ class ExpedientesController extends Controller {
         $row->situacion_especial_id = $especial;
         $row->state_id = $estado;
         $row->exito_id = $exito;
-        $this->expedienteRepo->create($row, $request->all());
+        $save = $this->expedienteRepo->create($row, $request->all());
 
         //GUARDAR HISTORIAL
         $this->expedienteRepo->saveHistory($row, $request, 'create');
+
+        if($save->fecha_vencimiento <> '0000-00-00')
+        {
+            $save->notificaciones()->create([
+                'abogado_id' => $save->abogado_id,
+                'fecha_vencimiento' => $save->fecha_vencimiento,
+                'descripcion' => 'Quedan {dias} días para la fecha de vencimiento de poder del Expediente '. $save->expediente
+            ]);
+
+        }
 
         //MENSAJE
         flash()->success('El registro se agregó satisfactoriamente.');
@@ -222,6 +236,15 @@ class ExpedientesController extends Controller {
 
         //GUARDAR HISTORIAL
         $this->expedienteRepo->saveHistory($row, $request, 'update');
+
+        if($save->fecha_vencimiento <> '0000-00-00')
+        {
+            $save->notificaciones()->update([
+                'abogado_id' => $save->abogado_id,
+                'fecha_vencimiento' => $save->fecha_vencimiento,
+                'descripcion' => 'Quedan {dias} días para la fecha de vencimiento de poder del Expediente '. $save->expediente
+            ]);
+        }
 
         //MENSAJE
         flash()->success('El registro se actualizó satisfactoriamente.');

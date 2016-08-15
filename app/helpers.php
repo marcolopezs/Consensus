@@ -43,6 +43,15 @@ function formatoFecha($date)
     }
 }
 
+//OBTENER DIAS
+function fechaDias($vencimiento)
+{
+    $fecha_fin = Carbon::createFromFormat('Y-m-d', $vencimiento);
+    $fecha_hoy = Carbon::now();
+    $dias = $fecha_fin->diffInDays($fecha_hoy);
+    return $dias;
+}
+
 //TIPO DE USUARIO
 function tipo_usuario($usuario)
 {

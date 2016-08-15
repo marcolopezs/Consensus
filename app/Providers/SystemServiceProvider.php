@@ -17,6 +17,10 @@ class SystemServiceProvider extends ServiceProvider
             ['system.expediente.list','system.expediente.create','system.expediente.edit'],
             'Consensus\Http\ViewComposers\ExpedienteComposer'
         );
+
+        view()->composer(
+            ['layouts.system'], 'Consensus\Http\ViewComposers\LayoutComposer'
+        );
     }
 
     /**

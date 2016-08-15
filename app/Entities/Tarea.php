@@ -11,6 +11,14 @@ class Tarea extends BaseEntity {
     protected $fillable = ['id','expediente_id','expediente_tipo_id','tarea_concepto_id','descripcion','fecha_solicitada','fecha_vencimiento','titular_id','abogado_id','estado'];
     protected $appends = ['titulo_tarea','asignado','url_editar','url_notificacion'];
 
+    /*
+     * RELACIONES
+     */
+    public function notificaciones()
+    {
+        return $this->morphMany(Notificacion::class, 'notificable');
+    }
+
     public function expedientes()
     {
         return $this->belongsTo(Expediente::class, 'expediente_id');

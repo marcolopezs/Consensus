@@ -27,6 +27,21 @@ class CreateInitialTables extends Migration
             $table->softDeletes();
         });
 
+        Schema::create('notificaciones', function(Blueprint $table)
+        {
+            $table->increments('id');
+
+            $table->integer('notificable_id')->unsigned();
+            $table->string('notificable_type');
+
+            $table->integer('abogado_id');
+            $table->date('fecha_vencimiento');
+            $table->text('descripcion');
+
+            $table->nullableTimestamps();
+            $table->softDeletes();
+        });
+
         /*===============================
         = USUARIOS =
         ===============================*/
@@ -684,6 +699,9 @@ class CreateInitialTables extends Migration
      */
     public function down()
     {
+        Schema::drop('configuraciones');
+        Schema::drop('notificaciones');
+
         Schema::drop('users');
         Schema::drop('user_profiles');
         Schema::drop('user_roles');

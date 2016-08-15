@@ -20,6 +20,10 @@ class Expediente extends BaseEntity {
     /*
      * RELACIONES
      */
+    public function notificaciones()
+    {
+        return $this->morphMany(Notificacion::class, 'notificable');
+    }
 
     public function cliente()
     {

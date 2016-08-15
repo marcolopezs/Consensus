@@ -59,7 +59,34 @@
                 <!-- BEGIN TOP NAVIGATION MENU -->
                 <div class="top-menu">
                     <ul class="nav navbar-nav pull-right">
+                        <!-- BEGIN NOTIFICATION DROPDOWN -->
+                        <li class="dropdown dropdown-extended dropdown-notification dropdown-dark" id="header_notification_bar">
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                <i class="icon-bell"></i>
+                                @if($notificacion->count() > 0)
+                                <span class="badge badge-default">&#9;</span>
+                                @endif
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
 
+                                        @foreach($notificacion as $item)
+                                            @php
+                                                $dias = fechaDias($item->fecha_vencimiento);
+                                                $descripcion = str_replace('{dias}', $dias, $item->descripcion);
+                                            @endphp
+                                        <li>
+                                            <a href="javascript:;">
+                                                <span class="details">{{ $descripcion }}</span>
+                                            </a>
+                                        </li>
+                                        @endforeach
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- END NOTIFICATION DROPDOWN -->
                         <!-- BEGIN USER LOGIN DROPDOWN -->
                         <li class="dropdown dropdown-user dropdown-dark">
                             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
