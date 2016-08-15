@@ -41,6 +41,11 @@ class Tarea extends BaseEntity {
         return $this->hasMany(TareaAccion::class);
     }
 
+    public function notificacion()
+    {
+        return $this->hasMany(TareaNotificacion::class);
+    }
+
     /*
      * SETTERS
      */

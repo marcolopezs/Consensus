@@ -55,7 +55,7 @@ class TareaNotificacionAsignado extends Command
                 $data = [
                     'abogado' => $tarea->abogado->nombre,
                     'email' => $tarea->abogado->email,
-                    'dias' => $conf->valor,
+                    'dias' => $dias,
                     'tarea' => $tarea->concepto->titulo,
                     'descripcion' => $tarea->descripcion
                 ];

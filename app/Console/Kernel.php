@@ -14,7 +14,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\Import::class,
-        Commands\TareaNotificacionAsignado::class
+        Commands\TareaNotificacionAsignado::class,
+        Commands\TareaNotificacionAsignadoLista::class
     ];
 
     /**
@@ -25,6 +26,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        $schedule->command('tarea:notif')->dailyAt('04:00');
         $schedule->command('tarea:abogado')->dailyAt('05:00');
     }
 }
