@@ -139,7 +139,17 @@
                                 '<td>'+ result.fecha_vencimiento +'</td>' +
                                 '<td>'+ result.titulo_tarea +'</td>' +
                                 '<td>'+ result.asignado +'</td>' +
-                                '<td><a href="'+ result.url_editar +'" data-target="#ajax" data-toggle="modal">Editar</a></td>' +
+                                '<td class="text-center">' +
+                                    '<div class="btn-group">' +
+                                        '<button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Movimientos' +
+                                            '<i class="fa fa-angle-down"></i>' +
+                                        '</button>' +
+                                        '<ul class="dropdown-menu pull-right" role="menu">' +
+                                            '<li><a href="'+ result.url_editar +'" data-target="#ajax" data-toggle="modal">Editar</a></li>' +
+                                            '<li><a href="'+ result.url_notificacion +'" data-target="#ajax" data-toggle="modal">Notificaciones</a></li>' +
+                                        '</ul>' +
+                                    '</div>' +
+                                '</td>' +
                            '</tr>';
 
                 $("#tarea-lista-{{ $row->id }} tbody").prepend(html);
