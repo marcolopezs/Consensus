@@ -384,6 +384,30 @@ class UsersController extends Controller
         ];
     }
 
+    /*
+     * UPDATE DE PERMISOS
+     */
+    public function abogadoPermisos(Request $request, $id)
+    {
+        $row = $this->userRoleRepo->where('user_id', $id)->first();
+
+        $inputCrear = $request->input('usuario_crear');
+        $inputEditar = $request->input('usuario_editar');
+        $inputExportar = $request->input('usuario_exportar');
+
+        $row->create = $inputCrear;
+        $row->update = $inputEditar;
+        $row->exporta = $inputExportar;
+        $this->userRoleRepo->update($row, $request->all());
+
+        //GUARDAR HISTORIAL
+        $this->userRoleRepo->saveHistory($row, $request, 'update');
+
+        return [
+            'estado' => true
+        ];
+    }
+
 
     /*
      * PERFIL DE USUARIO

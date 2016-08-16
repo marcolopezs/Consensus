@@ -152,6 +152,7 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
     Route::post('users/{id}/abogado/foto', ['as' => 'abogado.foto.upload', 'uses' => 'UsersController@abogadoFotoUpload']);
     Route::post('users/{id}/abogado/foto/delete', ['as' => 'abogado.foto.delete', 'uses' => 'UsersController@abogadoFotoDelete']);
     Route::post('users/{id}/abogado/password', ['as' => 'abogado.password', 'uses' => 'UsersController@abogadoPassword']);
+    Route::post('users/{id}/abogado/permisos', ['as' => 'abogado.permisos', 'uses' => 'UsersController@abogadoPermisos']);
 
     //USUARIO - MI PERFIL
     Route::get('user/perfil', ['as' => 'users.perfil', 'uses' => 'UsersController@perfil']);

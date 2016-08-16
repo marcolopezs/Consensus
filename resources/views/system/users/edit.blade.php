@@ -62,7 +62,7 @@
                                 @if($user_abogado)<li><a href="#tarifas" data-toggle="tab">Tarifas</a></li>@endif
                                 <li><a href="#foto" data-toggle="tab">Cambiar foto</a></li>
                                 <li><a href="#clave" data-toggle="tab">Cambiar contraseña</a></li>
-                                {{--<li><a href="#permisos" data-toggle="tab">Permisos</a></li>--}}
+                                <li><a href="#permisos" data-toggle="tab">Permisos</a></li>
                             </ul>
                         </div>
                         <div class="portlet-body">
@@ -318,64 +318,37 @@
 
                                 {{-- PERMISOS --}}
                                 <div class="tab-pane" id="permisos">
-                                    <form action="#">
+                                    {!! Form::open(['route' => ['abogado.permisos', $row->id], 'method' => 'POST', 'id' => 'formPermisosUpdate', 'autocomplete' => 'off']) !!}
+
+                                        <div class="form-content cambiar-permisos"></div>
+                                        @php
+                                            $usuario_crear = $row->role->create;
+                                            $usuario_editar = $row->role->update;
+                                            $usuario_exportar = $row->role->exporta;
+                                        @endphp
                                         <table class="table table-light table-hover">
                                             <tr>
-                                                <td> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus.. </td>
+                                                <td> Crear nuevos registros </td>
                                                 <td>
                                                     <div class="mt-radio-inline">
-                                                        <label class="mt-radio">
-                                                            <input type="radio" name="optionsRadios1" value="option1" /> Yes
-                                                            <span></span>
-                                                        </label>
-                                                        <label class="mt-radio">
-                                                            <input type="radio" name="optionsRadios1" value="option2" checked/> No
-                                                            <span></span>
-                                                        </label>
+                                                        {!! Form::checkbox('usuario_crear', 1, $usuario_crear,  ['class' => 'make-switch', 'data-size' => 'small', 'data-on-text' => '<i class="fa fa-check"></i>', 'data-off-text' => '<i class="fa fa-times"></i>']) !!}
                                                     </div>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td> Enim eiusmod high life accusamus terry richardson ad squid wolf moon </td>
+                                                <td> Editar registros </td>
                                                 <td>
                                                     <div class="mt-radio-inline">
-                                                        <label class="mt-radio">
-                                                            <input type="radio" name="optionsRadios11" value="option1" /> Yes
-                                                            <span></span>
-                                                        </label>
-                                                        <label class="mt-radio">
-                                                            <input type="radio" name="optionsRadios11" value="option2" checked/> No
-                                                            <span></span>
-                                                        </label>
+                                                        {!! Form::checkbox('usuario_editar', 1, $usuario_editar,  ['class' => 'make-switch', 'data-size' => 'small', 'data-on-text' => '<i class="fa fa-check"></i>', 'data-off-text' => '<i class="fa fa-times"></i>']) !!}
                                                     </div>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td> Enim eiusmod high life accusamus terry richardson ad squid wolf moon </td>
+                                                <td> Exportar a Excel </td>
                                                 <td>
                                                     <div class="mt-radio-inline">
                                                         <label class="mt-radio">
-                                                            <input type="radio" name="optionsRadios21" value="option1" /> Yes
-                                                            <span></span>
-                                                        </label>
-                                                        <label class="mt-radio">
-                                                            <input type="radio" name="optionsRadios21" value="option2" checked/> No
-                                                            <span></span>
-                                                        </label>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td> Enim eiusmod high life accusamus terry richardson ad squid wolf moon </td>
-                                                <td>
-                                                    <div class="mt-radio-inline">
-                                                        <label class="mt-radio">
-                                                            <input type="radio" name="optionsRadios31" value="option1" /> Yes
-                                                            <span></span>
-                                                        </label>
-                                                        <label class="mt-radio">
-                                                            <input type="radio" name="optionsRadios31" value="option2" checked/> No
-                                                            <span></span>
+                                                            {!! Form::checkbox('usuario_exportar', 1, $usuario_exportar,  ['class' => 'make-switch', 'data-size' => 'small', 'data-on-text' => '<i class="fa fa-check"></i>', 'data-off-text' => '<i class="fa fa-times"></i>']) !!}
                                                         </label>
                                                     </div>
                                                 </td>
@@ -383,10 +356,10 @@
                                         </table>
                                         <!--end profile-settings-->
                                         <div class="margin-top-10">
-                                            <a href="javascript:;" class="btn red"> Save Changes </a>
-                                            <a href="javascript:;" class="btn default"> Cancel </a>
+                                            <a id="btnPermisosUpdate" href="javascript:;" class="btn blue"> Guardar cambios </a>
+                                            {!! Form::reset('Cancelar', ['class' => 'btn default']) !!}
                                         </div>
-                                    </form>
+                                    {!! Form::close() !!}
                                 </div>
                                 {{-- FIN PERMISOS --}}
 
