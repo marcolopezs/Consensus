@@ -62,7 +62,7 @@
                                 @if($user_abogado)<li><a href="#tarifas" data-toggle="tab">Tarifas</a></li>@endif
                                 <li><a href="#foto" data-toggle="tab">Cambiar foto</a></li>
                                 <li><a href="#clave" data-toggle="tab">Cambiar contraseña</a></li>
-                                <li><a href="#permisos" data-toggle="tab">Permisos</a></li>
+                                @can('admin')<li><a href="#permisos" data-toggle="tab">Permisos</a></li>@endcan
                             </ul>
                         </div>
                         <div class="portlet-body">
@@ -317,6 +317,7 @@
                                 {{-- FIN CAMBIAR CONTRASEÑA --}}
 
                                 {{-- PERMISOS --}}
+                                @can('admin')
                                 <div class="tab-pane" id="permisos">
                                     {!! Form::open(['route' => ['abogado.permisos', $row->id], 'method' => 'POST', 'id' => 'formPermisosUpdate', 'autocomplete' => 'off']) !!}
 
@@ -361,6 +362,7 @@
                                         </div>
                                     {!! Form::close() !!}
                                 </div>
+                                @endcan
                                 {{-- FIN PERMISOS --}}
 
                             </div>
