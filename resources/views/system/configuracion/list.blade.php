@@ -25,13 +25,13 @@
                             <ul>
                                 <li> Sistema
                                     <ul>
-                                        <li data-jstree='{ "selected" : true, "type" : "file" }'>
-                                            <a href="#web_nombre" data-toggle="tab"> Información Básica </a>
-                                        </li>
+                                        {{--<li data-jstree='{ "selected" : true, "type" : "file" }'>--}}
+                                            {{--<a href="#web_nombre" data-toggle="tab"> Información Básica </a>--}}
+                                        {{--</li>--}}
                                         {{--<li data-jstree='{ "type" : "file" }'>--}}
                                             {{--<a href="#web_logo" data-toggle="tab"> Logo </a>--}}
                                         {{--</li>--}}
-                                        <li data-jstree='{ "type" : "file" }'>
+                                        <li data-jstree='{ "selected" : true, "type" : "file" }'>
                                             <a href="#notificacion" data-toggle="tab"> Notificaciones </a>
                                         </li>
                                     </ul>
@@ -46,7 +46,7 @@
 
                         <div class="tab-content">
 
-                            <div class="tab-pane active" id="web_nombre">
+                            <div class="tab-pane" id="web_nombre">
                                 <h3><strong>Información Básica</strong></h3>
 
                                 <div class="form-content-1"></div>
@@ -107,7 +107,7 @@
                                 {!! Form::close() !!}
                             </div>
 
-                            <div class="tab-pane" id="notificacion">
+                            <div class="tab-pane active" id="notificacion">
                                 <h3><strong>Notificaciones</strong></h3>
 
                                 <div class="form-content-3"></div>
@@ -117,11 +117,11 @@
                                     <div class="form-body">
 
                                         <div class="form-group">
-                                            {!! Form::label('', 'Notificación por correo', ['class' => 'control-label col-md-3']) !!}
-                                            <div class="col-md-9">
+                                            {!! Form::label('', 'Avisar', ['class' => 'control-label col-md-3']) !!}
+                                            <div class="col-md-2">
                                                 {!! Form::number('conf[3]', $row[2]->valor, ['class' => 'form-control']) !!}
-                                                <span class="help-block">Cantidad de días</span>
                                             </div>
+                                            <p class="margin-top-10">días antes</p>
                                         </div>
 
                                     </div>
