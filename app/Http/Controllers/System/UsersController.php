@@ -29,6 +29,7 @@ use Consensus\Repositories\UserProfileRepo;
 
 use Consensus\Entities\UserRole;
 use Consensus\Repositories\UserRoleRepo;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UsersController extends Controller
 {
@@ -521,5 +522,22 @@ class UsersController extends Controller
             'message' => $message,
             'estado'  => $estado
         ];
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function excel(Request $request)
+    {
+        //PERMISO PARA EXPORTAR
+        $this->authorize('exportar');
+
+        $rows = $this->userRepo->exportarExcel($request);
+
+        Excel::create('Consensus - Usuarios', function($excel) use($rows) {
+            $excel->sheet('Usuarios', function($sheet) use($rows) {
+                $sheet->loadView('excel.usuarios', ['rows' => $rows]);
+            });
+        })->export('xlsx');
     }
 }

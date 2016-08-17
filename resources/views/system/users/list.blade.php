@@ -18,9 +18,10 @@
         <div class="col-md-12 col-sm-12">
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
             <div class="portlet light portlet-datatable " id="form_wizard_1">
-                <div class="portlet-body">
 
-                    <div class="table-toolbar">
+                <div class="portlet-title">
+
+                    <div class="caption">
 
                         @can('create')
                         <div class="row">
@@ -35,6 +36,25 @@
                         @endcan
 
                     </div>
+
+                    <div class="actions">
+
+                        @can('exportar')
+                        <div class="btn-group btn-group-devided">
+                            <div class="btn-group">
+                                <a id="excel-expediente" class="btn green-haze btn-outline btn-circle" href="{{ route('users.excel', Request::all()) }}">
+                                    <i class="fa fa-file-excel-o" aria-hidden="true"></i>
+                                    <span class="hidden-xs"> Exportar a Excel </span>
+                                </a>
+                            </div>
+                        </div>
+                        @endcan
+
+                    </div>
+
+                </div>
+
+                <div class="portlet-body">
 
                     {!! Form::model(Request::all(), ['route' => 'users.index', 'method' => 'GET']) !!}
 
@@ -70,7 +90,7 @@
                                             <i class="fa fa-angle-down"></i>
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
-                                            <li><a href="{{ route('users.show', $row_id) }}" data-target="#ajax" data-toggle="modal">Ver registro</a></li>
+                                            {{--<li><a href="{{ route('users.show', $row_id) }}" data-target="#ajax" data-toggle="modal">Ver registro</a></li>--}}
                                             @can('update')
                                             <li><a href="{{ route('users.edit', $row_id) }}">Editar</a></li>
                                             @endcan

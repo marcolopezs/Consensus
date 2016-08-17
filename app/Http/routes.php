@@ -150,6 +150,7 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
     Route::put('users/update/abogado/{id}', ['as' => 'users.update.abogado', 'uses' => 'UsersController@updateAbogado']);
     Route::put('users/update/cliente/{id}', ['as' => 'users.update.cliente', 'uses' => 'UsersController@updateCliente']);
     Route::post('users/{id}/estado', ['as' => 'users.estado', 'uses' => 'UsersController@estado']);
+    Route::get('users/exportar/excel', ['as' => 'users.excel', 'uses' => 'UsersController@excel']);
 
     Route::put('users/{id}/abogado/tarifa', ['as' => 'abogado.tarifas.update', 'uses' => 'UsersController@abogadoTarifaUpdate']);
     Route::post('users/{id}/abogado/foto', ['as' => 'abogado.foto.upload', 'uses' => 'UsersController@abogadoFotoUpload']);
