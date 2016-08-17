@@ -148,8 +148,8 @@
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    {!! Form::label('nombre', 'Nombre', ['class' => 'control-label']) !!}
-                                                    {!! Form::text('nombre', $abogado_nombre, ['class' => 'form-control']) !!}
+                                                    {!! Form::label('nombres', 'Nombre', ['class' => 'control-label']) !!}
+                                                    {!! Form::text('nombres', $abogado_nombre, ['class' => 'form-control']) !!}
                                                 </div>
                                             </div>
 

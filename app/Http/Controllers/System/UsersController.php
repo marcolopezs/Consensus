@@ -262,23 +262,22 @@ class UsersController extends Controller
         //BUSCAR ID
         $row = $this->userRepo->findOrFail($id);
 
-        if($row->abogado_id > 0 OR $row->abogado_id > 0 AND $row->admin === 1){
-            $profile = $this->userProfileRepo->where('user_id', $id)->first();
-            $this->userProfileRepo->update($profile, $request->all());
+        //VARIABLE
+        $nombre = $request->input('nombres');
+        $apellidos = $request->input('apellidos');
 
-            $abogado = $this->abogadoRepo->findOrFail($row->abogado_id);
-            $this->abogadoRepo->update($abogado, $request->all());
+        $profile = $this->userProfileRepo->where('user_id', $id)->first();
+        $profile->nombre = $nombre;
+        $profile->apellidos = $apellidos;
+        $this->userProfileRepo->update($profile, $request->all());
 
-            //GUARDAR HISTORIAL
-            $this->userProfileRepo->saveHistory($profile, $request, 'update');
-            $this->abogadoRepo->saveHistory($abogado, $request, 'update');
-        }elseif($row->abogado_id > 0){
-            $abogado = $this->abogadoRepo->findOrFail($row->abogado_id);
-            $this->abogadoRepo->update($abogado, $request->all());
+        $abogado = $this->abogadoRepo->findOrFail($row->abogado_id);
+        $abogado->nombre = $nombre." ".$apellidos;
+        $this->abogadoRepo->update($abogado, $request->all());
 
-            //GUARDAR HISTORIAL
-            $this->abogadoRepo->saveHistory($abogado, $request, 'update');
-        }
+        //GUARDAR HISTORIAL
+        $this->userProfileRepo->saveHistory($profile, $request, 'update');
+        $this->abogadoRepo->saveHistory($abogado, $request, 'update');
 
         $mensaje = "El registro se actualizo satisfactoriamente.";
 
