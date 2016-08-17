@@ -24,6 +24,24 @@ class TareaRepo extends BaseRepo {
     public function filterPaginateAdmin(Request $request)
     {
         return $this->getModel()
+            ->join('expedientes', 'expedientes.id', '=', 'tareas.expediente_id')
+            ->select('expedientes.expediente', 'tareas.*')
+            ->expediente($request->get('expediente'))
+            ->abogadoId($request->get('abogado'))
+            ->concepto($request->get('tarea'))
+            ->descripcion($request->get('descripcion'))
+            ->fechaSolicitada($request->get('fecha_solicitada_from'), $request->get('fecha_solicitada_to'))
+            ->fechaVencimiento($request->get('fecha_vencimiento_from'), $request->get('fecha_vencimiento_to'))
+            ->estadoId($request->get('estado'))
+            ->orderBy('fecha_solicitada', 'desc')
+            ->with('expedientes','titular','concepto','abogado')
+            ->paginate();
+    }
+
+    //EXPORTAR A EXCEL
+    public function exportarExcel(Request $request)
+    {
+        return $this->getModel()
                     ->join('expedientes', 'expedientes.id', '=', 'tareas.expediente_id')
                     ->select('expedientes.expediente', 'tareas.*')
                     ->expediente($request->get('expediente'))
@@ -35,7 +53,7 @@ class TareaRepo extends BaseRepo {
                     ->estadoId($request->get('estado'))
                     ->orderBy('fecha_solicitada', 'desc')
                     ->with('expedientes','titular','concepto','abogado')
-                    ->paginate();
+                    ->get();
     }
 
     //FILTRAR TAREAS COMO ABOGADO

@@ -14,6 +14,7 @@ use Consensus\Repositories\FlujoCajaRepo;
 use Consensus\Repositories\TareaRepo;
 use Consensus\Repositories\TareaAccionRepo;
 use Illuminate\Support\Facades\Gate;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TareasAsignadasController extends Controller {
 
@@ -243,4 +244,20 @@ class TareasAsignadasController extends Controller {
         ];
     }
 
+    /**
+     * @param Request $request
+     */
+    public function excel(Request $request)
+    {
+        //PERMISO PARA EXPORTAR
+        $this->authorize('exportar');
+
+        $rows = $this->tareaRepo->exportarExcel($request);
+
+        Excel::create('Consensus - Tiempos por Tarea', function($excel) use($rows) {
+            $excel->sheet('Tiempos por Tarea', function($sheet) use($rows) {
+                $sheet->loadView('excel.tareas', ['rows' => $rows]);
+            });
+        })->export('xlsx');
+    }
 }

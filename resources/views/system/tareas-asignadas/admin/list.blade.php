@@ -34,16 +34,37 @@
                 @include('partials.progressbar')
 
                 <div class="portlet-title">
-                    <div class="actions pull-left">
-                        <div class="btn-group btn-group-devided" data-toggle="buttons">
+
+                    <div class="caption">
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="btn-group">
+                                    <a id="filtrar-tarea" class="btn blue-steel btn-outline btn-circle" href="javascript:;">
+                                        <i class="fa fa-search"></i>
+                                        <span class="hidden-xs"> Buscar </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="actions">
+
+                        @can('exportar')
+                        <div class="btn-group btn-group-devided">
                             <div class="btn-group">
-                                <a id="filtrar-tarea" class="btn blue-steel btn-outline btn-circle" href="javascript:;">
-                                    <i class="fa fa-search"></i>
-                                    <span class="hidden-xs"> Buscar </span>
+                                <a id="excel-expediente" class="btn green-haze btn-outline btn-circle" href="{{ route('tareas.asignadas.excel', Request::all()) }}">
+                                    <i class="fa fa-file-excel-o" aria-hidden="true"></i>
+                                    <span class="hidden-xs"> Exportar a Excel </span>
                                 </a>
                             </div>
                         </div>
+                        @endcan
+
                     </div>
+
                 </div>
 
                 <div class="portlet-body">

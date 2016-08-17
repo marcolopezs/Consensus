@@ -1,7 +1,7 @@
 @extends('layouts.system')
 
 @section('title')
-    Tareas Asignadas
+    Tiempos por Tarea
 @stop
 
 @section('contenido_header')
