@@ -1,8 +1,9 @@
 //UPDATE DE DATOS DE USUARIO
-$("#btnUserUpdate").on("click", function(e) {
+$(".btnUserUpdate").on("click", function(e) {
     e.preventDefault();
 
-    var form = $("#formUserUpdate");
+    var formName = $(this).data("form");
+    var form = $("#"+formName);
     var url = form.attr('action');
     var data = form.serialize();
     var formMessage = $(".form-content.info-personal");

@@ -54,6 +54,11 @@ class User extends BaseEntity implements AuthenticatableContract, CanResetPasswo
         return $this->belongsTo(Abogado::class);
     }
 
+    public function cliente()
+    {
+        return $this->belongsTo(Cliente::class);
+    }
+
     /*
      * SCOPES
      */

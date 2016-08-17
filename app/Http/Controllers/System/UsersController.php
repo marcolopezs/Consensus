@@ -5,6 +5,9 @@ use Consensus\Entities\Ajuste;
 use Consensus\Entities\TarifaAbogado;
 use Consensus\Entities\Tariff;
 use Consensus\Repositories\AjusteRepo;
+use Consensus\Repositories\ClienteRepo;
+use Consensus\Repositories\DistritoRepo;
+use Consensus\Repositories\PaisRepo;
 use Consensus\Repositories\TarifaAbogadoRepo;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -36,6 +39,9 @@ class UsersController extends Controller
 
     protected $ajusteRepo;
     protected $abogadoRepo;
+    protected $clienteRepo;
+    protected $distritoRepo;
+    protected $paisRepo;
     protected $tarifaAbogadoRepo;
     protected $tariffRepo;
     protected $userRepo;
@@ -46,6 +52,9 @@ class UsersController extends Controller
      * UsersController constructor.
      * @param AjusteRepo $ajusteRepo
      * @param AbogadoRepo $abogadoRepo
+     * @param ClienteRepo $clienteRepo
+     * @param DistritoRepo $distritoRepo
+     * @param PaisRepo $paisRepo
      * @param TarifaAbogadoRepo $tarifaAbogadoRepo
      * @param TariffRepo $tariffRepo
      * @param UserRepo $userRepo
@@ -55,6 +64,9 @@ class UsersController extends Controller
      */
     public function __construct(AjusteRepo $ajusteRepo,
                                 AbogadoRepo $abogadoRepo,
+                                ClienteRepo $clienteRepo,
+                                DistritoRepo $distritoRepo,
+                                PaisRepo $paisRepo,
                                 TarifaAbogadoRepo $tarifaAbogadoRepo,
                                 TariffRepo $tariffRepo,
                                 UserRepo $userRepo,
@@ -63,6 +75,9 @@ class UsersController extends Controller
     {
         $this->ajusteRepo = $ajusteRepo;
         $this->abogadoRepo = $abogadoRepo;
+        $this->clienteRepo = $clienteRepo;
+        $this->distritoRepo = $distritoRepo;
+        $this->paisRepo = $paisRepo;
         $this->tarifaAbogadoRepo = $tarifaAbogadoRepo;
         $this->tariffRepo = $tariffRepo;
         $this->userRepo = $userRepo;
@@ -198,6 +213,8 @@ class UsersController extends Controller
         $this->authorize('update');
 
         $row = $this->userRepo->findOrFail($id);
+        $pais = $this->paisRepo->estadoListArray();
+        $distrito = $this->distritoRepo->estadoListArray();
 
         if($row->abogado_id > 0){
             $tarifas = $this->tarifaAbogadoRepo->where('abogado_id', $row->abogado_id)->where('estado', 1)->get();
@@ -205,17 +222,40 @@ class UsersController extends Controller
             $tarifas = "";
         }
 
-        return view('system.users.edit', compact('row','tarifas'));
+        return view('system.users.edit', compact('row','tarifas','distrito','pais'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * UPDATE DE ADMIN
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function updateAdmin(Request $request, $id)
+    {
+        $this->authorize('update');
+
+        $profile = $this->userProfileRepo->where('user_id', $id)->first();
+        $this->userProfileRepo->update($profile, $request->all());
+
+        //GUARDAR HISTORIAL
+        $this->userProfileRepo->saveHistory($profile, $request, 'update');
+
+        $mensaje = "El registro se actualizo satisfactoriamente.";
+
+        return [
+            'message' => $mensaje,
+        ];
+    }
+
+    /**
+     * UPDATE DE ABOGADO
+     * @param Request $request
+     * @param $id
+     * @return array
+     */
+    public function updateAbogado(Request $request, $id)
     {
         $this->authorize('update');
 
@@ -232,13 +272,6 @@ class UsersController extends Controller
             //GUARDAR HISTORIAL
             $this->userProfileRepo->saveHistory($profile, $request, 'update');
             $this->abogadoRepo->saveHistory($abogado, $request, 'update');
-
-        }elseif($row->admin === 1){
-            $profile = $this->userProfileRepo->where('user_id', $id)->first();
-            $this->userProfileRepo->update($profile, $request->all());
-
-            //GUARDAR HISTORIAL
-            $this->userProfileRepo->saveHistory($profile, $request, 'update');
         }elseif($row->abogado_id > 0){
             $abogado = $this->abogadoRepo->findOrFail($row->abogado_id);
             $this->abogadoRepo->update($abogado, $request->all());
@@ -246,6 +279,40 @@ class UsersController extends Controller
             //GUARDAR HISTORIAL
             $this->abogadoRepo->saveHistory($abogado, $request, 'update');
         }
+
+        $mensaje = "El registro se actualizo satisfactoriamente.";
+
+        return [
+            'message' => $mensaje,
+        ];
+    }
+
+    /**
+     * UPDATE DE CLIENTE
+     * @param Request $request
+     * @param $id
+     * @return array
+     */
+    public function updateCliente(Request $request, $id)
+    {
+        $this->authorize('update');
+
+        //BUSCAR ID EN USUARIO / PROFILE / CLIENTE
+        $row = $this->userRepo->findOrFail($id);
+        $profile = $this->userProfileRepo->where('user_id', $id)->first();
+        $cliente = $this->clienteRepo->findOrFail($row->cliente_id);
+
+        //GUARDAR DATOS EN PERFIL DE USUARIO
+        $profile->nombre = $request->input('cliente');
+        $this->userProfileRepo->update($profile, $request->all());
+
+        //GUARDAR DATOS EN CLIENTE
+        $cliente->pais_id = $request->input('pais');
+        $cliente->distrito_id = $request->input('distrito');
+        $this->clienteRepo->update($cliente, $request->all());
+
+        //GUARDAR HISTORIAL
+        $this->clienteRepo->saveHistory($cliente, $request, 'update');
 
         $mensaje = "El registro se actualizo satisfactoriamente.";
 

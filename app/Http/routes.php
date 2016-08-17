@@ -146,6 +146,9 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
 
     //USUARIO
     Route::resource('users', 'UsersController', ['except' => 'destroy']);
+    Route::put('users/update/admin/{id}', ['as' => 'users.update.admin', 'uses' => 'UsersController@updateAdmin']);
+    Route::put('users/update/abogado/{id}', ['as' => 'users.update.abogado', 'uses' => 'UsersController@updateAbogado']);
+    Route::put('users/update/cliente/{id}', ['as' => 'users.update.cliente', 'uses' => 'UsersController@updateCliente']);
     Route::post('users/{id}/estado', ['as' => 'users.estado', 'uses' => 'UsersController@estado']);
 
     Route::put('users/{id}/abogado/tarifa', ['as' => 'abogado.tarifas.update', 'uses' => 'UsersController@abogadoTarifaUpdate']);
