@@ -120,7 +120,8 @@ class TareasController extends Controller {
             'fecha_solicitada' => $save->fecha_solicitada,
             'fecha_vencimiento' => $save->fecha_vencimiento,
             'asignado' => $save->asignado,
-            'url_editar' => $save->url_editar
+            'url_editar' => $save->url_editar,
+            'url_notificacion' => $save->url_notificacion
         ];
 
     }
@@ -190,7 +191,8 @@ class TareasController extends Controller {
             'fecha_solicitada' => $row->fecha_solicitada,
             'fecha_vencimiento' => $row->fecha_vencimiento,
             'asignado' => $save->asignado,
-            'url_editar' => $save->url_editar
+            'url_editar' => $save->url_editar,
+            'url_notificacion' => $save->url_notificacion
         ];
     }
 
