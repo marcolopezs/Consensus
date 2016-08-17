@@ -690,6 +690,34 @@ class CreateInitialTables extends Migration
 
             $table->nullableTimestamps();
         });
+
+        Schema::create('facturacion', function(Blueprint $table)
+        {
+            $table->increments('id');
+
+            $table->integer('cliente_id')->unsigned();
+            $table->integer('comprobante_tipo_id')->unsigned();
+            $table->string('comprobante_numero');
+            $table->date('fecha');
+            $table->integer('money_id')->unsigned();
+            $table->double('importe', 20, 2);
+            $table->integer('expediente_id')->nullable();
+            $table->text('descripcion');
+
+            $table->nullableTimestamps();
+            $table->softDeletes();
+        });
+        
+        Schema::create('comprobante_tipos', function(Blueprint $table)
+        {
+            $table->increments('id');
+
+            $table->string('titulo')->nullable();
+            $table->boolean('estado');
+
+            $table->nullableTimestamps();
+            $table->softDeletes();
+        });
     }
 
     /**
@@ -748,5 +776,8 @@ class CreateInitialTables extends Migration
         Schema::drop('exito');
 
         Schema::drop('ajustes');
+
+        Schema::drop('facturacion');
+        Schema::drop('comprobante_tipos');
     }
 }

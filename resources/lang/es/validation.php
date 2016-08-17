@@ -204,7 +204,10 @@ return [
         'distrito'              => 'Distrito',
         'titulo'                => 'Titulo',
         'administrador'         => 'Administrador',
-        'abogado'               => 'Abogado'
+        'abogado'               => 'Abogado',
+        'comprobante_tipo'      => 'Tipo de Comprobante',
+        'comprobante_numero'    => 'N° de Comprobante',
+        'importe'               => 'Importe'
     ],
 
 ];

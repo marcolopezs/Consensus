@@ -145,6 +145,10 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
 
     });
 
+    //FACTURACION
+    Route::resource('facturacion', 'FacturacionController');
+    Route::get('facturacion/exportar/excel', ['as' => 'facturacion.excel', 'uses' => 'FacturacionController@excel']);
+
     //USUARIO
     Route::resource('users', 'UsersController', ['except' => 'destroy']);
     Route::put('users/update/admin/{id}', ['as' => 'users.update.admin', 'uses' => 'UsersController@updateAdmin']);

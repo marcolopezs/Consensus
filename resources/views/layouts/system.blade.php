@@ -137,7 +137,8 @@
                                                     <ul class="mega-menu-submenu">
                                                         <li {!! (Request::is('options/area*') ? 'class="active"' : '') !!}><a href="{{ route('area.index') }}">Áreas</a></li>
                                                         <li {!! (Request::is('cliente*') ? 'class="active"' : '') !!}><a href="{{ route('cliente.index') }}">Clientes</a></li>
-                                                        <li {!! (Request::is('configuracion*') ? 'class="active"' : '') !!}><a href="{{ route('system.conf') }}">Configuración</a></li>
+                                                        @can('admin')<li {!! (Request::is('facturacion*') ? 'class="active"' : '') !!}><a href="{{ route('facturacion.index') }}">Comprobantes de Pago</a></li>@endcan
+                                                        @can('admin')<li {!! (Request::is('configuracion*') ? 'class="active"' : '') !!}><a href="{{ route('system.conf') }}">Configuración</a></li>@endcan
                                                         <li {!! (Request::is('options/entity*') ? 'class="active"' : '') !!}><a href="{{ route('entity.index') }}">Entidades</a></li>
                                                         <li {!! (Request::is('options/state*') ? 'class="active"' : '') !!}><a href="{{ route('state.index') }}">Estado</a></li>
                                                         <li {!! (Request::is('options/payment*') ? 'class="active"' : '') !!}><a href="{{ route('payment-method.index') }}">Formas de Pago</a></li>
