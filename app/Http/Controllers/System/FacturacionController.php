@@ -90,17 +90,23 @@ class FacturacionController extends Controller {
         $row->expediente_id = $expediente;
         $row->comprobante_tipo_id = $tipo;
         $row->money_id = $moneda;
-        $this->facturacionRepo->create($row, $request->all());
+        $save = $this->facturacionRepo->create($row, $request->all());
 
         //GUARDAR HISTORIAL
         $this->facturacionRepo->saveHistory($row, $request, 'create');
 
-        //MENSAJE
-        $mensaje = 'El registro se agregó satisfactoriamente.';
-
-        //AJAX
         return [
-            'message' => $mensaje
+            'id' => $save->id,
+            'cliente' => $save->cliente->nombre,
+            'tipo' => $save->comprobante_tipo->titulo,
+            'numero' => $save->comprobante_numero,
+            'fecha' => $save->fecha,
+            'moneda' => $save->money->titulo,
+            'importe' => $save->importe,
+            'expediente' => $save->fac_expediente,
+            'descripcion' => $save->descripcion,
+            'url_ver' => $save->url_ver,
+            'url_editar' => $save->url_editar
         ];
     }
 
@@ -157,17 +163,23 @@ class FacturacionController extends Controller {
         $row->expediente_id = $expediente;
         $row->comprobante_tipo_id = $tipo;
         $row->money_id = $moneda;
-        $this->facturacionRepo->update($row, $request->all());
+        $save = $this->facturacionRepo->update($row, $request->all());
 
         //GUARDAR HISTORIAL
         $this->facturacionRepo->saveHistory($row, $request, 'update');
 
-        //MENSAJE
-        $mensaje = 'El registro se actualizó satisfactoriamente.';
-
-        //AJAX
         return [
-            'message' => $mensaje
+            'id' => $save->id,
+            'cliente' => $save->cliente->nombre,
+            'tipo' => $save->comprobante_tipo->titulo,
+            'numero' => $save->comprobante_numero,
+            'fecha' => $save->fecha,
+            'moneda' => $save->money->titulo,
+            'importe' => $save->importe,
+            'expediente' => $save->fac_expediente,
+            'descripcion' => $save->descripcion,
+            'url_ver' => $save->url_ver,
+            'url_editar' => $save->url_editar
         ];
     }
 

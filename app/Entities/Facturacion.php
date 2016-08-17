@@ -8,6 +8,7 @@ class Facturacion extends BaseEntity {
 
     protected $dates = ['deleted_at'];
     protected $fillable = ['cliente_id','expediente_id','comprobante_tipo_id','comprobante_numero','fecha','money_id','importe','descripcion'];
+    protected $appends = ['url_ver','url_editar'];
     protected $table = 'facturacion';
 
     /*
@@ -53,6 +54,16 @@ class Facturacion extends BaseEntity {
     {
         if($this->expediente_id <> 0){ return $this->expedientes->expediente; }
         else{ return ""; }
+    }
+
+    public function getUrlVerAttribute()
+    {
+        return route('facturacion.show', $this->id);
+    }
+
+    public function getUrlEditarAttribute()
+    {
+        return route('facturacion.edit', $this->id);
     }
 
     /*

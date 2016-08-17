@@ -90,7 +90,7 @@
                                 $row_fecha = $item->fecha;
                                 $row_moneda = $item->money->titulo;
                                 $row_importe = $item->importe;
-                                $row_descripcion = $item->descripcion;
+                                $row_descripcion = substr($item->descripcion, 0, 30)."...";
                                 if($item->expediente_id > 0){ $row_expediente = $item->expedientes->expediente; }
                                 else{ $row_expediente = ""; }
                             @endphp

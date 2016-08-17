@@ -130,6 +130,35 @@
             success: function (result) {
                 var successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>'+result.message+'</div>';
                 $(".form-content").html(successHtml);
+
+                $("#facturacion-select-"+ result.id).remove();
+
+                var html = '<tr id="facturacion-select-'+ result.id +'">' +
+                        '<td>'+ result.cliente +'</td>' +
+                        '<td>'+ result.tipo +'</td>' +
+                        '<td>'+ result.numero +'</td>' +
+                        '<td>'+ result.fecha +'</td>' +
+                        '<td>'+ result.moneda +'</td>' +
+                        '<td>'+ result.importe +'</td>' +
+                        '<td>'+ result.expediente +'</td>' +
+                        '<td>'+ result.descripcion +'</td>' +
+                        '<td class="text-center">' +
+                        '<div class="btn-group">' +
+                        '<button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Movimientos' +
+                        '<i class="fa fa-angle-down"></i>' +
+                        '</button>' +
+                        '<ul class="dropdown-menu" role="menu">' +
+                        '<li><a class="menu-ver" href="'+ result.url_ver +'" data-target="#ajax" data-toggle="modal">Ver</a></li>'+
+                        @can('update')
+                                '<li><a class="menu-editar" href="'+ result.url_editar +'" data-target="#ajax" data-toggle="modal">Editar</a></li>'+
+                        '<li><a href="#" class="btn-delete">Eliminar</a></li>' +
+                        @endcan
+                                '</ul>' +
+                        '</div>' +
+                        '</td>' +
+                        '</tr>';
+
+                $("#facturacion-lista").prepend(html);
             },
             beforeSend: function () { $('.progress').show(); },
             complete: function () { $('.progress').hide(); },

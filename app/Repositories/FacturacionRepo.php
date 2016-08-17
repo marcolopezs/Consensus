@@ -23,7 +23,8 @@ class FacturacionRepo extends BaseRepo {
                     ->importe($request->get('importe'), $request->get('operador'))
                     ->expedienteId($request->get('expediente'))
                     ->descripcion($request->get('descripcion'))
-                    ->with('cliente','money','comprobante_tipo')
+                    ->orderBy('fecha','desc')
+                    ->with('cliente','money','comprobante_tipo','expedientes')
                     ->paginate();
     }
 
