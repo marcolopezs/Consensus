@@ -24,4 +24,5 @@ elixir(function(mix) {
     mix.scripts(['js-create-edit.js'], 'public/js/js-create-edit.js');
     mix.scripts(['js-form-close.js'], 'public/js/js-form-close.js');
     mix.scripts(['js-usuario-update.js'], 'public/js/js-usuario-update.js');
+    mix.scripts(['js-delete.js'], 'public/js/js-delete.js');
 });

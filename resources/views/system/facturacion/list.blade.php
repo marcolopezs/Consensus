@@ -80,7 +80,7 @@
                             </tr>
                         </thead>
 
-                        <tbody>
+                        <tbody id="facturacion-lista">
                         @foreach($rows as $item)
                             @php
                                 $row_id = $item->id;
@@ -94,7 +94,7 @@
                                 if($item->expediente_id > 0){ $row_expediente = $item->expedientes->expediente; }
                                 else{ $row_expediente = ""; }
                             @endphp
-                            <tr id="cliente-{{ $row_id }}" class="odd gradeX" data-id="{{ $row_id }}" data-title="{{ $row_cliente }}">
+                            <tr id="facturacion-select-{{ $row_id }}" class="odd gradeX" data-id="{{ $row_id }}" data-title="{{ $row_cliente }}">
                                 <td>{{ $row_cliente }}</td>
                                 <td>{{ $row_comprobante_tipo }}</td>
                                 <td>{{ $row_comprobante_numero }}</td>
@@ -112,6 +112,7 @@
                                             <li><a class="menu-ver" href="{{ route('facturacion.show', $row_id) }}" data-target="#ajax" data-toggle="modal">Ver</a></li>
                                             @can('update')
                                             <li><a class="menu-editar" href="{{ route('facturacion.edit', $row_id) }}" data-target="#ajax" data-toggle="modal">Editar</a></li>
+                                            <li><a href="#" class="btn-delete">Eliminar</a></li>
                                             @endcan
                                         </ul>
                                     </div>
@@ -144,6 +145,9 @@
 
     </div>
 
+{!! Form::open(['route' => ['facturacion.destroy', ':REGISTER'], 'method' => 'DELETE', 'id' => 'FormDeleteRow']) !!}
+{!! Form::close() !!}
+
 @stop
 
 @section('contenido_footer')
@@ -153,6 +157,9 @@
 
 {{-- BootBox --}}
 {!! HTML::script('assets/global/plugins/bootbox/bootbox.min.js') !!}
+
+{{-- Delete --}}
+{!! HTML::script('js/js-delete.js') !!}
 
 {{-- Cambiar Estado --}}
 {!! HTML::script('js/js-cambiar-estado.js') !!}

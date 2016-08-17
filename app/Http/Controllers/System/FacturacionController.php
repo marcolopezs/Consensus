@@ -171,6 +171,28 @@ class FacturacionController extends Controller {
         ];
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int $id
+     * @param Request $request
+     * @return Response
+     */
+    public function destroy($id, Request $request)
+    {
+        //BUSCAR ID PARA ELIMINAR
+        $row = $this->facturacionRepo->findOrFail($id);
+        $row->delete();
+
+        //GUARDAR HISTORIAL
+        $this->facturacionRepo->saveHistory($row, $request, 'delete');
+
+        $message = 'El registro se eliminó satisfactoriamente.';
+
+        return [
+            'message' => $message
+        ];
+    }
 
     /**
      * @param Request $request
