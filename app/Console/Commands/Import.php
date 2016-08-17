@@ -339,36 +339,5 @@ class Import extends Command
         }
 
         $this->line('<info>Creación</info> Tarifas de Abogados');
-
-        $this->line('----------------------------------------');
-        $this->line('----------------------------------------');
-
-        /*
-         * CREANDO NOTIFICACIONES DE EXPEDIENTES
-         */
-        $expedientes = Expediente::all();
-        foreach($expedientes as $expediente){
-            $expediente->notificaciones()->create([
-                'abogado_id' => $expediente->abogado_id,
-                'fecha_vencimiento' => $expediente->fecha_vencimiento,
-                'descripcion' => 'Quedan {dias} días para la fecha de vencimiento de poder del Expediente '. $expediente->expediente
-            ]);
-        }
-
-        $this->line('<info>Creación</info> Notificación de Expedientes');
-
-        /*
-         * CREANDO NOTIFICACIONES DE TAREAS
-         */
-        $tareas = Tarea::all();
-        foreach($tareas as $tarea){
-            $tarea->notificaciones()->create([
-                'abogado_id' => $tarea->abogado_id,
-                'fecha_vencimiento' => formatoFecha($tarea->fecha_vencimiento),
-                'descripcion' => 'Quedan {dias} días para tarea '. $tarea->concepto->titulo .', del Expediente '. $tarea->expedientes->expediente
-            ]);
-        }
-
-        $this->line('<info>Creación</info> Notificación de Tareas');
     }
 }

@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\Import::class,
+        Commands\Notificaciones::class,
         Commands\TareaNotificacionAsignado::class,
         Commands\TareaNotificacionAsignadoLista::class
     ];
