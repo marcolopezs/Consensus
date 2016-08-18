@@ -56,15 +56,12 @@
 
                 <div class="portlet-body">
 
+                    {!! Form::model(Request::all(), ['route' => 'tariff.index', 'method' => 'GET']) !!}
+
                     <table class="table table-striped table-bordered table-hover order-column" id="sample_2">
-                        <thead>
-                        <tr>
-                            <th>Titulo</th>
-                            <th class="text-center">Abreviatura</th>
-                            <th class="text-center">Estado</th>
-                            <th class="text-center">Acciones</th>
-                        </tr>
-                        </thead>
+
+                        @include('system.tariff.partials.search')
+
                         <tbody>
                         @foreach($rows as $item)
                             {{--*/
@@ -102,6 +99,8 @@
                         @endforeach
                         </tbody>
                     </table>
+
+                    {!! Form::close() !!}
 
                     <div class="row">
 

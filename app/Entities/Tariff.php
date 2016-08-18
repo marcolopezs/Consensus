@@ -10,4 +10,15 @@ class Tariff extends BaseEntity {
 
     protected $fillable = ['titulo','abrev','estado'];
 
+    /*
+     * SCOPES
+     */
+    public function scopeAbreviatura($query, $value)
+    {
+        if(trim($value) != "")
+        {
+            $query->where('abrev', 'LIKE', "%$value%");
+        }
+    }
+
 }
