@@ -9,7 +9,8 @@
 {!! HTML::style('assets/global/plugins/select2/css/select2.min.css') !!}
 {!! HTML::style('assets/global/plugins/select2/css/select2-bootstrap.min.css') !!}
 
-{{-- Date Picker --}}
+{{-- DatePicker  --}}
+{!! HTML::style('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') !!}
 {!! HTML::style('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') !!}
 @stop
 
@@ -20,6 +21,8 @@
         @include('flash::message')
 
         @include('partials.message')
+
+        @include('system.facturacion.partials.filtrar')
 
         <div class="col-md-12 col-sm-12">
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
@@ -46,6 +49,15 @@
                     </div>
 
                     <div class="actions">
+                        <div class="btn-group btn-group-devided" data-toggle="buttons">
+                            <div class="btn-group">
+                                <a id="filtrar-facturacion" class="btn blue-steel btn-outline btn-circle" href="javascript:;">
+                                    <i class="fa fa-filter" aria-hidden="true"></i>
+                                    <span class="hidden-xs"> Buscar</span>
+                                </a>
+                            </div>
+                        </div>
+
                         @can('exportar')
                         <div class="btn-group btn-group-devided">
                             <div class="btn-group">
@@ -151,6 +163,13 @@
 @stop
 
 @section('contenido_footer')
+{{-- DatePicker --}}
+{!! HTML::script('assets/global/plugins/moment.min.js') !!}
+{!! HTML::script('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') !!}
+{!! HTML::script('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') !!}
+{!! HTML::script('assets/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js') !!}
+{!! HTML::script('assets/pages/scripts/components-date-time-pickers.js') !!}
+
 {{-- Select2 --}}
 {!! HTML::script('assets/global/plugins/select2/js/select2.full.min.js') !!}
 {!! HTML::script('assets/global/plugins/select2/js/i18n/es.js') !!}
@@ -168,12 +187,35 @@
 {!! HTML::script('js/js-cliente.js') !!}
 <script>
     $(document).on("ready", function () {
-        $("#ajax").on("loaded.bs.modal", function() {
-            var placeholder = "Seleccionar";
+        var placeholder = "Seleccionar";
 
+        $('.select2').select2({
+            placeholder: placeholder
+        });
+
+        $("#ajax").on("loaded.bs.modal", function() {
             $('.select2').select2({
                 placeholder: placeholder
             });
+        });
+
+        /* FILTRAR */
+        $("#filtrar-facturacion").on("click", function() {
+            $("#filtrar-facturacion-panel").slideToggle();
+        });
+
+        $("#filtrar-facturacion-cancelar").on("click", function() {
+            $("#filtrar-facturacion-panel").slideUp();
+        });
+
+        $(".select2-clear").on("click", function(){
+            var id = $(this).data('id');
+            $("." + id + " .select2").val(null).trigger('change');
+        });
+
+        $(".text-clear").on("click", function(){
+            var id = $(this).data('id');
+            $("." + id + " .form-control").val(null);
         });
     });
 </script>

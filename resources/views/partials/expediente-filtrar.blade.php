@@ -185,7 +185,7 @@
                         <div class="form-group">
                             {!! Form::label('fecha_poder', 'Fecha Poder', ['class' => 'control-label']) !!}
                             <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="dd/mm/yyyy">
-                                {!! Form::text('fecha_termino_from', null, ['class' => 'form-control']) !!}
+                                {!! Form::text('fecha_poder_from', null, ['class' => 'form-control']) !!}
                                 <span class="input-group-addon"> A </span>
                                 {!! Form::text('fecha_poder_to', null, ['class' => 'form-control']) !!}
                                 <span class="input-group-btn">

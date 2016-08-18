@@ -15,7 +15,7 @@ class FacturacionRepo extends BaseRepo {
     public function filterPaginate(Request $request)
     {
         return $this->getModel()
-                    ->clienteId($request->get('cliente'))
+                    ->clienteId($request->get('fil-cliente'))
                     ->comprobanteId($request->get('comprobante_tipo'))
                     ->comprobanteNumero($request->get('comprobante_numero'))
                     ->fecha($request->get('fecha_from'), $request->get('fecha_to'))

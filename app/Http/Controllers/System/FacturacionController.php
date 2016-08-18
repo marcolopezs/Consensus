@@ -54,7 +54,11 @@ class FacturacionController extends Controller {
     {
         $rows = $this->facturacionRepo->filterPaginate($request);
 
-        return view('system.facturacion.list', compact('rows'));
+        $cliente = $this->clienteRepo->orderBy('cliente', 'asc')->lists('cliente', 'id')->toArray();
+        $tipo = $this->comprobanteTipoRepo->estadoListArray();
+        $moneda = $this->moneyRepo->estadoListArray();
+
+        return view('system.facturacion.list', compact('rows','cliente','tipo','moneda'));
     }
 
     public function create()
