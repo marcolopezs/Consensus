@@ -47,7 +47,10 @@ class ExpedienteTipo extends BaseEntity {
             $suma = $horas + $suma;
         }
 
-        $total = number_format($suma / $this->cantidad_expedientes, 0, '.', '');
+        if($this->cantidad_expedientes == 0){ $cantidad = 1; }
+        else{ $cantidad = $this->cantidad_expedientes; }
+
+        $total = number_format($suma / $cantidad, 0, '.', '');
 
         return $total;
     }
