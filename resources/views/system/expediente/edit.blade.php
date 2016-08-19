@@ -141,12 +141,12 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    {!! Form::label('numero_dias', 'Número de Días', ['class' => 'control-label']) !!}
-                                    {!! Form::text('numero_dias', null, ['class' => 'form-control']) !!}
-                                </div>
-                            </div>
+                            {{--<div class="col-md-2">--}}
+                                {{--<div class="form-group">--}}
+                                    {{--{!! Form::label('numero_dias', 'Número de Días', ['class' => 'control-label']) !!}--}}
+                                    {{--{!! Form::text('numero_dias', null, ['class' => 'form-control']) !!}--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
 
                             <div class="col-md-4 input-group date-picker input-daterange" data-date-format="dd/mm/yyyy">
 
@@ -379,31 +379,6 @@
                 var honorario = $("#honorario_hora").val();
                 var importe = horas * honorario;
                 $("#importe").val(importe);
-            });
-
-            //SELECCIONAR SERVICIO
-            $("#servicio").on("change", function() {
-                var id = $(this).val();
-                var url = $(this).data("url").replace(':SERVICE', id);
-                var inicio = $("#fecha_inicio").val();
-
-                $.ajax({
-                    method: 'POST',
-                    url: url,
-                    data: {'fecha_inicio': inicio},
-                    headers: {'X-CSRF-TOKEN' : '{{ csrf_token() }}'},
-                    beforeSend: function (){ $("#progressbar").show(); },
-                    complete: function (){ $("#progressbar").hide(); },
-                    success: function (result){
-                        $("#numero_dias").val(result.dias);
-                        $("#fecha_limite").val(result.fecha);
-                    },
-                    error: function (result){
-                        $("#message-error").show();
-                        $("#message-error p").text("Se produjo un error. Intente de nuevo más tarde.");
-                    }
-                });
-
             });
 
         });
