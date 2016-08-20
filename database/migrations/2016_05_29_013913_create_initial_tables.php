@@ -381,6 +381,10 @@ class CreateInitialTables extends Migration
 
             $table->text('observacion')->nullable();
 
+            $table->string('vehicular_placa_antigua')->nullable();
+            $table->string('vehicular_placa_nueva')->nullable();
+            $table->string('vehicular_siniestro')->nullable();
+
             $table->nullableTimestamps();
             $table->softDeletes();
         });

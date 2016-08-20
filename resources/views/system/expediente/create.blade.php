@@ -341,6 +341,29 @@
 
                             </div>
 
+                            <div id="vehicular_opciones" class="row" @if($errors->first('vehicular_placa_nueva')) style="" @else style="display:none;" @endif>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        {!! Form::label('vehicular_placa_antigua', 'Placa Antigua', ['class' => 'control-label']) !!}
+                                        {!! Form::text('vehicular_placa_antigua', null, ['class' => 'form-control']) !!}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        {!! Form::label('vehicular_placa_nueva', 'Placa Nueva', ['class' => 'control-label']) !!}
+                                        {!! Form::text('vehicular_placa_nueva', null, ['class' => 'form-control']) !!}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        {!! Form::label('vehicular_siniestro', 'Nro Siniestro', ['class' => 'control-label']) !!}
+                                        {!! Form::text('vehicular_siniestro', null, ['class' => 'form-control']) !!}
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="row">
 
                                 <div class="col-md-12">
@@ -400,6 +423,13 @@
             $("#honorario_hora").val(0);
             $("#numero_horas").val(0);
             $("#importe").val(0);
+        });
+
+        //TIPO VEHICULAR
+        $("#expediente_tipo").on("change", function(){
+            var valor = $("#expediente_tipo").val();
+            if(valor == 4){ $("#vehicular_opciones").show(); }
+            else{ $("#vehicular_opciones").hide(); }
         });
 
         //SELECCIONAR TARIFA DE ABOGADO

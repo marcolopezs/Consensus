@@ -120,6 +120,9 @@ return [
         'asistente_id' => [
             'required_if' => 'El campo Asistente es obligatorio cuando ha activado la casilla de Asistente'
         ],
+        'vehicular_placa_nueva' => [
+            'required_if' => 'El campo Placa nueva es obligatorio cuando el tipo de Expediente es Vehicular'
+        ]
     ],
 
     /*
@@ -207,7 +210,10 @@ return [
         'abogado'               => 'Abogado',
         'comprobante_tipo'      => 'Tipo de Comprobante',
         'comprobante_numero'    => 'N° de Comprobante',
-        'importe'               => 'Importe'
+        'importe'               => 'Importe',
+        'vehicular_placa_antigua' => 'Placa antigua',
+        'vehicular_placa_nueva' => 'Placa nueva',
+        'vehicular_siniestro' => 'Nro Siniestro'
     ],
 
 ];

@@ -43,11 +43,11 @@
 
                     <div class="form-body">
 
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <h3 class="form-section">Cliente: <strong>{{ $row->cliente->cliente }}</strong></h3>
                         </div>
 
-                        <div class="col-md-6 -pull-left">
+                        <div class="col-md-12 -pull-left">
                             <h3 class="form-section">Expediente: <strong>{{ $row->expediente }}</strong></h3>
                         </div>
 
@@ -297,6 +297,31 @@
                             </div>
 
                         </div>
+
+                        @if($row->expediente_tipo_id == 4)
+                        <div id="vehicular_opciones" class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    {!! Form::label('vehicular_placa_antigua', 'Placa Antigua', ['class' => 'control-label']) !!}
+                                    {!! Form::text('vehicular_placa_antigua', null, ['class' => 'form-control']) !!}
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    {!! Form::label('vehicular_placa_nueva', 'Placa Nueva', ['class' => 'control-label']) !!}
+                                    {!! Form::text('vehicular_placa_nueva', null, ['class' => 'form-control']) !!}
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    {!! Form::label('vehicular_siniestro', 'Nro Siniestro', ['class' => 'control-label']) !!}
+                                    {!! Form::text('vehicular_siniestro', null, ['class' => 'form-control']) !!}
+                                </div>
+                            </div>
+                        </div>
+                        @endif
 
                         <div class="row">
 

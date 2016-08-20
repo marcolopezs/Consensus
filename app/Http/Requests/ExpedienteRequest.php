@@ -74,7 +74,8 @@ class ExpedienteRequest extends Request
                     'especial' => 'exists:situacion_especial,id',
                     'estado' => 'required|exists:states,id',
                     'exito' => 'exists:exito,id',
-                    'observacion' => 'string'
+                    'observacion' => 'string',
+                    'vehicular_placa_nueva' => 'required_if:expediente_tipo,4',
                 ];
             }
             case 'PUT':

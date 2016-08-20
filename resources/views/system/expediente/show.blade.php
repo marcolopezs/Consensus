@@ -197,6 +197,25 @@
                             </div>
 
                             <div class="form-group">
+                                {!! Form::label('vehicular_placa_antigua', 'Placa Antigua', ['class' => 'control-label col-md-2']) !!}
+                                <div class="col-md-3">
+                                    <p class="form-control-static">{{ $row->vehicular_placa_antigua }}</p>
+                                </div>
+
+                                {!! Form::label('vehicular_placa_nueva', 'Placa Nueva', ['class' => 'control-label col-md-3']) !!}
+                                <div class="col-md-3">
+                                    <p class="form-control-static">{{ $row->vehicular_placa_nueva }}</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                {!! Form::label('vehicular_siniestro', 'Nro Siniestro', ['class' => 'control-label col-md-2']) !!}
+                                <div class="col-md-3">
+                                    <p class="form-control-static">{{ $row->vehicular_siniestro }}</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 {!! Form::label('observacion', 'Observación', ['class' => 'control-label col-md-2']) !!}
                                 <div class="col-md-10">
                                     <p class="form-control-static">{{ $row->observacion }}</p>
