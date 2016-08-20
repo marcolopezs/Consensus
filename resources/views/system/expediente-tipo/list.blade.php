@@ -92,6 +92,7 @@
                                         <ul class="dropdown-menu" role="menu">
                                             @can('update')
                                             <li><a href="{{ route('expediente-tipo.edit', $row_id) }}" data-target="#ajax" data-toggle="modal">Editar</a></li>
+                                            <li><a href="#" class="btn-delete">Eliminar</a></li>
                                             @endcan
                                         </ul>
                                     </div>
@@ -125,12 +126,19 @@
 
     </div>
 
+    {!! Form::open(['route' => ['expediente-tipo.destroy', ':REGISTER'], 'method' => 'DELETE', 'id' => 'FormDeleteRow']) !!}
+    {!! Form::close() !!}
+
 @stop
 
 @section('contenido_footer')
 {{-- BootBox --}}
 {!! HTML::script('assets/global/plugins/bootbox/bootbox.min.js') !!}
 
+{{-- Delete --}}
+{!! HTML::script('js/js-delete.js') !!}
+
 {{-- Cambiar Estado --}}
 {!! HTML::script('js/js-cambiar-estado.js') !!}
+
 @stop

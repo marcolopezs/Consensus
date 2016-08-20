@@ -139,7 +139,7 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
         Route::get('expense-type/exportar/excel', ['as' => 'expense-type.excel', 'uses' => 'ExpenseTypeController@excel']);
 
         //TIPOS DE EXPEDIENTE
-        Route::resource('expediente-tipo', 'ExpedienteTipoController', ['names' => $prefixedResourceNames('expediente-tipo'), 'except' => 'destroy']);
+        Route::resource('expediente-tipo', 'ExpedienteTipoController', ['names' => $prefixedResourceNames('expediente-tipo')]);
         Route::post('expediente-tipo/{id}/estado', ['as' => 'expediente-tipo.estado', 'uses' => 'ExpedienteTipoController@estado']);
         Route::get('expediente-tipo/exportar/excel', ['as' => 'expediente-tipo.excel', 'uses' => 'ExpedienteTipoController@excel']);
 
