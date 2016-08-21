@@ -47,8 +47,7 @@ class UserRequest extends Request
                     'username' => 'required|unique:users,username',
                     'password' => 'required|confirmed',
                     'password_confirmation' => 'required',
-                    'administrador' => 'required_without:abogado',
-                    'abogado' => 'required_without:administrador'
+                    'role' => 'required'
                 ];
             }
             case 'PUT':
@@ -61,8 +60,7 @@ class UserRequest extends Request
                     'username' => 'required|unique:users,username,'.$this->route->getParameter('users'),
                     'password' => 'required|confirmation',
                     'password_confirmation' => 'required',
-                    'administrador' => 'required_without:abogado',
-                    'abogado' => 'required_without:administrador'
+                    'role' => 'required'
                 ];
             }
             default:break;

@@ -57,6 +57,8 @@ class CreateInitialTables extends Migration
             $table->boolean('usuario')->nullable();
             $table->integer('cliente_id')->nullable()->unsigned();
             $table->integer('abogado_id')->nullable()->unsigned();
+            $table->integer('asistente_id')->nullable()->unsigned();
+            $table->boolean('administracion')->nullable();
 
             $table->string('code', 60)->nullable();
             $table->rememberToken();
@@ -273,6 +275,9 @@ class CreateInitialTables extends Migration
 
             $table->string('imagen');
             $table->string('imagen_carpeta');
+
+            $table->boolean('abogado')->nullable();
+            $table->boolean('asistente')->nullable();
 
             $table->boolean('estado');
 

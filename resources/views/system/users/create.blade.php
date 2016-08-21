@@ -75,38 +75,20 @@
                             <div class="col-md-10">
                                 <div class="mt-checkbox-inline">
                                     <label class="mt-checkbox" style="margin-right: 20px;">
-                                        {!! Form::checkbox('administrador', '1', null,  []) !!}
+                                        {!! Form::radio('role', 'admin', null,  []) !!}
                                         Administrador
                                     </label>
-                                    <label class="mt-checkbox">
-                                        {!! Form::checkbox('abogado', '1', true,  []) !!}
+                                    <label class="mt-checkbox" style="margin-right: 20px;">
+                                        {!! Form::radio('role', 'abogado', true,  []) !!}
                                         Abogado
                                     </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            {!! Form::label('roles', 'Permisos', ['class' => 'col-md-2 control-label']) !!}
-                            <div class="col-md-10">
-                                <div class="mt-checkbox-inline">
                                     <label class="mt-checkbox" style="margin-right: 20px;">
-                                        {!! Form::checkbox('usuario_crear', '1', null,  []) !!}
-                                        Crear
+                                        {!! Form::radio('role', 'asistente', null,  []) !!}
+                                        Asistente
                                     </label>
                                     <label class="mt-checkbox" style="margin-right: 20px;">
-                                        {!! Form::checkbox('usuario_editar', '1', null,  []) !!}
-                                        Editar
-                                    </label>
-                                    {{--<label class="mt-checkbox" style="margin-right: 20px;">--}}
-                                        {{--{!! Form::checkbox('usuario_eliminar', '1', null,  []) !!}--}}
-                                        {{--Eliminar--}}
-                                    {{--</label>--}}
-                                    <label class="mt-checkbox" style="margin-right: 20px;">
-                                        {!! Form::checkbox('usuario_exportar', '1', null,  []) !!}
-                                        Exportar
+                                        {!! Form::radio('role', 'administracion', null,  []) !!}
+                                        Administración
                                     </label>
                                 </div>
                             </div>
@@ -169,4 +151,3 @@
 
     });
 </script>
-

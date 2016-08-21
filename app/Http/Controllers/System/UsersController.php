@@ -2,6 +2,7 @@
 
 use Auth;
 use Consensus\Entities\Ajuste;
+use Consensus\Entities\Expediente;
 use Consensus\Entities\TarifaAbogado;
 use Consensus\Entities\Tariff;
 use Consensus\Repositories\AjusteRepo;
@@ -119,22 +120,17 @@ class UsersController extends Controller
      */
     public function store(UserRequest $request)
     {
-        $this->authorize('create');
-
         //VARIABLES
         $nombre_completo = $request->input('nombre')." ".$request->input('apellidos');
-        $inputAdmin = $request->input('administrador');
-        $inputAbogado = $request->input('abogado');
-        $inputCrear = $request->input('usuario_crear');
-        $inputEditar = $request->input('usuario_editar');
-        $inputEliminar = $request->input('usuario_eliminar');
-        $inputExportar = $request->input('usuario_exportar');
+        $inputRole = $request->input('role');
 
-        if( $inputAbogado == 1 ){
+        if($inputRole == "admin"){
             $abog = new Abogado($request->all());
             $abog->nombre = $nombre_completo;
+            $abog->abogado = 1;
+            $abog->asistente = 0;
             $saveAbog = $this->abogadoRepo->create($abog, $request->all());
-            $abogado = $saveAbog->id; $usuario = 0;
+            $abogado = $saveAbog->id;
 
             $tarifas = $this->tariffRepo->all();
 
@@ -145,43 +141,127 @@ class UsersController extends Controller
                 $tarAbogado->save();
             }
 
-        }else{
-            $usuario = 1; $abogado = 0;
+            //GUARDAR USUARIO
+            $user = new User($request->all());
+            $user->admin = 1;
+            $user->abogado_id = $abogado;
+            $user->active = 1;
+            $save = $this->userRepo->create($user, $request->all());
+
+            //GUARDAR PERFIL
+            $profile = new UserProfile($request->all());
+            $profile->user_id = $save->id;
+            $this->userProfileRepo->create($profile, $request->all());
+
+            //CREAR AJUSTES
+            $ajustes = new Ajuste();
+            $ajustes->model = Expediente::class;
+            $ajustes->user_id = $save->id;
+            $ajustes->contenido = '{"ch-expediente":"1","ch-cliente":"1","ch-abogado":"1","ch-servicio":"1","ch-estado":"1"}';
+            $this->ajusteRepo->create($ajustes, $request->all());
+
+            //GUARDAR HISTORIAL
+            $this->userRepo->saveHistory($user, $request, 'create');
+            $this->userProfileRepo->saveHistory($profile, $request, 'create');
+            $this->ajusteRepo->saveHistory($ajustes, $request, 'create');
+
+        }elseif($inputRole == "abogado"){
+            $abog = new Abogado($request->all());
+            $abog->nombre = $nombre_completo;
+            $abog->abogado = 1;
+            $abog->asistente = 0;
+            $saveAbog = $this->abogadoRepo->create($abog, $request->all());
+            $abogado = $saveAbog->id;
+
+            $tarifas = $this->tariffRepo->all();
+
+            foreach($tarifas as $tarifa){
+                $tarAbogado = new TarifaAbogado();
+                $tarAbogado->tariff_id = $tarifa->id;
+                $tarAbogado->abogado_id = $abogado;
+                $tarAbogado->save();
+            }
+
+            //GUARDAR USUARIO
+            $user = new User($request->all());
+            $user->admin = 0;
+            $user->abogado_id = $abogado;
+            $user->active = 1;
+            $save = $this->userRepo->create($user, $request->all());
+
+            //GUARDAR PERFIL
+            $profile = new UserProfile($request->all());
+            $profile->user_id = $save->id;
+            $this->userProfileRepo->create($profile, $request->all());
+
+            //CREAR AJUSTES
+            $ajustes = new Ajuste();
+            $ajustes->model = Expediente::class;
+            $ajustes->user_id = $save->id;
+            $ajustes->contenido = '{"ch-expediente":"1","ch-cliente":"1","ch-abogado":"1","ch-servicio":"1","ch-estado":"1"}';
+            $this->ajusteRepo->create($ajustes, $request->all());
+
+            //GUARDAR HISTORIAL
+            $this->userRepo->saveHistory($user, $request, 'create');
+            $this->userProfileRepo->saveHistory($profile, $request, 'create');
+            $this->ajusteRepo->saveHistory($ajustes, $request, 'create');
+
+        }elseif($inputRole == "asistente"){
+            $abog = new Abogado($request->all());
+            $abog->nombre = $nombre_completo;
+            $abog->abogado = 0;
+            $abog->asistente = 1;
+            $saveAbog = $this->abogadoRepo->create($abog, $request->all());
+            $abogado = $saveAbog->id;
+
+            $tarifas = $this->tariffRepo->all();
+
+            foreach($tarifas as $tarifa){
+                $tarAbogado = new TarifaAbogado();
+                $tarAbogado->tariff_id = $tarifa->id;
+                $tarAbogado->abogado_id = $abogado;
+                $tarAbogado->save();
+            }
+
+            //GUARDAR USUARIO
+            $user = new User($request->all());
+            $user->asistente_id = $abogado;
+            $user->active = 1;
+            $save = $this->userRepo->create($user, $request->all());
+
+            //GUARDAR PERFIL
+            $profile = new UserProfile($request->all());
+            $profile->user_id = $save->id;
+            $this->userProfileRepo->create($profile, $request->all());
+
+            //CREAR AJUSTES
+            $ajustes = new Ajuste();
+            $ajustes->model = Expediente::class;
+            $ajustes->user_id = $save->id;
+            $ajustes->contenido = '{"ch-expediente":"1","ch-cliente":"1","ch-abogado":"1","ch-servicio":"1","ch-estado":"1"}';
+            $this->ajusteRepo->create($ajustes, $request->all());
+
+            //GUARDAR HISTORIAL
+            $this->userRepo->saveHistory($user, $request, 'create');
+            $this->userProfileRepo->saveHistory($profile, $request, 'create');
+            $this->ajusteRepo->saveHistory($ajustes, $request, 'create');
+
+        }elseif($inputRole == "administracion"){
+            //GUARDAR USUARIO
+            $user = new User($request->all());
+            $user->administracion = 1;
+            $user->active = 1;
+            $save = $this->userRepo->create($user, $request->all());
+
+            //GUARDAR PERFIL
+            $profile = new UserProfile($request->all());
+            $profile->user_id = $save->id;
+            $this->userProfileRepo->create($profile, $request->all());
+
+            //GUARDAR HISTORIAL
+            $this->userRepo->saveHistory($user, $request, 'create');
+            $this->userProfileRepo->saveHistory($profile, $request, 'create');
         }
-
-        //GUARDAR USUARIO
-        $user = new User($request->all());
-        $user->admin = $inputAdmin;
-        $user->abogado_id = $abogado;
-        $user->usuario = $usuario;
-        $user->active = 1;
-        $save = $this->userRepo->create($user, $request->all());
-
-        $rol = new UserRole($request->all());
-        $rol->user_id = $save->id;
-        $rol->create = $inputCrear;
-        $rol->update = $inputEditar;
-        $rol->delete = $inputEliminar;
-        $rol->exportar = $inputExportar;
-        $this->userRoleRepo->create($rol, $request->all());
-
-        //GUARDAR PERFIL
-        $profile = new UserProfile($request->all());
-        $profile->user_id = $save->id;
-        $this->userProfileRepo->create($profile, $request->all());
-
-        //CREAR AJUSTES
-        $ajustes = new Ajuste();
-        $ajustes->model = \Consensus\Entities\Expediente::class;
-        $ajustes->user_id = $save->id;
-        $ajustes->contenido = '{"ch-expediente":"1","ch-cliente":"1","ch-abogado":"1","ch-servicio":"1","ch-estado":"1"}';
-        $this->ajusteRepo->create($ajustes, $request->all());
-
-        //GUARDAR HISTORIAL
-        $this->userRepo->saveHistory($user, $request, 'create');
-        $this->userRoleRepo->saveHistory($rol, $request, 'create');
-        $this->userProfileRepo->saveHistory($profile, $request, 'create');
-        $this->ajusteRepo->saveHistory($ajustes, $request, 'create');
 
         //MENSAJE
         $mensaje = 'El registro se agregó satisfactoriamente.';

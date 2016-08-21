@@ -27,7 +27,7 @@ class User extends BaseEntity implements AuthenticatableContract, CanResetPasswo
      *
      * @var array
      */
-    protected $fillable = ['id','username', 'password','active','admin','cliente_id','abogado_id'];
+    protected $fillable = ['id','username', 'password','active','admin','cliente_id','abogado_id','asistente_id','administracion'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -52,6 +52,11 @@ class User extends BaseEntity implements AuthenticatableContract, CanResetPasswo
     public function abogado()
     {
         return $this->belongsTo(Abogado::class);
+    }
+
+    public function asistente()
+    {
+        return $this->belongsTo(Abogado::class, 'asistente_id');
     }
 
     public function cliente()
@@ -109,7 +114,7 @@ class User extends BaseEntity implements AuthenticatableContract, CanResetPasswo
      */
     public function isAdmin()
     {
-        if($this->admin === 1 OR $this->admin === 1 AND $this->isAbogado())
+        if($this->admin === 1)
         {
             return true;
         }
@@ -126,6 +131,22 @@ class User extends BaseEntity implements AuthenticatableContract, CanResetPasswo
     public function isAbogado()
     {
         if($this->abogado_id <> 0)
+        {
+            return true;
+        }
+    }
+
+    public function isAsistente()
+    {
+        if($this->asistente_id <> 0)
+        {
+            return true;
+        }
+    }
+
+    public function isAdministracion()
+    {
+        if($this->administracion === 1)
         {
             return true;
         }
@@ -191,12 +212,14 @@ class User extends BaseEntity implements AuthenticatableContract, CanResetPasswo
      */
     public function getRolAttribute()
     {
-        if($this->admin === 1 AND $this->abogado_id > 0 ){
-            return "Administrador y Abogado";
-        }elseif($this->admin === 1){
+        if($this->admin === 1){
             return "Administrador";
         }elseif($this->abogado_id > 0){
             return "Abogado";
+        }elseif($this->asistente_id > 0){
+            return "Asistente";
+        }elseif($this->administracion === 1){
+            return "Administración";
         }elseif($this->cliente_id > 0){
             return "Cliente";
         }
