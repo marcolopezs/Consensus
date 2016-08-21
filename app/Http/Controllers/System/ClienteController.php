@@ -70,8 +70,6 @@ class ClienteController extends Controller {
 
     public function create()
     {
-        $this->authorize('create');
-
         $pais = $this->paisRepo->estadoListArray();
         $distrito = $this->distritoRepo->estadoListArray();
 
@@ -86,8 +84,6 @@ class ClienteController extends Controller {
      */
     public function store(ClienteRequest $request)
     {
-        $this->authorize('create');
-
         //VARIABLES
         $pais = $request->input('pais');
         $distrito = $request->input('distrito');
@@ -132,8 +128,6 @@ class ClienteController extends Controller {
      */
     public function edit($id)
     {
-        $this->authorize('update');
-
         $row = $this->clienteRepo->findOrFail($id);
         $pais = $this->paisRepo->estadoListArray();
         $distrito = $this->distritoRepo->estadoListArray();
@@ -150,8 +144,6 @@ class ClienteController extends Controller {
      */
     public function update(ClienteRequest $request, $id)
     {
-        $this->authorize('update');
-
         //BUSCAR ID
         $row = $this->clienteRepo->findOrFail($id);
 

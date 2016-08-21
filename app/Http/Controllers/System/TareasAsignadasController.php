@@ -76,7 +76,13 @@ class TareasAsignadasController extends Controller {
 
             return view('system.tareas-asignadas.list', compact('rows','tarea'));
         }
+        elseif(Gate::allows('asistente'))
+        {
+            $rows = $this->tareaRepo->filterPaginateAsistente($request);
+            $tarea = $this->tareaConceptoRepo->estadoListArray();
 
+            return view('system.tareas-asignadas.list', compact('rows','tarea'));
+        }
     }
 
     /**
@@ -97,8 +103,6 @@ class TareasAsignadasController extends Controller {
      */
     public function create($tarea)
     {
-        $this->authorize('create');
-
         $row = $this->tareaRepo->findOrFail($tarea);
 
         return view('system.tareas-asignadas.acciones.create', compact('row'));
@@ -111,8 +115,6 @@ class TareasAsignadasController extends Controller {
      */
     public function store(Request $request, $tarea)
     {
-        $this->authorize('create');
-
         $this->validate($request, $this->rules);
 
         //EXTRAER EXPEDIENTE
@@ -167,8 +169,6 @@ class TareasAsignadasController extends Controller {
      */
     public function edit($tarea, $id)
     {
-        $this->authorize('update');
-
         $row = $this->tareaRepo->findOrFail($tarea);
         $prin = $this->tareaAccionRepo->findOrFail($id);
 
@@ -183,8 +183,6 @@ class TareasAsignadasController extends Controller {
      */
     public function update(Request $request, $tarea, $id)
     {
-        $this->authorize('update');
-
         $this->validate($request, $this->rules);
 
         $row = $this->tareaAccionRepo->findOrFail($id);

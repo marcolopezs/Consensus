@@ -8,7 +8,7 @@ class ExpedientePolicy extends SystemPolicy
 
     public function clienteExpedientes($user, $expediente)
     {
-        return $user->cliente_id === $expediente->cliente_id || $user->isAbogado();
+        return $user->cliente_id === $expediente->cliente_id || $user->isAbogado() || $user->isAsistente();
     }
 
 }

@@ -62,8 +62,6 @@ class TareasController extends Controller {
      */
     public function create($expedientes)
     {
-        $this->authorize('create');
-
         $row = $this->expedienteRepo->findOrFail($expedientes);
         $concepto = $this->tareaConceptoRepo->where('estado',1)->orderBy('titulo', 'asc')->lists('titulo', 'id')->toArray();
         $abogados = $this->abogadoRepo->orderBy('nombre', 'asc')->lists('nombre', 'id')->toArray();
@@ -80,8 +78,6 @@ class TareasController extends Controller {
      */
     public function store($expedientes, Request $request)
     {
-        $this->authorize('create');
-
         //VALIDACION
         $this->validate($request, $this->rules);
 
@@ -135,8 +131,6 @@ class TareasController extends Controller {
      */
     public function edit($expedientes, $id)
     {
-        $this->authorize('update');
-
         $row = $this->expedienteRepo->findOrFail($expedientes);
         $prin = $this->tareaRepo->findOrFail($id);
         $concepto = $this->tareaConceptoRepo->where('estado',1)->orderBy('titulo', 'asc')->lists('titulo', 'id')->toArray();
@@ -155,8 +149,6 @@ class TareasController extends Controller {
      */
     public function update(Request $request, $expedientes, $id)
     {
-        $this->authorize('update');
-
         //BUSCAR ID
         $row = $this->tareaRepo->findOrFail($id);
 

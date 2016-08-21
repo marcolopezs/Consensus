@@ -28,7 +28,7 @@
 
                     <div class="caption">
 
-                        @can('create')
+                        @can('admin')
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="btn-group">

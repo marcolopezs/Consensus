@@ -60,6 +60,8 @@ class ExpedientesController extends Controller {
             $rows = $this->expedienteRepo->filterPaginate($request);
         }elseif(Gate::allows('abogado')){
             $rows = $this->expedienteRepo->filterPaginateAbogado($request);
+        }elseif(Gate::allows('asistente')){
+            $rows = $this->expedienteRepo->filterPaginateAsistente($request);
         }elseif(Gate::allows('cliente')){
             $rows = $this->expedienteRepo->filterPaginateCliente($request);
         }
@@ -76,8 +78,6 @@ class ExpedientesController extends Controller {
      */
     public function create()
     {
-        $this->authorize('create');
-
         return view('system.expediente.create');
     }
 
@@ -89,8 +89,6 @@ class ExpedientesController extends Controller {
      */
     public function store(ExpedienteRequest $request)
     {
-        $this->authorize('create');
-
         //VARIABLES
         $expediente_opcion = $request->input('expediente_opcion');
         $cliente = $request->input('cliente');
@@ -185,8 +183,6 @@ class ExpedientesController extends Controller {
      */
     public function edit($id)
     {
-        $this->authorize('update');
-
         $row = $this->expedienteRepo->findOrFail($id);
 
         return view('system.expediente.edit', compact('row'));
@@ -201,9 +197,6 @@ class ExpedientesController extends Controller {
      */
     public function update(ExpedienteRequest $request, $id)
     {
-        //PERMISO PARA ACTUALIZAR
-        $this->authorize('update');
-
         //BUSCAR ID
         $row = $this->expedienteRepo->findOrFail($id);
 
