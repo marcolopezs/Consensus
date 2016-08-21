@@ -15,7 +15,7 @@ class SystemPolicy
     }
 
     public function menu($user){
-        return $user->isAdmin() || $user->isAbogado();
+        return $user->isAdmin() || $user->isAbogado() || $user->isAsistente();
     }
 
     public function admin($user)
@@ -26,6 +26,11 @@ class SystemPolicy
     public function abogado($user)
     {
         return $user->isAbogado();
+    }
+
+    public function asistente($user)
+    {
+        return $user->isAsistente();
     }
 
     public function cliente($user)
