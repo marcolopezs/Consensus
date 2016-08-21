@@ -8,6 +8,7 @@ $prefixedResourceNames = function($prefix) {
         'show'    => $prefix . '.show',
         'edit'    => $prefix . '.edit',
         'update'  => $prefix . '.update',
+        'destroyView' => $prefix . 'destroyView',
         'destroy' => $prefix . '.destroy'
     ];
 };
@@ -42,6 +43,8 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
 
     //EXPEDIENTES - DOCUMENTOS
     Route::resource('expedientes.documentos', 'ExpDocumentosController', ['except' => 'destroy']);
+    Route::get('expedientes/{expedientes}/documentos/{documentos}/file', ['as' => 'expedientes.documentos.file.get', 'uses' => 'ExpDocumentosController@fileGet']);
+    Route::delete('expedientes/{expedientes}/documentos/{documentos}/file/destroy', ['as' => 'expedientes.documentos.file.destroy', 'uses' => 'ExpDocumentosController@fileDestroy']);
 
     //EXPEDIENTES - INTERVINIENTES
     Route::resource('expedientes.intervinientes', 'IntervinientesController', ['except' => 'destroy']);
@@ -153,6 +156,7 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
     Route::resource('users', 'UsersController', ['except' => 'destroy']);
     Route::put('users/update/admin/{id}', ['as' => 'users.update.admin', 'uses' => 'UsersController@updateAdmin']);
     Route::put('users/update/abogado/{id}', ['as' => 'users.update.abogado', 'uses' => 'UsersController@updateAbogado']);
+    Route::put('users/update/asistente/{id}', ['as' => 'users.update.asistente', 'uses' => 'UsersController@updateAsistente']);
     Route::put('users/update/cliente/{id}', ['as' => 'users.update.cliente', 'uses' => 'UsersController@updateCliente']);
     Route::post('users/{id}/estado', ['as' => 'users.estado', 'uses' => 'UsersController@estado']);
     Route::get('users/exportar/excel', ['as' => 'users.excel', 'uses' => 'UsersController@excel']);

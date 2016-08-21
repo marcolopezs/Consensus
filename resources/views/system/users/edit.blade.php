@@ -7,6 +7,7 @@
     $user_foto_t = "/imagenes/".$row->profile->imagen_carpeta."250x250/".$row->profile->imagen;
     $user_admin = $row->isAdmin();
     $user_abogado = $row->isAbogado();
+    $user_asistente = $row->isAsistente();
     $user_cliente = $row->isCliente();
 @endphp
 
@@ -64,11 +65,13 @@
                             </div>
                             <ul class="nav nav-tabs">
                                 <li class="active"><a href="#info-personal" data-toggle="tab">Información Personal</a></li>
-                                @if($user_abogado)<li><a href="#tarifas" data-toggle="tab">Tarifas</a></li>@endif
-                                <li><a href="#foto" data-toggle="tab">Cambiar foto</a></li>
-                                <li><a href="#clave" data-toggle="tab">Cambiar contraseña</a></li>
                                 @can('admin')
-                                    @if($user_admin OR $user_abogado)
+                                    @if($user_abogado OR $user_asistente)<li><a href="#tarifas" data-toggle="tab">Tarifas</a></li>@endif
+                                @endcan
+                                <li><a href="#foto" data-toggle="tab">Cambiar foto</a></li>
+                                @can('admin')
+                                <li><a href="#clave" data-toggle="tab">Cambiar contraseña</a></li>
+                                    @if($user_admin OR $user_abogado OR $user_asistente)
                                         <li><a href="#permisos" data-toggle="tab">Permisos</a></li>
                                     @endif
                                 @endcan
@@ -248,6 +251,130 @@
                                     </div>
                                 @endif
 
+                                @if($user_asistente)
+                                    @php
+                                    $asistente_nombre = $row->profile->nombre;
+                                    $asistente_apellidos = $row->profile->apellidos;
+                                    $asistente_dni = $row->asistente->dni;
+                                    $asistente_ruc = $row->asistente->ruc;
+                                    $asistente_carnet = $row->asistente->carnet_extranjeria;
+                                    $asistente_pasaporte = $row->asistente->pasaporte;
+                                    $asistente_partida = $row->asistente->partida_nacimiento;
+                                    $asistente_otros = $row->asistente->otros;
+                                    $asistente_email = $row->asistente->email;
+                                    $asistente_telefono = $row->asistente->telefono;
+                                    $asistente_fax = $row->asistente->fax;
+                                    $asistente_direccion = $row->asistente->direccion;
+                                    @endphp
+                                    <div class="tab-pane active" id="info-personal">
+                                        {!! Form::open(['route' => ['users.update.asistente', $row->id], 'method' => 'PUT', 'id' => 'formUserAbogadoUpdate', 'autocomplete' => 'off']) !!}
+
+                                        <div class="form-content info-personal"></div>
+
+                                        <div class="row">
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    {!! Form::label('nombres', 'Nombre', ['class' => 'control-label']) !!}
+                                                    {!! Form::text('nombres', $asistente_nombre, ['class' => 'form-control']) !!}
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    {!! Form::label('apellidos', 'Apellidos', ['class' => 'control-label']) !!}
+                                                    {!! Form::text('apellidos', $asistente_apellidos, ['class' => 'form-control']) !!}
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    {!! Form::label('dni', 'DNI', ['class' => 'control-label']) !!}
+                                                    {!! Form::text('dni', $asistente_dni, ['class' => 'form-control']) !!}
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    {!! Form::label('ruc', 'RUC', ['class' => 'control-label']) !!}
+                                                    {!! Form::text('ruc', $asistente_ruc, ['class' => 'form-control']) !!}
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    {!! Form::label('carnet_extranjeria', 'Carnet de Extranjería', ['class' => 'control-label']) !!}
+                                                    {!! Form::text('carnet_extranjeria', $asistente_carnet, ['class' => 'form-control']) !!}
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    {!! Form::label('pasaporte', 'Pasaporte', ['class' => 'control-label']) !!}
+                                                    {!! Form::text('pasaporte', $asistente_pasaporte, ['class' => 'form-control']) !!}
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    {!! Form::label('partida_nacimiento', 'Partida Nacimiento', ['class' => 'control-label']) !!}
+                                                    {!! Form::text('partida_nacimiento', $asistente_partida, ['class' => 'form-control']) !!}
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    {!! Form::label('otros', 'Otros', ['class' => 'control-label']) !!}
+                                                    {!! Form::text('otros', $asistente_otros, ['class' => 'form-control']) !!}
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    {!! Form::label('email', 'Email', ['class' => 'control-label']) !!}
+                                                    {!! Form::text('email', $asistente_email, ['class' => 'form-control']) !!}
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    {!! Form::label('telefono', 'Teléfono', ['class' => 'control-label']) !!}
+                                                    {!! Form::text('telefono', $asistente_telefono, ['class' => 'form-control']) !!}
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    {!! Form::label('fax', 'Fax', ['class' => 'control-label']) !!}
+                                                    {!! Form::text('fax', $asistente_fax, ['class' => 'form-control']) !!}
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    {!! Form::label('direccion', 'Dirección', ['class' => 'control-label']) !!}
+                                                    {!! Form::text('direccion', $asistente_direccion, ['class' => 'form-control']) !!}
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="margiv-top-10">
+                                            <a href="javascript:;" class="btnUserUpdate btn blue" data-form="formUserAbogadoUpdate"> Guardar cambios</a>
+                                        </div>
+
+                                        {!! Form::close() !!}
+                                    </div>
+                                @endif
+
                                 @if($user_cliente)
                                     @php
                                     $cliente_nombre = $row->profile->nombre;
@@ -373,7 +500,7 @@
                                 @endif
                                 {{-- FIN INFORMACION PERSONAL --}}
 
-                                @if($user_abogado)
+                                @if($user_abogado OR $user_asistente)
                                 {{-- TARIFAS DE ABOGADO --}}
                                 <div class="tab-pane" id="tarifas">
                                     {!! Form::open(['route' => ['abogado.tarifas.update', $row->id],'method' => 'PUT', 'id' => 'formTarifaUpdate', 'autocomplete' => 'off']) !!}
@@ -451,33 +578,45 @@
 
                                 {{-- PERMISOS --}}
                                 @can('admin')
-                                    @if($user_admin OR $user_abogado)
+                                    @if($user_admin OR $user_abogado OR $user_asistente)
                                         <div class="tab-pane" id="permisos">
                                             {!! Form::open(['route' => ['abogado.permisos', $row->id], 'method' => 'POST', 'id' => 'formPermisosUpdate', 'autocomplete' => 'off']) !!}
 
                                                 <div class="form-content cambiar-permisos"></div>
                                                 @php
-                                                    $usuario_crear = $row->role->create;
-                                                    $usuario_editar = $row->role->update;
-                                                    $usuario_exportar = $row->role->exporta;
+                                                    if($row->abogado_id > 0 AND $row->admin == 1){
+                                                        $usuario_admin = 1;
+                                                        $usuario_abogado = 0;
+                                                        $usuario_asistente = 0;
+                                                    }elseif($row->abogado_id > 0 AND $row->admin == 0){
+                                                        $usuario_admin = 0;
+                                                        $usuario_abogado = 1;
+                                                        $usuario_asistente = 0;
+                                                    }elseif($row->asistente_id > 0){
+                                                        $usuario_admin = 0;
+                                                        $usuario_abogado = 0;
+                                                        $usuario_asistente = 1;
+                                                    }
+                                                    $usuario_exportar = $row->yesExport();
                                                 @endphp
+                                                <h3>Tipo de Usuario</h3>
                                                 <table class="table table-light table-hover">
                                                     <tr>
-                                                        <td> Crear nuevos registros </td>
-                                                        <td>
-                                                            <div class="mt-radio-inline">
-                                                                {!! Form::checkbox('usuario_crear', 1, $usuario_crear,  ['class' => 'make-switch', 'data-size' => 'small', 'data-on-text' => '<i class="fa fa-check"></i>', 'data-off-text' => '<i class="fa fa-times"></i>']) !!}
-                                                            </div>
-                                                        </td>
+                                                        <td><label for="administrador">Administrador</label></td>
+                                                        <td>{!! Form::radio('role', 'administrador', $usuario_admin,  ['id' => 'administrador', 'class' => 'make-switch switch-radio1', 'data-size' => 'small', 'data-on-text' => 'SI', 'data-off-text' => 'NO']) !!}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td> Editar registros </td>
-                                                        <td>
-                                                            <div class="mt-radio-inline">
-                                                                {!! Form::checkbox('usuario_editar', 1, $usuario_editar,  ['class' => 'make-switch', 'data-size' => 'small', 'data-on-text' => '<i class="fa fa-check"></i>', 'data-off-text' => '<i class="fa fa-times"></i>']) !!}
-                                                            </div>
-                                                        </td>
+                                                        <td><label for="abogado">Abogado</label></td>
+                                                        <td>{!! Form::radio('role', 'abogado', $usuario_abogado,  ['id' => 'abogado', 'class' => 'make-switch switch-radio1', 'data-size' => 'small', 'data-on-text' => 'SI', 'data-off-text' => 'NO']) !!}</td>
                                                     </tr>
+                                                    <tr>
+                                                        <td><label for="asistente">Asistente</label></td>
+                                                        <td>{!! Form::radio('role', 'asistente', $usuario_asistente,  ['id' => 'asistente', 'class' => 'make-switch switch-radio1', 'data-size' => 'small', 'data-on-text' => 'SI', 'data-off-text' => 'NO']) !!}</td>
+                                                    </tr>
+                                                </table>
+
+                                                <h3>Permisos</h3>
+                                                <table class="table table-light table-hover">
                                                     <tr>
                                                         <td> Exportar a Excel </td>
                                                         <td>

@@ -71,7 +71,7 @@
 
                     <div class="col-md-12 margin-bottom-15">
                         <div class="form-group">
-                            {!! Form::label('roles', 'Tipo de Usuario', ['class' => 'col-md-2 control-label']) !!}
+                            {!! Form::label('role', 'Tipo de Usuario', ['class' => 'col-md-2 control-label']) !!}
                             <div class="col-md-10">
                                 <div class="mt-checkbox-inline">
                                     <label class="mt-checkbox" style="margin-right: 20px;">
@@ -86,9 +86,27 @@
                                         {!! Form::radio('role', 'asistente', null,  []) !!}
                                         Asistente
                                     </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            {!! Form::label('permisos', 'Permisos', ['class' => 'col-md-2 control-label']) !!}
+                            <div class="col-md-10">
+                                <div class="mt-checkbox-inline">
+                                    {{--<label class="mt-checkbox" style="margin-right: 20px;">--}}
+                                        {{--{!! Form::checkbox('usuario_crear', '1', null,  []) !!}--}}
+                                        {{--Crear--}}
+                                    {{--</label>--}}
+                                    {{--<label class="mt-checkbox" style="margin-right: 20px;">--}}
+                                        {{--{!! Form::checkbox('usuario_editar', '1', null,  []) !!}--}}
+                                        {{--Editar--}}
+                                    {{--</label>--}}
                                     <label class="mt-checkbox" style="margin-right: 20px;">
-                                        {!! Form::radio('role', 'administracion', null,  []) !!}
-                                        Administración
+                                        {!! Form::checkbox('usuario_exportar', '1', null,  []) !!}
+                                        Exportar a Excel
                                     </label>
                                 </div>
                             </div>

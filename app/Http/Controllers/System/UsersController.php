@@ -107,8 +107,6 @@ class UsersController extends Controller
      */
     public function create()
     {
-        $this->authorize('create');
-
         return view('system.users.create');
     }
 
@@ -123,6 +121,9 @@ class UsersController extends Controller
         //VARIABLES
         $nombre_completo = $request->input('nombre')." ".$request->input('apellidos');
         $inputRole = $request->input('role');
+        $inputCrear = 1;
+        $inputEditar = 1;
+        $inputExportar = $request->input('usuario_exportar');
 
         if($inputRole == "admin"){
             $abog = new Abogado($request->all());
@@ -153,6 +154,14 @@ class UsersController extends Controller
             $profile->user_id = $save->id;
             $this->userProfileRepo->create($profile, $request->all());
 
+            //GUARDAR ROL
+            $rol = new UserRole($request->all());
+            $rol->user_id = $save->id;
+            $rol->create = $inputCrear;
+            $rol->update = $inputEditar;
+            $rol->exportar = $inputExportar;
+            $this->userRoleRepo->create($rol, $request->all());
+
             //CREAR AJUSTES
             $ajustes = new Ajuste();
             $ajustes->model = Expediente::class;
@@ -163,6 +172,7 @@ class UsersController extends Controller
             //GUARDAR HISTORIAL
             $this->userRepo->saveHistory($user, $request, 'create');
             $this->userProfileRepo->saveHistory($profile, $request, 'create');
+            $this->userRoleRepo->saveHistory($rol, $request, 'create');
             $this->ajusteRepo->saveHistory($ajustes, $request, 'create');
 
         }elseif($inputRole == "abogado"){
@@ -194,6 +204,14 @@ class UsersController extends Controller
             $profile->user_id = $save->id;
             $this->userProfileRepo->create($profile, $request->all());
 
+            //GUARDAR ROL
+            $rol = new UserRole($request->all());
+            $rol->user_id = $save->id;
+            $rol->create = $inputCrear;
+            $rol->update = $inputEditar;
+            $rol->exportar = $inputExportar;
+            $this->userRoleRepo->create($rol, $request->all());
+
             //CREAR AJUSTES
             $ajustes = new Ajuste();
             $ajustes->model = Expediente::class;
@@ -204,6 +222,7 @@ class UsersController extends Controller
             //GUARDAR HISTORIAL
             $this->userRepo->saveHistory($user, $request, 'create');
             $this->userProfileRepo->saveHistory($profile, $request, 'create');
+            $this->userRoleRepo->saveHistory($rol, $request, 'create');
             $this->ajusteRepo->saveHistory($ajustes, $request, 'create');
 
         }elseif($inputRole == "asistente"){
@@ -234,6 +253,14 @@ class UsersController extends Controller
             $profile->user_id = $save->id;
             $this->userProfileRepo->create($profile, $request->all());
 
+            //GUARDAR ROL
+            $rol = new UserRole($request->all());
+            $rol->user_id = $save->id;
+            $rol->create = $inputCrear;
+            $rol->update = $inputEditar;
+            $rol->exportar = $inputExportar;
+            $this->userRoleRepo->create($rol, $request->all());
+
             //CREAR AJUSTES
             $ajustes = new Ajuste();
             $ajustes->model = Expediente::class;
@@ -244,23 +271,9 @@ class UsersController extends Controller
             //GUARDAR HISTORIAL
             $this->userRepo->saveHistory($user, $request, 'create');
             $this->userProfileRepo->saveHistory($profile, $request, 'create');
+            $this->userRoleRepo->saveHistory($rol, $request, 'create');
             $this->ajusteRepo->saveHistory($ajustes, $request, 'create');
 
-        }elseif($inputRole == "administracion"){
-            //GUARDAR USUARIO
-            $user = new User($request->all());
-            $user->administracion = 1;
-            $user->active = 1;
-            $save = $this->userRepo->create($user, $request->all());
-
-            //GUARDAR PERFIL
-            $profile = new UserProfile($request->all());
-            $profile->user_id = $save->id;
-            $this->userProfileRepo->create($profile, $request->all());
-
-            //GUARDAR HISTORIAL
-            $this->userRepo->saveHistory($user, $request, 'create');
-            $this->userProfileRepo->saveHistory($profile, $request, 'create');
         }
 
         //MENSAJE
@@ -291,14 +304,14 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        $this->authorize('update');
-
         $row = $this->userRepo->findOrFail($id);
         $pais = $this->paisRepo->estadoListArray();
         $distrito = $this->distritoRepo->estadoListArray();
 
         if($row->abogado_id > 0){
             $tarifas = $this->tarifaAbogadoRepo->where('abogado_id', $row->abogado_id)->where('estado', 1)->get();
+        }elseif($row->asistente_id > 0){
+            $tarifas = $this->tarifaAbogadoRepo->where('abogado_id', $row->asistente_id)->where('estado', 1)->get();
         }else{
             $tarifas = "";
         }
@@ -315,8 +328,6 @@ class UsersController extends Controller
      */
     public function updateAdmin(Request $request, $id)
     {
-        $this->authorize('update');
-
         $profile = $this->userProfileRepo->where('user_id', $id)->first();
         $this->userProfileRepo->update($profile, $request->all());
 
@@ -338,8 +349,6 @@ class UsersController extends Controller
      */
     public function updateAbogado(Request $request, $id)
     {
-        $this->authorize('update');
-
         //BUSCAR ID
         $row = $this->userRepo->findOrFail($id);
 
@@ -368,6 +377,41 @@ class UsersController extends Controller
     }
 
     /**
+     * UPDATE DE ASISTENTE
+     * @param Request $request
+     * @param $id
+     * @return array
+     */
+    public function updateAsistente(Request $request, $id)
+    {
+        //BUSCAR ID
+        $row = $this->userRepo->findOrFail($id);
+
+        //VARIABLE
+        $nombre = $request->input('nombres');
+        $apellidos = $request->input('apellidos');
+
+        $profile = $this->userProfileRepo->where('user_id', $id)->first();
+        $profile->nombre = $nombre;
+        $profile->apellidos = $apellidos;
+        $this->userProfileRepo->update($profile, $request->all());
+
+        $abogado = $this->abogadoRepo->findOrFail($row->asistente_id);
+        $abogado->nombre = $nombre." ".$apellidos;
+        $this->abogadoRepo->update($abogado, $request->all());
+
+        //GUARDAR HISTORIAL
+        $this->userProfileRepo->saveHistory($profile, $request, 'update');
+        $this->abogadoRepo->saveHistory($abogado, $request, 'update');
+
+        $mensaje = "El registro se actualizo satisfactoriamente.";
+
+        return [
+            'message' => $mensaje,
+        ];
+    }
+
+    /**
      * UPDATE DE CLIENTE
      * @param Request $request
      * @param $id
@@ -375,8 +419,6 @@ class UsersController extends Controller
      */
     public function updateCliente(Request $request, $id)
     {
-        $this->authorize('update');
-
         //BUSCAR ID EN USUARIO / PROFILE / CLIENTE
         $row = $this->userRepo->findOrFail($id);
         $profile = $this->userProfileRepo->where('user_id', $id)->first();
@@ -411,8 +453,13 @@ class UsersController extends Controller
     {
         //BUSCAR ID
         $row = $this->userRepo->findOrFail($id);
+        if($row->abogado_id > 0){
+            $abogado = $row->abogado_id;
+        }elseif($row->asistente_id > 0){
+            $abogado = $row->asistente_id;
+        }
 
-        $tarifas = $this->tarifaAbogadoRepo->where('abogado_id', $row->abogado_id)->get();
+        $tarifas = $this->tarifaAbogadoRepo->where('abogado_id', $abogado)->get();
 
         foreach($tarifas as $tarifa){
             $input = $request->input('tarifa-'.$tarifa->id);
@@ -536,14 +583,56 @@ class UsersController extends Controller
      */
     public function abogadoPermisos(Request $request, $id)
     {
+        $user = $this->userRepo->findOrFail($id);
         $row = $this->userRoleRepo->where('user_id', $id)->first();
 
-        $inputCrear = $request->input('usuario_crear');
-        $inputEditar = $request->input('usuario_editar');
+        if($user->abogado_id == 0 OR $user->abogado_id == NULL){
+            $abogado = $this->abogadoRepo->findOrFail($user->asistente_id);
+        }else{
+            $abogado = $this->abogadoRepo->findOrFail($user->abogado_id);
+        }
+
+        //VARIABLES
+        $inputRole = $request->input('role');
         $inputExportar = $request->input('usuario_exportar');
 
-        $row->create = $inputCrear;
-        $row->update = $inputEditar;
+        //CONDICIONAL DE ROLE
+        if($inputRole == "administrador"){
+            //ACTUALIZAR ABOGADO
+            $abogado->abogado = 1;
+            $abogado->asistente = 0;
+            $save = $this->abogadoRepo->update($abogado, $request->all());
+
+            //ACTUALIZAR ADMIN
+            $user->admin = 1;
+            $user->abogado_id = $save->id;
+            $user->asistente_id = 0;
+            $this->userRepo->update($user, $request->all());
+        }elseif($inputRole == "abogado"){
+            //ACTUALIZAR ABOGADO
+            $abogado->abogado = 1;
+            $abogado->asistente = 0;
+            $save = $this->abogadoRepo->update($abogado, $request->all());
+
+            //ACTUALIZAR ADMIN
+            $user->admin = 0;
+            $user->abogado_id = $save->id;
+            $user->asistente_id = 0;
+            $this->userRepo->update($user, $request->all());
+        }elseif($inputRole == "asistente"){
+            //ACTUALIZAR ABOGADO
+            $abogado->abogado = 0;
+            $abogado->asistente = 1;
+            $save = $this->abogadoRepo->update($abogado, $request->all());
+
+            //ACTUALIZAR ADMIN
+            $user->admin = 0;
+            $user->abogado_id = 0;
+            $user->asistente_id = $save->id;
+            $this->userRepo->update($user, $request->all());
+        }
+
+        //UPDATE DE ROLE
         $row->exporta = $inputExportar;
         $this->userRoleRepo->update($row, $request->all());
 

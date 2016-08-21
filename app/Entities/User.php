@@ -27,7 +27,7 @@ class User extends BaseEntity implements AuthenticatableContract, CanResetPasswo
      *
      * @var array
      */
-    protected $fillable = ['id','username', 'password','active','admin','cliente_id','abogado_id','asistente_id','administracion'];
+    protected $fillable = ['id','username', 'password','active','admin','cliente_id','abogado_id','asistente_id'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -98,6 +98,10 @@ class User extends BaseEntity implements AuthenticatableContract, CanResetPasswo
             case '3':
                 $query->where('cliente_id', '>', '0');
                 break;
+
+            case '4':
+                $query->where('asistente_id', '>', '0');
+                break;
         }
     }
 
@@ -139,14 +143,6 @@ class User extends BaseEntity implements AuthenticatableContract, CanResetPasswo
     public function isAsistente()
     {
         if($this->asistente_id <> 0)
-        {
-            return true;
-        }
-    }
-
-    public function isAdministracion()
-    {
-        if($this->administracion === 1)
         {
             return true;
         }
@@ -218,8 +214,6 @@ class User extends BaseEntity implements AuthenticatableContract, CanResetPasswo
             return "Abogado";
         }elseif($this->asistente_id > 0){
             return "Asistente";
-        }elseif($this->administracion === 1){
-            return "Administración";
         }elseif($this->cliente_id > 0){
             return "Cliente";
         }
