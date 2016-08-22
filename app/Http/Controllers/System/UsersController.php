@@ -159,7 +159,7 @@ class UsersController extends Controller
             $rol->user_id = $save->id;
             $rol->create = $inputCrear;
             $rol->update = $inputEditar;
-            $rol->exportar = $inputExportar;
+            $rol->exporta = $inputExportar;
             $this->userRoleRepo->create($rol, $request->all());
 
             //CREAR AJUSTES
@@ -209,7 +209,7 @@ class UsersController extends Controller
             $rol->user_id = $save->id;
             $rol->create = $inputCrear;
             $rol->update = $inputEditar;
-            $rol->exportar = $inputExportar;
+            $rol->exporta = $inputExportar;
             $this->userRoleRepo->create($rol, $request->all());
 
             //CREAR AJUSTES
@@ -258,7 +258,7 @@ class UsersController extends Controller
             $rol->user_id = $save->id;
             $rol->create = $inputCrear;
             $rol->update = $inputEditar;
-            $rol->exportar = $inputExportar;
+            $rol->exporta = $inputExportar;
             $this->userRoleRepo->create($rol, $request->all());
 
             //CREAR AJUSTES
