@@ -67,7 +67,7 @@
                         </div>
                     </div>
 
-                    @cannot('abogado')
+                    @can('admin')
                     <div class="col-abogado col-md-3">
                         <div class="form-group">
                             {!! Form::label('abogado', 'Abogado', ['class' => 'control-label']) !!}

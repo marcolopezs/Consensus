@@ -135,9 +135,9 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <ul class="mega-menu-submenu">
-                                                        @cannot('abogado')<li {!! (Request::is('options/area*') ? 'class="active"' : '') !!}><a href="{{ route('area.index') }}">Áreas</a></li>@endcan
+                                                        @can('admin')<li {!! (Request::is('options/area*') ? 'class="active"' : '') !!}><a href="{{ route('area.index') }}">Áreas</a></li>@endcan
                                                         <li {!! (Request::is('cliente*') ? 'class="active"' : '') !!}><a href="{{ route('cliente.index') }}">Clientes</a></li>
-                                                        @cannot('abogado')
+                                                        @can('admin')
                                                         <li {!! (Request::is('facturacion*') ? 'class="active"' : '') !!}><a href="{{ route('facturacion.index') }}">Comprobantes de Pago</a></li>
                                                         <li {!! (Request::is('configuracion*') ? 'class="active"' : '') !!}><a href="{{ route('system.conf') }}">Configuración</a></li>
                                                         <li {!! (Request::is('options/entity*') ? 'class="active"' : '') !!}><a href="{{ route('entity.index') }}">Entidades</a></li>
@@ -148,7 +148,7 @@
                                                         @endcan
                                                     </ul>
                                                 </div>
-                                                @cannot('abogado')
+                                                @can('admin')
                                                 <div class="col-md-6">
                                                     <ul class="mega-menu-submenu">
                                                         <li {!! (Request::is('options/matter*') ? 'class="active"' : '') !!}><a href="{{ route('matter.index') }}">Materias</a></li>
