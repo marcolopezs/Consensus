@@ -130,6 +130,14 @@ class Tarea extends BaseEntity {
         }
     }
 
+    public function scopeAsistenteId($query, $value)
+    {
+        if($value != "")
+        {
+            $query->where(Tarea::getTable().'.asistente_id', $value);
+        }
+    }
+
     public function scopeConcepto($query, $value)
     {
         if($value != "")
