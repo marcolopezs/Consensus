@@ -47,6 +47,7 @@ class ExpedienteRepo extends BaseRepo {
     {
         return $this->getModel()
                     ->where('abogado_id', auth()->user()->abogado_id)
+                    ->orWhere('asistente_id', auth()->user()->abogado_id)
                     ->expediente($request->get('expediente'))
                     ->clienteId($request->get('cliente'))
                     ->monedaId($request->get('moneda'))
