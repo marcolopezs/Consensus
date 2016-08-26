@@ -16,7 +16,8 @@ class Kernel extends ConsoleKernel
         Commands\Import::class,
         Commands\Notificaciones::class,
         Commands\TareaNotificacionAsignado::class,
-        Commands\TareaNotificacionAsignadoLista::class
+        Commands\TareaNotificacionAsignadoLista::class,
+        Commands\Prueba::class
     ];
 
     /**
