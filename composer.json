@@ -13,7 +13,8 @@
         "maatwebsite/excel": "^2.1",
         "nesbot/carbon": "^1.21",
         "jenssegers/date": "^3.2",
-        "barryvdh/laravel-dompdf": "0.6.*"
+        "barryvdh/laravel-dompdf": "0.6.*",
+        "guzzlehttp/guzzle": "~5.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
