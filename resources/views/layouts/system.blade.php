@@ -135,22 +135,25 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <ul class="mega-menu-submenu">
-                                                        @can('admin')<li {!! (Request::is('options/area*') ? 'class="active"' : '') !!}><a href="{{ route('area.index') }}">Áreas</a></li>@endcan
+                                                        @can('admin')
+                                                        <li {!! (Request::is('options/area*') ? 'class="active"' : '') !!}><a href="{{ route('area.index') }}">Áreas</a></li>
+                                                        @endcan
                                                         <li {!! (Request::is('cliente*') ? 'class="active"' : '') !!}><a href="{{ route('cliente.index') }}">Clientes</a></li>
                                                         @can('admin')
                                                         <li {!! (Request::is('facturacion*') ? 'class="active"' : '') !!}><a href="{{ route('facturacion.index') }}">Comprobantes de Pago</a></li>
+                                                        <li {!! (Request::is('options/tarea-concepto*') ? 'class="active"' : '') !!}><a href="{{ route('tarea-concepto.index') }}">Conceptos de Tarea</a></li>
                                                         <li {!! (Request::is('configuracion*') ? 'class="active"' : '') !!}><a href="{{ route('system.conf') }}">Configuración</a></li>
                                                         <li {!! (Request::is('options/entity*') ? 'class="active"' : '') !!}><a href="{{ route('entity.index') }}">Entidades</a></li>
                                                         <li {!! (Request::is('options/state*') ? 'class="active"' : '') !!}><a href="{{ route('state.index') }}">Estado</a></li>
                                                         <li {!! (Request::is('options/payment*') ? 'class="active"' : '') !!}><a href="{{ route('payment-method.index') }}">Formas de Pago</a></li>
                                                         <li {!! (Request::is('options/instance*') ? 'class="active"' : '') !!}><a href="{{ route('instance.index') }}">Instancias</a></li>
-                                                        <li {!! (Request::is('options/intervener*') ? 'class="active"' : '') !!}><a href="{{ route('intervener.index') }}">Intervinientes</a></li>
                                                         @endcan
                                                     </ul>
                                                 </div>
                                                 @can('admin')
                                                 <div class="col-md-6">
                                                     <ul class="mega-menu-submenu">
+                                                        <li {!! (Request::is('options/intervener*') ? 'class="active"' : '') !!}><a href="{{ route('intervener.index') }}">Intervinientes</a></li>
                                                         <li {!! (Request::is('options/matter*') ? 'class="active"' : '') !!}><a href="{{ route('matter.index') }}">Materias</a></li>
                                                         <li {!! (Request::is('options/service*') ? 'class="active"' : '') !!}><a href="{{ route('service.index') }}">Servicios</a></li>
                                                         <li {!! (Request::is('options/tariff*') ? 'class="active"' : '') !!}><a href="{{ route('tariff.index') }}">Tarifas</a></li>

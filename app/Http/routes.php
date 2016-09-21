@@ -146,6 +146,10 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
         Route::post('expediente-tipo/{id}/estado', ['as' => 'expediente-tipo.estado', 'uses' => 'ExpedienteTipoController@estado']);
         Route::get('expediente-tipo/exportar/excel', ['as' => 'expediente-tipo.excel', 'uses' => 'ExpedienteTipoController@excel']);
 
+        //TAREAS - CONCEPTOS
+        Route::resource('tarea-concepto', 'TareaConceptoController', ['names' => $prefixedResourceNames('tarea-concepto'), 'except' => 'destroy']);
+        Route::post('tarea-concepto/{id}/estado', ['as' => 'tarea-concepto.estado', 'uses' => 'TareaConceptoController@estado']);
+        Route::get('tarea-concepto/exportar/excel', ['as' => 'tarea-concepto.excel', 'uses' => 'TareaConceptoController@excel']);
     });
 
     //FACTURACION
