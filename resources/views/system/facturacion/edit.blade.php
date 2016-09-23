@@ -1,3 +1,10 @@
+@php
+    $fact_cliente = $row->cliente_id;
+    $fact_expediente = $row->expediente_id;
+    $fact_tipo = $row->comprobante_tipo_id;
+    $fact_moneda = $row->money_id;
+    $fact_descargar = $row->url_descargar;
+@endphp
 <div class="modal-header">
     <h4 class="modal-title">Editar registro</h4>
 </div>
@@ -16,14 +23,14 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             {!! Form::label('cliente', 'Cliente', ['class' => 'control-label']) !!}
-                            {!! Form::select('cliente', [''=>''] + $cliente, $row->cliente_id, ['class' => 'form-control select2']) !!}
+                            {!! Form::select('cliente', [''=>''] + $cliente, $fact_cliente, ['class' => 'form-control select2']) !!}
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group">
                             {!! Form::label('expediente', 'Expediente', ['class' => 'control-label']) !!}
-                            {!! Form::select('expediente', [''=>''] + $expediente, $row->expediente_id, ['class' => 'form-control select2']) !!}
+                            {!! Form::select('expediente', [''=>''] + $expediente, $fact_expediente, ['class' => 'form-control select2']) !!}
                         </div>
                     </div>
 
@@ -37,7 +44,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             {!! Form::label('comprobante_tipo', 'Tipo Comprobante', ['class' => 'control-label']) !!}
-                            {!! Form::select('comprobante_tipo', [''=>''] + $tipo, $row->comprobante_tipo_id, ['class' => 'form-control select2']) !!}
+                            {!! Form::select('comprobante_tipo', [''=>''] + $tipo, $fact_tipo, ['class' => 'form-control select2']) !!}
                         </div>
                     </div>
 
@@ -51,7 +58,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             {!! Form::label('moneda', 'Moneda', ['class' => 'control-label']) !!}
-                            {!! Form::select('moneda', [''=>''] + $moneda, $row->money_id, ['class' => 'form-control select2']) !!}
+                            {!! Form::select('moneda', [''=>''] + $moneda, $fact_moneda, ['class' => 'form-control select2']) !!}
                         </div>
                     </div>
 
@@ -62,10 +69,25 @@
                         </div>
                     </div>
 
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="form-group">
                             {!! Form::label('descripcion', 'Descripción', ['class' => 'control-label']) !!}
-                            {!! Form::textarea('descripcion', null, ['class' => 'form-control', 'rows' => '5']) !!}
+                            {!! Form::textarea('descripcion', null, ['class' => 'form-control', 'rows' => '8']) !!}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {!! Form::label('file', 'Documento', ['class' => 'control-label']) !!}
+                            @if($fact_descargar <> "")
+                                <a href="{{ $fact_descargar }}">
+                                    <i class="fa fa-download" aria-hidden="true"></i> Descargar
+                                </a>
+                            @endif
+                            <div class="dropzone"></div>
+                            @if($fact_descargar <> "")
+                                <p class="font-red-mint margin-top-10 margin-bottom-10">Actualmente ya existe un archivo, en caso de subir uno nuevo, se reemplazará el archivo actual.</p>
+                            @endif
                         </div>
                     </div>
 
@@ -116,22 +138,39 @@
 </script>
 
 <script>
+    var archivo = '';
+    var carpeta = '';
+
+    var myDropzone = new Dropzone(".dropzone", {
+        dictDefaultMessage: 'Da clic para seleccionar el archivo',
+        dictMaxFilesExceeded: 'No se puede cargar más archivos',
+        url: "{{ route('documentos.upload') }}",
+        method: 'POST',
+        headers: {'X-CSRF-Token': '{!! csrf_token() !!}'},
+        maxFiles: 1,
+        success: function (file, result) {
+            archivo = result.archivo;
+            carpeta = result.carpeta;
+        }
+    });
+
     $("#formCreateSubmit").on("click", function(e){
         e.preventDefault();
 
         var form = $("#formCreate");
         var url = form.attr('action');
-        var data = form.serialize();
+        var data = form.serialize()+'&documento='+archivo+'&carpeta='+carpeta;
 
         $.ajax({
             url: url,
             type: 'POST',
             data: data,
             success: function (result) {
-                var successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>'+result.message+'</div>';
+                var successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>El registro se actualizó satisfactoriamente.</div>';
                 $(".form-content").html(successHtml);
 
                 $("#facturacion-select-"+ result.id).remove();
+                myDropzone.removeAllFiles(); archivo = ""; carpeta = "";
 
                 var html = '<tr id="facturacion-select-'+ result.id +'">' +
                         '<td>'+ result.cliente +'</td>' +

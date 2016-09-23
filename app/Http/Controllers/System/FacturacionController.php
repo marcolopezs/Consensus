@@ -96,8 +96,11 @@ class FacturacionController extends Controller {
         $row->money_id = $moneda;
         $save = $this->facturacionRepo->create($row, $request->all());
 
-        //GUARDANDO DOCUMENTO
-        $this->facturacionRepo->saveDocumento($row, $request, 'create');
+        //GUARDAR DOCUMENTO
+        if($request->input('documento') <> ""){
+            $this->facturacionRepo->saveDocumento($row, $request, 'create');
+            $this->facturacionRepo->saveHistoryDocumento($row, $request, 'create');
+        }
 
         //GUARDAR HISTORIAL
         $this->facturacionRepo->saveHistory($row, $request, 'create');
@@ -171,6 +174,12 @@ class FacturacionController extends Controller {
         $row->comprobante_tipo_id = $tipo;
         $row->money_id = $moneda;
         $save = $this->facturacionRepo->update($row, $request->all());
+
+        //GUARDAR DOCUMENTO
+        if($request->input('documento') <> ""){
+            $this->facturacionRepo->saveDocumento($row, $request, 'create');
+            $this->facturacionRepo->saveHistoryDocumento($row, $request, 'create');
+        }
 
         //GUARDAR HISTORIAL
         $this->facturacionRepo->saveHistory($row, $request, 'update');
