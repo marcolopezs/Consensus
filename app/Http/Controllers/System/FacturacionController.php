@@ -96,16 +96,14 @@ class FacturacionController extends Controller {
         $row->money_id = $moneda;
         $save = $this->facturacionRepo->create($row, $request->all());
 
-        //GUARDANDO DOCUMENTO
-        $this->facturacionRepo->saveDocumento($row, $request, 'create');
+        //GUARDAR DOCUMENTO
+        if($request->input('documento') <> ""){
+            $this->facturacionRepo->saveDocumento($row, $request, 'create');
+            $this->facturacionRepo->saveHistoryDocumento($row, $request, 'create');
+        }
 
         //GUARDAR HISTORIAL
         $this->facturacionRepo->saveHistory($row, $request, 'create');
-
-        //GUARDAR HISTORIAL DE DOCUMENTO
-        if($request->input('documento') <> ""){
-            $this->facturacionRepo->saveHistoryDocumento($row, $request, 'create');
-        }
 
         return [
             'id' => $save->id,
@@ -177,16 +175,14 @@ class FacturacionController extends Controller {
         $row->money_id = $moneda;
         $save = $this->facturacionRepo->update($row, $request->all());
 
-        //GUARDANDO DOCUMENTO
-        $this->facturacionRepo->saveDocumento($row, $request, 'create');
+        //GUARDAR DOCUMENTO
+        if($request->input('documento') <> ""){
+            $this->facturacionRepo->saveDocumento($row, $request, 'create');
+            $this->facturacionRepo->saveHistoryDocumento($row, $request, 'create');
+        }
 
         //GUARDAR HISTORIAL
         $this->facturacionRepo->saveHistory($row, $request, 'update');
-
-        //GUARDAR HISTORIAL DE DOCUMENTO
-        if($request->input('documento') <> ""){
-            $this->facturacionRepo->saveHistoryDocumento($row, $request, 'create');
-        }
 
         return [
             'id' => $save->id,
