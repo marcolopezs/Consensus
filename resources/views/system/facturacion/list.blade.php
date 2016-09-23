@@ -88,6 +88,7 @@
                                 <th>Importe</th>
                                 <th style="width: 130px;">Expediente</th>
                                 <th>Descripción</th>
+                                <th width="100">Documento</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -103,8 +104,8 @@
                                 $row_moneda = $item->money->titulo;
                                 $row_importe = $item->importe;
                                 $row_descripcion = substr($item->descripcion, 0, 30)."...";
-                                if($item->expediente_id > 0){ $row_expediente = $item->expedientes->expediente; }
-                                else{ $row_expediente = ""; }
+                                $item->expediente_id > 0 ? $row_expediente = $item->expedientes->expediente : $row_expediente = "";
+                                $row_descargar = $item->url_descargar;
                             @endphp
                             <tr id="facturacion-select-{{ $row_id }}" class="odd gradeX" data-id="{{ $row_id }}" data-title="{{ $row_cliente }}">
                                 <td>{{ $row_cliente }}</td>
@@ -115,6 +116,13 @@
                                 <td class="text-center">{{ $row_importe }}</td>
                                 <td class="text-center">{{ $row_expediente }}</td>
                                 <td>{{ $row_descripcion }}</td>
+                                <td>
+                                    @if($row_descargar <> "")
+                                    <a href="{{ $row_descargar }}">
+                                        <i class="fa fa-download" aria-hidden="true"></i> Descargar
+                                    </a>
+                                    @endif
+                                </td>
                                 <td class="text-center">
                                     <div class="btn-group">
                                         <button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Movimientos

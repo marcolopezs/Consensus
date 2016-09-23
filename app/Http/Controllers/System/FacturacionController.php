@@ -96,6 +96,9 @@ class FacturacionController extends Controller {
         $row->money_id = $moneda;
         $save = $this->facturacionRepo->create($row, $request->all());
 
+        //GUARDANDO DOCUMENTO
+        $this->facturacionRepo->saveDocumento($row, $request, 'create');
+
         //GUARDAR HISTORIAL
         $this->facturacionRepo->saveHistory($row, $request, 'create');
 

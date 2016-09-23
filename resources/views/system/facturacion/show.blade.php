@@ -60,10 +60,23 @@
                             </div>
                         </div>
 
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 {!! Form::label('descripcion', 'Descripción', ['class' => 'control-label']) !!}
                                 {!! Form::textarea('descripcion', null, ['class' => 'form-control', 'readonly', 'rows' => '5']) !!}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {!! Form::label('file', 'Documento', ['class' => 'control-label']) !!}
+                                @if($row->url_descargar <> "")
+                                <p>
+                                    <a href="{{ $row->url_descargar }}">
+                                        <i class="fa fa-download" aria-hidden="true"></i> Descargar
+                                    </a>
+                                </p>
+                                @endif
                             </div>
                         </div>
 
