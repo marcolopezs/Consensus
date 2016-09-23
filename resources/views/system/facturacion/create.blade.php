@@ -62,10 +62,17 @@
                             </div>
                         </div>
 
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 {!! Form::label('descripcion', 'Descripción', ['class' => 'control-label']) !!}
-                                {!! Form::textarea('descripcion', null, ['class' => 'form-control', 'rows' => '5']) !!}
+                                {!! Form::textarea('descripcion', null, ['class' => 'form-control', 'rows' => '7']) !!}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {!! Form::label('file', 'Documento', ['class' => 'control-label']) !!}
+                                <div class="dropzone"></div>
                             </div>
                         </div>
 
@@ -120,12 +127,28 @@
 </script>
 
 <script>
+    var archivo = '';
+    var carpeta = '';
+
+    var myDropzone = new Dropzone(".dropzone", {
+        dictDefaultMessage: 'Da clic para seleccionar el archivo',
+        dictMaxFilesExceeded: 'No se puede cargar más archivos',
+        url: "{{ route('documentos.upload') }}",
+        method: 'POST',
+        headers: {'X-CSRF-Token': '{!! csrf_token() !!}'},
+        maxFiles: 1,
+        success: function (file, result) {
+            archivo = result.archivo;
+            carpeta = result.carpeta;
+        }
+    });
+
     $("#formCreateSubmit").on("click", function(e){
         e.preventDefault();
 
         var form = $("#formCreate");
         var url = form.attr('action');
-        var data = form.serialize();
+        var data = form.serialize()+'&documento='+archivo+'&carpeta='+carpeta;
 
         $.ajax({
             url: url,
@@ -136,6 +159,7 @@
                 $(".form-content").html(successHtml);
                 $(".select2").val(null).trigger('change');
                 form[0].reset();
+                myDropzone.removeAllFiles();
 
                 var html = '<tr id="facturacion-select-'+ result.id +'">' +
                             '<td>'+ result.cliente +'</td>' +

@@ -8,7 +8,7 @@ class Facturacion extends BaseEntity {
 
     protected $dates = ['deleted_at'];
     protected $fillable = ['cliente_id','expediente_id','comprobante_tipo_id','comprobante_numero','fecha','money_id','importe','descripcion'];
-    protected $appends = ['url_ver','url_editar'];
+    protected $appends = ['url_ver','url_editar','url_descargar'];
     protected $table = 'facturacion';
 
     /*
@@ -64,6 +64,16 @@ class Facturacion extends BaseEntity {
     public function getUrlEditarAttribute()
     {
         return route('facturacion.edit', $this->id);
+    }
+
+    public function getUrlDescargarAttribute()
+    {
+        $documento = $this->documentos->first();
+        if($documento <> ""){
+            return route('documentos.download', $documento['id']);
+        }else{
+            return "";
+        }
     }
 
     /*
