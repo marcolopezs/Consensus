@@ -142,6 +142,7 @@
                         '<td>'+ result.importe +'</td>' +
                         '<td>'+ result.expediente +'</td>' +
                         '<td>'+ result.descripcion +'</td>' +
+                        '<td></td>' +
                         '<td class="text-center">' +
                         '<div class="btn-group">' +
                         '<button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Movimientos' +
