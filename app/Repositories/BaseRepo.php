@@ -368,6 +368,18 @@ abstract class BaseRepo {
         ]);
     }
 
+    public function saveHistoryDocumento($entity, Request $request, $type)
+    {
+        $contenido = json_encode($request->only(['documento','carpeta']));
+
+        $entity->histories()->create([
+            'user_id' => auth()->user()->id,
+            'type' => $type,
+            'opcion' => 'file',
+            'descripcion' => $contenido
+        ]);
+    }
+
     //GUARDAR HISTORIAL DE DOCUMENTO
     public function saveDocumento($entity, Request $request, $type)
     {

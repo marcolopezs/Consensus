@@ -159,7 +159,7 @@
                 $(".form-content").html(successHtml);
                 $(".select2").val(null).trigger('change');
                 form[0].reset();
-                myDropzone.removeAllFiles();
+                myDropzone.removeAllFiles(); archivo = ""; carpeta = "";
 
                 var html = '<tr id="facturacion-select-'+ result.id +'">' +
                             '<td>'+ result.cliente +'</td>' +
