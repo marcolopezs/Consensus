@@ -8,7 +8,7 @@ class Facturacion extends BaseEntity {
 
     protected $dates = ['deleted_at'];
     protected $fillable = ['cliente_id','expediente_id','comprobante_tipo_id','comprobante_numero','fecha','money_id','importe','descripcion'];
-    protected $appends = ['url_ver','url_editar','url_descargar'];
+    protected $appends = ['url_ver','url_editar','url_descargar','tipo_comprobante','moneda'];
     protected $table = 'facturacion';
 
     /*
@@ -74,6 +74,16 @@ class Facturacion extends BaseEntity {
         }else{
             return "";
         }
+    }
+
+    public function getTipoComprobanteAttribute()
+    {
+        return $this->comprobante_tipo->titulo;
+    }
+
+    public function getMonedaAttribute()
+    {
+        return $this->money->titulo;
     }
 
     /*

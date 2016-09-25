@@ -41,6 +41,9 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
     Route::post('expedientes/abogado/{abogado}/tarifa/{tarifa}', ['as' => 'expedientes.abogado.tarifa', 'uses' => 'ExpedientesController@abogadoTarifa']);
     Route::get('expedientes/exportar/excel', ['as' => 'expedientes.excel', 'uses' => 'ExpedientesController@excel']);
 
+    //EXPEDIENTES - COMPROBANTES
+    Route::resource('expedientes.comprobantes', 'ExpComprobantesController', ['only' => 'index']);
+
     //EXPEDIENTES - DOCUMENTOS
     Route::resource('expedientes.documentos', 'ExpDocumentosController', ['except' => 'destroy']);
     Route::get('expedientes/{expedientes}/documentos/{documentos}/file', ['as' => 'expedientes.documentos.file.get', 'uses' => 'ExpDocumentosController@fileGet']);

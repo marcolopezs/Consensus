@@ -66,6 +66,11 @@ class Expediente extends BaseEntity {
         return $this->hasMany(ExpedienteDocumento::class);
     }
 
+    public function expFacturacion()
+    {
+        return $this->hasMany(Facturacion::class);
+    }
+
     public function tariff()
     {
         return $this->belongsTo(Tariff::class);

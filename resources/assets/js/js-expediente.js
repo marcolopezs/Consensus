@@ -343,3 +343,69 @@ $(".expediente-documento").on("click", function(e) {
     });
 
 });
+
+//MOSTRAR COMPROBANTES DE PAGO DE EXPEDIENTE
+$(".expediente-comprobantes").on("click", function(e) {
+    e.preventDefault();
+
+    var id = $(this).data('id');
+    var list = $(this).data('list');
+    var create = $(this).data('create');
+
+    $.ajax({
+        url: list,
+        type: 'GET',
+        success: function(result){
+            console.log(result);
+            var html = '<tr id="comprobante-'+id+'" class="bg-default" style="display:none;"><td style="padding:20px 15px;" colspan="23">' +
+                '<div class="btn-group pull-left">' +
+                '<h3 class="table-title">Comprobantes de Pago</h3>' +
+                '</div>' +
+                '<div class="btn-group pull-right table-botones">' +
+                '<a class="btn sbold white comprobante-cerrar" href="#" data-id="'+id+'"> Cerrar </a>' +
+                '</div>' +
+                '<table id="comprobante-lista-'+id+'" class="table table-striped table-bordered table-hover order-column">' +
+                '<thead>' +
+                '<tr role="row" class="heading">' +
+                    '<td>Tipo de Comprobante</td>' +
+                    '<td>N° de Comprobante</td>' +
+                    '<td>Fecha</td>' +
+                    '<td>Moneda</td>' +
+                    '<td>Importe</td>' +
+                    '<td>Documento</td>' +
+                '</tr>' +
+                '</thead>' +
+                '<tbody>' +
+                '</tbody>' +
+                '</table>' +
+                '</td></tr>';
+
+            $("#exp-" + id).after(html);
+            $("#comprobante-" + id).fadeIn();
+
+            var tr;
+            $.each(JSON.parse(result), function(idx, obj) {
+                tr = $('<tr id="comprobante-select-'+ obj.id +'">');
+                tr.append('<td>'+ obj.tipo_comprobante +'</td>');
+                tr.append('<td>'+ obj.comprobante_numero +'</td>');
+                tr.append('<td>'+ obj.fecha +'</td>');
+                tr.append('<td>'+ obj.moneda +'</td>');
+                tr.append('<td>'+ obj.importe +'</td>');
+                tr.append('<td class="text-center"><a href="'+ obj.url_descargar +'">Descargar</a></td>');
+                $("#comprobante-lista-"+id+" tbody").prepend(tr);
+            });
+
+            $(".comprobante-cerrar").on("click", function (e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                $("#comprobante-" + id).fadeOut();
+            });
+        },
+        beforeSend: function () { $('.progress').show(); },
+        complete: function () { $('.progress').hide(); },
+        error: function(result) {
+            console.log(result)
+        }
+    });
+
+});

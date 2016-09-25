@@ -98,10 +98,10 @@
                             @php
                                 $row_id = $item->id;
                                 $row_cliente = $item->cliente->nombre;
-                                $row_comprobante_tipo = $item->comprobante_tipo->titulo;
+                                $row_comprobante_tipo = $item->tipo_comprobante;
                                 $row_comprobante_numero = $item->comprobante_numero;
                                 $row_fecha = $item->fecha;
-                                $row_moneda = $item->money->titulo;
+                                $row_moneda = $item->moneda;
                                 $row_importe = $item->importe;
                                 $row_descripcion = substr($item->descripcion, 0, 30)."...";
                                 $item->expediente_id > 0 ? $row_expediente = $item->expedientes->expediente : $row_expediente = "";
