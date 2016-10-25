@@ -1,7 +1,7 @@
 @extends('layouts.system')
 
 @section('title')
-    Tiempos por Tarea
+    Mostrar todas las acciones
 @stop
 
 @section('contenido_header')
@@ -25,7 +25,7 @@
 
         @include('partials.message')
 
-        @include('partials.tareas-asignadas-filtrar')
+        @include('partials.tareas-asignadas-acciones-filtrar')
 
         <div class="col-md-12 col-sm-12">
 
@@ -38,7 +38,6 @@
                     <div class="caption">
 
                         <div class="row">
-
                             <div class="col-md-6">
                                 <div class="btn-group">
                                     <a id="filtrar-tarea" class="btn blue-steel btn-outline btn-circle" href="javascript:;">
@@ -50,13 +49,12 @@
 
                             <div class="col-md-6">
                                 <div class="btn-group">
-                                    <a id="filtrar-tarea" class="btn blue-madison btn-outline btn-circle" href="{{ route('tareas.asignadas.acciones') }}">
+                                    <a id="filtrar-tarea" class="btn blue-madison btn-outline btn-circle" href="{{ route('tareas.asignadas') }}">
                                         <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                        <span class="hidden-xs"> Ver todas las acciones </span>
+                                        <span class="hidden-xs"> Ver Tiempos </span>
                                     </a>
                                 </div>
                             </div>
-
                         </div>
 
                     </div>
@@ -84,14 +82,13 @@
 
                         <thead>
                             <tr>
-                                <th class="col-asignado" scope="col" style="width: 140px !important;"> Asignado </th>
+                                <th class="col-asignado" scope="col" style="width: 160px !important;"> Abogado </th>
                                 <th class="col-expediente" scope="col" style="width: 140px !important;"> Expediente </th>
-                                <th class="col-tarea" scope="col" style="width: 160px !important;"> Tarea </th>
+                                <th class="col-solicitada text-center" style="width: 100px !important;" scope="col"> Fecha </th>
+                                <th class="col-solicitada text-center" scope="col"> Desde </th>
+                                <th class="col-solicitada text-center" scope="col"> Hasta </th>
+                                <th class="col-solicitada text-center" scope="col"> Horas </th>
                                 <th class="col-descripcion" scope="col"> Descripción </th>
-                                <th class="col-solicitada text-center" scope="col"> Fecha Solicitada </th>
-                                <th class="col-vencimiento text-center" scope="col"> Fecha Vencimiento </th>
-                                <th class="col-estado text-center" scope="col"> Estado </th>
-                                <th class="col-estado" scope="col"></th>
                             </tr>
                         </thead>
 
@@ -100,33 +97,21 @@
                             @php
                                 $row_id = $item->id;
                                 $row_asignado = $item->abogado->nombre;
-                                $row_expediente_id = $item->expedientes->id;
-                                $row_expediente = $item->expedientes->expediente;
-                                $row_tarea = $item->titulo_tarea;
+                                $row_expediente = $item->nombre_expediente;
+                                $row_solicitada = $item->fecha_accion;
+                                $row_desde = $item->desde;
+                                $row_hasta = $item->hasta;
+                                $row_horas = $item->horas;
                                 $row_descripcion = $item->descripcion;
-                                $row_solicitada = $item->fecha_solicitada;
-                                $row_vencimiento = $item->fecha_vencimiento;
-                                $row_estado = $item->estado;
                             @endphp
                             <tr id="tarea-{{ $row_id }}" data-id="{{ $row_id }}" data-title="{{ $row_expediente }}">
                                 <td class="col-asignado">{{ $row_asignado }}</td>
                                 <td class="col-expediente">{{ $row_expediente }}</td>
-                                <td class="col-tarea">{{ $row_tarea }}</td>
-                                <td class="col-descripcion">{{ $row_descripcion }}</td>
                                 <td class="col-solicitada text-center">{{ $row_solicitada }}</td>
-                                <td class="col-vencimiento text-center">{{ $row_vencimiento }}</td>
-                                <td class="col-estado">{{ $row_estado ? 'Terminado' : 'Pendiente' }}</td>
-                                <td class="text-center">
-                                    <div class="btn-group">
-                                        <button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Movimientos
-                                            <i class="fa fa-angle-down"></i>
-                                        </button>
-                                        <ul class="dropdown-menu pull-right" role="menu">
-                                            <li><a href="{{ route('expedientes.show', $row_expediente_id) }}" data-target="#ajax" data-toggle="modal">Ver expediente</a></li>
-                                            <li><a href="#" class="tarea-acciones" data-id="{{ $row_id }}" data-list="{{ route('tareas.acciones.index', $row_id) }}" data-create="{{ route('tareas.acciones.create', $row_id) }}">Acciones</a></li>
-                                        </ul>
-                                    </div>
-                                </td>
+                                <td class="col-solicitada text-center">{{ $row_desde }}</td>
+                                <td class="col-solicitada text-center">{{ $row_hasta }}</td>
+                                <td class="col-solicitada text-center">{{ $row_horas }}</td>
+                                <td class="col-descripcion">{{ $row_descripcion }}</td>
                             </tr>
                         @endforeach
                         </tbody>

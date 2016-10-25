@@ -25,6 +25,7 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
 
     //TAREAS ASIGNADAS A ABOGADO
     Route::get('tareas-asignadas', ['as' => 'tareas.asignadas', 'uses' => 'TareasAsignadasController@tareas']);
+    Route::get('tareas-asignadas/acciones', ['as' => 'tareas.asignadas.acciones', 'uses' => 'TareasAsignadasController@tareasAcciones']);
     Route::get('tareas-asignadas/exportar/excel', ['as' => 'tareas.asignadas.excel', 'uses' => 'TareasAsignadasController@excel']);
     Route::resource('tareas.acciones', 'TareasAsignadasController');
     Route::resource('accion.gastos', 'TareasAccionGastosController');

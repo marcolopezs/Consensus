@@ -85,6 +85,21 @@ class TareasAsignadasController extends Controller {
         }
     }
 
+    /*
+     * MOSTRAR TODAS LAS ACCIONES
+     */
+    public function tareasAcciones(Request $request)
+    {
+        if(Gate::allows('admin'))
+        {
+            $rows = $this->tareaAccionRepo->filterPaginateAdmin($request);
+            $abogado = $this->abogadoRepo->orderBy('nombre', 'asc')->lists('nombre', 'id')->toArray();
+            $tarea = $this->tareaConceptoRepo->estadoListArray();
+
+            return view('system.tareas-asignadas.admin.acciones', compact('rows','abogado','tarea'));
+        }
+    }
+
     /**
      * @param Request $request
      * @param $tarea

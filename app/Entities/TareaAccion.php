@@ -32,6 +32,11 @@ class TareaAccion extends BaseEntity {
         return $this->belongsTo(Expediente::class, 'expediente_id');
     }
 
+    public function expedienteNombre()
+    {
+        return $this->belongsTo(Expediente::class, 'expediente_id');
+    }
+
     public function expedienteTipo()
     {
         return $this->belongsTo(ExpedienteTipo::class, 'expediente_tipo_id');
@@ -86,13 +91,53 @@ class TareaAccion extends BaseEntity {
         return route('accion.gastos.index', [$this->id]);
     }
 
+    public function getNombreExpedienteAttribute()
+    {
+        return $this->expedienteNombre->expediente;
+    }
+
     /*
      * SETTER
      */
-
     public function setFechaAttribute($value)
     {
         $this->attributes['fecha'] = formatoFecha($value);
     }
 
+    /*
+     * SCOPES
+     */
+    public function scopeExpedienteCodigo($query, $value)
+    {
+        if(trim($value) != "")
+        {
+            $query->where('expediente', 'LIKE', "%$value%");
+        }
+    }
+
+    public function scopeAbogadoId($query, $value)
+    {
+        if($value != "")
+        {
+            $query->where(TareaAccion::getTable().'.abogado_id', $value);
+        }
+    }
+
+    public function scopeDescripcion($query, $value)
+    {
+        if(trim($value) != "")
+        {
+            $query->where(TareaAccion::getTable().'.descripcion', 'LIKE', "%$value%");
+        }
+    }
+
+    public function scopeFechaSolicitada($query, $from, $to)
+    {
+        if($from != "" and $to != "")
+        {
+            $from = formatoFecha($from);
+            $to = formatoFecha($to);
+            $query->where('fecha', '>=', $from)->where('fecha', '<=', $to);
+        }
+    }
 }
