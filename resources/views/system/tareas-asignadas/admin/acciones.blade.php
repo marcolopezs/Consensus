@@ -59,21 +59,6 @@
 
                     </div>
 
-                    <div class="actions">
-
-                        @can('exportar')
-                        <div class="btn-group btn-group-devided">
-                            <div class="btn-group">
-                                <a id="excel-expediente" class="btn green-haze btn-outline btn-circle" href="{{ route('tareas.asignadas.excel', Request::all()) }}">
-                                    <i class="fa fa-file-excel-o" aria-hidden="true"></i>
-                                    <span class="hidden-xs"> Exportar a Excel </span>
-                                </a>
-                            </div>
-                        </div>
-                        @endcan
-
-                    </div>
-
                 </div>
 
                 <div class="portlet-body">
