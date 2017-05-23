@@ -132,6 +132,13 @@ class TareasAsignadasController extends Controller {
     {
         $this->validate($request, $this->rules);
 
+        if(auth()->user()->asistente_id <> 0)
+        {
+            $tipo = auth()->user()->asistente_id;
+        }else{
+            $tipo = auth()->user()->abogado->id;
+        }
+
         //EXTRAER EXPEDIENTE
         $expTarea = $this->tareaRepo->findOrFail($tarea);
 
@@ -148,7 +155,7 @@ class TareasAsignadasController extends Controller {
         $row = new TareaAccion($request->all());
         $row->expediente_id = $expTarea->expediente_id;
         $row->expediente_tipo_id = $expTarea->expediente_tipo_id;
-        $row->abogado_id = auth()->user()->abogado->id;
+        $row->abogado_id = $tipo;
         $row->cliente_id = $expediente->cliente_id;
         $row->tarea_id = $tarea;
         $row->horas = $horas;
