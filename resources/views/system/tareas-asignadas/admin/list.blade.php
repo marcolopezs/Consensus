@@ -193,6 +193,9 @@
     {!! HTML::script('assets/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js') !!}
     {!! HTML::script('assets/pages/scripts/components-date-time-pickers.js') !!}
 
+    {{-- BootBox --}}
+    {!! HTML::script('assets/global/plugins/bootbox/bootbox.min.js') !!}
+
     {{-- FUNCIONES --}}
     {!! HTML::script('js/js-tarea.js') !!}
     <script>

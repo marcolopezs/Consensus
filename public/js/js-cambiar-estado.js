@@ -1,1 +1,49 @@
-$(".btn-estado").on("click",function(e){e.preventDefault();var a=$(this).data("id"),s=$(this).data("url"),t=$(this).data("title");bootbox.confirm({message:"Desea cambiar el estado de <strong>"+t+"</strong>",closeButton:!1,buttons:{confirm:{label:"Cambiar estado",className:"green"},cancel:{label:"Cancelar"}},callback:function(e){1==e&&$.ajax({url:s,type:"POST",headers:{"X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr("content")},beforeSend:function(){$("#progressbar").show()},complete:function(){$("#progressbar").hide()},success:function(e){1==e.estado?$("#estado-"+a+" span").removeClass("label-default").addClass("label-success").text("Activo"):0==e.estado&&$("#estado-"+a+" span").removeClass("label-success").addClass("label-default").text("No activo"),$("#mensajeAjax").show(),$("#mensajeAjax .alert").removeClass("alert-danger").addClass("alert-success"),$("#mensajeAjax .alert span").text("Se cambió es estado del registro: "+t)},error:function(e){$("#mensajeAjax").show(),$("#mensajeAjax .alert").removeClass("alert-success").addClass("alert-danger"),$("#mensajeAjax .alert span").text("Se produjo un eror al cambiar el estado. Intentarlo nuevamente.")}})}})});
+$(".btn-estado").on("click", function(e){
+    e.preventDefault();
+
+    var id = $(this).data("id");
+    var url = $(this).data("url");
+    var title = $(this).data("title");
+
+    bootbox.confirm({
+        message: "Desea cambiar el estado de <strong>" + title + "</strong>",
+        closeButton: false,
+        buttons: {
+            confirm: {
+                label: "Cambiar estado",
+                className: "green"
+            },
+            cancel: {
+                label: "Cancelar"
+            }
+        },
+        callback: function(result){
+            if(result == true)
+            {
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                    beforeSend: function() { $("#progressbar").show(); },
+                    complete: function() { $("#progressbar").hide(); },
+                    success: function(result){
+                        if(result.estado == 1){ $("#estado-"+id+" span").removeClass('label-default').addClass('label-success').text('Activo'); }
+                        else if(result.estado == 0){ $("#estado-"+id+" span").removeClass('label-success').addClass('label-default').text('No activo'); }
+                        $("#mensajeAjax").show();
+                        $("#mensajeAjax .alert").removeClass('alert-danger').addClass('alert-success');
+                        $("#mensajeAjax .alert span").text("Se cambió es estado del registro: " + title);
+                    },
+                    error: function(result){
+                        $("#mensajeAjax").show();
+                        $("#mensajeAjax .alert").removeClass('alert-success').addClass('alert-danger');
+                        $("#mensajeAjax .alert span").text("Se produjo un eror al cambiar el estado. Intentarlo nuevamente.");
+                    }
+
+                });
+            }
+        }
+
+    });
+
+});
+//# sourceMappingURL=js-cambiar-estado.js.map

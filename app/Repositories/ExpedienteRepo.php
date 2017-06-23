@@ -39,6 +39,7 @@ class ExpedienteRepo extends BaseRepo {
                     ->ordenar($request->get('ordenar'),$request->get('ordenar-tipo'))
                     ->with('cliente','money','tariff','abogado','asistente','service','matter','entity',
                         'instance','area','bienes','situacionEspecial','state','exito','flujo_caja')
+                    ->withTrashed()
                     ->paginate();
     }
 

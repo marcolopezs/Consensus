@@ -246,6 +246,19 @@ class ExpedientesController extends Controller {
         return redirect()->route('expedientes.index');
     }
 
+    /*
+     * Eliminar o Anular
+     */
+    public function anular($id)
+    {
+        $row = $this->expedienteRepo->findOrFail($id);
+        $row->delete();
+
+        return [
+            'mensaje' => 'El registro se anuló con éxito.'
+        ];
+    }
+
 
     /**
      * @param $id

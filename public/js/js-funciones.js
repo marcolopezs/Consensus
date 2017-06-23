@@ -1,1 +1,49 @@
-function getObjects(t,e,r){var n=[];for(var o in t)t.hasOwnProperty(o)&&("object"==typeof t[o]?n=n.concat(getObjects(t[o],e,r)):o==e&&t[o]==r||o==e&&""==r?n.push(t):t[o]==r&&""==e&&-1==n.lastIndexOf(t)&&n.push(t));return n}function getValues(t,e){var r=[];for(var n in t)t.hasOwnProperty(n)&&("object"==typeof t[n]?r=r.concat(getValues(t[n],e)):n==e&&r.push(t[n]));return r}function getKeys(t,e){var r=[];for(var n in t)t.hasOwnProperty(n)&&("object"==typeof t[n]?r=r.concat(getKeys(t[n],e)):t[n]==e&&r.push(n));return r}
+//return an array of objects according to key, value, or key and value matching
+function getObjects(obj, key, val) {
+    var objects = [];
+    for (var i in obj) {
+        if (!obj.hasOwnProperty(i)) continue;
+        if (typeof obj[i] == 'object') {
+            objects = objects.concat(getObjects(obj[i], key, val));
+        } else
+        //if key matches and value matches or if key matches and value is not passed (eliminating the case where key matches but passed value does not)
+        if (i == key && obj[i] == val || i == key && val == '') { //
+            objects.push(obj);
+        } else if (obj[i] == val && key == ''){
+            //only add if the object is not already in the array
+            if (objects.lastIndexOf(obj) == -1){
+                objects.push(obj);
+            }
+        }
+    }
+    return objects;
+}
+
+//return an array of values that match on a certain key
+function getValues(obj, key) {
+    var objects = [];
+    for (var i in obj) {
+        if (!obj.hasOwnProperty(i)) continue;
+        if (typeof obj[i] == 'object') {
+            objects = objects.concat(getValues(obj[i], key));
+        } else if (i == key) {
+            objects.push(obj[i]);
+        }
+    }
+    return objects;
+}
+
+//return an array of keys that match on a certain value
+function getKeys(obj, val) {
+    var objects = [];
+    for (var i in obj) {
+        if (!obj.hasOwnProperty(i)) continue;
+        if (typeof obj[i] == 'object') {
+            objects = objects.concat(getKeys(obj[i], val));
+        } else if (obj[i] == val) {
+            objects.push(i);
+        }
+    }
+    return objects;
+}
+//# sourceMappingURL=js-funciones.js.map
