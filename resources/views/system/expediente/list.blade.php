@@ -189,8 +189,6 @@
 	                                            <li><a href="#" class="expediente-comprobantes" data-id="{{ $row_id }}" data-list="{{ route('expedientes.comprobantes.index', $row_id) }}">Comprobantes de Pago</a></li>
 	                                            <li><a href="#" class="expediente-interviniente" data-id="{{ $row_id }}" data-list="{{ route('expedientes.intervinientes.index', $row_id) }}" data-create="{{ route('expedientes.intervinientes.create', $row_id) }}">Intervinientes</a></li>
 	                                            <li><a href="#" class="expediente-documento" data-id="{{ $row_id }}" data-list="{{ route('expedientes.documentos.index', $row_id) }}" data-create="{{ route('expedientes.documentos.create', $row_id) }}">Documentos</a></li>
-		                                        <li class="divider"></li>
-	                                            <li><a href="#" class="expediente-anulado" data-id="{{ $row_id }}" data-title="{{ $row_expediente }}" data-anular="{{ route('expedientes.anular', $row_id) }}">Anular</a></li>
 	                                        </ul>
 	                                    </div>
 									@endif

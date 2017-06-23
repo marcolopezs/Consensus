@@ -213,34 +213,41 @@ class ExpedientesController extends Controller {
         $estado = $request->input('estado');
         $exito = $request->input('exito');
 
-        //GUARDAR DATOS
-        $row->money_id = $moneda;
-        $row->tariff_id = $tarifa;
-        $row->service_id = $servicio;
-        $row->matter_id = $materia;
-        $row->entity_id = $entidad;
-        $row->instance_id = $instancia;
-        $row->area_id = $area;
-        $row->bienes_id = $bienes;
-        $row->situacion_especial_id = $especial;
-        $row->state_id = $estado;
-        $row->exito_id = $exito;
-        $save = $this->expedienteRepo->update($row, $request->all());
-
-        //GUARDAR HISTORIAL
-        $this->expedienteRepo->saveHistory($row, $request, 'update');
-
-        if($save->fecha_vencimiento <> '0000-00-00')
+        if($estado == 29)
         {
-            $save->notificaciones()->update([
-                'abogado_id' => $save->abogado_id,
-                'fecha_vencimiento' => $save->fecha_vencimiento,
-                'descripcion' => 'Quedan {dias} días para la fecha de vencimiento de poder del Expediente '. $save->expediente
-            ]);
-        }
+            $row->delete();
 
-        //MENSAJE
-        flash()->success('El registro se actualizó satisfactoriamente.');
+            flash()->info('El registro '. $row->expediente .' se anuló satisfactoriamente.');
+        }else{
+            //GUARDAR DATOS
+            $row->money_id = $moneda;
+            $row->tariff_id = $tarifa;
+            $row->service_id = $servicio;
+            $row->matter_id = $materia;
+            $row->entity_id = $entidad;
+            $row->instance_id = $instancia;
+            $row->area_id = $area;
+            $row->bienes_id = $bienes;
+            $row->situacion_especial_id = $especial;
+            $row->state_id = $estado;
+            $row->exito_id = $exito;
+            $save = $this->expedienteRepo->update($row, $request->all());
+
+            //GUARDAR HISTORIAL
+            $this->expedienteRepo->saveHistory($row, $request, 'update');
+
+            if($save->fecha_vencimiento <> '0000-00-00')
+            {
+                $save->notificaciones()->update([
+                    'abogado_id' => $save->abogado_id,
+                    'fecha_vencimiento' => $save->fecha_vencimiento,
+                    'descripcion' => 'Quedan {dias} días para la fecha de vencimiento de poder del Expediente '. $save->expediente
+                ]);
+            }
+
+            //MENSAJE
+            flash()->success('El registro se actualizó satisfactoriamente.');
+        }
 
         //REDIRECCIONAR A PAGINA PARA VER DATOS
         return redirect()->route('expedientes.index');
@@ -251,8 +258,7 @@ class ExpedientesController extends Controller {
      */
     public function anular($id)
     {
-        $row = $this->expedienteRepo->findOrFail($id);
-        $row->delete();
+
 
         return [
             'mensaje' => 'El registro se anuló con éxito.'
