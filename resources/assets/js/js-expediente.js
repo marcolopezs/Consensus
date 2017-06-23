@@ -409,3 +409,49 @@ $(".expediente-comprobantes").on("click", function(e) {
     });
 
 });
+
+//ANULAR EXPEDIENTES
+$(".expediente-anulado").on("click", function (e) {
+    e.preventDefault();
+
+    var id = $(this).data('id');
+    var url = $(this).data('anular');
+    var title = $(this).data('title');
+
+    bootbox.dialog({
+        title: 'Anular registro',
+        message: '\<\strong\>\Desea anular el expediente:\</\strong\>\ '+ title,
+        closeButton: false,
+        buttons: {
+            cancel: {
+                label: 'Cancelar',
+                className: 'default'
+            },
+            success: {
+                label: 'Anular',
+                className: 'red',
+                callback: function() {
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                        beforeSend: function () { $('.progress').show(); },
+                        complete: function () { $('.progress').hide(); },
+                        success: function (result) {
+                            $("#exp-" + id + " .btn-group button i.fa").remove();
+                            $("#exp-" + id + " .btn-group .dropdown-menu").remove();
+                            $("#exp-" + id).addClass('danger');
+                            $("#exp-" + id + " .btn-group button").removeClass('blue').addClass('red').text('Anulado');
+                        },
+                        error: function (result) {
+                            $("#mensajeAjax").show();
+                            $("#mensajeAjax .alert").show().removeClass('alert-success').addClass('alert-danger');
+                            $("#mensajeAjax span").text("Se produjo un error al eliminar el registro");
+                            $(".accion-select-"+ accion).show();
+                        }
+                    });
+                }
+            }
+        }
+    });
+});
