@@ -114,7 +114,7 @@ class UsersController extends Controller
      * Store a newly created resource in storage.
      *
      * @param UserRequest $request
-     * @return Response
+     * @return array
      */
     public function store(UserRequest $request)
     {
@@ -324,7 +324,7 @@ class UsersController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return array
      */
     public function updateAdmin(Request $request, $id)
     {

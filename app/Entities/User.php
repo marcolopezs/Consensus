@@ -118,74 +118,52 @@ class User extends BaseEntity implements AuthenticatableContract, CanResetPasswo
      */
     public function isAdmin()
     {
-        if($this->admin === 1)
-        {
-            return true;
-        }
+        return $this->admin ? true : false;
     }
 
     public function isCliente()
     {
-        if($this->cliente_id <> 0)
-        {
-            return true;
-        }
+        return $this->cliente_id <> 0 ? true : false;
     }
 
     public function isAbogado()
     {
-        if($this->abogado_id <> 0)
-        {
-            return true;
-        }
+        return $this->abogado_id <> 0 ? true : false;
     }
 
     public function isAsistente()
     {
-        if($this->asistente_id <> 0)
-        {
-            return true;
-        }
+        return $this->asistente_id <> 0 ? true : false;
     }
 
     public function yesCreate()
     {
-        if($this->role->create == 1)
-        {
-            return true;
-        }
+        return $this->role->create ? true : false;
     }
 
     public function yesUpdate()
     {
-        if($this->role->update == 1)
-        {
-            return true;
-        }
+        return $this->role->update ? true : false;
     }
 
     public function yesDelete()
     {
-        if($this->role->delete == 1)
-        {
-            return true;
-        }
+        return $this->role->delete ? true : false;
     }
 
     public function yesPrint()
     {
-        if($this->role->print == 1)
-        {
-            return true;
-        }
+        return $this->role->print ? true : false;
     }
 
     public function yesExport()
     {
-        if($this->role->exporta == 1)
-        {
-            return true;
-        }
+        return $this->role->exporta ? true : false;
+    }
+
+    public function yesView()
+    {
+        return $this->role->view ? true : false;
     }
 
     public function setPasswordAttribute($value)

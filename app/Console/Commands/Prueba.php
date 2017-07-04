@@ -2,6 +2,7 @@
 
 namespace Consensus\Console\Commands;
 
+use Consensus\Entities\UserRole;
 use Illuminate\Console\Command;
 
 class Prueba extends Command
@@ -11,14 +12,14 @@ class Prueba extends Command
      *
      * @var string
      */
-    protected $signature = 'prueba';
+    protected $signature = 'view:role';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Prueba de correo';
+    protected $description = 'View User Role';
 
     /**
      * Create a new command instance.
@@ -37,28 +38,8 @@ class Prueba extends Command
      */
     public function handle()
     {
-        //DATOS PARA EMAIL
-        $data = [
-            'abogado' => 'Desarrollo',
-            'email' => 'mlopez18073@gmail.com',
-            'dias' => 7,
-            'tarea' => 'Prueba de Correo',
-            'descripcion' => 'Rhoncus ultricies quis. Nisi magna phasellus adipiscing et rhoncus, magnis egestas vut ridiculus nunc sociis, cursus! Aenean amet, aliquet tincidunt sit eu eros porta, facilisis lorem'
-        ];
+        \DB::table('user_roles')->update(['view' => 1]);
 
-        //ENVIAR A
-        $deEmail = 'noreply@consensus.com';
-        $deNombre = 'Consensus';
-
-        //ENVIAR DE
-        $aEmail = $data['email'];
-        $aNombre = $data['abogado'];
-
-        \Mail::send('emails.notificacion', $data, function($message) use ($deNombre, $deEmail, $aNombre, $aEmail){
-            $message->to($aEmail, $aNombre);
-            $message->from($deEmail, $deNombre);
-            $message->subject('Consensus - Prueba de correo');
-        });
-        $this->comment("<info>Se envío Notificación a Abogado</info>");
+        $this->comment("<info>Se modificó el campo View en User Role</info>");
     }
 }

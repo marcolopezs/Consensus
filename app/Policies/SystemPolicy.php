@@ -62,4 +62,9 @@ class SystemPolicy
     {
         return $user->yesExport();
     }
+
+    public function view($user)
+    {
+        return $user->yesView();
+    }
 }

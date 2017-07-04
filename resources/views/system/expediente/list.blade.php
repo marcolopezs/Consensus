@@ -170,22 +170,52 @@
                                 <td class="col-estado">{{ $row_estado }}</td>
                                 <td class="col-exito">{{ $row_exito }}</td>
                                 <td class="text-center">
-                                    <div class="btn-group">
-                                        <button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Movimientos
-                                            <i class="fa fa-angle-down"></i>
-                                        </button>
-                                        <ul class="dropdown-menu pull-right" role="menu">
-                                            <li><a href="{{ route('expedientes.show', $row_id) }}" data-target="#ajax" data-toggle="modal">Ver registro</a></li>
-                                            @can('update')
-                                            <li><a href="{{ route('expedientes.edit', $row_id) }}">Editar</a></li>
-                                            @endcan
-                                            <li><a href="#" class="expediente-tareas" data-id="{{ $row_id }}" data-list="{{ route('expedientes.tareas.index', $row_id) }}" data-create="{{ route('expedientes.tareas.create', $row_id) }}">Tareas</a></li>
-                                            <li><a href="#" class="expediente-caja" data-saldo="{{ $row_saldo }}" data-id="{{ $row_id }}" data-list="{{ route('expedientes.flujo-caja.index', $row_id) }}" data-create="{{ route('expedientes.flujo-caja.create', $row_id) }}">Flujo de Caja</a></li>
-                                            <li><a href="#" class="expediente-comprobantes" data-id="{{ $row_id }}" data-list="{{ route('expedientes.comprobantes.index', $row_id) }}">Comprobantes de Pago</a></li>
-                                            <li><a href="#" class="expediente-interviniente" data-id="{{ $row_id }}" data-list="{{ route('expedientes.intervinientes.index', $row_id) }}" data-create="{{ route('expedientes.intervinientes.create', $row_id) }}">Intervinientes</a></li>
-                                            <li><a href="#" class="expediente-documento" data-id="{{ $row_id }}" data-list="{{ route('expedientes.documentos.index', $row_id) }}" data-create="{{ route('expedientes.documentos.create', $row_id) }}">Documentos</a></li>
-                                        </ul>
-                                    </div>
+
+	                                @can('abogadoExpediente', $item)
+	                                <div class="btn-group">
+		                                <button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Movimientos
+			                                <i class="fa fa-angle-down"></i>
+		                                </button>
+		                                <ul class="dropdown-menu pull-right" role="menu">
+			                                <li><a href="{{ route('expedientes.show', $row_id) }}" data-target="#ajax" data-toggle="modal">Ver registro</a></li>
+			                                @can('update')
+				                                <li><a href="{{ route('expedientes.edit', $row_id) }}">Editar</a></li>
+			                                @endcan
+			                                <li><a href="#" class="expediente-tareas" data-id="{{ $row_id }}" data-list="{{ route('expedientes.tareas.index', $row_id) }}" data-create="{{ route('expedientes.tareas.create', $row_id) }}">Tareas</a></li>
+			                                <li><a href="#" class="expediente-caja" data-saldo="{{ $row_saldo }}" data-id="{{ $row_id }}" data-list="{{ route('expedientes.flujo-caja.index', $row_id) }}" data-create="{{ route('expedientes.flujo-caja.create', $row_id) }}">Flujo de Caja</a></li>
+			                                <li><a href="#" class="expediente-comprobantes" data-id="{{ $row_id }}" data-list="{{ route('expedientes.comprobantes.index', $row_id) }}">Comprobantes de Pago</a></li>
+			                                <li><a href="#" class="expediente-interviniente" data-id="{{ $row_id }}" data-list="{{ route('expedientes.intervinientes.index', $row_id) }}" data-create="{{ route('expedientes.intervinientes.create', $row_id) }}">Intervinientes</a></li>
+			                                <li><a href="#" class="expediente-documento" data-id="{{ $row_id }}" data-list="{{ route('expedientes.documentos.index', $row_id) }}" data-create="{{ route('expedientes.documentos.create', $row_id) }}">Documentos</a></li>
+		                                </ul>
+	                                </div>
+									@elsecan('asistenteExpediente', $item)
+		                                <div class="btn-group">
+			                                <button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Movimientos
+				                                <i class="fa fa-angle-down"></i>
+			                                </button>
+			                                <ul class="dropdown-menu pull-right" role="menu">
+				                                <li><a href="{{ route('expedientes.show', $row_id) }}" data-target="#ajax" data-toggle="modal">Ver registro</a></li>
+				                                @can('update')
+					                                <li><a href="{{ route('expedientes.edit', $row_id) }}">Editar</a></li>
+				                                @endcan
+				                                <li><a href="#" class="expediente-tareas" data-id="{{ $row_id }}" data-list="{{ route('expedientes.tareas.index', $row_id) }}" data-create="{{ route('expedientes.tareas.create', $row_id) }}">Tareas</a></li>
+				                                <li><a href="#" class="expediente-caja" data-saldo="{{ $row_saldo }}" data-id="{{ $row_id }}" data-list="{{ route('expedientes.flujo-caja.index', $row_id) }}" data-create="{{ route('expedientes.flujo-caja.create', $row_id) }}">Flujo de Caja</a></li>
+				                                <li><a href="#" class="expediente-comprobantes" data-id="{{ $row_id }}" data-list="{{ route('expedientes.comprobantes.index', $row_id) }}">Comprobantes de Pago</a></li>
+				                                <li><a href="#" class="expediente-interviniente" data-id="{{ $row_id }}" data-list="{{ route('expedientes.intervinientes.index', $row_id) }}" data-create="{{ route('expedientes.intervinientes.create', $row_id) }}">Intervinientes</a></li>
+				                                <li><a href="#" class="expediente-documento" data-id="{{ $row_id }}" data-list="{{ route('expedientes.documentos.index', $row_id) }}" data-create="{{ route('expedientes.documentos.create', $row_id) }}">Documentos</a></li>
+			                                </ul>
+		                                </div>
+									@else
+		                                <div class="btn-group">
+			                                <button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Movimientos
+				                                <i class="fa fa-angle-down"></i>
+			                                </button>
+			                                <ul class="dropdown-menu pull-right" role="menu">
+				                                <li><a href="{{ route('expedientes.show', $row_id) }}" data-target="#ajax" data-toggle="modal">Ver registro</a></li>
+				                            </ul>
+		                                </div>
+									@endcan
+
                                 </td>
                             </tr>
                         @endforeach
