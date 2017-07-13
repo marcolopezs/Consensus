@@ -67,6 +67,19 @@ class ExpedientesController extends Controller {
         return view('system.expediente.list', compact('rows','ajustes'));
     }
 
+    public function anulados(Request $request)
+    {
+        if(Gate::allows('cliente')){
+            $rows = $this->expedienteRepo->filterPaginateCliente($request);
+        }else{
+            $rows = $this->expedienteRepo->filterPaginateAnulados($request);
+        }
+
+        $ajustes = $this->ajusteRepo->findModelUserReturnContenido(Expediente::class);
+
+        return view('system.expediente.list', compact('rows','ajustes'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *

@@ -43,6 +43,37 @@ class ExpedienteRepo extends BaseRepo {
                     ->paginate();
     }
 
+    //BUSQUEDA DE REGISTROS ANULADOS - NIVEL ADMINISTRADOR
+    public function filterPaginateAnulados(Request $request)
+    {
+        return $this->getModel()
+            ->expediente($request->get('expediente'))
+            ->clienteId($request->get('cliente'))
+            ->monedaId($request->get('moneda'))
+            ->tarifaId($request->get('tarifa'))
+            ->abogadoId($request->get('abogado'))
+            ->asistenteId($request->get('asistente'))
+            ->servicioId($request->get('servicio'))
+            ->fechaInicio($request->get('fecha_inicio_from'), $request->get('fecha_inicio_to'))
+            ->fechaTermino($request->get('fecha_termino_from'), $request->get('fecha_termino_to'))
+            ->materiaId($request->get('materia'))
+            ->entidadId($request->get('entidad'))
+            ->instanciaId($request->get('instancia'))
+            ->encargado($request->get('encargado'))
+            ->fechaPoder($request->get('fecha_poder_from'), $request->get('fecha_poder_to'))
+            ->fechaVencimiento($request->get('fecha_vencimiento_from'), $request->get('fecha_vencimiento_to'))
+            ->areaId($request->get('area'))
+            ->jefeArea($request->get('jefe_area'))
+            ->bienesId($request->get('bienes'))
+            ->situacionId($request->get('situacion'))
+            ->estadoId(29)
+            ->exitoId($request->get('exito'))
+            ->ordenar($request->get('ordenar'),$request->get('ordenar-tipo'))
+            ->with('cliente','money','tariff','abogado','asistente','service','matter','entity',
+                'instance','area','bienes','situacionEspecial','state','exito','flujo_caja')
+            ->paginate();
+    }
+
     //BUSQUEDA DE REGISTROS - NIVEL ABOGADO
     public function filterPaginateAbogado(Request $request)
     {

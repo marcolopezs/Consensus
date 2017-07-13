@@ -36,6 +36,7 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
 
     //EXPEDIENTES
     Route::resource('expedientes', 'ExpedientesController', ['except' => 'destroy']);
+    Route::get('expedientes-anulados', ['as' => 'expedientes.anulados', 'uses' => 'ExpedientesController@anulados']);
     Route::get('expedientes/cliente/{id}', ['as' => 'expedientes.cliente', 'uses' => 'ExpedientesController@cliente']);
     Route::post('expedientes/ajustes', ['as' => 'expedientes.ajustes', 'uses' => 'ExpedientesController@ajustes']);
     Route::get('expedientes/filtrar', ['as' => 'expedientes.filtrar', 'uses' => 'ExpedientesController@filtrar']);

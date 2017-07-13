@@ -54,34 +54,54 @@
                     </div>
 
                     <div class="actions">
-                        <div class="btn-group btn-group-devided" data-toggle="buttons">
-                            <div class="btn-group">
-                                <a id="filtrar-expediente" class="btn blue-steel btn-outline btn-circle" href="javascript:;">
-                                    <i class="fa fa-filter" aria-hidden="true"></i>
-                                    <span class="hidden-xs"> Buscar | Ordenar</span>
-                                </a>
-                            </div>
-                        </div>
+	                    @if(!Request::is('exp*-anu*'))
+		                    <div class="btn-group btn-group-devided">
+			                    <div class="btn-group">
+				                    <a class="btn red btn-outline btn-circle" href="{{ route('expedientes.anulados') }}">
+					                    <i class="fa fa-eye" aria-hidden="true"></i>
+					                    <span class="hidden-xs"> Ver expedientes anulados</span>
+				                    </a>
+			                    </div>
+		                    </div>
 
-                        @can('exportar')
-                        <div class="btn-group btn-group-devided">
-                            <div class="btn-group">
-                                <a id="excel-expediente" class="btn green-haze btn-outline btn-circle" href="{{ route('expedientes.excel', Request::all()) }}">
-                                    <i class="fa fa-file-excel-o" aria-hidden="true"></i>
-                                    <span class="hidden-xs"> Exportar a Excel </span>
-                                </a>
-                            </div>
-                        </div>
-                        @endcan
+	                        <div class="btn-group btn-group-devided" data-toggle="buttons">
+	                            <div class="btn-group">
+	                                <a id="filtrar-expediente" class="btn blue-steel btn-outline btn-circle" href="javascript:;">
+	                                    <i class="fa fa-filter" aria-hidden="true"></i>
+	                                    <span class="hidden-xs"> Buscar | Ordenar</span>
+	                                </a>
+	                            </div>
+	                        </div>
 
-                        <div class="btn-group btn-group-devided" data-toggle="buttons">
-                            <div class="btn-group">
-                                <a id="ajustes-expediente" class="btn red btn-outline btn-circle" href="javascript:;">
-                                    <i class="fa fa-cog" aria-hidden="true"></i>
-                                    <span class="hidden-xs"> Ajustes </span>
-                                </a>
-                            </div>
-                        </div>
+	                        @can('exportar')
+	                        <div class="btn-group btn-group-devided">
+	                            <div class="btn-group">
+	                                <a id="excel-expediente" class="btn green-haze btn-outline btn-circle" href="{{ route('expedientes.excel', Request::all()) }}">
+	                                    <i class="fa fa-file-excel-o" aria-hidden="true"></i>
+	                                    <span class="hidden-xs"> Exportar a Excel </span>
+	                                </a>
+	                            </div>
+	                        </div>
+	                        @endcan
+
+	                        <div class="btn-group btn-group-devided" data-toggle="buttons">
+	                            <div class="btn-group">
+	                                <a id="ajustes-expediente" class="btn red btn-outline btn-circle" href="javascript:;">
+	                                    <i class="fa fa-cog" aria-hidden="true"></i>
+	                                    <span class="hidden-xs"> Ajustes </span>
+	                                </a>
+	                            </div>
+	                        </div>
+						@else
+		                    <div class="btn-group btn-group-devided">
+			                    <div class="btn-group">
+				                    <a class="btn blue btn-outline btn-circle" href="{{ route('expedientes.index') }}">
+					                    <i class="fa fa-bars" aria-hidden="true"></i>
+					                    <span class="hidden-xs"> Ver todos los expedientes </span>
+				                    </a>
+			                    </div>
+		                    </div>
+						@endif
                     </div>
 
                 </div>
