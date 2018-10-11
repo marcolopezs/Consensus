@@ -23,8 +23,8 @@ class UserTableSeeder extends Seeder
 
         factory(UserProfile::class)->create([
             'nombre' => 'Admin',
-            'apellidos' => 'Consensus',
-            'email' => 'admin@consensus.com',
+            'apellidos' => 'Webmaster',
+            'email' => 'admin@webmaster.com',
             'user_id' => '1'
         ]);
 
@@ -49,8 +49,8 @@ class UserTableSeeder extends Seeder
 
         factory(UserProfile::class)->create([
             'nombre' => 'Abogado 1',
-            'apellidos' => 'Consensus',
-            'email' => 'abogado1@consensus.com',
+            'apellidos' => 'Webmaster',
+            'email' => 'abogado1@webmaster.com',
             'user_id' => '2'
         ]);
 
@@ -75,8 +75,8 @@ class UserTableSeeder extends Seeder
 
         factory(UserProfile::class)->create([
             'nombre' => 'Abogado 2',
-            'apellidos' => 'Consensus',
-            'email' => 'abogado2@consensus.com',
+            'apellidos' => 'Webmaster',
+            'email' => 'abogado2@webmaster.com',
             'user_id' => '3'
         ]);
 
@@ -101,8 +101,8 @@ class UserTableSeeder extends Seeder
 
         factory(UserProfile::class)->create([
             'nombre' => 'Abogado 3',
-            'apellidos' => 'Consensus',
-            'email' => 'abogado3@consensus.com',
+            'apellidos' => 'Webmaster',
+            'email' => 'abogado3@webmaster.com',
             'user_id' => '4'
         ]);
 
@@ -127,8 +127,8 @@ class UserTableSeeder extends Seeder
 
         factory(UserProfile::class)->create([
             'nombre' => 'Cliente',
-            'apellidos' => 'Consensus',
-            'email' => 'cliente@consensus.com',
+            'apellidos' => 'Webmaster',
+            'email' => 'cliente@webmaster.com',
             'user_id' => '5'
         ]);
 

@@ -53,7 +53,7 @@ $factory->define(\Consensus\Entities\Cliente::class, function ($faker) use ($fac
         'telefono' => $faker->phoneNumber,
         'fax' => $faker->phoneNumber,
         'direccion' => $faker->address,
-        'pais_id' => \Consensus\Entities\Pais::all()->random()->id,
+        'pais_id' => rand(1,237),
         'estado' => $faker->randomElement([0,1])
     ];
 });
@@ -72,7 +72,7 @@ $factory->define(\Consensus\Entities\Abogado::class, function ($faker) use ($fac
         'telefono' => $faker->phoneNumber,
         'fax' => $faker->phoneNumber,
         'direccion' => $faker->address,
-        'pais_id' => \Consensus\Entities\Pais::all()->random()->id,
+        'pais_id' => rand(1,237),
         'estado' => $faker->randomElement([0,1])
     ];
 });
@@ -80,7 +80,7 @@ $factory->define(\Consensus\Entities\Abogado::class, function ($faker) use ($fac
 //CONTACTOS DE CLIENTE
 $factory->define(\Consensus\Entities\ClienteContacto::class, function ($faker) use ($factory) {
     return [
-        'cliente_id' => \Consensus\Entities\Cliente::all()->random()->id,
+        'cliente_id' => rand(1,60),
         'contacto' => $faker->name." ".$faker->lastName,
         'dni' => $faker->regexify('[0-9]{8,8}'),
         'ruc' => $faker->regexify('[0-9]{11,11}'),
@@ -92,7 +92,7 @@ $factory->define(\Consensus\Entities\ClienteContacto::class, function ($faker) u
         'telefono' => $faker->phoneNumber,
         'fax' => $faker->phoneNumber,
         'direccion' => $faker->address,
-        'pais_id' => \Consensus\Entities\Pais::all()->random()->id,
+        'pais_id' => rand(1,237),
         'estado' => $faker->randomElement([0,1])
     ];
 });
@@ -100,7 +100,7 @@ $factory->define(\Consensus\Entities\ClienteContacto::class, function ($faker) u
 //DOCUMENTOS DE CLIENTE
 $factory->define(\Consensus\Entities\ClienteDocumento::class, function ($faker) use ($factory) {
     return [
-        'cliente_id' => \Consensus\Entities\Cliente::all()->random()->id,
+        'cliente_id' => rand(1,60),
         'titulo' => $faker->sentence(),
         'descripcion' => $faker->text(rand(100,255))
     ];
@@ -108,32 +108,30 @@ $factory->define(\Consensus\Entities\ClienteDocumento::class, function ($faker) 
 
 //EXPEDIENTES
 $factory->define(\Consensus\Entities\Expediente::class, function ($faker) use ($factory) {
-    $servicio = \Consensus\Entities\Service::all()->random();
-    $dias = $servicio->dias_ejecucion;
     return [
         'expediente' => $faker->regexify('[A-Z]{1,1}-[0-9]{10,10}'),
-        'cliente_id' => \Consensus\Entities\Cliente::all()->random()->id,
-        'money_id' => \Consensus\Entities\Money::all()->random()->id,
-        'abogado_id' => \Consensus\Entities\Abogado::all()->random()->id,
-        'tariff_id' => \Consensus\Entities\Tariff::all()->random()->id,
+        'cliente_id' => rand(1,30),
+        'money_id' => rand(1,3),
+        'abogado_id' => rand(1,30),
+        'tariff_id' => rand(1,7),
         'valor' => $faker->randomFloat(2, 5, 15),
-        'asistente_id' => \Consensus\Entities\Abogado::all()->random()->id,
-        'service_id' => $servicio->id,
-        'numero_dias' => $dias,
-        'fecha_inicio' => $faker->dateTimeBetween('-2 years', 'now'),
-        'fecha_termino' => $faker->dateTimeBetween('now', '+2 years'),
+        'asistente_id' => rand(1,30),
+        'service_id' => rand(1,58),
+        'numero_dias' => rand(1,31),
+        'fecha_inicio' => '10/07/2018',
+        'fecha_termino' => '28/08/2018',
         'descripcion' => $faker->text(rand(100,255)),
         'concepto' => $faker->text(rand(100,255)),
-        'matter_id' => \Consensus\Entities\Matter::all()->random()->id,
-        'entity_id' => \Consensus\Entities\Entity::all()->random()->id,
-        'instance_id' => \Consensus\Entities\Instance::all()->random()->id,
+        'matter_id' => rand(1,27),
+        'entity_id' => rand(1,35),
+        'instance_id' => rand(1,10),
         'encargado' => $faker->name,
-        'area_id' => \Consensus\Entities\Area::all()->random()->id,
+        'area_id' => rand(1,13),
         'jefe_area' => $faker->name,
-        'state_id' => \Consensus\Entities\State::all()->random()->id,
-        'bienes_id' => \Consensus\Entities\Bienes::all()->random()->id,
-        'situacion_especial_id' => \Consensus\Entities\SituacionEspecial::all()->random()->id,
-        'exito_id' => \Consensus\Entities\Exito::all()->random()->id,
+        'state_id' => rand(1,25),
+        'bienes_id' => rand(1,4),
+        'situacion_especial_id' => rand(1,4),
+        'exito_id' => rand(1,2),
         'observacion' => $faker->text(rand(100,255))
     ];
 });
@@ -141,25 +139,25 @@ $factory->define(\Consensus\Entities\Expediente::class, function ($faker) use ($
 //INTERVINIENTES DE EXPEDIENTE
 $factory->define(\Consensus\Entities\ExpedienteInterviniente::class, function ($faker) use ($factory) {
     return [
-        'expediente_id' => \Consensus\Entities\Expediente::all()->random()->id,
+        'expediente_id' => rand(1,150),
         'nombre' => $faker->name." ".$faker->lastName,
         'dni' => $faker->regexify('[0-9]{8,8}'),
         'email' => $faker->email,
         'telefono' => $faker->phoneNumber,
         'celular' => $faker->phoneNumber,
-        'intervener_id' => \Consensus\Entities\Intervener::all()->random()->id
+        'intervener_id' => rand(1,53)
     ];
 });
 
 //TAREAS DE EXPEDIENTE
 $factory->define(\Consensus\Entities\Tarea::class, function ($faker) use ($factory) {
    return [
-       'expediente_id' => \Consensus\Entities\Expediente::all()->random()->id,
-       'tarea' => $faker->sentence(),
+       'expediente_id' => rand(1,150),
+       'tarea_concepto_id' => rand(1,15),
        'descripcion' => $faker->text(rand(100,255)),
        'fecha_solicitada' => $faker->date('d/m/Y', '+5 years'),
        'fecha_vencimiento' => $faker->date('d/m/Y', '+5 years'),
-       'abogado_id' => \Consensus\Entities\Abogado::all()->random()->id,
+       'abogado_id' => rand(1,30),
        'estado' => $faker->randomElement([0,1])
    ];
 });
@@ -167,10 +165,10 @@ $factory->define(\Consensus\Entities\Tarea::class, function ($faker) use ($facto
 //FLUJO DE CAJA
 $factory->define(\Consensus\Entities\FlujoCaja::class, function ($faker) use ($factory) {
     return [
-        'expediente_id' => \Consensus\Entities\Expediente::all()->random()->id,
+        'expediente_id' => rand(1,150),
         'referencia' => $faker->sentence(),
         'fecha' => $faker->dateTimeBetween('-2 years', 'now'),
-        'money_id' => \Consensus\Entities\Money::all()->random()->id,
+        'money_id' => rand(1,3),
         'monto' => $faker->randomFloat(2, 5, 15),
     ];
 });

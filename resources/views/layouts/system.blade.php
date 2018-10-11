@@ -49,7 +49,7 @@
                 <!-- BEGIN LOGO -->
                 <div class="page-logo">
                     <a href="/">
-                        <img src="/imagenes/logo.jpg" alt="logo" class="logo-default">
+                        <img src="/logo.png" alt="logo" class="logo-default" width="100%">
                     </a>
                 </div>
                 <!-- END LOGO -->
