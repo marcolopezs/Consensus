@@ -113,7 +113,7 @@ $factory->define(\Consensus\Entities\Expediente::class, function ($faker) use ($
     return [
         'expediente' => $faker->regexify('[A-Z]{1,1}-[0-9]{10,10}'),
         'cliente_id' => DB::table('clientes')->inRandomOrder()->first()->id,
-        'money_id' => DB::table('services')->inRandomOrder()->first()->id,
+        'money_id' => DB::table('money')->inRandomOrder()->first()->id,
         'abogado_id' => DB::table('abogados')->inRandomOrder()->first()->id,
         'tariff_id' => DB::table('tariffs')->inRandomOrder()->first()->id,
         'valor' => $faker->randomFloat(2, 5, 15),
@@ -170,7 +170,7 @@ $factory->define(\Consensus\Entities\FlujoCaja::class, function ($faker) use ($f
         'expediente_id' => DB::table('expedientes')->inRandomOrder()->first()->id,
         'referencia' => $faker->sentence(6),
         'fecha' => $faker->date(),
-        'money_id' => DB::table('services')->inRandomOrder()->first()->id,
+        'money_id' => DB::table('money')->inRandomOrder()->first()->id,
         'monto' => $faker->randomFloat(2, 5, 15),
     ];
 });
