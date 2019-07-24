@@ -12,7 +12,7 @@
     {!! HTML::style('https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css') !!}
     {!! HTML::style('https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.2.4/css/simple-line-icons.min.css') !!}
     {!! HTML::style('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css') !!}
-    {!! HTML::style('https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css') !!}
+    {!! HTML::style('https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css') !!}
     {!! HTML::style('assets/global/plugins/uniform/css/uniform.default.css') !!}
     {!! HTML::style('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css') !!}
     <!-- END GLOBAL MANDATORY STYLES -->
@@ -238,7 +238,7 @@
 
     <!-- BEGIN CORE PLUGINS -->
     {!! HTML::script('https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js') !!}
-    {!! HTML::script('https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js') !!}
+    {!! HTML::script('https://code.jquery.com/ui/1.12.1/jquery-ui.min.js') !!}
     {!! HTML::script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js') !!}
     {!! HTML::script('assets/global/plugins/js.cookie.min.js') !!}
     {!! HTML::script('assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js') !!}

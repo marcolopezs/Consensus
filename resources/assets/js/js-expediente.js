@@ -89,6 +89,7 @@ $(".expediente-tareas").on("click", function(e) {
                 '<td>Solicitada</td>' +
                 '<td>Vencimiento</td>' +
                 '<td>Tarea</td>' +
+                '<td>Descripción</td>' +
                 '<td>Asignado</td>' +
                 '<td></td>' +
                 '</tr>' +
@@ -101,12 +102,14 @@ $(".expediente-tareas").on("click", function(e) {
             $("#exp-" + id).after(html);
             $("#tarea-" + id).fadeIn();
 
-            var tr;
+            var tr, descripcion;
             $.each(JSON.parse(result), function(idx, obj) {
+                descripcion = obj.descripcion;
                 tr = $('<tr id="tarea-select-'+ obj.id +'">');
                 tr.append('<td>'+ obj.fecha_solicitada +'</td>');
                 tr.append('<td>'+ obj.fecha_vencimiento +'</td>');
                 tr.append('<td>'+ obj.titulo_tarea +'</td>');
+                tr.append('<td data-tooltip="'+ obj.descripcion +'">'+ descripcion.substr(0,30) + "..." +'</td>');
                 tr.append('<td>'+ obj.asignado +'</td>');
                 tr.append('<td class="text-center">' +
                     '<div class="btn-group">' +

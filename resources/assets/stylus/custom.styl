@@ -201,3 +201,31 @@ a.menu-usuario:before
 .page-header .page-header-top .top-menu .navbar-nav>li.dropdown-dark .dropdown-menu .dropdown-menu-list>li a, .page-header .page-header-top .top-menu .navbar-nav>li.dropdown-dark .dropdown-menu.dropdown-menu-default>li a
     color: #FFFFff
     cursor default
+
+
+[data-tooltip]
+    position relative
+    cursor help
+
+    &:hover
+        &::before
+            content attr(data-tooltip)
+            position absolute
+            display inline-block
+            padding 3px 6px
+            background #fff
+            color #000
+            width 500px
+            border 1px solid #000
+            z-index 2
+            left 0
+
+        &::after
+            content ''
+            position absolute
+            bottom 10px
+            left -22px
+            display inline-block
+            color #fff
+            border 10px solid transparent
+            border-right 12px solid #000
