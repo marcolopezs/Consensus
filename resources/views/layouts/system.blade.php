@@ -127,6 +127,7 @@
                             @endcan
 
                             <li {!! (Request::is('tareas-*') ? 'class="active"' : '') !!}><a href="{{ route('tareas.asignadas') }}">Tiempos</a></li>
+
                             <li class="menu-dropdown mega-menu-dropdown {!! (Request::is('options*') ? 'active' : '') !!}">
                                 <a href="javascript:;">Opciones</a><span class="arrow"></span>
                                 <ul class="dropdown-menu" style="min-width: 500px;">
@@ -146,7 +147,6 @@
                                                         <li {!! (Request::is('options/entity*') ? 'class="active"' : '') !!}><a href="{{ route('entity.index') }}">Entidades</a></li>
                                                         <li {!! (Request::is('options/state*') ? 'class="active"' : '') !!}><a href="{{ route('state.index') }}">Estado</a></li>
                                                         <li {!! (Request::is('options/payment*') ? 'class="active"' : '') !!}><a href="{{ route('payment-method.index') }}">Formas de Pago</a></li>
-                                                        <li {!! (Request::is('options/instance*') ? 'class="active"' : '') !!}><a href="{{ route('instance.index') }}">Instancias</a></li>
                                                         @endcan
                                                     </ul>
                                                 </div>

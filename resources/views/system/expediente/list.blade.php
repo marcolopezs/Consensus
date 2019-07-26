@@ -68,7 +68,7 @@
 	                            <div class="btn-group">
 	                                <a id="filtrar-expediente" class="btn blue-steel btn-outline btn-circle" href="javascript:;">
 	                                    <i class="fa fa-filter" aria-hidden="true"></i>
-	                                    <span class="hidden-xs"> Buscar | Ordenar</span>
+	                                    <span class="hidden-xs"> Buscar</span>
 	                                </a>
 	                            </div>
 	                        </div>
@@ -114,24 +114,16 @@
                             <tr>
                                 <th class="col-expediente" scope="col" style="width: 140px !important;"> Expediente </th>
                                 <th class="col-cliente" scope="col"> Cliente </th>
-                                <th class="col-moneda" scope="col"> Moneda </th>
                                 <th class="col-valor" scope="col"> Valor </th>
                                 <th class="col-tarifa" scope="col"> Tarifa </th>
-                                <th class="col-abogado" scope="col"> Abogado </th>
+                                <th class="col-abogado" scope="col"> Responsable </th>
                                 <th class="col-asistente" scope="col"> Asistente </th>
                                 <th class="col-servicio" scope="col"> Servicio </th>
                                 <th class="col-fecha-inicio" scope="col"> Fecha Inicio </th>
                                 <th class="col-fecha-termino" scope="col"> Fecha Término </th>
                                 <th class="col-materia" scope="col"> Materia </th>
                                 <th class="col-entidad" scope="col"> Entidad </th>
-                                <th class="col-instancia" scope="col"> Instancia </th>
-                                <th class="col-encargado" scope="col"> Encargado </th>
-                                <th class="col-fecha-poder" scope="col"> Fecha Poder </th>
-                                <th class="col-fecha-vencimiento" scope="col"> Fecha Vencimiento </th>
                                 <th class="col-area" scope="col"> Área </th>
-                                <th class="col-jefe-area" scope="col"> Jefe de Área </th>
-                                <th class="col-bienes" scope="col"> Bienes </th>
-                                <th class="col-situacion" scope="col"> Situación Especial </th>
                                 <th class="col-estado" scope="col"> Estado </th>
                                 <th class="col-exito" scope="col"> Éxito </th>
                                 <th scope="col"> Acciones </th>
@@ -145,7 +137,6 @@
                                 $row_expediente = $item->expediente;
                                 $row_cliente = $item->exp_cliente;
                                 $row_saldo = $item->saldo;
-                                $row_moneda = $item->exp_moneda;
                                 $row_valor = $item->valor;
                                 $row_tarifa = $item->exp_tarifa;
                                 $row_abogado = $item->exp_abogado;
@@ -155,21 +146,13 @@
                                 $row_fecha_termino = $item->exp_fecha_termino;
                                 $row_materia = $item->exp_materia;
                                 $row_entidad = $item->exp_entidad;
-                                $row_instancia = $item->exp_instancia;
-                                $row_encargado = $item->encargado;
-                                $row_fecha_poder = $item->exp_fecha_poder;
-                                $row_fecha_vencimiento = $item->exp_fecha_vencimiento;
                                 $row_area = $item->exp_area;
-                                $row_jefe_area = $item->jefe_area;
-                                $row_bienes = $item->exp_bienes;
-                                $row_situacion_especial = $item->exp_situacion_especial;
                                 $row_estado = $item->exp_estado;
                                 $row_exito = $item->exp_exito;
                             @endphp
                             <tr id="exp-{{ $row_id }}" data-id="{{ $row_id }}" data-title="{{ $row_expediente }}" {!! $item->state_id == 29 ? 'class="danger"' : '' !!}>
                                 <td class="col-expediente">{{ $row_expediente }}</td>
                                 <td class="col-cliente">{{ $row_cliente }}</td>
-                                <td class="col-moneda">{{ $row_moneda }}</td>
                                 <td class="col-valor">{{ $row_valor }}</td>
                                 <td class="col-tarifa">{{ $row_tarifa }}</td>
                                 <td class="col-abogado">{{ $row_abogado }}</td>
@@ -179,14 +162,7 @@
                                 <td class="col-fecha-termino">{{ $row_fecha_termino }}</td>
                                 <td class="col-materia">{{ $row_materia }}</td>
                                 <td class="col-entidad">{{ $row_entidad }}</td>
-                                <td class="col-instancia">{{ $row_instancia }}</td>
-                                <td class="col-encargado">{{ $row_encargado }}</td>
-                                <td class="col-fecha-poder">{{ $row_fecha_poder }}</td>
-                                <td class="col-fecha-vencimiento">{{ $row_fecha_vencimiento }}</td>
                                 <td class="col-area">{{ $row_area }}</td>
-                                <td class="col-jefe-area">{{ $row_jefe_area }}</td>
-                                <td class="col-bienes">{{ $row_bienes }}</td>
-                                <td class="col-situacion">{{ $row_situacion_especial }}</td>
                                 <td class="col-estado">{{ $row_estado }}</td>
                                 <td class="col-exito">{{ $row_exito }}</td>
                                 <td class="text-center">

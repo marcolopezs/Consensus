@@ -101,17 +101,12 @@ class ExpedientesController extends Controller {
         //VARIABLES
         $expediente_opcion = $request->input('expediente_opcion');
         $cliente = $request->input('cliente');
-        $moneda = $request->input('moneda');
         $tarifa = $request->input('tarifa');
         $servicio = $request->input('servicio');
         $materia = $request->input('materia');
         $entidad = $request->input('entidad');
-        $instancia = $request->input('instancia');
         $area = $request->input('area');
-        $bienes = $request->input('bienes');
-        $especial = $request->input('especial');
         $estado = $request->input('estado');
-        $exito = $request->input('exito');
 
         //VALIDAD SI ES EXPEDIENTE AUTOMATICO O MANUAL
         if($expediente_opcion == 'auto')
@@ -119,7 +114,7 @@ class ExpedientesController extends Controller {
             $expediente_tipo = $request->input('expediente_tipo');
             $tipo = $this->expedienteTipoRepo->findOrFail($expediente_tipo);
             $num = $tipo->num + 1;
-            $correlativo = str_pad($num, 10, "0", STR_PAD_LEFT);
+            $correlativo = str_pad($num, 6, "0", STR_PAD_LEFT);
             $expediente = $tipo->abrev.'-'.$correlativo;
 
             //GUARDAR CORRELATIVO DE EXPEDIENTE
@@ -136,31 +131,16 @@ class ExpedientesController extends Controller {
         $row->expediente_opcion = $expediente_opcion;
         $row->expediente_tipo_id = $expediente_tipo;
         $row->cliente_id = $cliente;
-        $row->money_id = $moneda;
         $row->tariff_id = $tarifa;
         $row->service_id = $servicio;
         $row->matter_id = $materia;
         $row->entity_id = $entidad;
-        $row->instance_id = $instancia;
         $row->area_id = $area;
-        $row->bienes_id = $bienes;
-        $row->situacion_especial_id = $especial;
         $row->state_id = $estado;
-        $row->exito_id = $exito;
         $save = $this->expedienteRepo->create($row, $request->all());
 
         //GUARDAR HISTORIAL
         $this->expedienteRepo->saveHistory($row, $request, 'create');
-
-        if($save->fecha_vencimiento <> '0000-00-00')
-        {
-            $save->notificaciones()->create([
-                'abogado_id' => $save->abogado_id,
-                'fecha_vencimiento' => $save->fecha_vencimiento,
-                'descripcion' => 'Quedan {dias} días para la fecha de vencimiento de poder del Expediente '. $save->expediente
-            ]);
-
-        }
 
         //MENSAJE
         flash()->success('El registro se agregó satisfactoriamente.');
@@ -210,43 +190,24 @@ class ExpedientesController extends Controller {
         $row = $this->expedienteRepo->findOrFail($id);
 
         //VARIABLES
-        $moneda = $request->input('moneda');
         $tarifa = $request->input('tarifa');
         $servicio = $request->input('servicio');
         $materia = $request->input('materia');
         $entidad = $request->input('entidad');
-        $instancia = $request->input('instancia');
         $area = $request->input('area');
-        $bienes = $request->input('bienes');
-        $especial = $request->input('especial');
         $estado = $request->input('estado');
-        $exito = $request->input('exito');
 
         //GUARDAR DATOS
-        $row->money_id = $moneda;
         $row->tariff_id = $tarifa;
         $row->service_id = $servicio;
         $row->matter_id = $materia;
         $row->entity_id = $entidad;
-        $row->instance_id = $instancia;
         $row->area_id = $area;
-        $row->bienes_id = $bienes;
-        $row->situacion_especial_id = $especial;
         $row->state_id = $estado;
-        $row->exito_id = $exito;
         $save = $this->expedienteRepo->update($row, $request->all());
 
         //GUARDAR HISTORIAL
         $this->expedienteRepo->saveHistory($row, $request, 'update');
-
-        if($save->fecha_vencimiento <> '0000-00-00')
-        {
-            $save->notificaciones()->update([
-                'abogado_id' => $save->abogado_id,
-                'fecha_vencimiento' => $save->fecha_vencimiento,
-                'descripcion' => 'Quedan {dias} días para la fecha de vencimiento de poder del Expediente '. $save->expediente
-            ]);
-        }
 
         //MENSAJE
         flash()->success('El registro se actualizó satisfactoriamente.');
