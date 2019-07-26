@@ -152,7 +152,9 @@
                             @endphp
                             <tr id="exp-{{ $row_id }}" data-id="{{ $row_id }}" data-title="{{ $row_expediente }}" {!! $item->state_id == 29 ? 'class="danger"' : '' !!}>
                                 <td class="col-expediente">{{ $row_expediente }}</td>
-                                <td class="col-cliente">{{ $row_cliente }}</td>
+                                <td class="col-cliente" data-tooltip="{{ $row_cliente }}">
+                                    {{  strlen($row_cliente) > 25 ? substr($row_cliente, 0, 25).'...': $row_cliente }}
+                                </td>
                                 <td class="col-valor">{{ $row_valor }}</td>
                                 <td class="col-tarifa">{{ $row_tarifa }}</td>
                                 <td class="col-abogado">{{ $row_abogado }}</td>

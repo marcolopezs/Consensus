@@ -204,7 +204,7 @@ a.menu-usuario:before
 
 
 [data-tooltip]
-    position relative
+    position relative !important
     cursor help
 
     &:hover
@@ -215,7 +215,8 @@ a.menu-usuario:before
             padding 3px 6px
             background #fff
             color #000
-            width 500px
+            min-width 200px
+            max-width 500px
             border 1px solid #000
             z-index 2
             left 0
@@ -229,3 +230,4 @@ a.menu-usuario:before
             color #fff
             border 10px solid transparent
             border-right 12px solid #000
+            

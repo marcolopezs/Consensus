@@ -42,7 +42,7 @@ $factory->define(\Consensus\Entities\UserRole::class, function ($faker) use ($fa
 //CLIENTES
 $factory->define(\Consensus\Entities\Cliente::class, function ($faker) use ($factory) {
     return [
-        'cliente' => $faker->unique()->company,
+        'cliente' => $faker->unique()->catchPhrase,
         'dni' => $faker->unique()->regexify('[0-9]{8,8}'),
         'ruc' => $faker->unique()->regexify('[0-9]{11,11}'),
         'carnet_extranjeria' => $faker->unique()->regexify('[0-9]{12,12}'),
@@ -111,7 +111,7 @@ $factory->define(\Consensus\Entities\Expediente::class, function ($faker) use ($
     $servicio = DB::table('services')->inRandomOrder()->first();
     $dias = $servicio->dias_ejecucion;
     return [
-        'expediente' => $faker->regexify('[A-Z]{1,1}-[0-9]{10,10}'),
+        'expediente' => $faker->regexify('[A-Z]{1,1}-[0-9]{6,6}'),
         'cliente_id' => DB::table('clientes')->inRandomOrder()->first()->id,
         'money_id' => DB::table('money')->inRandomOrder()->first()->id,
         'abogado_id' => DB::table('abogados')->inRandomOrder()->first()->id,
