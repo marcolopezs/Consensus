@@ -15,7 +15,6 @@ class TareasController extends Controller {
     protected $rules = [
         'tarea' => 'required',
         'fecha_solicitada' => 'required',
-        'fecha_vencimiento' => 'required',
         'asignado' => 'required|exists:abogados,id',
         'descripcion' => 'string'
     ];
@@ -53,7 +52,7 @@ class TareasController extends Controller {
     {
         $row = $this->expedienteRepo->findOrFail($expedientes);
 
-        return $row->tarea->toJson();
+        return $row->tarea()->orderBy('fecha_solicitada','asc')->get()->toJson();
     }
 
     /**
@@ -99,15 +98,15 @@ class TareasController extends Controller {
 
         //GUARDAR HISTORIAL
         $this->tareaRepo->saveHistory($row, $request, 'create');
-
-        if(formatoFecha($save->fecha_vencimiento) <> '0000-00-00')
-        {
-            $save->notificaciones()->create([
-                'abogado_id' => $save->abogado_id,
-                'fecha_vencimiento' => formatoFecha($save->fecha_vencimiento),
-                'descripcion' => 'Quedan {dias} días para tarea '. $save->concepto->titulo .', del Expediente '. $save->expedientes->expediente
-            ]);
-        }
+//
+//        if(formatoFecha($save->fecha_vencimiento) <> '0000-00-00')
+//        {
+//            $save->notificaciones()->create([
+//                'abogado_id' => $save->abogado_id,
+//                'fecha_vencimiento' => formatoFecha($save->fecha_vencimiento),
+//                'descripcion' => 'Quedan {dias} días para tarea '. $save->concepto->titulo .', del Expediente '. $save->expedientes->expediente
+//            ]);
+//        }
 
         //ARRAY
         return [
@@ -115,9 +114,12 @@ class TareasController extends Controller {
             'titulo_tarea' => $save->titulo_tarea,
             'fecha_solicitada' => $save->fecha_solicitada,
             'fecha_vencimiento' => $save->fecha_vencimiento,
+            'descripcion' => $save->descripcion,
             'asignado' => $save->asignado,
+            'estado_nombre' => $save->estado_nombre,
             'url_editar' => $save->url_editar,
-            'url_notificacion' => $save->url_notificacion
+            'url_notificacion' => $save->url_notificacion,
+            'todo' => $save
         ];
 
     }
@@ -145,7 +147,7 @@ class TareasController extends Controller {
      * @param  \Illuminate\Http\Request $request
      * @param $expedientes
      * @param  int $id
-     * @return Response
+     * @return
      */
     public function update(Request $request, $expedientes, $id)
     {
@@ -167,14 +169,14 @@ class TareasController extends Controller {
         //GUARDAR HISTORIAL
         $this->tareaRepo->saveHistory($row, $request, 'update');
 
-        if(formatoFecha($save->fecha_vencimiento) <> '0000-00-00')
-        {
-            $save->notificaciones()->update([
-                'abogado_id' => $save->abogado_id,
-                'fecha_vencimiento' => formatoFecha($save->fecha_vencimiento),
-                'descripcion' => 'Quedan {dias} días para tarea '. $save->concepto->titulo .', del Expediente '. $save->expedientes->expediente
-            ]);
-        }
+//        if(formatoFecha($save->fecha_vencimiento) <> '0000-00-00')
+//        {
+//            $save->notificaciones()->update([
+//                'abogado_id' => $save->abogado_id,
+//                'fecha_vencimiento' => formatoFecha($save->fecha_vencimiento),
+//                'descripcion' => 'Quedan {dias} días para tarea '. $save->concepto->titulo .', del Expediente '. $save->expedientes->expediente
+//            ]);
+//        }
 
         //AJAX
         return [
@@ -182,7 +184,9 @@ class TareasController extends Controller {
             'titulo_tarea' => $save->titulo_tarea,
             'fecha_solicitada' => $row->fecha_solicitada,
             'fecha_vencimiento' => $row->fecha_vencimiento,
+            'descripcion' => $save->descripcion,
             'asignado' => $save->asignado,
+            'estado_nombre' => $save->estado_nombre,
             'url_editar' => $save->url_editar,
             'url_notificacion' => $save->url_notificacion
         ];

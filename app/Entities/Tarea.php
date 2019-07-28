@@ -6,10 +6,9 @@ class Tarea extends BaseEntity {
 
     use SoftDeletes;
 
+    protected $appends = ['titulo_tarea','asignado','url_editar','url_notificacion','estado_nombre'];
     protected $dates = ['deleted_at'];
-
     protected $fillable = ['id','expediente_id','expediente_tipo_id','tarea_concepto_id','descripcion','fecha_solicitada','fecha_vencimiento','titular_id','abogado_id','estado'];
-    protected $appends = ['titulo_tarea','asignado','url_editar','url_notificacion'];
 
     /*
      * RELACIONES
@@ -82,7 +81,7 @@ class Tarea extends BaseEntity {
 
     public function getFechaVencimientoAttribute($value)
     {
-        return soloFecha($value);
+        return $value != '0000-00-00' ? soloFecha($value) : '';
     }
 
     public function getAsignadoPorAttribute()
@@ -108,6 +107,11 @@ class Tarea extends BaseEntity {
     public function getUrlNotificacionAttribute()
     {
         return route('expedientes.tareas.notificacion.index', [$this->expediente_id, $this->id]);
+    }
+
+    public function getEstadoNombreAttribute()
+    {
+        return $this->estado ? 'Terminado' : 'Pendiente';
     }
 
     /*

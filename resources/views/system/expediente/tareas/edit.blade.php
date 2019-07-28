@@ -51,7 +51,7 @@
 
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        {!! Form::label('fecha_vencimiento', 'Vencimiento', ['class' => 'control-label']) !!}
+                                        {!! Form::label('fecha_vencimiento', 'Finalizado', ['class' => 'control-label']) !!}
                                         <div class="input-group input-medium date date-picker" data-date-format="dd/mm/yyyy" data-date-viewmode="years">
                                             {!! Form::text('fecha_vencimiento', null, ['class' => 'form-control']) !!}
                                             <span class="input-group-btn"><button class="btn default" type="button"><i class="fa fa-calendar"></i></button></span>
@@ -133,16 +133,20 @@
             type: 'POST',
             data: data,
             success: function (result) {
+                console.log(result);
                 successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>El registro se actualizó satisfactoriamente.</div>';
                 $(".form-content").html(successHtml);
 
                 $("#tarea-select-"+ result.id).remove();
+                var descripcion = result.descripcion;
 
                 var html = '<tr id="tarea-select-'+ result.id +'">' +
                                 '<td>'+ result.fecha_solicitada +'</td>' +
                                 '<td>'+ result.fecha_vencimiento +'</td>' +
                                 '<td>'+ result.titulo_tarea +'</td>' +
+                                '<td data-tooltip="'+ result.descripcion +'">'+ descripcion.substr(0,30) + "..." +'</td>' +
                                 '<td>'+ result.asignado +'</td>' +
+                                '<td>'+ result.estado_nombre +'</td>' +
                                 '<td class="text-center">' +
                                     '<div class="btn-group">' +
                                         '<button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Movimientos' +

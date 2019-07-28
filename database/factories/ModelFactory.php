@@ -112,28 +112,20 @@ $factory->define(\Consensus\Entities\Expediente::class, function ($faker) use ($
     $dias = $servicio->dias_ejecucion;
     return [
         'expediente' => $faker->regexify('[A-Z]{1,1}-[0-9]{6,6}'),
+        'expediente_tipo_id' => DB::table('expediente_tipos')->inRandomOrder()->first()->id,
         'cliente_id' => DB::table('clientes')->inRandomOrder()->first()->id,
-        'money_id' => DB::table('money')->inRandomOrder()->first()->id,
         'abogado_id' => DB::table('abogados')->inRandomOrder()->first()->id,
         'tariff_id' => DB::table('tariffs')->inRandomOrder()->first()->id,
-        'valor' => $faker->randomFloat(2, 5, 15),
         'asistente_id' => DB::table('abogados')->inRandomOrder()->first()->id,
         'service_id' => $servicio->id,
         'numero_dias' => $dias,
         'fecha_inicio' => $faker->date('d/m/Y', '-5 years'),
         'fecha_termino' => $faker->date('d/m/Y', '+5 years'),
         'descripcion' => $faker->text(rand(100,255)),
-        'concepto' => $faker->text(rand(100,255)),
         'matter_id' => DB::table('matters')->inRandomOrder()->first()->id,
-        'entity_id' => DB::table('entities')->inRandomOrder()->first()->id,
-        'instance_id' => DB::table('instances')->inRandomOrder()->first()->id,
-        'encargado' => $faker->name,
         'area_id' => DB::table('areas')->inRandomOrder()->first()->id,
-        'jefe_area' => $faker->name,
+        'entity_id' => DB::table('entities')->inRandomOrder()->first()->id,
         'state_id' => DB::table('states')->inRandomOrder()->first()->id,
-        'bienes_id' => DB::table('bienes')->inRandomOrder()->first()->id,
-        'situacion_especial_id' => DB::table('situacion_especial')->inRandomOrder()->first()->id,
-        'exito_id' => DB::table('exito')->inRandomOrder()->first()->id,
         'observacion' => $faker->text(rand(100,255))
     ];
 });

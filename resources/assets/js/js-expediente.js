@@ -91,6 +91,7 @@ $(".expediente-tareas").on("click", function(e) {
                 '<td>Tarea</td>' +
                 '<td>Descripción</td>' +
                 '<td>Asignado</td>' +
+                '<td>Estado</td>' +
                 '<td></td>' +
                 '</tr>' +
                 '</thead>' +
@@ -111,6 +112,7 @@ $(".expediente-tareas").on("click", function(e) {
                 tr.append('<td>'+ obj.titulo_tarea +'</td>');
                 tr.append('<td data-tooltip="'+ obj.descripcion +'">'+ descripcion.substr(0,30) + "..." +'</td>');
                 tr.append('<td>'+ obj.asignado +'</td>');
+                tr.append('<td>'+ obj.estado_nombre +'</td>');
                 tr.append('<td class="text-center">' +
                     '<div class="btn-group">' +
                     '<button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Movimientos' +
