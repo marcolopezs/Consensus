@@ -103,16 +103,17 @@ $(".expediente-tareas").on("click", function(e) {
             $("#exp-" + id).after(html);
             $("#tarea-" + id).fadeIn();
 
-            var tr, descripcion;
+            var tr, descripcion, estado;
             $.each(JSON.parse(result), function(idx, obj) {
                 descripcion = obj.descripcion;
+                estado = obj.estado_nombre;
                 tr = $('<tr id="tarea-select-'+ obj.id +'">');
                 tr.append('<td>'+ obj.fecha_solicitada +'</td>');
                 tr.append('<td>'+ obj.fecha_vencimiento +'</td>');
                 tr.append('<td>'+ obj.titulo_tarea +'</td>');
                 tr.append('<td data-tooltip="'+ obj.descripcion +'">'+ descripcion.substr(0,30) + "..." +'</td>');
                 tr.append('<td>'+ obj.asignado +'</td>');
-                tr.append('<td>'+ obj.estado_nombre +'</td>');
+                tr.append('<td><span class="estado-'+ estado.toLowerCase() +'">'+ estado +'</span></td>');
                 tr.append('<td class="text-center">' +
                     '<div class="btn-group">' +
                     '<button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Movimientos' +
@@ -460,3 +461,4 @@ $(".expediente-anulado").on("click", function (e) {
         }
     });
 });
+

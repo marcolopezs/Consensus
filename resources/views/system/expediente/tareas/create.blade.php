@@ -117,7 +117,11 @@
 
 {{-- GUARDAR TAREA --}}
 <script>
-
+    $("input:radio[name=estado]").change(function (e) {
+        if($(this).val() == 1){
+            $("input[name=fecha_vencimiento]").val(moment().format('DD/MM/YYYY'));
+        }
+    });
 
     $("#formCreateSubmit").on("click", function(e){
         e.preventDefault();
@@ -136,6 +140,7 @@
                 $(".select2").val(null).trigger('change');
                 form[0].reset();
                 var descripcion = result.descripcion;
+                var estado = result.estado_nombre;
 
                 var html = '<tr id="tarea-select-'+ result.id +'">' +
                                 '<td>'+ result.fecha_solicitada +'</td>' +
@@ -143,7 +148,7 @@
                                 '<td>'+ result.titulo_tarea +'</td>' +
                                 '<td data-tooltip="'+ result.descripcion +'">'+ descripcion.substr(0,30) + "..." +'</td>' +
                                 '<td>'+ result.asignado +'</td>' +
-                                '<td>'+ result.estado_nombre +'</td>' +
+                                '<td><span class="estado-'+ estado.toLowerCase() +'">'+ estado +'</span></td>' +
                                 '<td class="text-center">' +
                                     '<div class="btn-group">' +
                                         '<button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Movimientos' +
