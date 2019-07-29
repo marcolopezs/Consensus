@@ -1,5 +1,7 @@
 <?php namespace Consensus\Http\Controllers\System;
 
+use Consensus\Entities\TareaAccion;
+use Consensus\Repositories\TareaAccionRepo;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Consensus\Http\Controllers\Controller;
@@ -9,6 +11,7 @@ use Consensus\Repositories\AbogadoRepo;
 use Consensus\Repositories\ExpedienteRepo;
 use Consensus\Repositories\TareaRepo;
 use Consensus\Repositories\TareaConceptoRepo;
+use Illuminate\Support\Facades\DB;
 
 class TareasController extends Controller {
 
@@ -23,22 +26,26 @@ class TareasController extends Controller {
     protected $expedienteRepo;
     protected $tareaRepo;
     protected $tareaConceptoRepo;
+    protected $tareaAccionRepo;
 
     /**
      * TareasController constructor.
      * @param AbogadoRepo $abogadoRepo
      * @param ExpedienteRepo $expedienteRepo
      * @param TareaRepo $tareaRepo
+     * @param TareaAccionRepo $tareaAccionRepo
      * @param TareaConceptoRepo $tareaConceptoRepo
      */
     public function __construct(AbogadoRepo $abogadoRepo,
                                 ExpedienteRepo $expedienteRepo,
                                 TareaRepo $tareaRepo,
+                                TareaAccionRepo $tareaAccionRepo,
                                 TareaConceptoRepo $tareaConceptoRepo)
     {
         $this->abogadoRepo = $abogadoRepo;
         $this->expedienteRepo = $expedienteRepo;
         $this->tareaRepo = $tareaRepo;
+        $this->tareaAccionRepo = $tareaAccionRepo;
         $this->tareaConceptoRepo = $tareaConceptoRepo;
     }
 
@@ -80,48 +87,51 @@ class TareasController extends Controller {
         //VALIDACION
         $this->validate($request, $this->rules);
 
-        //EXTRAER EXPEDIENTE
-        $exp = $this->expedienteRepo->findOrFail($expedientes);
+        return DB::transaction(function () use ($expedientes, $request) {
+            $exp = $this->expedienteRepo->findOrFail($expedientes);
 
-        //VARIABLES
-        $asignado = $request->input('asignado');
-        $concepto = $request->input('tarea');
+            //VARIABLES
+            $asignado = $request->input('asignado');
+            $concepto = $request->input('tarea');
 
-        //GUARDAR DATOS
-        $row = new Tarea($request->all());
-        $row->expediente_id = $expedientes;
-        $row->expediente_tipo_id = $exp->expediente_tipo_id;
-        $row->tarea_concepto_id = $concepto;
-        $row->titular_id = auth()->user()->id;
-        $row->abogado_id = $asignado;
-        $save = $this->tareaRepo->create($row, $request->all());
+            //GUARDAR DATOS DE NUEVA TAREA
+            $row = new Tarea($request->all());
+            $row->expediente_id = $expedientes;
+            $row->expediente_tipo_id = $exp->expediente_tipo_id;
+            $row->tarea_concepto_id = $concepto;
+            $row->titular_id = auth()->user()->id;
+            $row->abogado_id = $asignado;
+            $save = $this->tareaRepo->create($row, $request->all());
 
-        //GUARDAR HISTORIAL
-        $this->tareaRepo->saveHistory($row, $request, 'create');
-//
-//        if(formatoFecha($save->fecha_vencimiento) <> '0000-00-00')
-//        {
-//            $save->notificaciones()->create([
-//                'abogado_id' => $save->abogado_id,
-//                'fecha_vencimiento' => formatoFecha($save->fecha_vencimiento),
-//                'descripcion' => 'Quedan {dias} días para tarea '. $save->concepto->titulo .', del Expediente '. $save->expedientes->expediente
-//            ]);
-//        }
+            //GUARDAR DATOS DE NUEVA ACCION
+            $accion = new TareaAccion();
+            $accion->expediente_id = $expedientes;
+            $accion->expediente_tipo_id = $exp->expediente_tipo_id;
+            $accion->abogado_id = $asignado;
+            $accion->cliente_id = $exp->cliente_id;
+            $accion->tarea_id = $save->id;
+            $accion->fecha = $request->input('fecha_solicitada');
+            $accion->descripcion = $request->input('descripcion');
+            $this->tareaAccionRepo->create($accion, $request->all());
 
-        //ARRAY
-        return [
-            'id' => $save->id,
-            'expediente_id' => $expedientes,
-            'titulo_tarea' => $save->titulo_tarea,
-            'fecha_solicitada' => $save->fecha_solicitada,
-            'fecha_vencimiento' => $save->fecha_vencimiento,
-            'descripcion' => $save->descripcion,
-            'asignado' => $save->asignado,
-            'estado_nombre' => $save->estado_nombre,
-            'url_editar' => $save->url_editar,
-            'url_notificacion' => $save->url_notificacion
-        ];
+            //GUARDAR HISTORIAL
+            $this->tareaRepo->saveHistory($row, $request, 'create');
+            $this->tareaAccionRepo->saveHistory($accion, $request, 'create');
 
+            //ARRAY
+            return [
+                'id' => $save->id,
+                'expediente_id' => $expedientes,
+                'titulo_tarea' => $save->titulo_tarea,
+                'fecha_solicitada' => $save->fecha_solicitada,
+                'fecha_vencimiento' => $save->fecha_vencimiento,
+                'descripcion' => $save->descripcion,
+                'asignado' => $save->asignado,
+                'estado_nombre' => $save->estado_nombre,
+                'url_editar' => $save->url_editar,
+                'url_notificacion' => $save->url_notificacion
+            ];
+        });
     }
 
     /**
