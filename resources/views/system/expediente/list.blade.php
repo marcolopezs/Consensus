@@ -171,7 +171,7 @@
                                 <td class="col-estado">{{ $row_estado }}</td>
                                 <td>
                                     <a href="{{ $row_ultimo_movimiento_url }}" data-target="#ajax" data-toggle="modal">
-                                        {{ $row_ultimo_movimiento }}
+                                        {{ $row_ultimo_movimiento->fecha_accion }}
                                     </a>
                                 </td>
                                 <td class="col-exito">{{ $row_exito }}</td>
