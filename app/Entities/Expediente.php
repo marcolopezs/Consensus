@@ -12,7 +12,7 @@ class Expediente extends BaseEntity {
         'check_asistente','asistente_id','service_id','numero_dias','fecha_inicio','fecha_termino','descripcion','matter_id','entity_id',
         'area_id','state_id','vehicular_placa_antigua','vehicular_placa_nueva','vehicular_siniestro','observacion'];
 
-    protected $appends = ['exp_asistente','exp_fecha_inicio','exp_fecha_termino','saldo','lista_tareas'];
+    protected $appends = ['exp_asistente','exp_fecha_inicio','exp_fecha_termino','saldo','lista_tareas','ultimo_movimiento','ultimo_movimiento_url'];
 
     protected $table = 'expedientes';
 
@@ -202,9 +202,36 @@ class Expediente extends BaseEntity {
         return number_format($total, 2, '.', ',');
     }
 
+    /**
+     * Listado de tareas de expedientes, ordenados por fecha solicitada
+     */
     public function getListaTareasAttribute()
     {
         return $this->tarea()->orderBy('fecha_solicitada','desc')->get();
+    }
+
+    /**
+     * Mostrar ultimo movimiento en las acciones de la tarea del expediente
+     */
+    public function getUltimoMovimientoAttribute()
+    {
+        $ultima_tarea = $this->tarea()->orderBy('fecha_solicitada','desc')->first();
+        if($ultima_tarea){
+            $ultima_accion = $ultima_tarea->acciones()->orderBy('fecha','desc')->orderBy('desde','desc')->first();
+        }
+
+        return $ultima_tarea ? $ultima_accion->fecha_accion : '';
+    }
+
+    public function getUltimoMovimientoUrlAttribute()
+    {
+        $tarea = $this->tarea()->orderBy('fecha_solicitada','desc')->first();
+
+        if($tarea){
+            $accion = route('expedientes.tareas.acciones', [$tarea->expediente_id, $tarea->id]);
+        }
+
+        return $tarea ? $accion : '';
     }
 
 

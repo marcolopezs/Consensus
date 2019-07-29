@@ -125,6 +125,7 @@
                                 <th class="col-entidad" scope="col"> Entidad </th>
                                 <th class="col-area" scope="col"> Área </th>
                                 <th class="col-estado" scope="col"> Estado </th>
+                                <th scope="col"> Último<br>Movimiento </th>
                                 <th class="col-exito" scope="col"> Éxito </th>
                                 <th scope="col"> Acciones </th>
                             </tr>
@@ -148,6 +149,8 @@
                                 $row_entidad = $item->exp_entidad;
                                 $row_area = $item->exp_area;
                                 $row_estado = $item->exp_estado;
+                                $row_ultimo_movimiento = $item->ultimo_movimiento;
+                                $row_ultimo_movimiento_url = $item->ultimo_movimiento_url;
                                 $row_exito = $item->exp_exito;
                             @endphp
                             <tr id="exp-{{ $row_id }}" data-id="{{ $row_id }}" data-title="{{ $row_expediente }}" {!! $item->state_id == 29 ? 'class="danger"' : '' !!}>
@@ -166,6 +169,11 @@
                                 <td class="col-entidad">{{ $row_entidad }}</td>
                                 <td class="col-area">{{ $row_area }}</td>
                                 <td class="col-estado">{{ $row_estado }}</td>
+                                <td>
+                                    <a href="{{ $row_ultimo_movimiento_url }}" data-target="#ajax" data-toggle="modal">
+                                        {{ $row_ultimo_movimiento }}
+                                    </a>
+                                </td>
                                 <td class="col-exito">{{ $row_exito }}</td>
                                 <td class="text-center">
 
