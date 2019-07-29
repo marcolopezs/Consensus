@@ -88,8 +88,8 @@
                                 <th class="col-expediente" scope="col" style="width: 140px !important;"> Expediente </th>
                                 <th class="col-tarea" scope="col" style="width: 160px !important;"> Tarea </th>
                                 <th class="col-descripcion" scope="col"> Descripción </th>
-                                <th class="col-solicitada text-center" scope="col"> Fecha Solicitada </th>
-                                <th class="col-vencimiento text-center" scope="col"> Fecha Vencimiento </th>
+                                <th class="col-solicitada text-center" scope="col"> Solicitada </th>
+                                <th class="col-vencimiento text-center" scope="col"> Finalizada </th>
                                 <th class="col-estado text-center" scope="col"> Estado </th>
                                 <th class="col-estado" scope="col"></th>
                             </tr>
@@ -106,24 +106,36 @@
                                 $row_descripcion = $item->descripcion;
                                 $row_solicitada = $item->fecha_solicitada;
                                 $row_vencimiento = $item->fecha_vencimiento;
-                                $row_estado = $item->estado;
+                                $row_estado = $item->estado_nombre;
                             @endphp
                             <tr id="tarea-{{ $row_id }}" data-id="{{ $row_id }}" data-title="{{ $row_expediente }}">
                                 <td class="col-asignado">{{ $row_asignado }}</td>
                                 <td class="col-expediente">{{ $row_expediente }}</td>
                                 <td class="col-tarea">{{ $row_tarea }}</td>
-                                <td class="col-descripcion">{{ $row_descripcion }}</td>
+                                <td class="col-descripcion" data-tooltip="{{ $row_descripcion }}">
+                                    {{  strlen($row_descripcion) > 50 ? substr($row_descripcion, 0, 50).'...': $row_descripcion }}
+                                </td>
                                 <td class="col-solicitada text-center">{{ $row_solicitada }}</td>
                                 <td class="col-vencimiento text-center">{{ $row_vencimiento }}</td>
-                                <td class="col-estado">{{ $row_estado ? 'Terminado' : 'Pendiente' }}</td>
+                                <td class="col-estado">
+                                    <span class="estado-{{ strtolower($row_estado) }}">
+                                        {{ $row_estado }}
+                                    </span>
+                                </td>
                                 <td class="text-center">
                                     <div class="btn-group">
                                         <button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Movimientos
                                             <i class="fa fa-angle-down"></i>
                                         </button>
                                         <ul class="dropdown-menu pull-right" role="menu">
-                                            <li><a href="{{ route('expedientes.show', $row_expediente_id) }}" data-target="#ajax" data-toggle="modal">Ver expediente</a></li>
-                                            <li><a href="#" class="tarea-acciones" data-id="{{ $row_id }}" data-list="{{ route('tareas.acciones.index', $row_id) }}" data-create="{{ route('tareas.acciones.create', $row_id) }}">Acciones</a></li>
+                                            <li><a href="{{ route('expedientes.show', $row_expediente_id) }}"
+                                                   data-target="#ajax"
+                                                   data-toggle="modal">Ver expediente</a></li>
+
+                                            <li><a href="#" class="tarea-acciones"
+                                                   data-id="{{ $row_id }}"
+                                                   data-list="{{ route('tareas.acciones.index', $row_id) }}"
+                                                   data-create="{{ route('tareas.acciones.create', $row_id) }}">Acciones</a></li>
                                         </ul>
                                     </div>
                                 </td>
