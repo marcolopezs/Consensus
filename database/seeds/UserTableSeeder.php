@@ -18,7 +18,8 @@ class UserTableSeeder extends Seeder
             'username' => 'admin',
             'password' => 'admin',
             'active' => 1,
-            'admin' => 1
+            'admin' => 1,
+            'abogado_id' => DB::table('abogados')->inRandomOrder()->first()->id
         ]);
 
         factory(UserProfile::class)->create([
