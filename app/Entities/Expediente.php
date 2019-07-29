@@ -217,10 +217,12 @@ class Expediente extends BaseEntity {
     {
         $ultima_tarea = $this->tarea()->orderBy('fecha_solicitada','desc')->first();
         if($ultima_tarea){
-            $ultima_accion = $ultima_tarea->acciones()->orderBy('fecha','desc')->orderBy('desde','desc')->first();
+            $acciones = $ultima_tarea->acciones;
+            if($acciones->count()){
+                $ultima_accion = $ultima_tarea->acciones()->orderBy('fecha','desc')->orderBy('desde','desc')->first();
+                return $ultima_accion->fecha_accion;
+            }
         }
-
-        return $ultima_tarea ? $ultima_accion->fecha_accion : '';
     }
 
     public function getUltimoMovimientoUrlAttribute()
