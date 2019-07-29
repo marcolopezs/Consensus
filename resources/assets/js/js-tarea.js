@@ -1,4 +1,4 @@
-//MOSTRAR TAREAS DE EXPEDIENTE
+//MOSTRAR ACCIONES DE TAREA DEL EXPEDIENTE
 $(".tarea-acciones").on("click", function(e) {
     e.preventDefault();
 
@@ -55,7 +55,7 @@ $(".tarea-acciones").on("click", function(e) {
                                     '</ul>' +
                                 '</div>' +
                             '</td></tr>');
-                $("#accion-lista-"+id+" tbody").prepend(tr);
+                $("#accion-lista-"+id+" tbody").append(tr);
 
             });
             $("#accion-" + id).fadeIn();

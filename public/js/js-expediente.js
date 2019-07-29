@@ -87,7 +87,7 @@ $(".expediente-tareas").on("click", function(e) {
                 '<thead>' +
                 '<tr role="row" class="heading">' +
                 '<td>Solicitada</td>' +
-                '<td>Vencimiento</td>' +
+                '<td>Finalizado</td>' +
                 '<td>Tarea</td>' +
                 '<td>Descripción</td>' +
                 '<td>Asignado</td>' +
@@ -116,16 +116,17 @@ $(".expediente-tareas").on("click", function(e) {
                 tr.append('<td><span class="estado-'+ estado.toLowerCase() +'">'+ estado +'</span></td>');
                 tr.append('<td class="text-center">' +
                     '<div class="btn-group">' +
-                    '<button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Movimientos' +
-                    '<i class="fa fa-angle-down"></i>' +
-                    '</button>' +
-                    '<ul class="dropdown-menu pull-right" role="menu">' +
-                    '<li><a href="'+ obj.url_editar +'" data-target="#ajax" data-toggle="modal">Editar</a></li>' +
-                    '<li><a href="'+ obj.url_notificacion +'" data-target="#ajax" data-toggle="modal">Notificaciones</a></li>' +
-                    '</ul>' +
+                        '<button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Movimientos' +
+                            '<i class="fa fa-angle-down"></i>' +
+                        '</button>' +
+                        '<ul class="dropdown-menu pull-right" role="menu">' +
+                            '<li><a href="'+ obj.url_editar +'" data-target="#ajax" data-toggle="modal">Editar</a></li>' +
+                            '<li><a href="/expedientes/'+ obj.expediente_id +'/tareas/'+ obj.id +'/acciones" data-target="#ajax" data-toggle="modal">Acciones</a></li>' +
+                            '<li><a href="'+ obj.url_notificacion +'" data-target="#ajax" data-toggle="modal">Notificaciones</a></li>' +
+                        '</ul>' +
                     '</div>' +
                     '</td></tr>');
-                $("#tarea-lista-"+id+" tbody").prepend(tr);
+                $("#tarea-lista-"+id+" tbody").append(tr);
             });
 
             $(".tarea-cerrar").on("click", function (e) {

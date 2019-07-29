@@ -109,7 +109,7 @@ class TareasAsignadasController extends Controller {
     {
         $row = $this->tareaRepo->findOrFail($tarea);
 
-        return $row->acciones->toJson();
+        return $row->lista_acciones->toJson();
     }
 
     /**

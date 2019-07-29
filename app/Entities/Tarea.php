@@ -6,7 +6,7 @@ class Tarea extends BaseEntity {
 
     use SoftDeletes;
 
-    protected $appends = ['titulo_tarea','asignado','url_editar','url_notificacion','estado_nombre'];
+    protected $appends = ['titulo_tarea','asignado','url_editar','url_notificacion','estado_nombre','lista_acciones'];
     protected $dates = ['deleted_at'];
     protected $fillable = ['id','expediente_id','expediente_tipo_id','tarea_concepto_id','descripcion','fecha_solicitada','fecha_vencimiento','titular_id','abogado_id','estado'];
 
@@ -112,6 +112,11 @@ class Tarea extends BaseEntity {
     public function getEstadoNombreAttribute()
     {
         return $this->estado ? 'Terminado' : 'Pendiente';
+    }
+
+    public function getListaAccionesAttribute()
+    {
+        return $this->acciones()->orderBy('fecha','desc')->orderBy('desde','desc')->get();
     }
 
     /*

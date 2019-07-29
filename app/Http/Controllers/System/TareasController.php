@@ -52,7 +52,7 @@ class TareasController extends Controller {
     {
         $row = $this->expedienteRepo->findOrFail($expedientes);
 
-        return $row->tarea()->orderBy('fecha_solicitada','asc')->get()->toJson();
+        return $row->lista_tareas->toJson();
     }
 
     /**
@@ -111,6 +111,7 @@ class TareasController extends Controller {
         //ARRAY
         return [
             'id' => $save->id,
+            'expediente_id' => $expedientes,
             'titulo_tarea' => $save->titulo_tarea,
             'fecha_solicitada' => $save->fecha_solicitada,
             'fecha_vencimiento' => $save->fecha_vencimiento,
@@ -118,8 +119,7 @@ class TareasController extends Controller {
             'asignado' => $save->asignado,
             'estado_nombre' => $save->estado_nombre,
             'url_editar' => $save->url_editar,
-            'url_notificacion' => $save->url_notificacion,
-            'todo' => $save
+            'url_notificacion' => $save->url_notificacion
         ];
 
     }
@@ -181,6 +181,7 @@ class TareasController extends Controller {
         //AJAX
         return [
             'id' => $save->id,
+            'expediente_id' => $expedientes,
             'titulo_tarea' => $save->titulo_tarea,
             'fecha_solicitada' => $row->fecha_solicitada,
             'fecha_vencimiento' => $row->fecha_vencimiento,
@@ -192,4 +193,17 @@ class TareasController extends Controller {
         ];
     }
 
+
+    /**
+     * Mostrar acciones de tarea seleccionada
+     * @param $expediente
+     * @param $tarea
+     * @return String
+     */
+    public function acciones($expediente, $tarea)
+    {
+        $row = $this->tareaRepo->findOrFail($tarea);
+
+        return view('system.expediente.tareas.acciones', compact('row'));
+    }
 }

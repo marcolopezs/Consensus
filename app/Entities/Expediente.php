@@ -12,7 +12,7 @@ class Expediente extends BaseEntity {
         'check_asistente','asistente_id','service_id','numero_dias','fecha_inicio','fecha_termino','descripcion','matter_id','entity_id',
         'area_id','state_id','vehicular_placa_antigua','vehicular_placa_nueva','vehicular_siniestro','observacion'];
 
-    protected $appends = ['exp_asistente','exp_fecha_inicio','exp_fecha_termino','saldo'];
+    protected $appends = ['exp_asistente','exp_fecha_inicio','exp_fecha_termino','saldo','lista_tareas'];
 
     protected $table = 'expedientes';
 
@@ -201,6 +201,12 @@ class Expediente extends BaseEntity {
 
         return number_format($total, 2, '.', ',');
     }
+
+    public function getListaTareasAttribute()
+    {
+        return $this->tarea()->orderBy('fecha_solicitada','desc')->get();
+    }
+
 
     /*
      * SETTERS

@@ -57,6 +57,9 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
     //EXPEDIENTES - TAREAS
     Route::resource('expedientes.tareas', 'TareasController', ['except' => 'destroy']);
 
+    //EXPEDIENTES - TAREAS - ACCIONES
+    Route::resource('expedientes.tareas.acciones', 'TareasController@acciones');
+
     //EXPEDIENTES - TAREAS - NOTIFICACIONES
     Route::resource('expedientes.tareas.notificacion', 'TareasNotificacionController', ['except' => 'destroy']);
 
