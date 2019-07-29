@@ -156,6 +156,7 @@
                                         '</button>' +
                                         '<ul class="dropdown-menu pull-right" role="menu">' +
                                             '<li><a href="'+ result.url_editar +'" data-target="#ajax" data-toggle="modal">Editar</a></li>' +
+                                            '<li><a href="/expedientes/'+ result.expediente_id +'/tareas/'+ result.id +'/acciones" data-target="#ajax" data-toggle="modal">Acciones</a></li>' +
                                             '<li><a href="'+ result.url_notificacion +'" data-target="#ajax" data-toggle="modal">Notificaciones</a></li>' +
                                         '</ul>' +
                                     '</div>' +
