@@ -44,6 +44,11 @@ class Expediente extends BaseEntity {
         return $this->hasMany(Tarea::class);
     }
 
+    public function acciones()
+    {
+        return $this->hasMany(TareaAccion::class);
+    }
+
     public function flujo_caja()
     {
         return $this->hasMany(FlujoCaja::class);
@@ -215,25 +220,23 @@ class Expediente extends BaseEntity {
      */
     public function getUltimoMovimientoAttribute()
     {
-        $ultima_tarea = $this->tarea()->orderBy('fecha_solicitada','desc')->first();
-        if($ultima_tarea){
-            $acciones = $ultima_tarea->acciones;
-            if($acciones->count()){
-                $ultima_accion = $ultima_tarea->acciones()->orderBy('fecha','desc')->orderBy('desde','desc')->first();
-                return $ultima_accion->fecha_accion;
-            }
+        $acciones = $this->acciones;
+
+        if($acciones->count()){
+            $ultima_accion = $this->acciones()->orderBy('fecha','desc')->orderBy('desde','desc')->first();
+            return $ultima_accion;
         }
     }
 
     public function getUltimoMovimientoUrlAttribute()
     {
-        $tarea = $this->tarea()->orderBy('fecha_solicitada','desc')->first();
+        $acciones = $this->acciones;
 
-        if($tarea){
-            $accion = route('expedientes.tareas.acciones', [$tarea->expediente_id, $tarea->id]);
+        if($acciones->count()){
+            $accion = route('expedientes.tareas.acciones', [$this->ultimo_movimiento->expediente_id, $this->ultimo_movimiento->tarea_id]);
         }
 
-        return $tarea ? $accion : '';
+        return $acciones ? $accion : '';
     }
 
 
