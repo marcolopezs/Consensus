@@ -156,6 +156,22 @@ $factory->define(\Consensus\Entities\Tarea::class, function ($faker) use ($facto
    ];
 });
 
+//ACCIONES DE TAREA
+$factory->define(\Consensus\Entities\TareaAccion::class, function ($faker) use ($factory) {
+    return [
+        'expediente_id' => DB::table('expedientes')->inRandomOrder()->first()->id,
+        'expediente_tipo_id' => DB::table('expediente_tipos')->inRandomOrder()->first()->id,
+        'abogado_id' => DB::table('users')->inRandomOrder()->first()->id,
+        'cliente_id' => DB::table('clientes')->inRandomOrder()->first()->id,
+        'tarea_id' => DB::table('tareas')->inRandomOrder()->first()->id,
+        'fecha' => $faker->date('d/m/Y', '+5 years'),
+        'desde' => $faker->time('H:i:s'),
+        'hasta' => $faker->time('H:i:s'),
+        'horas' => $faker->time('H:i:s'),
+        'descripcion' => $faker->text(rand(100,255))
+    ];
+});
+
 //FLUJO DE CAJA
 $factory->define(\Consensus\Entities\FlujoCaja::class, function ($faker) use ($factory) {
     return [

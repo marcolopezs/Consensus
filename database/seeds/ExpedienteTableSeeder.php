@@ -11,6 +11,6 @@ class ExpedienteTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\Consensus\Entities\Expediente::class, 150)->create();
+        factory(\Consensus\Entities\Expediente::class, 30)->create();
     }
 }

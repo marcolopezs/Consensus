@@ -11,6 +11,9 @@ class TareasTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\Consensus\Entities\Tarea::class, 600)->create();
+        factory(\Consensus\Entities\Tarea::class, 100)->create();
+
+
+        factory(\Consensus\Entities\TareaAccion::class, 300)->create();
     }
 }
