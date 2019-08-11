@@ -53,9 +53,9 @@
 
                         <div class="btn-group btn-group-devided">
                             <div class="btn-group">
-                                <a class="btn red btn-outline btn-circle" href="{{ route('area.inactivos') }}">
+                                <a class="btn green btn-outline btn-circle" href="{{ route('area.index') }}">
                                     <i class="fa fa-eye" aria-hidden="true"></i>
-                                    <span class="hidden-xs"> No activos </span>
+                                    <span class="hidden-xs"> Activos </span>
                                 </a>
                             </div>
                         </div>
@@ -64,12 +64,15 @@
                 </div>
 
                 <div class="portlet-body">
-
-                    {!! Form::model(Request::all(), ['route' => 'area.index', 'method' => 'GET']) !!}
-
                     <table class="table table-striped table-bordered table-hover order-column">
-
-                        @include('system.area.partials.search')
+                        <thead>
+                            <tr role="row" class="heading">
+                                <th width="30%">Titulo</th>
+                                <th width="30%">Email</th>
+                                <th width="20%">Estado</th>
+                                <th width="10%">Acciones</th>
+                            </tr>
+                        </thead>
 
                         <tbody>
                         @foreach($rows as $item)
@@ -108,7 +111,6 @@
                         @endforeach
                         </tbody>
                     </table>
-                    {!! Form::close() !!}
 
                     <div class="row">
 
@@ -127,7 +129,6 @@
 
                 </div>
             </div>
-            <!-- END EXAMPLE TABLE PORTLET-->
         </div>
 
     </div>

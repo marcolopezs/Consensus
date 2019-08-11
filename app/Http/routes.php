@@ -126,6 +126,7 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
 
         //AREAS
         Route::resource('area', 'AreaController', ['names' => $prefixedResourceNames('area'), 'except' => 'destroy']);
+        Route::get('area-inactivos', ['as' => 'area.inactivos', 'uses' => 'AreaController@inactivos']);
         Route::post('area/{id}/estado', ['as' => 'area.estado', 'uses' => 'AreaController@estado']);
         Route::get('area/exportar/excel', ['as' => 'area.excel', 'uses' => 'AreaController@excel']);
 

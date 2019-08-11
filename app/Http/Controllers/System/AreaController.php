@@ -122,10 +122,8 @@ class AreaController extends Controller {
     }
 
 
-    /*
-     * Cambiar Estado
-     */
     /**
+     * Cambiar estado mediante ajax
      * @param $id
      * @param Request $request
      * @return array
@@ -151,6 +149,7 @@ class AreaController extends Controller {
     }
 
     /**
+     * Exportar a Excel
      * @param Request $request
      */
     public function excel(Request $request)
@@ -165,5 +164,16 @@ class AreaController extends Controller {
                 $sheet->loadView('excel.areas', ['rows' => $rows]);
             });
         })->export('xlsx');
+    }
+
+
+    /**
+     *
+     */
+    public function inactivos(Request $request)
+    {
+        $rows = $this->areaRepo->listaInactivos();
+
+        return view('system.area.list-inactivos', compact('rows'));
     }
 }
