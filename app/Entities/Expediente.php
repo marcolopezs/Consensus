@@ -6,13 +6,17 @@ class Expediente extends BaseEntity {
 
     use SoftDeletes;
 
+    protected $appends = [
+        'exp_asistente','exp_fecha_inicio','exp_fecha_termino',
+        'saldo','lista_tareas',
+        'ultimo_movimiento','ultimo_movimiento_url'
+    ];
+
     protected $dates = ['deleted_at'];
 
     protected $fillable = ['id','expediente_opcion','expediente_tipo_id','expediente','cliente_id','tariff_id','check_abogado','abogado_id',
         'check_asistente','asistente_id','service_id','numero_dias','fecha_inicio','fecha_termino','descripcion','matter_id','entity_id',
         'area_id','state_id','vehicular_placa_antigua','vehicular_placa_nueva','vehicular_siniestro','observacion'];
-
-    protected $appends = ['exp_asistente','exp_fecha_inicio','exp_fecha_termino','saldo','lista_tareas','ultimo_movimiento','ultimo_movimiento_url'];
 
     protected $table = 'expedientes';
 
@@ -223,8 +227,7 @@ class Expediente extends BaseEntity {
         $acciones = $this->acciones;
 
         if($acciones->count()){
-            $ultima_accion = $this->acciones()->orderBy('fecha','desc')->orderBy('desde','desc')->first();
-            return $ultima_accion;
+            return $this->acciones()->orderBy('fecha','desc')->orderBy('desde','desc')->first();
         }
     }
 
@@ -233,10 +236,8 @@ class Expediente extends BaseEntity {
         $acciones = $this->acciones;
 
         if($acciones->count()){
-            $accion = route('expedientes.tareas.acciones', [$this->ultimo_movimiento->expediente_id, $this->ultimo_movimiento->tarea_id]);
+            return route('expedientes.tareas.acciones', [$this->ultimo_movimiento->expediente_id, $this->ultimo_movimiento->tarea_id]);
         }
-
-        return $acciones ? $accion : '';
     }
 
 
