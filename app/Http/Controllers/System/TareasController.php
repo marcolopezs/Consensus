@@ -22,6 +22,13 @@ class TareasController extends Controller {
         'descripcion' => 'string'
     ];
 
+    protected $rulesAccion = [
+        'fecha' => 'required',
+        'desde' => 'required|date_format:H:i',
+        'hasta' => 'required|date_format:H:i',
+        'descripcion' => 'required'
+    ];
+
     protected $abogadoRepo;
     protected $expedienteRepo;
     protected $tareaRepo;
@@ -205,15 +212,125 @@ class TareasController extends Controller {
 
 
     /**
-     * Mostrar acciones de tarea seleccionada
-     * @param $expediente
-     * @param $tarea
-     * @return String
+     * Metodos para Acciones de Tarea en Listado de Expedientes
+     * @method accionesList
+     * @method accionesStore
+     * @method accionesEdit
+     * @method accionesUpdate
+     *
      */
-    public function acciones($expediente, $tarea)
+    public function accionesList($expediente, $tarea)
     {
         $row = $this->tareaRepo->findOrFail($tarea);
 
-        return view('system.expediente.tareas.acciones', compact('row'));
+        return view('system.expediente.tareas.acciones.list', compact('row'));
+    }
+
+    public function accionesStore($expediente, $tarea, Request $request)
+    {
+        $this->validate($request, $this->rulesAccion);
+
+        $save = DB::transaction(function () use ($expediente, $tarea, $request){
+            if(auth()->user()->asistente_id <> 0)
+            {
+                $tipo = auth()->user()->asistente_id;
+            }else{
+                $tipo = auth()->user()->abogado->id;
+            }
+
+            //EXTRAER EXPEDIENTE
+            $expTarea = $this->tareaRepo->findOrFail($tarea);
+
+            //EXTRAER DATOS DE EXPEDIENTE
+            $expediente = $this->expedienteRepo->findOrFail($expTarea->expediente_id);
+
+            //VARAIBLES
+            $fecha = formatoFecha($request->input('fecha'));
+            $hora_desde = $request->input('desde');
+            $hora_hasta = $request->input('hasta');
+
+            $horas = restarHoras($fecha, $hora_desde, $hora_hasta);
+
+            $row = new TareaAccion($request->all());
+            $row->expediente_id = $expTarea->expediente_id;
+            $row->expediente_tipo_id = $expTarea->expediente_tipo_id;
+            $row->abogado_id = $tipo;
+            $row->cliente_id = $expediente->cliente_id;
+            $row->tarea_id = $tarea;
+            $row->horas = $horas;
+            $save = $this->tareaAccionRepo->create($row, $request->all());
+
+            //GUARDAR HISTORIAL
+            $this->tareaAccionRepo->saveHistory($row, $request, 'create');
+
+            return $save;
+        });
+
+        return [
+            'id' => $save->id,
+            'fecha_accion' => $save->fecha_accion,
+            'desde' => $save->desde,
+            'hasta' => $save->hasta,
+            'horas' => $save->horas,
+            'descripcion' => $save->descripcion,
+            'url_editar' => $save->url_editar,
+            'url_eliminar' => $save->url_eliminar,
+            'url_lista_gastos' => $save->url_lista_gastos
+        ];
+    }
+
+    public function accionesEdit($expediente, $tarea, $accion)
+    {
+        $row = $this->tareaAccionRepo->findOrFail($accion);
+
+        return [
+            'id' => $row->id,
+            'fecha' => $row->fecha_accion,
+            'desde' => $row->desde,
+            'hasta' => $row->hasta,
+            'horas' => $row->horas,
+            'descripcion' => $row->descripcion
+        ];
+    }
+
+    public function accionesUpdate($expediente, $tarea, $accion, Request $request)
+    {
+        $this->validate($request, $this->rulesAccion);
+
+        $save = DB::transaction(function () use ($expediente, $tarea, $accion, $request) {
+            $row = $this->tareaAccionRepo->findOrFail($accion);
+
+            //VARAIBLES
+            $fecha = formatoFecha($request->input('fecha'));
+            $hora_desde = $request->input('desde');
+            $hora_hasta = $request->input('hasta');
+
+            $horas = restarHoras($fecha, $hora_desde, $hora_hasta);
+
+            $row->horas = $horas;
+            $save = $this->tareaAccionRepo->update($row, $request->all());
+
+            //GUARDAR HISTORIAL
+            $this->tareaAccionRepo->saveHistory($row, $request, 'update');
+
+            return $save;
+        });
+
+        return [
+            'id' => $save->id,
+            'fecha_accion' => $save->fecha_accion,
+            'desde' => $save->desde,
+            'hasta' => $save->hasta,
+            'horas' => $save->horas,
+            'descripcion' => $save->descripcion,
+            'url_editar' => $save->url_editar,
+            'url_eliminar' => $save->url_eliminar,
+            'url_lista_gastos' => $save->url_lista_gastos
+        ];
+    }
+
+    public function accionesDelete($expediente, $tarea, $accion)
+    {
+
     }
 }
