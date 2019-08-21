@@ -27,9 +27,9 @@
     {!! HTML::style('assets/global/css/plugins.min.css') !!}
     <!-- END THEME GLOBAL STYLES -->
     <!-- BEGIN THEME LAYOUT STYLES -->
-    {!! HTML::style('assets/layouts/layout3/css/layout.css') !!}
+    {!! HTML::style(elixir('assets/layouts/layout3/css/layout.css')) !!}
     {!! HTML::style('assets/layouts/layout3/css/themes/default.min.css') !!}
-    {!! HTML::style('assets/layouts/layout3/css/custom.css') !!}
+    {!! HTML::style(elixir('assets/layouts/layout3/css/custom.css')) !!}
     <!-- END THEME LAYOUT STYLES -->
 
     {{-- DropZone --}}

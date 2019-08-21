@@ -25,4 +25,18 @@ elixir(function(mix) {
     mix.scripts(['js-form-close.js'], 'public/js/js-form-close.js');
     mix.scripts(['js-usuario-update.js'], 'public/js/js-usuario-update.js');
     mix.scripts(['js-delete.js'], 'public/js/js-delete.js');
+
+    mix.version([
+        'public/assets/layouts/layout3/css/custom.css',
+        'public/assets/layouts/layout3/css/layout.css',
+        'public/js/js-funciones.js',
+        'public/js/js-expediente.js',
+        'public/js/js-cliente.js',
+        'public/js/js-cambiar-estado.js',
+        'public/js/js-tarea.js',
+        'public/js/js-create-edit.js',
+        'public/js/js-form-close.js',
+        'public/js/js-usuario-update.js',
+        'public/js/js-delete.js'
+    ]);
 });

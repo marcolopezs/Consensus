@@ -136,9 +136,9 @@
 {!! HTML::script('assets/global/plugins/bootbox/bootbox.min.js') !!}
 
 {{-- Delete --}}
-{!! HTML::script('js/js-delete.js') !!}
+{!! HTML::script(elixir('js/js-delete.js')) !!}
 
 {{-- Cambiar Estado --}}
-{!! HTML::script('js/js-cambiar-estado.js') !!}
+{!! HTML::script(elixir('js/js-cambiar-estado.js')) !!}
 
 @stop

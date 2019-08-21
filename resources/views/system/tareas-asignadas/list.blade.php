@@ -157,7 +157,7 @@
     {!! HTML::script('assets/global/plugins/bootbox/bootbox.min.js') !!}
 
     {{-- FUNCIONES --}}
-    {!! HTML::script('js/js-tarea.js') !!}
+    {!! HTML::script(elixir('js/js-tarea.js')) !!}
     <script>
         $(document).on("ready", function() {
             /* FILTRAR */

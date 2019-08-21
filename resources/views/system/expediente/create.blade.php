@@ -322,7 +322,7 @@
 
 {{-- BootBox y FormClose --}}
 {!! HTML::script('assets/global/plugins/bootbox/bootbox.min.js') !!}
-{!! HTML::script('js/js-form-close.js') !!}
+{!! HTML::script(elixir('js/js-form-close.js')) !!}
 <script>
     $("#formCloseExpediente").on("click", function (e) {
         e.preventDefault();

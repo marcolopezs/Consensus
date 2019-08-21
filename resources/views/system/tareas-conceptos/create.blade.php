@@ -35,10 +35,10 @@
 
 {{-- BootBox --}}
 {!! HTML::script('assets/global/plugins/bootbox/bootbox.min.js') !!}
-{!! HTML::script('js/js-form-close.js') !!}
+{!! HTML::script(elixir('js/js-form-close.js')) !!}
 
 {{-- JS Create --}}
-{!! HTML::script('js/js-create-edit.js') !!}
+{!! HTML::script(elixir('js/js-create-edit.js')) !!}
 <script>
     $("#formCreateClose").on("click", function (e) {
         e.preventDefault();

@@ -48,4 +48,4 @@
 </div>
 
 {{-- JS Create --}}
-{!! HTML::script('js/js-create-edit.js') !!}
+{!! HTML::script(elixir('js/js-create-edit.js')) !!}

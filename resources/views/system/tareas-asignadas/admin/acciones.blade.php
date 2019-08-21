@@ -164,7 +164,7 @@
     {!! HTML::script('assets/pages/scripts/components-date-time-pickers.js') !!}
 
     {{-- FUNCIONES --}}
-    {!! HTML::script('js/js-tarea.js') !!}
+    {!! HTML::script(elixir('js/js-tarea.js')) !!}
     <script>
         $(document).on("ready", function() {
             /* FILTRAR */

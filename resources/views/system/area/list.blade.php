@@ -139,5 +139,5 @@
 {!! HTML::script('assets/global/plugins/bootbox/bootbox.min.js') !!}
 
 {{-- Cambiar Estado --}}
-{!! HTML::script('js/js-cambiar-estado.js') !!}
+{!! HTML::script(elixir('js/js-cambiar-estado.js')) !!}
 @stop

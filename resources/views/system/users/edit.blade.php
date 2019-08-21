@@ -652,7 +652,7 @@
 
 @section('contenido_footer')
 {{-- Script de Usuario --}}
-{!! HTML::script('js/js-usuario-update.js') !!}
+{!! HTML::script(elixir('js/js-usuario-update.js')) !!}
 
 {{-- Select2 --}}
 {!! HTML::script('assets/global/plugins/select2/js/select2.full.min.js') !!}

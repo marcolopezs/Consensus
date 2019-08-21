@@ -102,7 +102,7 @@
 
 {{-- BootBox --}}
 {!! HTML::script('assets/global/plugins/bootbox/bootbox.min.js') !!}
-{!! HTML::script('js/js-form-close.js') !!}
+{!! HTML::script(elixir('js/js-form-close.js')) !!}
 
 <script>
     $("#cliente").on("change", function() {
