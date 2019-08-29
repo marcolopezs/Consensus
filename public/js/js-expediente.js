@@ -105,6 +105,7 @@ $(".expediente-tareas").on("click", function(e) {
             $("#tarea-" + id).fadeIn();
 
             var tr, descripcion, estado;
+
             $.each(JSON.parse(result), function(idx, obj) {
                 descripcion = obj.descripcion;
                 estado = obj.estado_nombre;
@@ -122,13 +123,16 @@ $(".expediente-tareas").on("click", function(e) {
                         '</button>' +
                         '<ul class="dropdown-menu pull-right" role="menu">' +
                             '<li><a href="'+ obj.url_editar +'" data-target="#ajax" data-toggle="modal">Editar</a></li>' +
-                            '<li><a href="#" class="expediente-tarea-acciones-lista" data-list="'+ obj.url_acciones +'" data-create="hola">Acciones</a></li>' +
+                            '<li><a href="#" class="expediente-tarea-acciones-lista" data-id="'+ obj.id +'" ' +
+                                    'data-list="'+ obj.url_acciones_lista +'" data-create="'+ obj.url_acciones_crear +'">Acciones</a></li>' +
                             '<li><a href="'+ obj.url_notificacion +'" data-target="#ajax" data-toggle="modal">Notificaciones</a></li>' +
                         '</ul>' +
                     '</div>' +
                     '</td></tr>');
                 $("#tarea-lista-"+id+" tbody").append(tr);
             });
+
+            tareaListaAcciones();
 
             $(".tarea-cerrar").on("click", function (e) {
                 e.preventDefault();
@@ -144,6 +148,8 @@ $(".expediente-tareas").on("click", function(e) {
     });
 
 });
+
+
 
 
 //MOSTRAR FLUJO DE CAJA DE EXPEDIENTE
