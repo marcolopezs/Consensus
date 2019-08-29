@@ -247,6 +247,20 @@
                         '</form>';
 
                     $("#formulario-contenido").append(html);
+
+                    $('.date-picker').datepicker({
+                        orientation: "left",
+                        autoclose: true,
+                        language: "es"
+                    });
+
+                    $('.timepicker-24').timepicker({
+                        autoclose: true,
+                        minuteStep: 5,
+                        showSeconds: false,
+                        showMeridian: false
+                    });
+
                     $("#form-editar").fadeIn();
                 }
             });
