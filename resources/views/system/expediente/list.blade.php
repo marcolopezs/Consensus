@@ -124,6 +124,7 @@
                                 <th class="col-materia" scope="col"> Materia </th>
                                 <th class="col-entidad" scope="col"> Entidad </th>
                                 <th class="col-area" scope="col"> Área </th>
+                                <th class="col-saldo" scope="col"> Saldo </th>
                                 <th class="col-estado" scope="col"> Estado </th>
                                 <th scope="col"> Último<br>Movimiento </th>
                                 <th class="col-exito" scope="col"> Éxito </th>
@@ -168,6 +169,9 @@
                                 <td class="col-materia">{{ $row_materia }}</td>
                                 <td class="col-entidad">{{ $row_entidad }}</td>
                                 <td class="col-area">{{ $row_area }}</td>
+                                <td class="col-saldo">
+                                    <span class="{!! $row_saldo > 0 ? "saldo-positivo" : "saldo-negativo" !!}">S/ {{ $row_saldo }}</span>
+                                </td>
                                 <td class="col-estado">{{ $row_estado }}</td>
                                 <td>
                                     <a href="{{ $row_ultimo_movimiento_url }}" data-target="#ajax" data-toggle="modal">
