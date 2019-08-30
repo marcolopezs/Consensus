@@ -220,6 +220,7 @@ function tareaListaAcciones()
                     '<td>Hasta</td>' +
                     '<td>Horas</td>' +
                     '<td>Descripción</td>' +
+                    '<td>Gastos</td>' +
                     '<td></td>' +
                     '</tr>' +
                     '</thead>' +
@@ -231,15 +232,19 @@ function tareaListaAcciones()
                 $("#tarea-select-" + id).after(html);
                 $("#acciones-" + id).fadeIn();
 
-                var tr;
+                var tr, descripcion;
 
                 $.each(JSON.parse(result), function(idx, obj) {
+
+                    descripcion = obj.descripcion;
+
                     tr = $('<tr id="accion-select-'+ obj.id +'">');
                     tr.append('<td>'+ obj.fecha_accion +'</td>');
                     tr.append('<td>'+ obj.desde +'</td>');
                     tr.append('<td>'+ obj.hasta +'</td>');
                     tr.append('<td>'+ obj.horas +'</td>');
-                    tr.append('<td>'+ obj.descripcion +'</td>');
+                    tr.append('<td data-tooltip="'+ obj.descripcion +'">'+ descripcion.substr(0,30) + "..." +'</td>');
+                    tr.append('<td>S/ '+ obj.gastos +'</td>');
                     tr.append('<td class="text-center">' +
                         '<div class="btn-group">' +
                         '<button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Movimientos' +

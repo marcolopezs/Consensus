@@ -88,7 +88,8 @@
                                 <th class="col-expediente" scope="col" style="width: 140px !important;"> Expediente </th>
                                 <th class="col-tarea" scope="col" style="width: 160px !important;"> Tarea </th>
                                 <th class="col-descripcion" scope="col"> Descripción </th>
-                                <th class="col-horas" scope="col"> Tiempo Total </th>
+                                <th class="col-horas text-center" scope="col"> Tiempo Total </th>
+                                <th class="col-gastos text-center" scope="col"> Gastos </th>
                                 <th class="col-solicitada text-center" scope="col"> Solicitada </th>
                                 <th class="col-vencimiento text-center" scope="col"> Finalizada </th>
                                 <th class="col-estado text-center" scope="col"> Estado </th>
@@ -106,6 +107,7 @@
                                 $row_tarea = $item->titulo_tarea;
                                 $row_descripcion = $item->descripcion;
                                 $row_tiempo_total = $item->tiempo_total;
+                                $row_gastos = $item->gastos;
                                 $row_solicitada = $item->fecha_solicitada;
                                 $row_vencimiento = $item->fecha_vencimiento;
                                 $row_estado = $item->estado_nombre;
@@ -115,9 +117,10 @@
                                 <td class="col-expediente">{{ $row_expediente }}</td>
                                 <td class="col-tarea">{{ $row_tarea }}</td>
                                 <td class="col-descripcion" data-tooltip="{{ $row_descripcion }}">
-                                    {{  strlen($row_descripcion) > 50 ? substr($row_descripcion, 0, 50).'...': $row_descripcion }}
+                                    {{  strlen($row_descripcion) > 35 ? substr($row_descripcion, 0, 35).'...': $row_descripcion }}
                                 </td>
                                 <td class="col-horas text-center"><strong>{{ $row_tiempo_total }}</strong></td>
+                                <td class="col-gastos text-center"><strong>S/ {{ $row_gastos }}</strong></td>
                                 <td class="col-solicitada text-center">{{ $row_solicitada }}</td>
                                 <td class="col-vencimiento text-center">{{ $row_vencimiento }}</td>
                                 <td class="col-estado">
