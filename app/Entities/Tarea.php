@@ -10,7 +10,7 @@ class Tarea extends BaseEntity {
         'titulo_tarea','asignado','estado_nombre','lista_acciones',
         'url_editar','url_acciones','url_notificacion',
         'url_acciones_lista','url_acciones_crear',
-        'tiempo_total'];
+        'tiempo_total','gastos'];
 
     protected $dates = ['deleted_at'];
 
@@ -147,6 +147,17 @@ class Tarea extends BaseEntity {
     public function getTiempoTotalAttribute()
     {
         return sumarHoras($this->acciones);
+    }
+
+    public function getGastosAttribute()
+    {
+        $suma = 0;
+        foreach ($this->acciones as $caja){
+            $monto = $caja->gastos;
+            $suma = $monto + $suma;
+        }
+
+        return number_format($suma, 2, '.', ',');
     }
 
     /*
