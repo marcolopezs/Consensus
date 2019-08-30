@@ -9,7 +9,8 @@ class Tarea extends BaseEntity {
     protected $appends = [
         'titulo_tarea','asignado','estado_nombre','lista_acciones',
         'url_editar','url_acciones','url_notificacion',
-        'url_acciones_lista','url_acciones_crear'];
+        'url_acciones_lista','url_acciones_crear',
+        'tiempo_total'];
     protected $dates = ['deleted_at'];
     protected $fillable = ['id','expediente_id','expediente_tipo_id','tarea_concepto_id','descripcion','fecha_solicitada','fecha_vencimiento','titular_id','abogado_id','estado'];
 
@@ -135,6 +136,11 @@ class Tarea extends BaseEntity {
     public function getUrlAccionesCrearAttribute()
     {
         return route('tareas.acciones.create', $this->id);
+    }
+
+    public function getTiempoTotalAttribute()
+    {
+        return sumarHoras($this->acciones);
     }
 
     /*

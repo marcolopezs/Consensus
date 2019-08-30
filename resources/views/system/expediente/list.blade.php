@@ -337,6 +337,5 @@
     {!! HTML::script('assets/global/plugins/bootbox/bootbox.min.js') !!}
 
     {{-- FUNCIONES --}}
-    {!! HTML::script('js/js-funciones.js') !!}
     {!! HTML::script('js/js-expediente.js') !!}
 @stop

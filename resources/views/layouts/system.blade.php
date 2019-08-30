@@ -254,6 +254,7 @@
 
     <!-- BEGIN THEME GLOBAL SCRIPTS -->
     {!! HTML::script('assets/global/scripts/app.js') !!}
+    {!! HTML::script('js/js-funciones.js') !!}
     <!-- END THEME GLOBAL SCRIPTS -->
 
     <script>

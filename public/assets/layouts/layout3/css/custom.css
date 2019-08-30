@@ -293,3 +293,18 @@ a.menu-usuario:before {
     font-weight: bold;
     color: #1ba298;
 }
+
+
+.tabla-cabecera{
+    display: inline-block;
+    width: 33.333333%;
+}
+
+.tabla-cabecera:nth-child(3){
+    text-align: right;
+}
+
+.tabla-cabecera .btn{
+    display: inline-block;
+    float: initial;
+}

@@ -88,6 +88,7 @@
                                 <th class="col-expediente" scope="col" style="width: 140px !important;"> Expediente </th>
                                 <th class="col-tarea" scope="col" style="width: 160px !important;"> Tarea </th>
                                 <th class="col-descripcion" scope="col"> Descripción </th>
+                                <th class="col-horas" scope="col"> Tiempo Total </th>
                                 <th class="col-solicitada text-center" scope="col"> Solicitada </th>
                                 <th class="col-vencimiento text-center" scope="col"> Finalizada </th>
                                 <th class="col-estado text-center" scope="col"> Estado </th>
@@ -104,6 +105,7 @@
                                 $row_expediente = $item->expedientes->expediente;
                                 $row_tarea = $item->titulo_tarea;
                                 $row_descripcion = $item->descripcion;
+                                $row_tiempo_total = $item->tiempo_total;
                                 $row_solicitada = $item->fecha_solicitada;
                                 $row_vencimiento = $item->fecha_vencimiento;
                                 $row_estado = $item->estado_nombre;
@@ -115,6 +117,7 @@
                                 <td class="col-descripcion" data-tooltip="{{ $row_descripcion }}">
                                     {{  strlen($row_descripcion) > 50 ? substr($row_descripcion, 0, 50).'...': $row_descripcion }}
                                 </td>
+                                <td class="col-horas text-center"><strong>{{ $row_tiempo_total }}</strong></td>
                                 <td class="col-solicitada text-center">{{ $row_solicitada }}</td>
                                 <td class="col-vencimiento text-center">{{ $row_vencimiento }}</td>
                                 <td class="col-estado">
@@ -134,6 +137,7 @@
 
                                             <li><a href="#" class="tarea-acciones"
                                                    data-id="{{ $row_id }}"
+                                                   data-tiempo-total="{{ $row_tiempo_total }}"
                                                    data-list="{{ route('tareas.acciones.index', $row_id) }}"
                                                    data-create="{{ route('tareas.acciones.create', $row_id) }}">Acciones</a></li>
                                         </ul>

@@ -3,6 +3,7 @@ $(".tarea-acciones").on("click", function(e) {
     e.preventDefault();
 
     var id = $(this).data('id');
+    var tiempo_total = $(this).data('tiempo-total');
     var list = $(this).data('list');
     var create = $(this).data('create');
 
@@ -12,10 +13,13 @@ $(".tarea-acciones").on("click", function(e) {
         success: function(result){
 
             var html = '<tr id="accion-'+id+'" class="bg-default" style="display:none;"><td style="padding:20px 15px;" colspan="23">' +
-                            '<div class="btn-group pull-left">' +
+                            '<div class="btn-group tabla-cabecera">' +
                                 '<h3 class="table-title">Acciones</h3>' +
                             '</div>' +
-                            '<div class="btn-group pull-right table-botones">' +
+                            '<div class="btn-group tabla-cabecera">' +
+                                '<h3 class="table-title">Tiempo total: '+ tiempo_total +'</h3>' +
+                            '</div>' +
+                            '<div class="btn-group table-botones tabla-cabecera">' +
                                 '<a class="btn sbold white accion-cerrar" href="#" data-id="'+id+'"> Cerrar </a>' +
                                 '<a class="btn sbold blue-soft" href="'+create+'" data-target="#ajax" data-toggle="modal"> Agregar nueva acción <i class="fa fa-plus"></i></a>' +
                             '</div>' +
@@ -78,4 +82,5 @@ $(".tarea-acciones").on("click", function(e) {
     });
 
 });
+
 //# sourceMappingURL=js-tarea.js.map
