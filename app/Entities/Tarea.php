@@ -11,8 +11,14 @@ class Tarea extends BaseEntity {
         'url_editar','url_acciones','url_notificacion',
         'url_acciones_lista','url_acciones_crear',
         'tiempo_total'];
+
     protected $dates = ['deleted_at'];
-    protected $fillable = ['id','expediente_id','expediente_tipo_id','tarea_concepto_id','descripcion','fecha_solicitada','fecha_vencimiento','titular_id','abogado_id','estado'];
+
+    protected $fillable = [
+        'id','expediente_id','expediente_tipo_id',
+        'tarea_concepto_id','descripcion','fecha_solicitada',
+        'fecha_vencimiento','titular_id','abogado_id','estado'
+    ];
 
     /*
      * RELACIONES

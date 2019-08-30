@@ -52,7 +52,7 @@ class TareaRepo extends BaseRepo {
                     ->fechaVencimiento($request->get('fecha_vencimiento_from'), $request->get('fecha_vencimiento_to'))
                     ->estadoId($request->get('estado'))
                     ->orderBy('fecha_solicitada', 'desc')
-                    ->with('expedientes','titular','concepto','abogado')
+                    ->with('expedientes','titular','concepto','abogado','acciones')
                     ->get();
     }
 
