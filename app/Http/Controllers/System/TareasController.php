@@ -273,6 +273,7 @@ class TareasController extends Controller {
             'hasta' => $save->hasta,
             'horas' => $save->horas,
             'descripcion' => $save->descripcion,
+            'gastos' => 0,
             'url_editar' => $save->url_editar,
             'url_eliminar' => $save->url_eliminar,
             'url_lista_gastos' => $save->url_lista_gastos
@@ -289,7 +290,8 @@ class TareasController extends Controller {
             'desde' => $row->desde,
             'hasta' => $row->hasta,
             'horas' => $row->horas,
-            'descripcion' => $row->descripcion
+            'descripcion' => $row->descripcion,
+            'gastos' => $row->gastos
         ];
     }
 
@@ -323,6 +325,7 @@ class TareasController extends Controller {
             'hasta' => $save->hasta,
             'horas' => $save->horas,
             'descripcion' => $save->descripcion,
+            'gastos' => $save->gastos,
             'url_editar' => $save->url_editar,
             'url_eliminar' => $save->url_eliminar,
             'url_lista_gastos' => $save->url_lista_gastos

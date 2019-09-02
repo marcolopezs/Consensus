@@ -115,7 +115,7 @@ $(".expediente-tareas").on("click", function(e) {
                 tr.append('<td class="text-center">'+ obj.fecha_solicitada +'</td>');
                 tr.append('<td class="text-center">'+ obj.fecha_vencimiento +'</td>');
                 tr.append('<td>'+ obj.titulo_tarea +'</td>');
-                tr.append('<td data-tooltip="'+ obj.descripcion +'">'+ descripcion.substr(0,30) + "..." +'</td>');
+                tr.append('<td data-tooltip="'+ obj.descripcion +'">'+ descripcion.substr(0,50) + "..." +'</td>');
                 tr.append('<td>'+ obj.asignado +'</td>');
                 tr.append('<td class="text-center"><strong>'+ obj.tiempo_total +'</strong></td>');
                 tr.append('<td class="text-right"><strong>S/ '+ obj.gastos +'</strong></td>');

@@ -52,7 +52,7 @@ $(".tarea-acciones").on("click", function(e) {
                 tr.append('<td>'+ obj.desde +'</td>');
                 tr.append('<td>'+ obj.hasta +'</td>');
                 tr.append('<td>'+ obj.horas +'</td>');
-                tr.append('<td data-tooltip="'+ obj.descripcion +'">'+ descripcion.substr(0,30) + "..." +'</td>');
+                tr.append('<td data-tooltip="'+ obj.descripcion +'">'+ descripcion.substr(0,50) + "..." +'</td>');
                 tr.append('<td>S/ '+ obj.gastos +'</td>');
                 tr.append('<td class="text-center">' +
                                 '<div class="btn-group">' +

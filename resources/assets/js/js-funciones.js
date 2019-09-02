@@ -243,7 +243,7 @@ function tareaListaAcciones()
                     tr.append('<td>'+ obj.desde +'</td>');
                     tr.append('<td>'+ obj.hasta +'</td>');
                     tr.append('<td>'+ obj.horas +'</td>');
-                    tr.append('<td data-tooltip="'+ obj.descripcion +'">'+ descripcion.substr(0,30) + "..." +'</td>');
+                    tr.append('<td data-tooltip="'+ obj.descripcion +'">'+ descripcion.substr(0,50) + "..." +'</td>');
                     tr.append('<td>S/ '+ obj.gastos +'</td>');
                     tr.append('<td class="text-center">' +
                         '<div class="btn-group">' +
@@ -252,7 +252,7 @@ function tareaListaAcciones()
                         '</button>' +
                         '<ul class="dropdown-menu pull-right" role="menu">' +
                         '<li><a href="'+ obj.url_editar +'" data-target="#ajax" data-toggle="modal">Editar</a></li>' +
-                        '<li><a href="#" class="expediente-tarea-acciones-lista" data-id="'+ obj.id +'">Gastos</a></li>' +
+                        '<li><a href="'+ obj.url_lista_gastos +'" data-target="#ajax" data-toggle="modal">Gastos</a></li>' +
                         '</ul>' +
                         '</div>' +
                         '</td>' +

@@ -138,12 +138,15 @@
                 $(".form-content").html(successHtml);
                 form[0].reset();
 
+                var descripcion = result.descripcion;
+
                 var html = '<tr id="accion-'+ result.id +'">' +
                     '<td>'+ result.fecha_accion +'</td>' +
                     '<td>'+ result.desde +'</td>' +
                     '<td>'+ result.hasta +'</td>' +
                     '<td>'+ result.horas +'</td>' +
-                    '<td>'+ result.descripcion +'</td>' +
+                    '<td data-tooltip="'+ result.descripcion +'">'+ descripcion.substr(0,50) + "..." +'</td>' +
+                    '<td>S/ '+ result.gastos +'</td>' +
                     '<td>' +
                         '<div class="btn-group">' +
                             '<button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">' +

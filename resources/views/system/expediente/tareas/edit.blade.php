@@ -151,7 +151,7 @@
                                 '<td>'+ result.fecha_solicitada +'</td>' +
                                 '<td>'+ result.fecha_vencimiento +'</td>' +
                                 '<td>'+ result.titulo_tarea +'</td>' +
-                                '<td data-tooltip="'+ result.descripcion +'">'+ descripcion.substr(0,30) + "..." +'</td>' +
+                                '<td data-tooltip="'+ result.descripcion +'">'+ descripcion.substr(0,50) + "..." +'</td>' +
                                 '<td>'+ result.asignado +'</td>' +
                                 '<td><span class="estado-'+ estado.toLowerCase() +'">'+ estado +'</span></td>' +
                                 '<td class="text-center">' +
