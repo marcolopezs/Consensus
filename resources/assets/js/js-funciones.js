@@ -58,6 +58,7 @@ function editarAccion() {
 
         var url = $(this).data('url');
         var update = $(this).data('update');
+        var token = $("#token").attr('content');
 
         $.ajax({
             url: url,
@@ -73,7 +74,7 @@ function editarAccion() {
             success: function(result){
                 var html = '<form method="POST" action='+ update +' id="formEdit" class="horizontal-form" autocomplete="off">' +
                     '<input name="_method" type="hidden" value="PUT">' +
-                    '<input name="_token" type="hidden" value="{{ csrf_token() }}">' +
+                    '<input name="_token" type="hidden" value="'+ token +'">' +
                     '<div class="form-body">' +
                     '<div class="col-md-4">' +
                     '<div class="form-group">' +
