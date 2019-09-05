@@ -5,7 +5,7 @@
     <title>Consensus</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1" name="viewport" />
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" id="token" content="{{ csrf_token() }}">
 
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     {!! HTML::style('http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all') !!}
@@ -254,6 +254,7 @@
 
     <!-- BEGIN THEME GLOBAL SCRIPTS -->
     {!! HTML::script('assets/global/scripts/app.js') !!}
+    {!! HTML::script('js/js-funciones.js') !!}
     <!-- END THEME GLOBAL SCRIPTS -->
 
     <script>

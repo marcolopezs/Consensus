@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('tarea:notif')->dailyAt('01:00');
-        $schedule->command('tarea:abogado')->dailyAt('02:00');
+//        $schedule->command('tarea:notif')->dailyAt('01:00');
+//        $schedule->command('tarea:abogado')->dailyAt('02:00');
     }
 }

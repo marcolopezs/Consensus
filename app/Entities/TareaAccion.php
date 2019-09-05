@@ -9,8 +9,9 @@ class TareaAccion extends BaseEntity {
 
     protected $dates = ['deleted_at'];
 
+    protected $appends = ['url_editar','url_eliminar','url_lista_gastos','fecha_accion','gastos'];
+
     protected $fillable = ['id','expediente_id','expediente_tipo_id','abogado_id','cliente_id','tarea_id','fecha','desde','hasta','horas','descripcion'];
-    protected $appends = ['url_editar','url_eliminar','url_lista_gastos','fecha_accion'];
 
     protected $table = 'tarea_acciones';
 
@@ -94,6 +95,17 @@ class TareaAccion extends BaseEntity {
     public function getNombreExpedienteAttribute()
     {
         return $this->expedienteNombre->expediente;
+    }
+
+    public function getGastosAttribute()
+    {
+        $suma = 0;
+        foreach ($this->flujo_caja as $caja){
+            $monto = $caja->monto * $caja->money->valor;
+            $suma = $monto + $suma;
+        }
+
+        return number_format($suma, 2, '.', ',');
     }
 
     /*

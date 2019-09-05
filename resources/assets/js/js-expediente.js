@@ -75,45 +75,51 @@ $(".expediente-tareas").on("click", function(e) {
         type: 'GET',
         success: function(result){
 
-            var html = '<tr id="tarea-'+id+'" class="bg-default" style="display:none;"><td style="padding:20px 15px;" colspan="23">' +
-                '<div class="btn-group pull-left">' +
-                '<h3 class="table-title">Tareas</h3>' +
-                '</div>' +
-                '<div class="btn-group pull-right table-botones">' +
-                '<a class="btn sbold white tarea-cerrar" href="#" data-id="'+id+'"> Cerrar </a>' +
-                '<a class="btn sbold blue-soft" href="'+create+'" data-target="#ajax" data-toggle="modal"> Agregar nuevo tarea <i class="fa fa-plus"></i></a>' +
-                '</div>' +
-                '<table id="tarea-lista-'+id+'" class="table table-striped table-bordered table-hover order-column">' +
-                '<thead>' +
-                '<tr role="row" class="heading">' +
-                '<td>Solicitada</td>' +
-                '<td>Finalizado</td>' +
-                '<td>Tarea</td>' +
-                '<td>Descripción</td>' +
-                '<td>Asignado</td>' +
-                '<td>Estado</td>' +
-                '<td></td>' +
-                '</tr>' +
-                '</thead>' +
-                '<tbody>' +
-                '</tbody>' +
-                '</table>' +
-                '</td></tr>';
+            var html = '<tr id="tarea-'+id+'" class="bg-default" style="display:none;">' +
+                    '<td style="padding:20px 15px;" colspan="23">' +
+                        '<div class="btn-group pull-left">' +
+                            '<h3 class="table-title">Tareas</h3>' +
+                        '</div>' +
+                        '<div class="btn-group pull-right table-botones">' +
+                            '<a class="btn sbold white tarea-cerrar" href="#" data-id="'+id+'"> Cerrar </a>' +
+                            '<a class="btn sbold blue-soft" href="'+create+'" data-target="#ajax" data-toggle="modal"> Agregar nuevo tarea <i class="fa fa-plus"></i></a>' +
+                        '</div>' +
+                        '<table id="tarea-lista-'+id+'" class="table table-striped table-bordered table-hover order-column">' +
+                            '<thead>' +
+                                '<tr role="row" class="heading">' +
+                                    '<td class="text-center">Solicitada</td>' +
+                                    '<td class="text-center">Finalizado</td>' +
+                                    '<td>Tarea</td>' +
+                                    '<td>Descripción</td>' +
+                                    '<td>Asignado</td>' +
+                                    '<td class="text-center">Tiempo</td>' +
+                                    '<td class="text-center">Gastos</td>' +
+                                    '<td class="text-center">Estado</td>' +
+                                    '<td></td>' +
+                                '</tr>' +
+                            '</thead>' +
+                            '<tbody></tbody>' +
+                        '</table>' +
+                    '</td>' +
+                '</tr>';
 
             $("#exp-" + id).after(html);
             $("#tarea-" + id).fadeIn();
 
             var tr, descripcion, estado;
+
             $.each(JSON.parse(result), function(idx, obj) {
                 descripcion = obj.descripcion;
                 estado = obj.estado_nombre;
                 tr = $('<tr id="tarea-select-'+ obj.id +'">');
-                tr.append('<td>'+ obj.fecha_solicitada +'</td>');
-                tr.append('<td>'+ obj.fecha_vencimiento +'</td>');
+                tr.append('<td class="text-center">'+ obj.fecha_solicitada +'</td>');
+                tr.append('<td class="text-center">'+ obj.fecha_vencimiento +'</td>');
                 tr.append('<td>'+ obj.titulo_tarea +'</td>');
-                tr.append('<td data-tooltip="'+ obj.descripcion +'">'+ descripcion.substr(0,30) + "..." +'</td>');
+                tr.append('<td data-tooltip="'+ obj.descripcion +'">'+ descripcion.substr(0,50) + "..." +'</td>');
                 tr.append('<td>'+ obj.asignado +'</td>');
-                tr.append('<td><span class="estado-'+ estado.toLowerCase() +'">'+ estado +'</span></td>');
+                tr.append('<td class="text-center"><strong>'+ obj.tiempo_total +'</strong></td>');
+                tr.append('<td class="text-right"><strong>S/ '+ obj.gastos +'</strong></td>');
+                tr.append('<td class="text-center"><span class="estado-'+ estado.toLowerCase() +'">'+ estado +'</span></td>');
                 tr.append('<td class="text-center">' +
                     '<div class="btn-group">' +
                         '<button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Movimientos' +
@@ -121,13 +127,16 @@ $(".expediente-tareas").on("click", function(e) {
                         '</button>' +
                         '<ul class="dropdown-menu pull-right" role="menu">' +
                             '<li><a href="'+ obj.url_editar +'" data-target="#ajax" data-toggle="modal">Editar</a></li>' +
-                            '<li><a href="/expedientes/'+ obj.expediente_id +'/tareas/'+ obj.id +'/acciones" data-target="#ajax" data-toggle="modal">Acciones</a></li>' +
+                            '<li><a href="#" class="expediente-tarea-acciones-lista" data-id="'+ obj.id +'" ' +
+                                    'data-list="'+ obj.url_acciones_lista +'" data-create="'+ obj.url_acciones_crear +'">Acciones</a></li>' +
                             '<li><a href="'+ obj.url_notificacion +'" data-target="#ajax" data-toggle="modal">Notificaciones</a></li>' +
                         '</ul>' +
                     '</div>' +
                     '</td></tr>');
                 $("#tarea-lista-"+id+" tbody").append(tr);
             });
+
+            tareaListaAcciones();
 
             $(".tarea-cerrar").on("click", function (e) {
                 e.preventDefault();
@@ -143,6 +152,8 @@ $(".expediente-tareas").on("click", function(e) {
     });
 
 });
+
+
 
 
 //MOSTRAR FLUJO DE CAJA DE EXPEDIENTE
@@ -351,6 +362,7 @@ $(".expediente-documento").on("click", function(e) {
 
 });
 
+
 //MOSTRAR COMPROBANTES DE PAGO DE EXPEDIENTE
 $(".expediente-comprobantes").on("click", function(e) {
     e.preventDefault();
@@ -416,6 +428,7 @@ $(".expediente-comprobantes").on("click", function(e) {
     });
 
 });
+
 
 //ANULAR EXPEDIENTES
 $(".expediente-anulado").on("click", function (e) {

@@ -58,7 +58,10 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
     Route::resource('expedientes.tareas', 'TareasController', ['except' => 'destroy']);
 
     //EXPEDIENTES - TAREAS - ACCIONES
-    Route::get('expedientes/{expediente}/tareas/{tarea}/acciones', ['as' => 'expedientes.tareas.acciones', 'uses' => 'TareasController@acciones']);
+    Route::get('expedientes/{expediente}/tareas/{tarea}/acciones', ['as' => 'expedientes.tareas.acciones', 'uses' => 'TareasController@accionesList']);
+    Route::post('expedientes/{expediente}/tareas/{tarea}/acciones', ['as' => 'expedientes.tareas.acciones.store', 'uses' => 'TareasController@accionesStore']);
+    Route::get('expedientes/{expediente}/tareas/{tarea}/acciones/{accion}/edit', ['as' => 'expedientes.tareas.acciones.edit', 'uses' => 'TareasController@accionesEdit']);
+    Route::put('expedientes/{expediente}/tareas/{tarea}/acciones/{accion}', ['as' => 'expedientes.tareas.acciones.update', 'uses' => 'TareasController@accionesUpdate']);
 
     //EXPEDIENTES - TAREAS - NOTIFICACIONES
     Route::resource('expedientes.tareas.notificacion', 'TareasNotificacionController', ['except' => 'destroy']);

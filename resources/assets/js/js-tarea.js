@@ -3,6 +3,7 @@ $(".tarea-acciones").on("click", function(e) {
     e.preventDefault();
 
     var id = $(this).data('id');
+    var tiempo_total = $(this).data('tiempo-total');
     var list = $(this).data('list');
     var create = $(this).data('create');
 
@@ -12,10 +13,13 @@ $(".tarea-acciones").on("click", function(e) {
         success: function(result){
 
             var html = '<tr id="accion-'+id+'" class="bg-default" style="display:none;"><td style="padding:20px 15px;" colspan="23">' +
-                            '<div class="btn-group pull-left">' +
+                            '<div class="btn-group tabla-cabecera">' +
                                 '<h3 class="table-title">Acciones</h3>' +
                             '</div>' +
-                            '<div class="btn-group pull-right table-botones">' +
+                            '<div class="btn-group tabla-cabecera">' +
+                                '<h3 class="table-title">Tiempo total: '+ tiempo_total +'</h3>' +
+                            '</div>' +
+                            '<div class="btn-group table-botones tabla-cabecera">' +
                                 '<a class="btn sbold white accion-cerrar" href="#" data-id="'+id+'"> Cerrar </a>' +
                                 '<a class="btn sbold blue-soft" href="'+create+'" data-target="#ajax" data-toggle="modal"> Agregar nueva acción <i class="fa fa-plus"></i></a>' +
                             '</div>' +
@@ -26,7 +30,8 @@ $(".tarea-acciones").on("click", function(e) {
                                         '<td>Desde</td>' +
                                         '<td>Hasta</td>' +
                                         '<td>Horas</td>' +
-                                        '<td>Descripcion</td>' +
+                                        '<td>Descripción</td>' +
+                                        '<td>Gastos</td>' +
                                         '<td></td>' +
                                     '</tr>' +
                                 '</thead>' +
@@ -36,13 +41,19 @@ $(".tarea-acciones").on("click", function(e) {
                         '</td></tr>';
 
             $("#tarea-" + id).after(html);
+            var descripcion;
+
             $.each(JSON.parse(result), function(idx, obj) {
+
+                descripcion = obj.descripcion;
+
                 tr = $('<tr id="accion-select-'+ obj.id +'">');
                 tr.append('<td>'+ obj.fecha_accion +'</td>');
                 tr.append('<td>'+ obj.desde +'</td>');
                 tr.append('<td>'+ obj.hasta +'</td>');
                 tr.append('<td>'+ obj.horas +'</td>');
-                tr.append('<td>'+ obj.descripcion +'</td>');
+                tr.append('<td data-tooltip="'+ obj.descripcion +'">'+ descripcion.substr(0,50) + "..." +'</td>');
+                tr.append('<td>S/ '+ obj.gastos +'</td>');
                 tr.append('<td class="text-center">' +
                                 '<div class="btn-group">' +
                                     '<button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Movimientos' +
@@ -78,51 +89,3 @@ $(".tarea-acciones").on("click", function(e) {
     });
 
 });
-
-function borrarAccion(){
-    $('.btn-delete').on("click", function(e){
-        e.preventDefault();
-
-        var url = $(this).data('url');
-        var title = $(this).data('title');
-        var accion = $(this).data('accion');
-
-        bootbox.dialog({
-            title: 'Eliminar registro',
-            message: '\<\strong\>\Desea eliminar la acción:\</\strong\>\ '+ title,
-            closeButton: false,
-            buttons: {
-                cancel: {
-                    label: 'Cancelar',
-                    className: 'default'
-                },
-                success: {
-                    label: 'Eliminar',
-                    className: 'blue',
-                    callback: function() {
-                        $.ajax({
-                            url: url,
-                            type: 'POST',
-                            data: {'_method': 'DELETE'},
-                            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-                            beforeSend: function () { $('.progress').show(); },
-                            complete: function () { $('.progress').hide(); },
-                            success: function (result) {
-                                $("#mensajeAjax").show();
-                                $("#mensajeAjax .alert").show().removeClass('alert-danger').addClass('alert-success');
-                                $("#mensajeAjax span").text(result.message);
-                                $("#accion-select-"+ accion).fadeOut();
-                            },
-                            error: function (result) {
-                                $("#mensajeAjax").show();
-                                $("#mensajeAjax .alert").show().removeClass('alert-success').addClass('alert-danger');
-                                $("#mensajeAjax span").text("Se produjo un error al eliminar el registro");
-                                $(".accion-select-"+ accion).show();
-                            }
-                        });
-                    }
-                }
-            }
-        });
-    });
-}

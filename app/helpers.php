@@ -32,6 +32,29 @@ function restarHoras($fecha, $desde, $hasta)
     return $dt->toTimeString();
 }
 
+
+function sumarHoras($values) {
+
+    $soloHoras = [];
+
+    foreach($values as $valor) {
+       array_push($soloHoras, $valor->horas.":00");
+    }
+
+    $total_horas = 0;
+    foreach($soloHoras as $h) {
+        $parts = explode(":", $h );
+        $total_horas += $parts[2] + $parts[1]*60 + $parts[0]*3600;
+    }
+    $h = sprintf('%02d',floor($total_horas / 3600)); // Calculas horas
+    $total_horas -= $h * 3600; // Restas al total
+    $m = sprintf('%02d',floor($total_horas / 60)); // Calculas minutos
+    $s = sprintf('%02d',$total_horas - ($m * 60)); // Calculas segundos restando minutos al total // Calculas segundos restando minutos al total
+
+    return $h . ':' . $m;
+}
+
+
 //CONVERTIR FORMATO DE FECHA
 function formatoFecha($date)
 {

@@ -124,6 +124,7 @@
                                 <th class="col-materia" scope="col"> Materia </th>
                                 <th class="col-entidad" scope="col"> Entidad </th>
                                 <th class="col-area" scope="col"> Área </th>
+                                <th class="col-saldo" scope="col"> Saldo </th>
                                 <th class="col-estado" scope="col"> Estado </th>
                                 <th scope="col"> Último<br>Movimiento </th>
                                 <th class="col-exito" scope="col"> Éxito </th>
@@ -168,6 +169,9 @@
                                 <td class="col-materia">{{ $row_materia }}</td>
                                 <td class="col-entidad">{{ $row_entidad }}</td>
                                 <td class="col-area">{{ $row_area }}</td>
+                                <td class="col-saldo">
+                                    <span class="{!! $row_saldo > 0 ? "saldo-positivo" : "saldo-negativo" !!}">S/ {{ $row_saldo }}</span>
+                                </td>
                                 <td class="col-estado">{{ $row_estado }}</td>
                                 <td>
                                     <a href="{{ $row_ultimo_movimiento_url }}" data-target="#ajax" data-toggle="modal">
@@ -223,11 +227,30 @@
 				                                @can('update')
 					                                <li><a href="{{ route('expedientes.edit', $row_id) }}">Editar</a></li>
 				                                @endcan
-				                                <li><a href="#" class="expediente-tareas" data-id="{{ $row_id }}" data-list="{{ route('expedientes.tareas.index', $row_id) }}" data-create="{{ route('expedientes.tareas.create', $row_id) }}">Tareas</a></li>
-				                                <li><a href="#" class="expediente-caja" data-saldo="{{ $row_saldo }}" data-id="{{ $row_id }}" data-list="{{ route('expedientes.flujo-caja.index', $row_id) }}" data-create="{{ route('expedientes.flujo-caja.create', $row_id) }}">Flujo de Caja</a></li>
-				                                <li><a href="#" class="expediente-comprobantes" data-id="{{ $row_id }}" data-list="{{ route('expedientes.comprobantes.index', $row_id) }}">Comprobantes de Pago</a></li>
-				                                <li><a href="#" class="expediente-interviniente" data-id="{{ $row_id }}" data-list="{{ route('expedientes.intervinientes.index', $row_id) }}" data-create="{{ route('expedientes.intervinientes.create', $row_id) }}">Intervinientes</a></li>
-				                                <li><a href="#" class="expediente-documento" data-id="{{ $row_id }}" data-list="{{ route('expedientes.documentos.index', $row_id) }}" data-create="{{ route('expedientes.documentos.create', $row_id) }}">Documentos</a></li>
+				                                <li><a href="#" class="expediente-tareas"
+                                                       data-id="{{ $row_id }}"
+                                                       data-list="{{ route('expedientes.tareas.index', $row_id) }}"
+                                                       data-create="{{ route('expedientes.tareas.create', $row_id) }}">Tareas</a></li>
+
+                                                <li><a href="#" class="expediente-caja"
+                                                       data-saldo="{{ $row_saldo }}"
+                                                       data-id="{{ $row_id }}"
+                                                       data-list="{{ route('expedientes.flujo-caja.index', $row_id) }}"
+                                                       data-create="{{ route('expedientes.flujo-caja.create', $row_id) }}">Flujo de Caja</a></li>
+
+                                                <li><a href="#" class="expediente-comprobantes"
+                                                       data-id="{{ $row_id }}"
+                                                       data-list="{{ route('expedientes.comprobantes.index', $row_id) }}">Comprobantes de Pago</a></li>
+
+                                                <li><a href="#" class="expediente-interviniente"
+                                                       data-id="{{ $row_id }}"
+                                                       data-list="{{ route('expedientes.intervinientes.index', $row_id) }}"
+                                                       data-create="{{ route('expedientes.intervinientes.create', $row_id) }}">Intervinientes</a></li>
+
+                                                <li><a href="#" class="expediente-documento"
+                                                       data-id="{{ $row_id }}"
+                                                       data-list="{{ route('expedientes.documentos.index', $row_id) }}"
+                                                       data-create="{{ route('expedientes.documentos.create', $row_id) }}">Documentos</a></li>
 			                                </ul>
 		                                </div>
 									@else
@@ -313,7 +336,6 @@
     {{-- BootBox --}}
     {!! HTML::script('assets/global/plugins/bootbox/bootbox.min.js') !!}
 
-    {{-- FUNCIONES --}}
-    {!! HTML::script(elixir('js/js-funciones.js')) !!}
+    {{-- Expedientes --}}
     {!! HTML::script(elixir('js/js-expediente.js')) !!}
 @stop

@@ -6,9 +6,19 @@ class Tarea extends BaseEntity {
 
     use SoftDeletes;
 
-    protected $appends = ['titulo_tarea','asignado','url_editar','url_notificacion','estado_nombre','lista_acciones'];
+    protected $appends = [
+        'titulo_tarea','asignado','estado_nombre','lista_acciones',
+        'url_editar','url_acciones','url_notificacion',
+        'url_acciones_lista','url_acciones_crear',
+        'tiempo_total','gastos'];
+
     protected $dates = ['deleted_at'];
-    protected $fillable = ['id','expediente_id','expediente_tipo_id','tarea_concepto_id','descripcion','fecha_solicitada','fecha_vencimiento','titular_id','abogado_id','estado'];
+
+    protected $fillable = [
+        'id','expediente_id','expediente_tipo_id',
+        'tarea_concepto_id','descripcion','fecha_solicitada',
+        'fecha_vencimiento','titular_id','abogado_id','estado'
+    ];
 
     /*
      * RELACIONES
@@ -99,6 +109,11 @@ class Tarea extends BaseEntity {
         return $this->abogado->nombre;
     }
 
+    public function getUrlAccionesAttribute()
+    {
+        return route('expedientes.tareas.acciones', [$this->expediente_id, $this->id]);
+    }
+
     public function getUrlEditarAttribute()
     {
         return route('expedientes.tareas.edit', [$this->expediente_id, $this->id]);
@@ -117,6 +132,32 @@ class Tarea extends BaseEntity {
     public function getListaAccionesAttribute()
     {
         return $this->acciones()->orderBy('fecha','desc')->orderBy('desde','desc')->get();
+    }
+
+    public function getUrlAccionesListaAttribute()
+    {
+        return route('api.expedientes.tareas.acciones', [$this->expediente_id, $this->id]);
+    }
+
+    public function getUrlAccionesCrearAttribute()
+    {
+        return route('tareas.acciones.create', $this->id);
+    }
+
+    public function getTiempoTotalAttribute()
+    {
+        return sumarHoras($this->acciones);
+    }
+
+    public function getGastosAttribute()
+    {
+        $suma = 0;
+        foreach ($this->acciones as $caja){
+            $monto = $caja->gastos;
+            $suma = $monto + $suma;
+        }
+
+        return number_format($suma, 2, '.', ',');
     }
 
     /*
