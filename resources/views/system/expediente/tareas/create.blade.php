@@ -148,7 +148,9 @@
                                 '<td>'+ result.titulo_tarea +'</td>' +
                                 '<td data-tooltip="'+ result.descripcion +'">'+ descripcion.substr(0,50) + "..." +'</td>' +
                                 '<td>'+ result.asignado +'</td>' +
-                                '<td><span class="estado-'+ estado.toLowerCase() +'">'+ estado +'</span></td>' +
+                                '<td class="text-center"><strong>00:00</strong></td>' +
+                                '<td class="text-right"><strong>S/ 0.00</strong></td>' +
+                                '<td class="text-center"><span class="estado-'+ estado.toLowerCase() +'">'+ estado +'</span></td>' +
                                 '<td class="text-center">' +
                                     '<div class="btn-group">' +
                                         '<button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Movimientos' +
@@ -156,7 +158,8 @@
                                         '</button>' +
                                         '<ul class="dropdown-menu pull-right" role="menu">' +
                                             '<li><a href="'+ result.url_editar +'" data-target="#ajax" data-toggle="modal">Editar</a></li>' +
-                                            '<li><a href="/expedientes/'+ result.expediente_id +'/tareas/'+ result.id +'/acciones" data-target="#ajax" data-toggle="modal">Acciones</a></li>' +
+                                            '<li><a href="#" class="expediente-tarea-acciones-lista" data-id="'+ result.id +'" ' +
+                                                    'data-list="'+ result.url_acciones_lista +'" data-create="'+ result.url_acciones_crear +'">Acciones</a></li>' +
                                             '<li><a href="'+ result.url_notificacion +'" data-target="#ajax" data-toggle="modal">Notificaciones</a></li>' +
                                         '</ul>' +
                                     '</div>' +
@@ -164,6 +167,8 @@
                            '</tr>';
 
                 $("#tarea-lista-{{ $row->id }} tbody").prepend(html);
+
+                tareaListaAcciones();
 
             },
             beforeSend: function () { $('.progress').show(); },

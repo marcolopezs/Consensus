@@ -134,9 +134,13 @@ class TareasController extends Controller {
                 'fecha_vencimiento' => $save->fecha_vencimiento,
                 'descripcion' => $save->descripcion,
                 'asignado' => $save->asignado,
+                'tiempo_total' => $save->tiempo_total,
+                'gastos' => $save->gastos,
                 'estado_nombre' => $save->estado_nombre,
                 'url_editar' => $save->url_editar,
-                'url_notificacion' => $save->url_notificacion
+                'url_notificacion' => $save->url_notificacion,
+                'url_acciones_lista' => $save->url_acciones_lista,
+                'url_acciones_crear' => $save->url_acciones_crear
             ];
         });
     }
@@ -204,6 +208,8 @@ class TareasController extends Controller {
             'fecha_vencimiento' => $row->fecha_vencimiento,
             'descripcion' => $save->descripcion,
             'asignado' => $save->asignado,
+            'tiempo_total' => $save->tiempo_total,
+            'gastos' => $save->gastos,
             'estado_nombre' => $save->estado_nombre,
             'url_editar' => $save->url_editar,
             'url_notificacion' => $save->url_notificacion

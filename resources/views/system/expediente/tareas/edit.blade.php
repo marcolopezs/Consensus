@@ -139,8 +139,7 @@
             type: 'POST',
             data: data,
             success: function (result) {
-                console.log(result);
-                successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>El registro se actualizó satisfactoriamente.</div>';
+                var successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>El registro se actualizó satisfactoriamente.</div>';
                 $(".form-content").html(successHtml);
 
                 $("#tarea-select-"+ result.id).remove();
@@ -153,7 +152,9 @@
                                 '<td>'+ result.titulo_tarea +'</td>' +
                                 '<td data-tooltip="'+ result.descripcion +'">'+ descripcion.substr(0,50) + "..." +'</td>' +
                                 '<td>'+ result.asignado +'</td>' +
-                                '<td><span class="estado-'+ estado.toLowerCase() +'">'+ estado +'</span></td>' +
+                                '<td class="text-center"><strong>'+ result.tiempo_total +'</strong></td>' +
+                                '<td class="text-right"><strong>S/ '+ result.gastos +'</strong></td>' +
+                                '<td class="text-center"><span class="estado-'+ estado.toLowerCase() +'">'+ estado +'</span></td>' +
                                 '<td class="text-center">' +
                                     '<div class="btn-group">' +
                                         '<button class="btn btn-xs blue dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Movimientos' +
@@ -161,7 +162,8 @@
                                         '</button>' +
                                         '<ul class="dropdown-menu pull-right" role="menu">' +
                                             '<li><a href="'+ result.url_editar +'" data-target="#ajax" data-toggle="modal">Editar</a></li>' +
-                                            '<li><a href="/expedientes/'+ result.expediente_id +'/tareas/'+ result.id +'/acciones" data-target="#ajax" data-toggle="modal">Acciones</a></li>' +
+                                            '<li><a href="#" class="expediente-tarea-acciones-lista" data-id="'+ result.id +'" ' +
+                                                    'data-list="'+ result.url_acciones_lista +'" data-create="'+ result.url_acciones_crear +'">Acciones</a></li>' +
                                             '<li><a href="'+ result.url_notificacion +'" data-target="#ajax" data-toggle="modal">Notificaciones</a></li>' +
                                         '</ul>' +
                                     '</div>' +
@@ -170,11 +172,12 @@
 
                 $("#tarea-lista-{{ $row->id }} tbody").prepend(html);
 
+                tareaListaAcciones();
+
             },
             beforeSend: function () { $('.progress').show(); },
             complete: function () { $('.progress').hide(); },
             error: function (result){
-                console.log(result);
                 if(result.status === 422){
                     var errors = result.responseJSON;
                     errorsHtml = '<div class="alert alert-danger"><button class="close" data-close="alert"></button><ul>';
