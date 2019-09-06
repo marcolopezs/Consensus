@@ -1,13 +1,13 @@
 {
-  "assets/layouts/layout3/css/custom.css": "assets/layouts/layout3/css/custom-ed4764212b.css",
+  "assets/layouts/layout3/css/custom.css": "assets/layouts/layout3/css/custom-b904a2f3df.css",
   "assets/layouts/layout3/css/layout.css": "assets/layouts/layout3/css/layout-1231840480.css",
   "js/js-cambiar-estado.js": "js/js-cambiar-estado-daf578cbf5.js",
   "js/js-cliente.js": "js/js-cliente-9145cc16c0.js",
   "js/js-create-edit.js": "js/js-create-edit-ffdc43a8b1.js",
   "js/js-delete.js": "js/js-delete-77b083e157.js",
-  "js/js-expediente.js": "js/js-expediente-b6e8b6ed7b.js",
+  "js/js-expediente.js": "js/js-expediente-14a3df396c.js",
   "js/js-form-close.js": "js/js-form-close-849a0f58c4.js",
-  "js/js-funciones.js": "js/js-funciones-5023496414.js",
-  "js/js-tarea.js": "js/js-tarea-6fe1a27738.js",
+  "js/js-funciones.js": "js/js-funciones-b4e4af1f92.js",
+  "js/js-tarea.js": "js/js-tarea-c09721af1e.js",
   "js/js-usuario-update.js": "js/js-usuario-update-18062fb175.js"
 }
