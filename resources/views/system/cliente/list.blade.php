@@ -67,19 +67,25 @@
 
                         <tbody>
                         @foreach($rows as $item)
-                            {{--*/
-                            $row_id = $item->id;
-                            $row_cliente = $item->cliente;
-                            $row_dni = $item->dni;
-                            $row_ruc = $item->ruc;
-                            $row_email = $item->email;
-                            $row_estado = $item->estado;
-                            /*--}}
+                            @php
+                                $row_id = $item->id;
+                                $row_cliente = $item->cliente;
+                                $row_dni = $item->dni;
+                                $row_ruc = $item->ruc;
+                                $row_email = $item->email;
+                                $row_expedientes = $item->cantidad_expedientes;
+                                $row_estado = $item->estado;
+                            @endphp
                             <tr id="cliente-{{ $row_id }}" class="odd gradeX" data-id="{{ $row_id }}" data-title="{{ $row_cliente }}">
                                 <td>{{ $row_cliente }}</td>
                                 <td>{{ $row_dni }}</td>
                                 <td>{{ $row_ruc }}</td>
                                 <td>{{ $row_email }}</td>
+                                <td class="text-center">
+                                    <a href="{{ route('cliente.expedientes', $row_id) }}" data-target="#ajax" data-toggle="modal">
+                                        <strong>{{ $row_expedientes }}</strong>
+                                    </a>
+                                </td>
                                 <td class="text-center">
                                     @can('update')
                                     <a id="estado-{{ $row_id }}" href="#" class="btn-estado" data-id="{{ $row_id }}" data-title="{{ $row_cliente }}" data-url="{{ route('cliente.estado', $row_id) }}">

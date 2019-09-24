@@ -140,7 +140,7 @@ class ClienteController extends Controller {
      *
      * @param ClienteRequest $request
      * @param  int $id
-     * @return Response
+     * @return array
      */
     public function update(ClienteRequest $request, $id)
     {
@@ -166,6 +166,19 @@ class ClienteController extends Controller {
         return [
             'message' => $mensaje
         ];
+    }
+
+    /**
+     * Mostrar ventana de cantidad de Expedientes de Cliente
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function expedientes($id)
+    {
+        $row = $this->clienteRepo->findOrFail($id);
+        $expedientes = $row->expedientes()->orderBy('expediente','asc')->get();
+
+        return view('system.cliente.expedientes', compact('row','expedientes'));
     }
 
 

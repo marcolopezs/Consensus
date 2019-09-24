@@ -71,6 +71,7 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
 
     //CLIENTES
     Route::resource('cliente', 'ClienteController', ['except' => 'destroy']);
+    Route::get('cliente/{id}/expedientes', ['as' => 'cliente.expedientes', 'uses' => 'ClienteController@expedientes']);
     Route::post('cliente/{id}/estado', ['as' => 'cliente.estado', 'uses' => 'ClienteController@estado']);
     Route::get('cliente/{cliente}/user', ['as' => 'cliente.user.get', 'uses' => 'ClienteController@userGet']);
     Route::post('cliente/{cliente}/user', ['as' => 'cliente.user.post', 'uses' => 'ClienteController@userPost']);
