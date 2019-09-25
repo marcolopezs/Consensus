@@ -41,6 +41,15 @@ class Cliente extends BaseEntity {
         return $this->cliente;
     }
 
+    /**
+     * Mostrar cantidad de Expedientes del cliente
+     * @return mixed
+     */
+    public function getCantidadExpedientesAttribute()
+    {
+        return $this->expedientes->count();
+    }
+
     /*
      * APPENDS
      */

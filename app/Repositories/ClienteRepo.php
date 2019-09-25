@@ -11,6 +11,19 @@ class ClienteRepo extends BaseRepo {
         return new Cliente();
     }
 
+    /**
+     * Mostrar listado de cliente, excepto el Cliente actual
+     * @param $id
+     * @return mixed
+     */
+    public function mostrarClientesDiferentesAlActual($id)
+    {
+        return $this->getModel()->where('id', '<>', $id)
+                                ->orderBy('cliente','asc')
+                                ->with('expedientes')
+                                ->get();
+    }
+
     //BUSCAR JSON
     public function buscarCliente(Request $request)
     {

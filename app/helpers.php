@@ -109,8 +109,7 @@ function soloFecha($fecha)
 
 /* FECHA ACTUAL */
 function dateActual(){
-    $fechaActual = date('d/m/Y');
-    return $fechaActual;
+    return date('d/m/Y');
 }
 
 //FUNCION PARA MARCAR ORDEN
