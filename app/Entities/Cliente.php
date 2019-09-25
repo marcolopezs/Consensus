@@ -6,10 +6,12 @@ class Cliente extends BaseEntity {
 
     use SoftDeletes;
 
+    protected $appends = [
+        'cantidad_expedientes',
+        'url_estado','url_editar','url_contactos_list','url_contactos_create','url_documentos_list','url_documentos_create','url_user_create'
+    ];
     protected $dates = ['deleted_at'];
-
     protected $fillable = ['id','cliente','dni','ruc','carnet_extranjeria','pasaporte','partida_nacimiento','otros','email','telefono','fax','direccion','pais_id','estado'];
-    protected $appends = ['url_estado','url_editar','url_contactos_list','url_contactos_create','url_documentos_list','url_documentos_create','url_user_create'];
 
     public function expedientes()
     {
@@ -47,7 +49,7 @@ class Cliente extends BaseEntity {
      */
     public function getCantidadExpedientesAttribute()
     {
-        return $this->expedientes->count();
+        return $this->expedientes()->count();
     }
 
     /*

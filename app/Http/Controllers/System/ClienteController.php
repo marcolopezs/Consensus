@@ -193,16 +193,26 @@ class ClienteController extends Controller {
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function transferir($id)
+    public function transferir($id, Request $request)
     {
         $row = $this->clienteRepo->findOrFail($id);
-        $clientes = $this->clienteRepo->mostrarClientesDiferentesAlActual($id);
 
-        return view('system.cliente.transferir', compact('row', 'clientes'));
+        return view('system.cliente.transferir', compact('row'));
+    }
+
+    public function transferirDatos($id, Request $request)
+    {
+        return $this->clienteRepo->mostrarClientesDiferentesAlActual($id, $request);
     }
 
     public function transferirStore($id, Request $request)
     {
+        $rules = [
+            'acepto' => 'accepted'
+        ];
+
+        $this->validate($request, $rules);
+
         DB::transaction(function () use ($id, $request) {
 
             $nuevo_cliente = $request->input('nuevo_cliente');

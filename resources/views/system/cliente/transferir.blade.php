@@ -4,41 +4,52 @@
 <div class="modal-body">
     <div class="row">
         <div class="col-md-12">
-            <div class="form-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h3>Cliente seleccionado: <strong>{{ $row->cliente }}</strong></h3>
+            <div class="form-content"></div>
+
+            {!! Form::open(['route' => ['cliente.transferir.store', $row->id], 'method' => 'POST', 'id' => 'formCreate']) !!}
+                @include('partials.progressbar')
+
+                <div class="form-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Cliente seleccionado: <strong>{{ $row->cliente }}</strong></h3>
+                            <p>Expedientes: <strong>{{ $row->cantidad_expedientes }}</strong></p>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Seleccionar cliente al cual se le transferirá todos los datos</label>
+                                <select name="nuevo_cliente" class="seleccionar-cliente" data-id="{{ $row->id }}"></select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="alert alert-danger">
+                                    <strong>Advertencia:</strong> Una vez que se transfiera la información del Cliente al nuevo Cliente seleccionado,
+                                    no se podrá revertir dicha acción. Es importante que revise a que usuario transferirá los datos.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>
+                                	{!! Form::checkbox('acepto', '1', null) !!}
+                                	<strong>Confirmo transferir los datos del cliente</strong>
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                {!! Form::open(['route' => ['cliente.transferir.store', $row->id], 'method' => 'post', 'id' => 'formCreate']) !!}
-                @include('partials.progressbar')
 
-                <table class="table table-striped table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th>Clientes</th>
-                            <th>Expedientes</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($clientes as $cliente)
-                        <tr>
-                            <td><label><input type="radio" name="nuevo_cliente" value="{{ $cliente->id }}"> {{ $cliente->cliente }}</label></td>
-                            <td>{{ $cliente->cantidad_expedientes }}</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-
-                @include('partials.progressbar')
-                {!! Form::close() !!}
-            </div>
+            {!! Form::close() !!}
         </div>
     </div>
 </div>
 <div class="modal-footer">
     <a class="btn default" id="formCreateClose" data-dismiss="modal">Cerrar</a>
-    <a class="btn blue" id="formCreateSubmit" href="javascript:;">Guardar</a>
+    <a class="btn blue" id="formCreateSubmit" href="javascript:;">Transferir datos</a>
 </div>
 
 <script>
@@ -54,8 +65,13 @@
             type: 'POST',
             data: data,
             success: function (result) {
-                var successHtml = '<div class="alert alert-success"><button class="close" data-close="alert"></button>El registro se agregó satisfactoriamente.</div>';
+                var successHtml = '<div class="alert alert-success">' +
+                    '<button class="close" data-close="alert"></button>' +
+                        'Los datos se transfirieron con éxito.' +
+                    '</div>';
+
                 $(".form-content").html(successHtml);
+
                 form[0].reset();
             },
             beforeSend: function () { $('.progress').show(); },

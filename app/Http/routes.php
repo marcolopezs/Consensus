@@ -75,6 +75,7 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
 
     Route::get('cliente/{id}/transferir', ['as' => 'cliente.transferir', 'uses' => 'ClienteController@transferir']);
     Route::post('cliente/{id}/transferir', ['as' => 'cliente.transferir.store', 'uses' => 'ClienteController@transferirStore']);
+    Route::get('cliente/{id}/transferir/datos', ['as' => 'cliente.transferir.datos', 'uses' => 'ClienteController@transferirDatos']);
 
     Route::post('cliente/{id}/estado', ['as' => 'cliente.estado', 'uses' => 'ClienteController@estado']);
     Route::get('cliente/{cliente}/user', ['as' => 'cliente.user.get', 'uses' => 'ClienteController@userGet']);

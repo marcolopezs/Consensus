@@ -16,11 +16,11 @@ class ClienteRepo extends BaseRepo {
      * @param $id
      * @return mixed
      */
-    public function mostrarClientesDiferentesAlActual($id)
+    public function mostrarClientesDiferentesAlActual($id, Request $request)
     {
         return $this->getModel()->where('id', '<>', $id)
+                                ->where('cliente', 'LIKE', "%{$request->input('q')}%")
                                 ->orderBy('cliente','asc')
-                                ->with('expedientes')
                                 ->get();
     }
 

@@ -162,6 +162,57 @@
             $('.select2').select2({
                 placeholder: placeholder
             });
+
+
+            var idSelect = $('.seleccionar-cliente').data('id');
+
+            $(".seleccionar-cliente").select2({
+                ajax: {
+                    url: "/cliente/"+idSelect+"/transferir/datos",
+                    dataType: 'json',
+                    data: function (params) {
+                        return {
+                            q: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: data
+                        };
+                    },
+                },
+                placeholder: 'Buscar y seleccionar cliente',
+                minimumInputLength: 1,
+                templateResult: formatRepo,
+                templateSelection: formatRepoSelection
+            });
+
+            function formatRepo (repo) {
+                if (repo.loading) {
+                    return repo.cliente;
+                }
+
+                var $container = $(
+                    "<div class='select2-result-repository clearfix'>" +
+                        "<div class='select2-result-repository__meta'>" +
+                            "<div class='select2-result-repository__title'></div>" +
+                            "<div class='select2-result-repository__description'></div>" +
+                            "<div class='select2-result-repository__statistics'>" +
+                                "<div class='select2-result-repository__forks'><i class='fa fa-briefcase'></i> Tiene </div>" +
+                            "</div>" +
+                        "</div>" +
+                    "</div>"
+                );
+
+                $container.find(".select2-result-repository__title").text(repo.cliente);
+                $container.find(".select2-result-repository__forks").append(repo.cantidad_expedientes + " Expedientes");
+
+                return $container;
+            }
+
+            function formatRepoSelection (repo) {
+                return repo.cliente || repo.text;
+            }
         });
     });
 </script>
