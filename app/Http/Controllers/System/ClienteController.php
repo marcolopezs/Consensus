@@ -1,5 +1,10 @@
 <?php namespace Consensus\Http\Controllers\System;
 
+use Consensus\Entities\ClienteContacto;
+use Consensus\Entities\ClienteDocumento;
+use Consensus\Entities\Expediente;
+use Consensus\Entities\Facturacion;
+use Consensus\Entities\TareaAccion;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
@@ -18,6 +23,7 @@ use Consensus\Entities\UserProfile;
 use Consensus\Repositories\UserProfileRepo;
 
 use Consensus\Repositories\PaisRepo;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ClienteController extends Controller {
@@ -181,6 +187,39 @@ class ClienteController extends Controller {
         return view('system.cliente.expedientes', compact('row','expedientes'));
     }
 
+    /**
+     * Mostrar ventana en donde se seleccionará al Cliente al cual
+     * se le transferirá toda la información del Cliente actual
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function transferir($id)
+    {
+        $row = $this->clienteRepo->findOrFail($id);
+        $clientes = $this->clienteRepo->mostrarClientesDiferentesAlActual($id);
+
+        return view('system.cliente.transferir', compact('row', 'clientes'));
+    }
+
+    public function transferirStore($id, Request $request)
+    {
+        DB::transaction(function () use ($id, $request) {
+
+            $nuevo_cliente = $request->input('nuevo_cliente');
+
+            User::transferirDatosNuevoCliente($id, $nuevo_cliente);
+
+            ClienteContacto::transferirDatosNuevoCliente($id, $nuevo_cliente);
+
+            ClienteDocumento::transferirDatosNuevoCliente($id, $nuevo_cliente);
+
+            Expediente::transferirDatosNuevoCliente($id, $nuevo_cliente);
+
+            TareaAccion::transferirDatosNuevoCliente($id, $nuevo_cliente);
+
+            Facturacion::transferirDatosNuevoCliente($id, $nuevo_cliente);
+        });
+    }
 
     /*
      *  Busqueda de Cliente por medio de JSON

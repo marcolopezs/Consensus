@@ -2,8 +2,11 @@
 
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
+use Consensus\Traits\Updates;
 
-class BaseEntity extends Model{
+class BaseEntity extends Model
+{
+    use Updates;
 
     protected $hidden = ['created_at','updated_at','deleted_at'];
 

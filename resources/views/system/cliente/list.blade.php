@@ -107,7 +107,7 @@
                                             @endcan
                                             <li><a href="#" class="menu-contacto cliente-contacto" data-id="{{ $row_id }}" data-list="{{ route('cliente.contactos.index', $row_id) }}" data-create="{{ route('cliente.contactos.create', $row_id) }}">Contacto</a></li>
                                             <li><a href="#" class="menu-documentos cliente-documento" data-id="{{ $row_id }}" data-list="{{ route('cliente.documentos.index', $row_id) }}" data-create="{{ route('cliente.documentos.create', $row_id) }}">Documentos</a></li>
-                                            <li><a class="menu-usuario" href="{{ route('cliente.user.get', $row_id) }}">Crear usuario</a></li>
+                                            <li><a href="{{ route('cliente.transferir', $row_id) }}" class="menu-transferir" data-target="#ajax" data-toggle="modal">Transferir a Cliente</a></li>
                                         </ul>
                                     </div>
                                 </td>
