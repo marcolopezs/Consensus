@@ -41,7 +41,7 @@ class ClienteRepo extends BaseRepo {
                     ->dni($request->get('dni'))
                     ->ruc($request->get('ruc'))
                     ->email($request->get('email'))
-                    ->estado($request->get('estado'))
+                    ->estado(1)
                     ->order($request->get('order'))
                     ->paginate();
     }
