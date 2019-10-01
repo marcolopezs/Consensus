@@ -39,7 +39,7 @@
         <td>{!! Form::text('ruc', null, ['class' => 'form-control form-filter input-sm']) !!}</td>
         <td>{!! Form::text('email', null, ['class' => 'form-control form-filter input-sm']) !!}</td>
         <td></td>
-        <td>{!! Form::select('estado', [''=>'','0' => 'No activo','1' => 'Activo'], null, ['class' => 'form-control form-filter input-sm']) !!}</td>
+        <td></td>
         <td>
             {!! Form::button('<i class="fa fa-search"></i>', ['type' => 'submit', 'class' => 'btn btn-sm btn-success filter-submit margin-bottom']) !!}
             <a href="{!! route('cliente.index') !!}" class="btn btn-sm btn-default filter-cancel"><i class="fa fa-times"></i></a>

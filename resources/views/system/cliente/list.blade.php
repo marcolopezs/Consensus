@@ -107,7 +107,7 @@
                                             @endcan
                                             <li><a href="#" class="menu-contacto cliente-contacto" data-id="{{ $row_id }}" data-list="{{ route('cliente.contactos.index', $row_id) }}" data-create="{{ route('cliente.contactos.create', $row_id) }}">Contacto</a></li>
                                             <li><a href="#" class="menu-documentos cliente-documento" data-id="{{ $row_id }}" data-list="{{ route('cliente.documentos.index', $row_id) }}" data-create="{{ route('cliente.documentos.create', $row_id) }}">Documentos</a></li>
-                                            <li><a href="{{ route('cliente.transferir', $row_id) }}" class="menu-transferir" data-target="#ajax" data-toggle="modal">Transferir a Cliente</a></li>
+                                            <li><a href="{{ route('cliente.unir', $row_id) }}" class="menu-transferir" data-target="#ajax" data-toggle="modal">Unir Cliente</a></li>
                                         </ul>
                                     </div>
                                 </td>
@@ -162,6 +162,66 @@
             $('.select2').select2({
                 placeholder: placeholder
             });
+
+
+            var idSelect = $('.seleccionar-cliente').data('id');
+
+            $(".seleccionar-cliente").select2({
+                ajax: {
+                    url: "/cliente/"+idSelect+"/unir/datos",
+                    dataType: 'json',
+                    data: function (params) {
+                        return {
+                            q: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: data
+                        };
+                    },
+                },
+                placeholder: 'Buscar y seleccionar cliente',
+                minimumInputLength: 1,
+                templateResult: formatRepo,
+                templateSelection: formatRepoSelection
+            });
+
+            function formatRepo (repo) {
+                if (repo.loading) {
+                    return repo.cliente;
+                }
+
+                var $container = $(
+                    "<div class='select2-result-repository clearfix'>" +
+                        "<div class='select2-result-repository__meta'>" +
+                            "<div class='select2-result-repository__title'></div>" +
+                            "<div class='select2-result-repository__description select-dni'><strong>DNI:</strong> </div>" +
+                            "<div class='select2-result-repository__description select-ruc'><strong>RUC:</strong> </div>" +
+                            "<div class='select2-result-repository__description select-email'><strong>Email:</strong> </div>" +
+                            "<div class='select2-result-repository__description select-telefono'><strong>Teléfono:</strong> </div>" +
+                            "<div class='select2-result-repository__description select-direccion'><strong>Dirección:</strong> </div>" +
+                            "<div class='select2-result-repository__statistics'>" +
+                                "<div class='select2-result-repository__forks'><i class='fa fa-briefcase'></i> Tiene </div>" +
+                            "</div>" +
+                        "</div>" +
+                    "</div>"
+                );
+
+                $container.find(".select2-result-repository__title").text(repo.cliente);
+                $container.find(".select2-result-repository__description.select-dni").append(repo.dni);
+                $container.find(".select2-result-repository__description.select-ruc").append(repo.ruc);
+                $container.find(".select2-result-repository__description.select-email").append(repo.email);
+                $container.find(".select2-result-repository__description.select-telefono").append(repo.telefono);
+                $container.find(".select2-result-repository__description.select-direccion").append(repo.direccion);
+                $container.find(".select2-result-repository__forks").append(repo.cantidad_expedientes + " Expedientes");
+
+                return $container;
+            }
+
+            function formatRepoSelection (repo) {
+                return repo.cliente || repo.text;
+            }
         });
     });
 </script>
