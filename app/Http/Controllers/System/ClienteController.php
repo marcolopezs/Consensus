@@ -189,23 +189,23 @@ class ClienteController extends Controller {
 
     /**
      * Mostrar ventana en donde se seleccionará al Cliente al cual
-     * se le transferirá toda la información del Cliente actual
+     * se le unirá toda la información del Cliente actual
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function transferir($id, Request $request)
+    public function unir($id, Request $request)
     {
         $row = $this->clienteRepo->findOrFail($id);
 
         return view('system.cliente.transferir', compact('row'));
     }
 
-    public function transferirDatos($id, Request $request)
+    public function unirDatos($id, Request $request)
     {
         return $this->clienteRepo->mostrarClientesDiferentesAlActual($id, $request);
     }
 
-    public function transferirStore($id, Request $request)
+    public function unirStore($id, Request $request)
     {
         $rules = [
             'acepto' => 'accepted'
@@ -228,13 +228,15 @@ class ClienteController extends Controller {
             TareaAccion::transferirDatosNuevoCliente($id, $nuevo_cliente);
 
             Facturacion::transferirDatosNuevoCliente($id, $nuevo_cliente);
+
+            Cliente::unirCliente($id, $nuevo_cliente);
+
+            Cliente::where('id', $id)->delete();
         });
     }
 
-    /*
-     *  Busqueda de Cliente por medio de JSON
-     */
     /**
+     * Busqueda de Cliente por medio de JSON
      * @param Request $request
      * @return mixed
      */
