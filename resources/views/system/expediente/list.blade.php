@@ -197,6 +197,7 @@
 			                                <li><a href="#" class="expediente-caja"
                                                    data-saldo="{{ $row_saldo }}"
                                                    data-id="{{ $row_id }}"
+                                                   data-exportar="{{ route('expedientes.flujo-caja.excel', $row_id) }}"
                                                    data-list="{{ route('expedientes.flujo-caja.index', $row_id) }}"
                                                    data-create="{{ route('expedientes.flujo-caja.create', $row_id) }}">Flujo de Caja</a></li>
 

@@ -163,6 +163,7 @@ $(".expediente-caja").on("click", function(e) {
     var id = $(this).data('id');
     var list = $(this).data('list');
     var create = $(this).data('create');
+    var exportar = $(this).data('exportar');
     var saldo = $(this).data('saldo');
 
     $.ajax({
@@ -174,12 +175,15 @@ $(".expediente-caja").on("click", function(e) {
                     '<div class="col-md-3">' +
                     '<h3 class="table-title">Flujo de Caja</h3>' +
                     '</div>' +
-                    '<div class="col-md-5 text-center">' +
+                    '<div class="col-md-3 text-center">' +
                     '<h3 class="table-title">Saldo: S/. '+ saldo + '</h3>' +
                     '</div>' +
-                    '<div class="col-md-4">' +
-                        '<div class="pull-right btn-group table-botones">' +
-                            '<a class="btn sbold white caja-cerrar" href="#" data-id="'+id+'"> Cerrar </a>' +
+                    '<div class="col-md-6">' +
+                        '<div class="pull-right btn-group table-botones">';
+                            if(exportar){
+                                html += '<a class="btn sbold green caja-exportar" href="'+exportar+'"> Exportar </a>';
+                            }
+                            html += '<a class="btn sbold white caja-cerrar" href="#" data-id="'+id+'"> Cerrar </a>' +
                             '<a class="btn sbold blue-soft" href="'+create+'" data-target="#ajax" data-toggle="modal"> Agregar nuevo flujo de caja <i class="fa fa-plus"></i></a>' +
                         '</div>' +
                     '</div>' +

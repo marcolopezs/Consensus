@@ -68,6 +68,7 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
 
     //EXPEDIENTES - FLUJO DE CAJA
     Route::resource('expedientes.flujo-caja', 'FlujoCajaController', ['except' => 'destroy']);
+    Route::get('expedientes/{expediente}/flujo-caja/exportar/excel', ['as' => 'expedientes.flujo-caja.excel', 'uses' => 'FlujoCajaController@excel']);
 
     //CLIENTES
     Route::resource('cliente', 'ClienteController', ['except' => 'destroy']);
