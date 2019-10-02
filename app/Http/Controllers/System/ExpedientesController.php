@@ -1,5 +1,6 @@
 <?php namespace Consensus\Http\Controllers\System;
 
+use Consensus\Repositories\ClienteRepo;
 use Consensus\Repositories\StateRepo;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -26,11 +27,13 @@ class ExpedientesController extends Controller {
     protected $tarifaAbogadoRepo;
     protected $ajusteRepo;
     protected $estadoRepo;
+    protected $clienteRepo;
 
     /**
      * ExpedientesController constructor.
      * @param AbogadoRepo $abogadoRepo
      * @param AjusteRepo $ajusteRepo
+     * @param ClienteRepo $clienteRepo
      * @param ExpedienteRepo $expedienteRepo
      * @param ExpedienteTipoRepo $expedienteTipoRepo
      * @param NotificacionRepo $notificacionRepo
@@ -39,6 +42,7 @@ class ExpedientesController extends Controller {
      */
     public function __construct(AbogadoRepo $abogadoRepo,
                                 AjusteRepo $ajusteRepo,
+                                ClienteRepo $clienteRepo,
                                 ExpedienteRepo $expedienteRepo,
                                 ExpedienteTipoRepo $expedienteTipoRepo,
                                 NotificacionRepo $notificacionRepo,
@@ -47,6 +51,7 @@ class ExpedientesController extends Controller {
     {
         $this->abogadoRepo = $abogadoRepo;
         $this->ajusteRepo = $ajusteRepo;
+        $this->clienteRepo = $clienteRepo;
         $this->estadoRepo = $estadoRepo;
         $this->expedienteRepo = $expedienteRepo;
         $this->expedienteTipoRepo = $expedienteTipoRepo;
@@ -162,8 +167,9 @@ class ExpedientesController extends Controller {
     public function edit($id)
     {
         $row = $this->expedienteRepo->findOrFail($id);
+        $clientes = $this->clienteRepo->listarClientesActivos();
 
-        return view('system.expediente.edit', compact('row'));
+        return view('system.expediente.edit', compact('row','clientes'));
     }
 
     /**
@@ -193,7 +199,7 @@ class ExpedientesController extends Controller {
         $row->entity_id = $entidad;
         $row->area_id = $area;
         $row->state_id = $estado;
-        $save = $this->expedienteRepo->update($row, $request->all());
+        $this->expedienteRepo->update($row, $request->all());
 
         //GUARDAR HISTORIAL
         $this->expedienteRepo->saveHistory($row, $request, 'update');

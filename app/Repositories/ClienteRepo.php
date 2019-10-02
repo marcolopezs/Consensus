@@ -12,6 +12,16 @@ class ClienteRepo extends BaseRepo {
     }
 
     /**
+     * Listar registros por estado ACTIVO
+     * y los ordenará por Nombre
+     * @return mixed
+     */
+    public function listarClientesActivos()
+    {
+        return $this->getModel()->where('estado', 1)->orderBy('cliente','asc')->get();
+    }
+
+    /**
      * Mostrar listado de cliente, excepto el Cliente actual
      * @param $id
      * @return mixed
