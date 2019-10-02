@@ -107,7 +107,9 @@
                                             @endcan
                                             <li><a href="#" class="menu-contacto cliente-contacto" data-id="{{ $row_id }}" data-list="{{ route('cliente.contactos.index', $row_id) }}" data-create="{{ route('cliente.contactos.create', $row_id) }}">Contacto</a></li>
                                             <li><a href="#" class="menu-documentos cliente-documento" data-id="{{ $row_id }}" data-list="{{ route('cliente.documentos.index', $row_id) }}" data-create="{{ route('cliente.documentos.create', $row_id) }}">Documentos</a></li>
+                                            @can('admin')
                                             <li><a href="{{ route('cliente.unir', $row_id) }}" class="menu-transferir" data-target="#ajax" data-toggle="modal">Unir Cliente</a></li>
+                                            @endcan
                                         </ul>
                                     </div>
                                 </td>
