@@ -11,6 +11,34 @@ class ExpedienteRepo extends BaseRepo {
         return new Expediente();
     }
 
+    /**
+     * Lista de registros por Estado de expediente
+     * por defecto se mostrará el estado EN TRAMITE
+     * @param Request $request
+     * @return mixed
+     */
+    public function listarRegistrosPorEstado(Request $request)
+    {
+        return $this->getModel()
+                    ->expediente($request->get('expediente'))
+                    ->clienteId($request->get('cliente'))
+                    ->tarifaId($request->get('tarifa'))
+                    ->abogadoId($request->get('abogado'))
+                    ->asistenteId($request->get('asistente'))
+                    ->servicioId($request->get('servicio'))
+                    ->fechaInicio($request->get('fecha_inicio_from'), $request->get('fecha_inicio_to'))
+                    ->fechaTermino($request->get('fecha_termino_from'), $request->get('fecha_termino_to'))
+                    ->materiaId($request->get('materia'))
+                    ->entidadId($request->get('entidad'))
+                    ->areaId($request->get('area'))
+                    ->estadoId($request->get('estado') ?: 24)
+                    ->orderBy('fecha_inicio', 'desc')
+                    ->orderBy('created_at', 'desc')
+                    ->with('cliente','tariff','abogado','asistente','service','matter','entity','area','state','flujo_caja')
+                    ->withTrashed()
+                    ->paginate();
+    }
+
     //BUSQUEDA DE REGISTROS - NIVEL ADMINISTRADOR
     public function filterPaginate(Request $request)
     {
@@ -32,28 +60,6 @@ class ExpedienteRepo extends BaseRepo {
                     ->with('cliente','tariff','abogado','asistente','service','matter','entity','area','state','flujo_caja')
                     ->withTrashed()
                     ->paginate();
-    }
-
-    //BUSQUEDA DE REGISTROS ANULADOS - NIVEL ADMINISTRADOR
-    public function filterPaginateAnulados(Request $request)
-    {
-        return $this->getModel()
-            ->expediente($request->get('expediente'))
-            ->clienteId($request->get('cliente'))
-            ->tarifaId($request->get('tarifa'))
-            ->abogadoId($request->get('abogado'))
-            ->asistenteId($request->get('asistente'))
-            ->servicioId($request->get('servicio'))
-            ->fechaInicio($request->get('fecha_inicio_from'), $request->get('fecha_inicio_to'))
-            ->fechaTermino($request->get('fecha_termino_from'), $request->get('fecha_termino_to'))
-            ->materiaId($request->get('materia'))
-            ->entidadId($request->get('entidad'))
-            ->areaId($request->get('area'))
-            ->estadoId(29)
-            ->orderBy('fecha_inicio', 'desc')
-            ->orderBy('created_at', 'desc')
-            ->with('cliente','tariff','abogado','asistente','service','matter','entity','area','state','flujo_caja')
-            ->paginate();
     }
 
     //BUSQUEDA DE REGISTROS - NIVEL ABOGADO

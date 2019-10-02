@@ -1,6 +1,6 @@
 <div class="col-md-12">
 
-    <div id="filtrar-expediente-panel" class="panel panel-default" {!! (Request::except('page') ? '' : 'style="display: none;"') !!}>
+    <div id="filtrar-expediente-panel" class="panel panel-default" {!! Request::except(['page','estado']) ? '' : 'style="display: none;"' !!}>
         <div class="panel-heading">Buscar y Ordenar</div>
         <div class="panel-body form">
 

@@ -1,8 +1,6 @@
 <?php namespace Consensus\Http\Controllers\System;
 
-use Auth;
-use Carbon\Carbon;
-use Consensus\Entities\Notificacion;
+use Consensus\Repositories\StateRepo;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
@@ -27,25 +25,33 @@ class ExpedientesController extends Controller {
     protected $notificacionRepo;
     protected $tarifaAbogadoRepo;
     protected $ajusteRepo;
+    protected $estadoRepo;
 
     /**
      * ExpedientesController constructor.
      * @param AbogadoRepo $abogadoRepo
+     * @param AjusteRepo $ajusteRepo
      * @param ExpedienteRepo $expedienteRepo
      * @param ExpedienteTipoRepo $expedienteTipoRepo
      * @param NotificacionRepo $notificacionRepo
      * @param TarifaAbogadoRepo $tarifaAbogadoRepo
-     * @param AjusteRepo $ajusteRepo
+     * @param StateRepo $estadoRepo
      */
-    public function __construct(AbogadoRepo $abogadoRepo, ExpedienteRepo $expedienteRepo,ExpedienteTipoRepo $expedienteTipoRepo,
-                                NotificacionRepo $notificacionRepo, TarifaAbogadoRepo $tarifaAbogadoRepo, AjusteRepo $ajusteRepo)
+    public function __construct(AbogadoRepo $abogadoRepo,
+                                AjusteRepo $ajusteRepo,
+                                ExpedienteRepo $expedienteRepo,
+                                ExpedienteTipoRepo $expedienteTipoRepo,
+                                NotificacionRepo $notificacionRepo,
+                                TarifaAbogadoRepo $tarifaAbogadoRepo,
+                                StateRepo $estadoRepo)
     {
         $this->abogadoRepo = $abogadoRepo;
+        $this->ajusteRepo = $ajusteRepo;
+        $this->estadoRepo = $estadoRepo;
         $this->expedienteRepo = $expedienteRepo;
         $this->expedienteTipoRepo = $expedienteTipoRepo;
         $this->notificacionRepo = $notificacionRepo;
         $this->tarifaAbogadoRepo = $tarifaAbogadoRepo;
-        $this->ajusteRepo = $ajusteRepo;
     }
 
     /**
@@ -56,28 +62,11 @@ class ExpedientesController extends Controller {
      */
     public function index(Request $request)
     {
-        if(Gate::allows('cliente')){
-            $rows = $this->expedienteRepo->filterPaginateCliente($request);
-        }else{
-            $rows = $this->expedienteRepo->filterPaginate($request);
-        }
-
+        $rows = $this->expedienteRepo->listarRegistrosPorEstado($request);
         $ajustes = $this->ajusteRepo->findModelUserReturnContenido(Expediente::class);
+        $estados = $this->estadoRepo->listarRegistrosActivos();
 
-        return view('system.expediente.list', compact('rows','ajustes'));
-    }
-
-    public function anulados(Request $request)
-    {
-        if(Gate::allows('cliente')){
-            $rows = $this->expedienteRepo->filterPaginateCliente($request);
-        }else{
-            $rows = $this->expedienteRepo->filterPaginateAnulados($request);
-        }
-
-        $ajustes = $this->ajusteRepo->findModelUserReturnContenido(Expediente::class);
-
-        return view('system.expediente.list', compact('rows','ajustes'));
+        return view('system.expediente.list', compact('rows','ajustes','estados'));
     }
 
     /**

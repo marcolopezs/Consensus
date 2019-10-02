@@ -409,4 +409,14 @@ abstract class BaseRepo {
         ]);
     }
 
+    /**
+     * Listar registros por estado ACTIVO
+     * y los ordenará por Titulo
+     * @return mixed
+     */
+    public function listarRegistrosActivos()
+    {
+        return $this->getModel()->where('estado', 1)->orderBy('titulo','asc')->get();
+    }
+
 }

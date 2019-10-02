@@ -57,11 +57,17 @@
 	                    @if(!Request::is('exp*-anu*'))
 		                    <div class="btn-group btn-group-devided">
 			                    <div class="btn-group">
-				                    <a class="btn red btn-outline btn-circle" href="{{ route('expedientes.anulados') }}">
-					                    <i class="fa fa-eye" aria-hidden="true"></i>
-					                    <span class="hidden-xs"> Ver expedientes anulados</span>
-				                    </a>
-			                    </div>
+                                    <button type="button" class="btn blue-hoki btn-outline btn-circle dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-filter" aria-hidden="true"></i>
+                                        <span class="hidden-xs"> Estado de Expedientes</span>
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        @foreach($estados as $estado)
+                                        <li {!! $estado->id == Request::input('estado') ? "class='active'" : '' !!}><a href="{{ "?estado=$estado->id" }}">{{ $estado->titulo }}</a></li>
+                                        @endforeach
+                                    </ul>
+                                </div>
 		                    </div>
 
 	                        <div class="btn-group btn-group-devided" data-toggle="buttons">
@@ -84,14 +90,6 @@
 	                        </div>
 	                        @endcan
 
-	                        <div class="btn-group btn-group-devided" data-toggle="buttons">
-	                            <div class="btn-group">
-	                                <a id="ajustes-expediente" class="btn red btn-outline btn-circle" href="javascript:;">
-	                                    <i class="fa fa-cog" aria-hidden="true"></i>
-	                                    <span class="hidden-xs"> Ajustes </span>
-	                                </a>
-	                            </div>
-	                        </div>
 						@else
 		                    <div class="btn-group btn-group-devided">
 			                    <div class="btn-group">
