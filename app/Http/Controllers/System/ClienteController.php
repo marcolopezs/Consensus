@@ -1,5 +1,10 @@
 <?php namespace Consensus\Http\Controllers\System;
 
+use Consensus\Entities\ClienteContacto;
+use Consensus\Entities\ClienteDocumento;
+use Consensus\Entities\Expediente;
+use Consensus\Entities\Facturacion;
+use Consensus\Entities\TareaAccion;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
@@ -18,6 +23,7 @@ use Consensus\Entities\UserProfile;
 use Consensus\Repositories\UserProfileRepo;
 
 use Consensus\Repositories\PaisRepo;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ClienteController extends Controller {
@@ -140,7 +146,7 @@ class ClienteController extends Controller {
      *
      * @param ClienteRequest $request
      * @param  int $id
-     * @return Response
+     * @return array
      */
     public function update(ClienteRequest $request, $id)
     {
@@ -168,11 +174,69 @@ class ClienteController extends Controller {
         ];
     }
 
-
-    /*
-     *  Busqueda de Cliente por medio de JSON
-     */
     /**
+     * Mostrar ventana de cantidad de Expedientes de Cliente
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function expedientes($id)
+    {
+        $row = $this->clienteRepo->findOrFail($id);
+        $expedientes = $row->expedientes()->orderBy('expediente','asc')->get();
+
+        return view('system.cliente.expedientes', compact('row','expedientes'));
+    }
+
+    /**
+     * Mostrar ventana en donde se seleccionará al Cliente al cual
+     * se le unirá toda la información del Cliente actual
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function unir($id, Request $request)
+    {
+        $row = $this->clienteRepo->findOrFail($id);
+
+        return view('system.cliente.transferir', compact('row'));
+    }
+
+    public function unirDatos($id, Request $request)
+    {
+        return $this->clienteRepo->mostrarClientesDiferentesAlActual($id, $request);
+    }
+
+    public function unirStore($id, Request $request)
+    {
+        $rules = [
+            'acepto' => 'accepted'
+        ];
+
+        $this->validate($request, $rules);
+
+        DB::transaction(function () use ($id, $request) {
+
+            $nuevo_cliente = $request->input('nuevo_cliente');
+
+            User::transferirDatosNuevoCliente($id, $nuevo_cliente);
+
+            ClienteContacto::transferirDatosNuevoCliente($id, $nuevo_cliente);
+
+            ClienteDocumento::transferirDatosNuevoCliente($id, $nuevo_cliente);
+
+            Expediente::transferirDatosNuevoCliente($id, $nuevo_cliente);
+
+            TareaAccion::transferirDatosNuevoCliente($id, $nuevo_cliente);
+
+            Facturacion::transferirDatosNuevoCliente($id, $nuevo_cliente);
+
+            Cliente::unirCliente($id, $nuevo_cliente);
+
+            Cliente::where('id', $id)->delete();
+        });
+    }
+
+    /**
+     * Busqueda de Cliente por medio de JSON
      * @param Request $request
      * @return mixed
      */

@@ -11,6 +11,29 @@ class ClienteRepo extends BaseRepo {
         return new Cliente();
     }
 
+    /**
+     * Listar registros por estado ACTIVO
+     * y los ordenará por Nombre
+     * @return mixed
+     */
+    public function listarClientesActivos()
+    {
+        return $this->getModel()->where('estado', 1)->orderBy('cliente','asc')->get();
+    }
+
+    /**
+     * Mostrar listado de cliente, excepto el Cliente actual
+     * @param $id
+     * @return mixed
+     */
+    public function mostrarClientesDiferentesAlActual($id, Request $request)
+    {
+        return $this->getModel()->where('id', '<>', $id)
+                                ->where('cliente', 'LIKE', "%{$request->input('q')}%")
+                                ->orderBy('cliente','asc')
+                                ->get();
+    }
+
     //BUSCAR JSON
     public function buscarCliente(Request $request)
     {
@@ -28,7 +51,7 @@ class ClienteRepo extends BaseRepo {
                     ->dni($request->get('dni'))
                     ->ruc($request->get('ruc'))
                     ->email($request->get('email'))
-                    ->estado($request->get('estado'))
+                    ->estado(1)
                     ->order($request->get('order'))
                     ->paginate();
     }

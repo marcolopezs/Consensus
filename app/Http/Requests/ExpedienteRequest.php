@@ -65,6 +65,7 @@ class ExpedienteRequest extends Request
             case 'PATCH':
             {
                 return [
+                    'cliente_id' => 'required',
                     'tarifa' => 'exists:tariffs,id',
                     'check_abogado' => 'required',
                     'abogado_id' => 'required_if:check_abogado,1|exists:abogados,id',

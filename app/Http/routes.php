@@ -68,9 +68,16 @@ Route::group(['namespace' => 'System', 'middleware' => 'auth'], function () use 
 
     //EXPEDIENTES - FLUJO DE CAJA
     Route::resource('expedientes.flujo-caja', 'FlujoCajaController', ['except' => 'destroy']);
+    Route::get('expedientes/{expediente}/flujo-caja/exportar/excel', ['as' => 'expedientes.flujo-caja.excel', 'uses' => 'FlujoCajaController@excel']);
 
     //CLIENTES
     Route::resource('cliente', 'ClienteController', ['except' => 'destroy']);
+    Route::get('cliente/{id}/expedientes', ['as' => 'cliente.expedientes', 'uses' => 'ClienteController@expedientes']);
+
+    Route::get('cliente/{id}/unir', ['as' => 'cliente.unir', 'uses' => 'ClienteController@unir']);
+    Route::post('cliente/{id}/unir', ['as' => 'cliente.unir.store', 'uses' => 'ClienteController@unirStore']);
+    Route::get('cliente/{id}/unir/datos', ['as' => 'cliente.unir.datos', 'uses' => 'ClienteController@unirDatos']);
+
     Route::post('cliente/{id}/estado', ['as' => 'cliente.estado', 'uses' => 'ClienteController@estado']);
     Route::get('cliente/{cliente}/user', ['as' => 'cliente.user.get', 'uses' => 'ClienteController@userGet']);
     Route::post('cliente/{cliente}/user', ['as' => 'cliente.user.post', 'uses' => 'ClienteController@userPost']);

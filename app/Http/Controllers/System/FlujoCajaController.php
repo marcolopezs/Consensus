@@ -10,6 +10,7 @@ use Consensus\Http\Controllers\Controller;
 use Consensus\Repositories\ExpedienteRepo;
 use Consensus\Repositories\FlujoCajaRepo;
 use Consensus\Repositories\MoneyRepo;
+use Maatwebsite\Excel\Facades\Excel;
 
 class FlujoCajaController extends Controller {
 
@@ -168,4 +169,26 @@ class FlujoCajaController extends Controller {
         ];
     }
 
+
+    /**
+     * Exportar a Excel el flujo de Caja del expediente seleccionado
+     * @param $expediente
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function excel($expediente)
+    {
+        $this->authorize('exportar');
+
+        $exp = $this->expedienteRepo->findOrFail($expediente);
+        $rows = $exp->flujo_caja;
+
+        Excel::create("Consensus - Expediente {$exp->expediente}", function($excel) use($exp, $rows) {
+            $excel->sheet('Flujo de Caja', function($sheet) use($exp, $rows) {
+                $sheet->loadView('excel.flujo_caja', [
+                    'expediente' => $exp,
+                    'rows' => $rows
+                ]);
+            });
+        })->export('xlsx');
+    }
 }

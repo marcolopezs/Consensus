@@ -43,12 +43,24 @@
 
                     <div class="form-body">
 
-                        <div class="col-md-12">
-                            <h3 class="form-section">Cliente: <strong>{{ $row->cliente->cliente }}</strong></h3>
-                        </div>
+                        <div class="row">
+                            <div class="col-md-12 -pull-left">
+                                <h3 class="form-section">Expediente: <strong>{{ $row->expediente }}</strong></h3>
+                            </div>
 
-                        <div class="col-md-12 -pull-left">
-                            <h3 class="form-section">Expediente: <strong>{{ $row->expediente }}</strong></h3>
+                            @can('admin')
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        {!! Form::label('cliente_id', 'Cliente', ['class' => 'control-label']) !!}
+                                        {!! Form::select('cliente_id', [''=>''] + $cliente, $row->cliente_id, ['class' => 'form-control select2', 'id' => 'cliente']) !!}
+                                    </div>
+                                </div>
+                            @else
+                                <div class="col-md-12">
+                                    <h3 class="form-section">Cliente: <strong>{{ $row->cliente->cliente }}</strong></h3>
+                                    {!! Form::hidden('cliente_id', $row->cliente_id) !!}
+                                </div>
+                            @endcan
                         </div>
 
                         <div class="row">
