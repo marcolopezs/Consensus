@@ -309,6 +309,11 @@
                 placeholder: placeholder
             });
 
+            $('.select2-multiple').select2({
+                placeholder: placeholder,
+                tags: true
+            });
+
             $('#mensajeAjax').hide();
 
             $("#ajax").on("loaded.bs.modal", function() {

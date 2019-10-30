@@ -338,12 +338,9 @@ class Expediente extends BaseEntity {
         }
     }
 
-    public function scopeEstadoId($query, $value)
+    public function scopeEstadoId($query, $values)
     {
-        if($value != "")
-        {
-            $query->where('state_id', $value);
-        }
+        !$values ?: $query->whereIn('state_id', $values);
     }
 
     public function scopeFechaInicio($query, $from, $to)

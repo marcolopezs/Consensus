@@ -162,14 +162,11 @@
                         </div>
                     </div>
 
-                    <div class="col-estado col-md-3">
+                    <div class="col-estado col-md-4">
                         <div class="form-group">
                             {!! Form::label('estado', 'Estado', ['class' => 'control-label']) !!}
                             <div class="input-group">
-                                {!! Form::select('estado', [''=>''] + $estado, null,['class' => 'form-control select2']) !!}
-                                <span class="input-group-btn">
-                                    <a data-id="col-estado" class="btn red select2-clear"><i class="fa fa-times" aria-hidden="true"></i></a>
-                                </span>
+                                {!! Form::select('estado[]', $estado, null,['class' => 'form-control select2-multiple', 'multiple']) !!}
                             </div>
                         </div>
                     </div>
