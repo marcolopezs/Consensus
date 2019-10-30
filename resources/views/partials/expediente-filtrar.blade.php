@@ -22,6 +22,18 @@
                         </div>
                     </div>
 
+                    <div class="col-descripcion col-md-4">
+                        <div class="form-group">
+                            {!! Form::label('descripcion', 'Descripción', ['class' => 'control-label']) !!}
+                            <div class="input-group">
+                                {!! Form::text('descripcion', null, ['class' => 'form-control']) !!}
+                                <span class="input-group-btn">
+                                    <a data-id="col-descripcion" class="btn red text-clear"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
                     @cannot('cliente')
                     <div class="col-cliente col-md-5">
                         <div class="form-group">

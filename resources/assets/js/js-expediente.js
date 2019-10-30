@@ -19,6 +19,7 @@ var ajustes = $("#expediente-ajustes-data").text();
 var js = JSON.parse(ajustes);
 
 getValues(js,'ch-expediente') == 1 ? $('.col-expediente').show() : $('.col-expediente').hide();
+//getValues(js,'ch-descripcion') == 1 ? $('.col-descripcion').show() : $('.col-descripcion').hide();
 getValues(js,'ch-cliente') == 1 ? $('.col-cliente').show() : $('.col-cliente').hide();
 getValues(js,'ch-moneda') == 1 ? $('.col-moneda').show() : $('.col-moneda').hide();
 getValues(js,'ch-valor') == 1 ? $('.col-valor').show() : $('.col-valor').hide();

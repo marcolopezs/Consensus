@@ -21,6 +21,7 @@ class ExpedienteRepo extends BaseRepo {
     {
         return $this->getModel()
                     ->expediente($request->get('expediente'))
+                    ->descripcion($request->get('descripcion'))
                     ->clienteId($request->get('cliente'))
                     ->tarifaId($request->get('tarifa'))
                     ->abogadoId($request->get('abogado'))
@@ -31,7 +32,7 @@ class ExpedienteRepo extends BaseRepo {
                     ->materiaId($request->get('materia'))
                     ->entidadId($request->get('entidad'))
                     ->areaId($request->get('area'))
-                    ->estadoId($request->get('estado') ?: 24)
+                    ->estadoId($request->all() ? $request->get('estado') : 24)
                     ->orderBy('fecha_inicio', 'desc')
                     ->orderBy('created_at', 'desc')
                     ->with('cliente','tariff','abogado','asistente','service','matter','entity','area','state','flujo_caja')
