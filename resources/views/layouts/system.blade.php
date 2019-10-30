@@ -129,6 +129,10 @@
                             <li {!! (Request::is('tareas-*') ? 'class="active"' : '') !!}><a href="{{ route('tareas.asignadas') }}">Tiempos</a></li>
                             <li {!! (Request::is('cliente*') ? 'class="active"' : '') !!}><a href="{{ route('cliente.index') }}">Clientes</a></li>
 
+                            @can('admin')
+                            <li {!! (Request::is('facturacion*') ? 'class="active"' : '') !!}><a href="{{ route('facturacion.index') }}">Comprobantes de Pago</a></li>
+                            @endcan
+
                             <li class="menu-dropdown mega-menu-dropdown {!! (Request::is('options*') ? 'active' : '') !!}">
                                 <a href="javascript:;">Opciones</a><span class="arrow"></span>
                                 <ul class="dropdown-menu" style="min-width: 500px;">
@@ -139,7 +143,6 @@
                                                     <ul class="mega-menu-submenu">
                                                         @can('admin')
                                                         <li {!! (Request::is('options/area*') ? 'class="active"' : '') !!}><a href="{{ route('area.index') }}">Áreas</a></li>
-                                                        <li {!! (Request::is('facturacion*') ? 'class="active"' : '') !!}><a href="{{ route('facturacion.index') }}">Comprobantes de Pago</a></li>
                                                         <li {!! (Request::is('options/tarea-concepto*') ? 'class="active"' : '') !!}><a href="{{ route('tarea-concepto.index') }}">Conceptos de Tarea</a></li>
                                                         <li {!! (Request::is('configuracion*') ? 'class="active"' : '') !!}><a href="{{ route('system.conf') }}">Configuración</a></li>
                                                         <li {!! (Request::is('options/entity*') ? 'class="active"' : '') !!}><a href="{{ route('entity.index') }}">Entidades</a></li>
