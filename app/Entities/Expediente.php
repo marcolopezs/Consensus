@@ -268,6 +268,20 @@ class Expediente extends BaseEntity {
         }
     }
 
+    public function scopeDescripcion($query, $value)
+    {
+        if(trim($value) != "")
+        {
+            $searchValues = preg_split('/\s+/', $value, -1, PREG_SPLIT_NO_EMPTY);
+
+            $query->where(function ($q) use ($searchValues) {
+                foreach ($searchValues as $value) {
+                    $q->orWhere('descripcion', 'like', "%{$value}%");
+                }
+            });
+        }
+    }
+
     public function scopeTarifaId($query, $value)
     {
         if($value != "")
@@ -324,12 +338,9 @@ class Expediente extends BaseEntity {
         }
     }
 
-    public function scopeEstadoId($query, $value)
+    public function scopeEstadoId($query, $values)
     {
-        if($value != "")
-        {
-            $query->where('state_id', $value);
-        }
+        !$values ?: $query->whereIn('state_id', $values);
     }
 
     public function scopeFechaInicio($query, $from, $to)
