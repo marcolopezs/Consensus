@@ -81,8 +81,8 @@
                         <thead>
                             <tr>
                                 <th>Cliente</th>
-                                <th>Tipo de Comprobante</th>
-                                <th>N° de Comprobante</th>
+                                <th>Tipo</th>
+                                <th>N°</th>
                                 <th>Fecha</th>
                                 <th>Moneda</th>
                                 <th>Importe</th>

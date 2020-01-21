@@ -50,7 +50,7 @@ class FlujoCajaController extends Controller {
     {
         $row = $this->expedienteRepo->findOrFail($expedientes);
 
-        return $row->flujo_caja->toJson();
+        return $row->flujo_caja()->with('tarea_accion')->get()->toJson();
     }
 
     /**

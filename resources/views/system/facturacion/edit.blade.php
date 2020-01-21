@@ -43,14 +43,14 @@
 
                     <div class="col-md-3">
                         <div class="form-group">
-                            {!! Form::label('comprobante_tipo', 'Tipo Comprobante', ['class' => 'control-label']) !!}
+                            {!! Form::label('comprobante_tipo', 'Tipo', ['class' => 'control-label']) !!}
                             {!! Form::select('comprobante_tipo', [''=>''] + $tipo, $fact_tipo, ['class' => 'form-control select2']) !!}
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group">
-                            {!! Form::label('comprobante_numero', 'N° Comprobante', ['class' => 'control-label']) !!}
+                            {!! Form::label('comprobante_numero', 'N°', ['class' => 'control-label']) !!}
                             {!! Form::text('comprobante_numero', null, ['class' => 'form-control']) !!}
                         </div>
                     </div>
