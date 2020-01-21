@@ -341,5 +341,5 @@
     {!! HTML::script('assets/global/plugins/bootbox/bootbox.min.js') !!}
 
     {{-- Expedientes --}}
-    {!! HTML::script(elixir('js/js-expediente.js')) !!}
+    <script src="/dist/js-expediente-dist.js?{{ date('Ymd') }}"></script>
 @stop

@@ -208,11 +208,16 @@ $(".expediente-caja").on("click", function(e) {
             $("#exp-" + id).after(html);
             $("#caja-" + id).fadeIn();
 
-            var tr;
+            var tr, descripcion;
             $.each(JSON.parse(result), function(idx, obj) {
                 tr = $('<tr id="caja-select-'+ obj.id +'">');
                 tr.append('<td>'+ obj.fecha_caja +'</td>');
-                tr.append('<td>'+ obj.referencia +'</td>');
+                if(obj.tarea_accion) {
+                    descripcion = obj.tarea_accion.descripcion + ':: '+ obj.referencia;
+                    tr.append('<td data-tooltip="'+ descripcion +'">'+ descripcion.substr(0,50) + "..." +'</td>');
+                } else {
+                    tr.append('<td>' + obj.referencia + '</td>');
+                }
                 tr.append('<td>'+ obj.monto +'</td>');
                 tr.append('<td>'+ obj.moneda +'</td>');
                 tr.append('<td>'+ obj.tipo +'</td>');
