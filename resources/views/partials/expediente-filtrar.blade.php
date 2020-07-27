@@ -98,7 +98,7 @@
                         </div>
                     </div>
 
-                    <div class="col-fecha-inicio col-md-3">
+                    <div class="col-md-3">
                         <div class="form-group">
                             {!! Form::label('fecha_inicio', 'Fecha Inicio', ['class' => 'control-label']) !!}
                             <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="dd/mm/yyyy">
